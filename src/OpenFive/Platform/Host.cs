@@ -21,6 +21,8 @@ public sealed unsafe class Host : IDisposable
     bool _fullscreen;
     bool _smooth = true;
     public InputState Input { get; } = new();
+    static volatile bool s_signalled;
+    readonly List<System.Runtime.InteropServices.PosixSignalRegistration> _signals = new();
 
     public Host(bool fullscreen, bool smooth)
     {
@@ -38,6 +40,13 @@ public sealed unsafe class Host : IDisposable
             throw new InvalidOperationException("SDL_CreateRenderer failed: " + Sdl.GetError());
         Sdl.SetRenderVSync(_renderer, 1);
         Sdl.SetRenderLogicalPresentation(_renderer, Framebuffer.Width, Framebuffer.Height, Sdl.LOGICAL_PRESENTATION_LETTERBOX);
+        // Ctrl+C / termination: leave the main loop and shut audio and video down in order.
+        foreach (var sig in new[] { System.Runtime.InteropServices.PosixSignal.SIGINT, System.Runtime.InteropServices.PosixSignal.SIGTERM })
+            _signals.Add(System.Runtime.InteropServices.PosixSignalRegistration.Create(sig, ctx =>
+            {
+                ctx.Cancel = true;
+                s_signalled = true;
+            }));
         _texture = Sdl.CreateTexture(_renderer, Sdl.PIXELFORMAT_RGB565, Sdl.TEXTUREACCESS_STREAMING, Framebuffer.Width, Framebuffer.Height);
         ApplyScaleMode();
     }
@@ -57,6 +66,8 @@ public sealed unsafe class Host : IDisposable
     {
         Input.Clicked = false;
         Input.RightClicked = false;
+        if (s_signalled)
+            Input.QuitRequested = true;
         while (Sdl.PollEvent(out var e))
         {
             switch (e.Type)
@@ -119,6 +130,8 @@ public sealed unsafe class Host : IDisposable
 
     public void Dispose()
     {
+        foreach (var r in _signals)
+            r.Dispose();
         if (_texture != IntPtr.Zero) Sdl.DestroyTexture(_texture);
         if (_renderer != IntPtr.Zero) Sdl.DestroyRenderer(_renderer);
         if (_window != IntPtr.Zero) Sdl.DestroyWindow(_window);

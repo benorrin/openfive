@@ -64,3 +64,13 @@ would collide, the avoidance logic inserts short detour segments.
 
 The label appears above the cursor (about 32 pixels up, kept on screen) after the mouse has
 rested for one tick, using the object's "over" text, or the character's name for actors.
+
+## Sound
+
+* One **background track** (music or ambience) loops at a time. Asking for the track that is
+  already playing leaves it playing; a different track replaces it.
+* **Effects** play with a volume (0-100) and a pan (-10000 left .. 10000 right); some loop until
+  stopped.
+* **Speech** recordings are looked up by name in the language's speech folders.
+* The option sliders (0-100) map to attenuation of (volume - 100) x 100 millibels, so 100 is full
+  volume and 0 is silent.

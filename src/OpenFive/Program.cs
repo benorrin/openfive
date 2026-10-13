@@ -1,4 +1,5 @@
 using OpenFive.Engine;
+using OpenFive.Engine.Audio;
 using OpenFive.Engine.Graphics;
 using OpenFive.Engine.IO;
 using OpenFive.Engine.World;
@@ -50,6 +51,7 @@ sealed class Options
     public bool Fullscreen, Sharp, ShowHelp;
     public string? Viewer;
     public string? Screenshot;
+    public string? Track;
     public int Frames = -1;
 
     public const string Help =
@@ -59,6 +61,7 @@ sealed class Options
         "  --fullscreen       start in fullscreen (F11 or Alt+Enter toggles)\n" +
         "  --sharp            sharp pixel scaling instead of smooth (F12 toggles)\n" +
         "  --view LOCATION    developer scene viewer (e.g. loc05)\n" +
+        "  --track PATH       viewer: play a background track (e.g. wav/atmo/Geheim.WAV)\n" +
         "  --screenshot FILE  with --frames N: render N frames off-screen, save a BMP and exit\n";
 
     public static Options Parse(string[] args)
@@ -77,6 +80,7 @@ sealed class Options
                 case "--view": o.Viewer = Next(); break;
                 case "--screenshot": o.Screenshot = Next(); break;
                 case "--frames": o.Frames = int.Parse(Next()); break;
+                case "--track": o.Track = Next(); break;
                 case "-h":
                 case "--help": o.ShowHelp = true; break;
                 default:
@@ -111,8 +115,19 @@ static class Viewer
                 font.Draw(fb, label, Math.Clamp(mx - w / 2, 0, Framebuffer.Width - w), Math.Max(0, my - 24));
             }
         }
+        var mixer = new AudioMixer();
+        var audio = new GameAudio(data, mixer);
+        if (opt.Track != null)
+            audio.SetBackgroundTrack(opt.Track);
         if (opt.Screenshot != null)
         {
+            if (opt.Track != null)
+            {
+                var buf = new float[44100 * 2];
+                mixer.Mix(buf);
+                double rms = Math.Sqrt(buf.Average(x => (double)x * x));
+                Console.WriteLine($"audio: {opt.Track} rms over 1s = {rms:F4}");
+            }
             for (int i = 0; i < Math.Max(1, opt.Frames); i++)
                 scene.Update(100);
             int mx = 400, my = 300;
@@ -126,8 +141,10 @@ static class Viewer
             return 0;
         }
         using var host = new Host(opt.Fullscreen, !opt.Sharp);
+        using var output = new AudioOutput(mixer);
         ulong last = Sdl.GetTicks();
-        while (!host.Input.QuitRequested)
+        int frame = 0;
+        while (!host.Input.QuitRequested && (opt.Frames < 0 || frame++ < opt.Frames))
         {
             host.PumpEvents();
             while (host.Input.KeysPressed.TryDequeue(out int k))
