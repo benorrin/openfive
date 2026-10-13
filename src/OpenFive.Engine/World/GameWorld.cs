@@ -52,6 +52,8 @@ public sealed class GameWorld
         Data = data;
         Audio = audio;
         Sprites = new SpriteBank(data);
+        Font = new BitmapFont(data.Image("bmp/common/misc/char.brg"));
+        Dialogue = new DialogueSystem(this);
         Actors = new[]
         {
             new Actor("Dick", "aDick_"), new Actor("George", "aGeorge_"), new Actor("Julian", "aJulian_"),
@@ -63,7 +65,47 @@ public sealed class GameWorld
             if (a.Resource >= 0 && a.Resource < _common.Resources.Count)
                 _commonAnims[a.Name] = new AnimInfo { Def = a, Resource = _common.Resources[a.Resource], X = a.X, Y = a.Y };
         LoadGlobalObjects();
+        foreach (var o in _common.Objects)
+        {
+            CommonObjectVisible[o.Name] = o.On;
+            if (o.Gfx >= 0 && o.Gfx < _common.Resources.Count && Sprites.For(_common.Resources[o.Gfx]) is { } sp)
+            {
+                sp.Visible = o.On;
+                sp.X = o.GfxX;
+                sp.Y = o.GfxY;
+                if (o.Depth != 0)
+                    sp.Depth = o.Depth;
+            }
+        }
     }
+
+    /// <summary>On/off state of the objects shared by all locations (dialogue box, rucksack...).</summary>
+    public Dictionary<string, bool> CommonObjectVisible { get; } = new(StringComparer.OrdinalIgnoreCase);
+    public IReadOnlyList<ObjectDef> CommonObjects => _common.Objects;
+    public ResScript Common => _common;
+
+    /// <summary>The end of the sequence being built (scripts chain new steps after it).</summary>
+    public TaskHandle? Chain { get; set; }
+
+    /// <summary>Is the mouse pointer shown (the game hides it during scenes)?</summary>
+    public bool CursorVisible { get; set; } = true;
+    /// <summary>Set when a task moves the pointer; the platform warps the mouse there.</summary>
+    public (int X, int Y)? CursorWarp { get; set; }
+
+    /// <summary>Texts currently on screen (speech subtitles, labels, menu options).</summary>
+    public List<TextItem> Texts { get; } = new();
+
+    /// <summary>Story position: the chapter ("quest") and the step within it ("episode").</summary>
+    public int Quest { get; set; } = 1;
+    public int Episode { get; set; } = 1;
+
+    public DialogueSystem Dialogue { get; }
+
+    /// <summary>The game's font (read from the disc).</summary>
+    public BitmapFont Font { get; }
+
+    /// <summary>Set for one tick when the player asks to skip the line being spoken.</summary>
+    public bool SkipRequested { get; set; }
 
     void LoadGlobalObjects()
     {
@@ -150,10 +192,30 @@ public sealed class GameWorld
             (a.X, a.Y) = (x, y);
     }
 
+    /// <summary>Finds an object of the location or of the common set.</summary>
+    public ObjectDef? FindObject(string name) =>
+        Scene?.Script.Objects.FirstOrDefault(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase)) ??
+        _common.Objects.FirstOrDefault(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+
+    public bool IsObjectOn(string name)
+    {
+        if (Scene != null && Scene.Script.Objects.Any(o => o.Name.Equals(name, StringComparison.OrdinalIgnoreCase)))
+            return Scene.ObjectVisible.TryGetValue(name, out bool v) && v;
+        return CommonObjectVisible.TryGetValue(name, out bool c) ? c : GlobalObjects.TryGetValue(name, out bool g) && g;
+    }
+
     /// <summary>Switches an object on or off, in the location and in the persistent list.</summary>
     public bool ShowObject(string name, bool on)
     {
         bool found = false;
+        var common = _common.Objects.FirstOrDefault(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+        if (common != null)
+        {
+            CommonObjectVisible[common.Name] = on;
+            if (common.Gfx >= 0 && common.Gfx < _common.Resources.Count && Sprites.For(_common.Resources[common.Gfx]) is { } cs)
+                cs.Visible = on;
+            found = true;
+        }
         if (Scene != null)
         {
             var o = Scene.Script.Objects.FirstOrDefault(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
@@ -177,16 +239,17 @@ public sealed class GameWorld
     /// <summary>Moves an object (its picture and click area) so that its anchor lands at (x, y).</summary>
     public void MoveObject(string name, int x, int y)
     {
-        var o = Scene?.Script.Objects.FirstOrDefault(v => v.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+        var o = FindObject(name);
         if (o == null)
             return;
+        var res = Scene != null && Scene.Script.Objects.Contains(o) ? Scene.Script : _common;
         (int ax, int ay) = o.Gfx >= 0 ? (o.GfxX, o.GfxY) : o.Click.Length > 0 ? o.Click[0] : (0, 0);
         int dx = x - ax, dy = y - ay;
         if (o.Gfx >= 0)
         {
             o.GfxX += dx;
             o.GfxY += dy;
-            if (Sprites.For(Scene!.Script.Resources[o.Gfx]) is { } s)
+            if (o.Gfx < res.Resources.Count && Sprites.For(res.Resources[o.Gfx]) is { } s)
             {
                 s.X += dx;
                 s.Y += dy;
@@ -435,7 +498,10 @@ public sealed class GameWorld
     public void Update()
     {
         Tick++;
+        if (SkipRequested)
+            Audio.Mixer.StopSpeech();
         Tasks.Tick(this);
+        SkipRequested = false;
         foreach (var a in Actors)
             UpdateActor(a);
     }
@@ -455,5 +521,20 @@ public sealed class GameWorld
                 return null;
             return (x, y) => _regionDepth[mask[y * Framebuffer.Width + x]] is { } rd && rd < d;
         });
+        foreach (var t in Texts.ToList())
+            DrawText(fb, t);
+    }
+
+    /// <summary>Line spacing of wrapped texts.</summary>
+    public const int LineHeight = 22;
+
+    public void DrawText(Framebuffer fb, TextItem t)
+    {
+        int y = t.Y;
+        foreach (string line in Font.Wrap(t.Text, Math.Max(40, t.Right - t.X)))
+        {
+            Font.Draw(fb, line, t.X, y);
+            y += LineHeight;
+        }
     }
 }

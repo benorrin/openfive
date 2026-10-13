@@ -121,3 +121,22 @@ rested for one tick, using the object's "over" text, or the character's name for
   either axis is sent walking to the leader.
 * The original also steers walking characters around each other; OpenFive leaves this out for
   now, because it can make characters oscillate and block scenes.
+
+## Dialogue
+
+* Lines live in the dialogue files of each speaker, keyed by kind ("V" = line, "DLG" = choice
+  menu), story chapter and step, scene id and line number. Speech recordings are named in the
+  file and stored in the speaker's speech folder.
+* A **line** shows the dialogue box (an object of the common set) at the bottom of the screen,
+  the speaker's talking-head animation at its left, the text from x=50 wrapping before x=780,
+  and plays the recording; the pointer is hidden. When the recording ends the box and head go
+  away. Without a recording the text stays for a time based on its length.
+* Lines chain: each starts after the previous step of the current sequence, and becomes the new
+  end of the sequence. After queuing a line, the location's script is told (so it can plan what
+  comes next); after the **last** line the pointer comes back.
+* A **choice menu** shows the options not yet asked, in a box at the top, middle or bottom of the
+  screen (rows 70 pixels apart), with the asking character's head. The player clicks an option;
+  that character speaks it and the location's script learns which option (as numbered in the
+  file) was picked. When only one option is left it is asked without showing the menu.
+* A click (or Space) while a line is being spoken skips to its end (an addition over the
+  original).

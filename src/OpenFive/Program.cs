@@ -55,6 +55,8 @@ sealed class Options
     public List<string> Anims = new();
     public List<(string Name, int X, int Y)> Place = new();
     public List<(int X, int Y)> WalkTargets = new();
+    public List<(int Speaker, string Scene, int Line)> Say = new();
+    public int Quest = 1, Episode = 1;
     public int Frames = -1;
 
     public const string Help =
@@ -66,6 +68,8 @@ sealed class Options
         "  --view LOCATION    developer scene viewer (e.g. loc05)\n" +
         "  --anim NAME        viewer: loop a named animation (repeatable)\n" +
         "  --place NAME:X,Y   viewer: put a character (Dick, George, ...) at X,Y; the first one is the hero\n" +
+        "  --quest Q,E        viewer: story step for dialogue lookups\n" +
+        "  --say S,SCENE,N    viewer: speaker code S says line N of SCENE (repeatable, in order)\n" +
         "  --walk X,Y         viewer: hero walks to X,Y (repeatable, one after another)\n" +
         "  --track PATH       viewer: play a background track (e.g. wav/atmo/Geheim.WAV)\n" +
         "  --screenshot FILE  with --frames N: render N frames off-screen, save a BMP and exit\n";
@@ -92,6 +96,18 @@ sealed class Options
                 {
                     string[] p = Next().Split(':', ',');
                     o.Place.Add((p[0], int.Parse(p[1]), int.Parse(p[2])));
+                    break;
+                }
+                case "--say":
+                {
+                    string[] p = Next().Split(',');
+                    o.Say.Add((int.Parse(p[0]), p[1], int.Parse(p[2])));
+                    break;
+                }
+                case "--quest":
+                {
+                    string[] p = Next().Split(',');
+                    (o.Quest, o.Episode) = (int.Parse(p[0]), int.Parse(p[1]));
                     break;
                 }
                 case "--walk":
@@ -148,6 +164,10 @@ static class Viewer
         }
         foreach (var (x, y) in opt.WalkTargets)
             world.WalkToAfter(world.Hero, x, y);
+        world.Quest = opt.Quest;
+        world.Episode = opt.Episode;
+        for (int i = 0; i < opt.Say.Count; i++)
+            world.Dialogue.Say(opt.Say[i].Speaker, opt.Say[i].Scene, opt.Say[i].Line, last: i == opt.Say.Count - 1);
         foreach (string a in opt.Anims)
             if (world.PlayAnim(a, -1) == null)
                 Console.Error.WriteLine($"unknown animation {a}");
@@ -199,7 +219,11 @@ static class Viewer
             while (host.Input.KeysPressed.TryDequeue(out int k))
                 if (k == Keys.Escape)
                     host.Input.QuitRequested = true;
-            if (host.Input.Clicked && world.Hero.Visible)
+            if (host.Input.Clicked && world.Dialogue.OpenMenu is { } menu)
+                menu.Click(world, host.Input.MouseX, host.Input.MouseY);
+            else if (host.Input.Clicked && !world.CursorVisible)
+                world.SkipRequested = true;
+            else if (host.Input.Clicked && world.Hero.Visible)
                 world.WalkTo(world.Hero, host.Input.MouseX, host.Input.MouseY);
             ulong now = Sdl.GetTicks();
             scene.Update(now - last);

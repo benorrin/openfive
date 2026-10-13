@@ -65,10 +65,11 @@ public sealed class DialogTexts
 {
     readonly Dictionary<string, DialogEntry> _entries = new(StringComparer.OrdinalIgnoreCase);
 
-    static string Key(int q, int e, string scene, int id) => $"{q}|{e}|{scene}|{id}";
+    static string Key(string speaker, int q, int e, string scene, int id) => $"{speaker}|{q}|{e}|{scene}|{id}";
 
-    public DialogEntry? Get(int quest, int episode, string scene, int id) =>
-        _entries.TryGetValue(Key(quest, episode, scene, id), out var d) ? d : null;
+    /// <summary>A line of a speaker's file for the given story step, scene and line number.</summary>
+    public DialogEntry? Get(string speaker, int quest, int episode, string scene, int id) =>
+        _entries.TryGetValue(Key(speaker, quest, episode, scene, id), out var d) ? d : null;
 
     /// <summary>Finds a line of a scene regardless of quest/episode (some scenes are shared).</summary>
     public DialogEntry? Find(string scene, int id) =>
@@ -99,7 +100,7 @@ public sealed class DialogTexts
                     Id = int.TryParse(p[4].Trim(), out int id) ? id : 0,
                     Speaker = speaker,
                 };
-                _entries[Key(cur.Quest, cur.Episode, cur.Scene, cur.Id)] = cur;
+                _entries[Key(speaker, cur.Quest, cur.Episode, cur.Scene, cur.Id)] = cur;
                 continue;
             }
             if (cur == null)

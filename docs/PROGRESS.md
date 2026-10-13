@@ -15,8 +15,8 @@ Behaviour is reimplemented from documentation of how the original engine works (
 | 2 | Audio mixer (music, ambience, effects, speech), SDL3 output, option volumes | done |
 | 3 | Sprites (one per image, depth sorted), named animations with loops and end-of-animation object switches, object on/off with location hooks, global task scheduler | done |
 | 4 | Characters: state animations, walk paths/areas, routes between them, scaling and depth with distance, hiding behind scenery (mask), action queues, followers. Not yet: collision avoidance between characters (deliberately left out for now), footstep sounds | done |
-| 5 | Task scheduler (actor queues, global tasks, wait-for handles, delays) | |
-| 6 | Dialogue (speech lines, talking heads, choice menus, skip) | |
+| 5 | Task scheduler: actor queues, global tasks, wait-for handles, delays; speech, text, pointer, place/hide character tasks | done |
+| 6 | Dialogue: lines with box, talking head, recording and text; choice menus (remaining options, auto-pick of the last one); skip; location hooks | done |
 | 7 | Cursor, hover labels, click handling, inventory (rucksack, drag/drop, combine) | |
 | 8 | Menus: main menu, options, load/save (own save format), language switch, intro/extro videos | |
 | 9 | Story logic, location by location (loc01 ... loc29, ship, extro) | |
