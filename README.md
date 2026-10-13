@@ -9,10 +9,9 @@ OpenFive contains **no code, graphics, text, speech or music from the original g
 your own copy of the game CD (or a disc image of it): OpenFive reads all game data from the disc
 every time it runs.
 
-> **Status:** in development. The engine works (intro, menus, saving and loading, walking,
-> conversations, the rucksack); the story logic is being reimplemented location by location, so
-> the adventure cannot be finished yet. See [docs/PROGRESS.md](docs/PROGRESS.md) for what works
-> today.
+> **Status:** the whole adventure can be played, from the intro to the closing credits. Character
+> shadows and the logo scene are still missing, and not every side path has been tried yet. See
+> [docs/PROGRESS.md](docs/PROGRESS.md) for details.
 
 ## What you need
 
@@ -40,7 +39,9 @@ openfive --disc ~/Games/famous5/FAMOUS5.cue
 ```
 
 Instead of `--disc` you can set the `OPENFIVE_DISC` environment variable. OpenFive remembers the
-disc you used last, so afterwards plain `openfive` is enough.
+disc you used last, so afterwards plain `openfive` (or the menu entry) is enough. Without a disc
+given or remembered, it looks for the CD mounted under `/run/media`, `/media` or `/mnt`. From
+your file manager, you can also open a disc image (`.cue`, `.iso`, ...) with OpenFive.
 
 | Option | Meaning |
 |--------|---------|
@@ -57,8 +58,9 @@ on Windows and macOS in the application data folder). Set `OPENFIVE_HOME` to use
 
 * **Mouse:** move the pointer over the scene; names of things appear above it. Click to walk,
   look at things, talk to people and pick things up. Left and right buttons do the same.
-* **Rucksack (inventory):** click the character you are playing. To use an item, hold the button
-  on it, drag it onto something in the scene, and release.
+* **Rucksack (inventory):** click the character you are playing. To use an item, click it to take
+  it in hand, then click what to use it on: something in the scene, a person, or another item in
+  the rucksack. Clicking the treasure map looks at it.
 * **Conversations:** click (or press Space) to skip the line being spoken. When you are offered
   choices, click the one you want.
 * **F1:** main menu (load, save, options, quit). **Escape** in a menu returns to the game.
@@ -73,13 +75,29 @@ anything you can interact with. Items you collect go into the rucksack; many puz
 dragging an item onto a person or an object. If you are stuck, talk to the others again: they
 often give hints.
 
+## Installing
+
+### openSUSE Tumbleweed
+
+Build the package from a checkout and install it:
+
+```sh
+sudo zypper install rpm-build dotnet-sdk-8.0
+git clone https://github.com/benorrin/openfive.git
+cd openfive
+packaging/opensuse/build-rpm.sh
+sudo zypper install dist/x86_64/openfive-*.rpm
+```
+
+This installs `openfive`, a menu entry and the .NET 8 runtime and SDL3 it needs.
+
 ## Building from source
 
 ### openSUSE Tumbleweed
 
 ```sh
 sudo zypper install dotnet-sdk-8.0 libSDL3-0
-git clone <repository-url> openfive
+git clone https://github.com/benorrin/openfive.git
 cd openfive
 dotnet build -c Release
 dotnet run -c Release --project src/OpenFive -- --disc /path/to/FAMOUS5.cue
@@ -94,8 +112,8 @@ dotnet publish src/OpenFive -c Release -r linux-x64 --self-contained -o out/linu
 
 ### Other platforms
 
-The code is platform-neutral (.NET 8 + SDL3). Packaging for Windows, macOS and other Linux
-distributions is planned; the same `dotnet publish` command works with `-r win-x64`,
+The code is platform-neutral (.NET 8 + SDL3). Packages for Windows, macOS and other Linux
+distributions are planned; the same `dotnet publish` command works with `-r win-x64`,
 `-r osx-arm64`, etc., with the matching SDL3 library placed next to the executable
 (`SDL3.dll`, `libSDL3.0.dylib`).
 
