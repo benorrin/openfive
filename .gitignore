@@ -5,3 +5,5 @@ out/
 .vs/
 .idea/
 *.bmp
+dist/
+publish/
