@@ -116,6 +116,7 @@ public sealed class DialogueSystem
         LastChoice = option;
         var spoken = new SpokenLine(this, speaker, entry.Options[option - 1]);
         world.Chain = owner;
+        LineStarting(speaker.Code);
         Hooks?.LineQueued(world, owner);
         Hooks?.ChoiceMade(world, scene, line, option);
         return spoken;
@@ -246,7 +247,12 @@ public sealed class DialogueTask : GameTask
                 }
             }
             else
+            {
                 _inner = new SpokenLine(_sys, _speaker, entry.Options.Count > 0 ? entry.Options[0] : ("", ""));
+                // As in the original, the location hears that the line starts (the speaker takes a
+                // talking pose) before it hears that it was queued (poses for after the line).
+                _sys.LineStarting(_speaker.Code);
+            }
             _sys.LineQueued(this, _last);
         }
         return _inner!.Run(world);
@@ -272,7 +278,6 @@ sealed class SpokenLine : GameTask
     {
         if (_speech == null)
         {
-            _sys.LineStarting(_speaker.Code);
             world.CursorVisible = false;
             if (world.DialogueBox)
             {

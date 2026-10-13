@@ -5,7 +5,7 @@ namespace OpenFive;
 
 /// <summary>
 /// Plays the game from a list of commands, one at a time, each once the game is idle (pointer
-/// shown, hero standing, nothing being said). Speech is skipped. For automated play-throughs.
+/// shown, hero standing, nothing being said). Speech is skipped (see "speech on"). For automated play-throughs.
 ///
 ///   click OBJECT | actor NAME | at X Y | use ITEM TARGET | choose OPTION | wait TICKS | shot FILE
 ///   expect LOCATION | step Q E | items | save SLOT | load SLOT | until VAR VALUE | # comment
@@ -19,6 +19,9 @@ sealed class PlayRunner
     int _next, _idle, _wait, _stuck;
     public bool Done => _next >= _cmds.Count;
     public int Errors { get; private set; }
+    /// <summary>Speech is skipped unless "speech on" asks for lines at their real length
+    /// (scenes timed against speech, such as pushing the stone at the castle).</summary>
+    bool _skipSpeech = true;
 
     public PlayRunner(string path)
     {
@@ -58,7 +61,7 @@ sealed class PlayRunner
     public string? Tick(GameSession s, Action<string> shot)
     {
         var w = s.World;
-        if (!w.CursorVisible && w.Tick % 3 == 0)
+        if (_skipSpeech && !w.CursorVisible && w.Tick % 3 == 0)
             w.SkipRequested = true;
         if (Done)
             return null;
@@ -188,6 +191,9 @@ sealed class PlayRunner
                     s.Script.Click(a.Name);
                 return where;
             }
+            case "speech":
+                _skipSpeech = cmd[1] != "on";
+                return where;
             case "lines":
                 // Lists every entry of a dialogue scene (all speakers and story steps).
                 foreach (var d in w.Data.Dialogs.All
@@ -207,6 +213,14 @@ sealed class PlayRunner
                 {
                     Errors++;
                     return $"item {item} not in the rucksack [{string.Join(",", s.Inventory.Items)}] " + where;
+                }
+                bool here = w.IsObjectOn(cmd[2]) || Inventory.ItemOf(cmd[2]) != 0 ||
+                            w.Actors.Any(a => a.Visible && a.Name.Equals(cmd[2], StringComparison.OrdinalIgnoreCase) &&
+                                              a.Location.Equals(w.Scene?.Name, StringComparison.OrdinalIgnoreCase));
+                if (!here)
+                {
+                    Errors++;
+                    return $"target {cmd[2]} not here " + where;
                 }
                 s.UseItemOn(item, cmd[2]);
                 return where;

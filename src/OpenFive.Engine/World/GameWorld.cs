@@ -382,7 +382,7 @@ public sealed class GameWorld
 
     void UpdateActor(Actor a)
     {
-        // Process the queue: finished steps are removed, at most one step acts per tick.
+        // Process the queue: finished steps are removed.
         for (int guard = 0; guard < 64 && a.Queue.First is { } node; guard++)
         {
             var step = node.Value;
@@ -435,8 +435,11 @@ public sealed class GameWorld
                 a.State = ActorStates.StandFor(a.State);
                 break;
             }
-            if (step is WalkStep)
-                continue;
+            // As in the original, one step is handled per tick: a pose set by a state step is
+            // seen for at least a tick before the next step changes it. Only the legs of a walk
+            // (and the planning of a route) carry straight on.
+            if (step is not (WalkStep or RouteStep))
+                break;
         }
         UpdateDisplay(a);
     }
