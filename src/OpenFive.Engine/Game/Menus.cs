@@ -96,6 +96,21 @@ public abstract class MenuScreen : LocationScript
     protected void BackToMenu() => Session.ChangeLocation("menue");
 }
 
+/// <summary>The title logo shown after the intro; clicking it goes on to the main menu.</summary>
+public sealed class LogoScreen : LocationScript
+{
+    public override string Location => "logo";
+
+    public override void Enter(string from) => World.CursorVisible = true;
+
+    public override bool Click(string objectName)
+    {
+        if (objectName.Equals("logoStartClick", StringComparison.OrdinalIgnoreCase))
+            World.Tasks.Add(new ActionTask("CHANGELOC", _ => Session.ChangeLocation("menue")) { Delay = 5 });
+        return true;
+    }
+}
+
 /// <summary>The main menu: new game, load, save, quit, options, back to the game.</summary>
 public sealed class MainMenu : MenuScreen
 {
@@ -103,7 +118,9 @@ public sealed class MainMenu : MenuScreen
 
     public override void Enter(string from)
     {
-        World.Audio.SetBackgroundTrack(English ? "wav/atmo/track2.wav" : "wav/atmo/titelsong.wav");
+        // The intro's music goes on into the menu from the logo; otherwise the menu is silent.
+        if (!from.Equals("logo", StringComparison.OrdinalIgnoreCase))
+            World.Audio.StopBackgroundTrack();
         HideAll();
         ShowMain();
     }

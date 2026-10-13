@@ -170,7 +170,12 @@ rested for one tick, using the object's "over" text, or the character's name for
 
 ## Menus
 
-* The intro is the language's Smacker movie with its title song; a click or key skips it.
+* The intro is the language's Smacker movie with its title song; a click or key skips it. The
+  song is the background track: it goes on over the title logo ("click to start") that
+  follows, and into the main menu. Opened from anywhere else, the main menu is silent.
+* Location numbers used by the scripts: loc01-loc29 are 1-29, loc17b is 117; logo 50, load 52,
+  save 53, main menu 54, options 55, the close-ups 56-63 (schiff, morning, morgen, hand, hand2,
+  schiffc1-3), the ending 70 and the map 71.
 * Menu screens are locations of their own. Buttons are pairs of objects, the plain picture and
   the highlighted one (name + "1"), swapped while the pointer is over the button. German and
   English screens use different objects.

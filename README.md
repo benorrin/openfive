@@ -10,7 +10,7 @@ your own copy of the game CD (or a disc image of it): OpenFive reads all game da
 every time it runs.
 
 > **Status:** the whole adventure can be played, from the intro to the closing credits. Character
-> shadows and the logo scene are still missing, and not every side path has been tried yet. See
+> shadows are still missing, and not every side path has been tried yet. See
 > [docs/PROGRESS.md](docs/PROGRESS.md) for details.
 
 ## What you need

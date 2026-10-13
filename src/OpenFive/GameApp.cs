@@ -34,13 +34,19 @@ sealed class GameApp
         _session.MovieRequested += (path, music) => StartMovie(path, music);
     }
 
-    void StartMovie(string path, string music)
+    /// <summary>Plays a movie; its music is a sound of its own, or (the intro's) the background
+    /// track, which goes on playing afterwards.</summary>
+    void StartMovie(string path, string music, bool musicAsTrack = false)
     {
         try
         {
             _movie = new MoviePlayer(_data, path);
             _audio.StopBackgroundTrack();
-            _movieMusic = music.Length > 0 ? _audio.PlayEffect(music) : 0;
+            _movieMusic = 0;
+            if (musicAsTrack)
+                _audio.SetBackgroundTrack(music);
+            else if (music.Length > 0)
+                _movieMusic = _audio.PlayEffect(music);
         }
         catch (Exception e) when (e is IOException or InvalidDataException)
         {
@@ -62,7 +68,8 @@ sealed class GameApp
         if (!_opt.SkipIntro)
         {
             bool de = _data.Language == Language.German;
-            StartMovie(de ? "smk/introd.smk" : "smk/introe.smk", de ? "wav/atmo/titelsong.wav" : "wav/atmo/track2.wav");
+            StartMovie(de ? "smk/introd.smk" : "smk/introe.smk", de ? "wav/atmo/titelsong.wav" : "wav/atmo/track2.wav",
+                musicAsTrack: true);
         }
         if (_opt.StartLocation != null)
         {
@@ -76,7 +83,7 @@ sealed class GameApp
             _session.EnterLocation(_opt.StartLocation, _opt.From ?? "");
         }
         else
-            _session.EnterLocation("menue");
+            _session.EnterLocation(_opt.SkipIntro ? "menue" : "logo");
     }
 
     void Tick()

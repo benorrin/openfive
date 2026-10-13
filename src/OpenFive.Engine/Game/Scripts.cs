@@ -5,6 +5,7 @@ public static class Scripts
 {
     static readonly Dictionary<string, Func<LocationScript>> Registry = new(StringComparer.OrdinalIgnoreCase)
     {
+        ["logo"] = () => new LogoScreen(),
         ["menue"] = () => new MainMenu(),
         ["load"] = () => new SaveLoadScreen(false),
         ["save"] = () => new SaveLoadScreen(true),

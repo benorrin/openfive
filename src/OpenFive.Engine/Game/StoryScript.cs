@@ -342,14 +342,15 @@ public abstract class StoryScript : LocationScript
     /// <summary>Where the hero came from (location name).</summary>
     protected string From { get; private set; } = "";
 
-    /// <summary>The game's number of a location ("loc14" = 14, "loc17b" = 117, main menu = 50).</summary>
+    /// <summary>The game's number of a location ("loc14" = 14, "loc17b" = 117, main menu = 54).</summary>
     public static int IdOf(string location) => location.ToLowerInvariant() switch
     {
         "loc17b" => 117,
-        "menue" => 50,
+        "logo" => 50,
         "load" => 52,
-        "save" => 51,
-        "options" => 53,
+        "save" => 53,
+        "menue" => 54,
+        "options" => 55,
         "locextro" => 70,
         "schiff" => 56,
         "morning" => 57,
