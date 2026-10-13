@@ -1,0 +1,11 @@
+# The diary is read in the kitchen; the five go to the beach.
+load 9
+click LOC02Buch
+items
+click LOC02ExitToLOC04
+expect loc04
+click LOC04ExitToLOC05
+expect loc09
+wait 10
+items
+save 10

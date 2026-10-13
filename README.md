@@ -108,6 +108,9 @@ distributions is planned; the same `dotnet publish` command works with `-r win-x
   `use ITEM TARGET`, `choose OPTION`, `expect LOCATION`, `save SLOT`, `load SLOT`, ...; see
   `src/OpenFive/PlayRunner.cs`), skipping speech, and reports anything that did not work.
   `lines SCENE` lists every line of a dialogue scene with its quest and episode.
+* `tests/play/run.sh /path/to/FAMOUS5.cue` plays the whole game, from a new game to the closing
+  credits, in about a minute (nine `--play` scripts in `tests/play`, each continuing from the
+  previous one's save). It exits with an error if any step did not work.
 * Setting `OPENFIVE_TRACE=1` prints clicks, dialogue lines, story variables and pointer changes.
 * `--view LOCATION` opens a scene viewer (e.g. `--view loc05`): the location's background and
   objects, with hover labels.

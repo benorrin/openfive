@@ -1,0 +1,49 @@
+# Dungeon, escape, distracting the professor, the radio and the ending.
+load 24
+click LOC17bExitToLOC21
+expect loc21
+click LOC21ExitToLoc23
+expect loc23
+click LOC23ExitToLoc26
+expect loc26
+click LOC26ExitToLoc25
+expect loc25
+click LOC25ExitToLoc24
+expect loc24
+save 25
+use 13 LOC24ExitToLoc27
+wait 30
+save 26
+click LOC24ExitToLoc27
+wait 60
+expect loc28
+save 27
+click LOC28Spalte
+click LOC28ExitToLoc25
+wait 30
+expect loc25
+save 28
+click LOC25ExitToLoc22
+expect loc22
+click LOC22Loch
+wait 60
+expect loc14
+save 29
+click LOC14ExitToLoc17
+wait 30
+expect loc17
+save 30
+click LOC17Steinhaufen
+use 15 LOC17Busch
+wait 30
+click LOC17Steinhaufen
+use 16 LOC17Busch
+wait 60
+save 31
+click LOC17SeilClick
+use 12 LOC17Efeu
+wait 60
+save 32
+click LOC17Funkgeraet
+wait 100
+expect locextro

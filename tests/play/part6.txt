@@ -1,0 +1,34 @@
+# The fisherman, the boat, the wreck and the tin; the tin opener in the kitchen.
+load 10
+click LOC09Fischer
+!choose 1
+click LOC09Fischer
+!choose 2
+click LOC09Fischer
+click LOC09Fischer
+save 11
+at 125 365
+expect loc13
+click LOC13ExitToLoc15
+expect loc15
+use 12 LOC15Reling
+expect loc16
+use 26 LOC16Scharnier
+click LOC16Dose
+click LOC16ExitToLoc15
+!choose 1
+wait 50
+save 12
+click LOC15ExitToLoc13
+expect loc13
+click LOC13ExitToLoc09
+expect loc09
+click LOC09ExitToLOC06
+expect loc06
+click LOC06ExitToLOC04
+expect loc04
+click LOC04ExitToLOC05
+expect loc05
+use 3 LOC05Dosenoeffner
+items
+save 13

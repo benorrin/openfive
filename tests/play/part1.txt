@@ -1,0 +1,53 @@
+# Opening in the garden, the beach and the cave
+choose 1
+choose 2
+click LOC06ExitToLOC09
+expect loc09
+click LOC09Alf
+click LOC09Fusspuren
+click LOC09KisteRechtsClick
+click LOC09ExitToLOC08
+expect loc08
+choose 1
+click LOC08Lampe
+click LOC08LaterneKlick
+save 1
+# The kitchen
+click LOC08ExitToLOC09
+expect loc05
+click LOC05GeorgesSandwich
+click LOC05Schrank4
+click LOC05Flasche
+click LOC05Dick
+click LOC05Julian
+click LOC05Anne
+click LOC05Quentin
+click LOC05Kanne
+until kitchen.quentinDistracted 1
+!use 22 LOC05Timmy
+expect loc04
+save 3
+# The hall, the shed and the study door
+click LOC04ExitToLOC03
+click LOC04ExitToLOC06
+expect loc06
+click LOC06ExitToLOC07
+expect loc07
+click LOC07Oelkanne
+click LOC07Schraubenzieher
+click LOC07Axt
+click LOC07Seil
+click LOC07ExitToLOC06
+expect loc06
+click LOC06Eimer
+click LOC06ExitToLOC04
+expect loc04
+use 10 COMMON_INV29
+use 28 LOC04TueschlossLoc03
+items
+save 4
+click LOC04ExitToLOC03
+wait 50
+items
+expect loc05
+save 5

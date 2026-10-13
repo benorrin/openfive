@@ -1,0 +1,14 @@
+# Second morning: the guest room door, the cupboard and the suitcase key.
+load 5
+click LOC05ExitToLOC04
+expect loc04
+click LOC04ExitToLOC02
+click LOC04Schluesselloch
+use 27 LOC04Tuerspalte2
+use 6 LOC04Schluesselloch
+items
+expect loc02
+click LOC02OpenSchrankClick
+click LOC02Tasche
+items
+save 6

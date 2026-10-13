@@ -1,0 +1,11 @@
+# George goes to the professor's room; the rug and the diary in the guest room.
+load 8
+click LOC05Anne
+choose 2
+click LOC05ExitToLOC04
+expect loc04
+click LOC04ExitToLOC02
+expect loc02
+click LOC02Carpet1Click
+items
+save 9

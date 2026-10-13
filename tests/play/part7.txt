@@ -1,0 +1,38 @@
+# The study by night: tea, the fire, the window, the model ship and the map.
+load 13
+click LOC05ExitToLOC04
+expect loc04
+click LOC04ExitToLOC03
+expect loc03
+click LOC03Schiff
+expect loc04
+click LOC04ExitToLOC05
+expect loc05
+click LOC05Toast
+click LOC05Kanne
+items
+save 14
+click LOC05ExitToLOC04
+click LOC04ExitToLOC03
+expect loc03
+use 1 LOC03Tasse
+use 1 LOC03Kamin
+click LOC03Holz1
+use 9 LOC03Kamin
+click LOC03WindowClickObj
+save 15
+click LOC03ExitToLOC04
+expect loc04
+click LOC04ExitToLOC06
+expect loc06
+save 16
+click LOC06ExitToLOC03
+expect loc03
+use 32 LOC03Schiff
+expect loc03
+save 17
+actor George
+click COMMON_INV14
+expect locKarte
+click KARTEStartClick
+expect loc03

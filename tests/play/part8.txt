@@ -1,0 +1,48 @@
+# Kirrin Island: from the study (map in hand) to the dungeon stairs.
+load 17
+click LOC03ExitToLOC04
+expect loc08
+click LOC08ExitToLOC09
+expect loc09
+save 18
+click LOC09Alf
+click LOC09Boot
+expect loc13
+click LOC13ExitToLoc14
+expect loc14
+click LOC14ExitToLoc17
+expect loc17
+save 19
+click LOC17TuerClick
+click LOC17ZwischenTurmundHaus
+click LOC17ExitToLoc14
+save 20
+click LOC17Busch
+!choose 1
+use 13 LOC17Busch
+click LOC17Busch
+expect loc18
+click LOC18BigClick
+expect loc17
+use 12 LOC17Stein
+click LOC17Busch
+expect loc18
+save 21
+click LOC18ExitToLoc19
+wait 60
+expect loc19
+use 2 LOC19SeilKlick
+wait 60
+expect loc18
+save 22
+click LOC18ExitToLoc17
+wait 60
+expect loc17
+click LOC17George
+click LOC17Anne
+expect loc17b
+save 23
+click LOC17bStein
+actor Julian
+wait 60
+save 24

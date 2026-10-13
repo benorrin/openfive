@@ -1,0 +1,11 @@
+# The suitcase, the study and Quentin's ship's layout; to the kitchen.
+load 6
+use 31 LOC04Koffer
+items
+click LOC04ExitToLOC03
+expect loc03
+items
+save 7
+click LOC03ExitToLOC04
+expect loc05
+save 8
