@@ -13,8 +13,8 @@ Behaviour is reimplemented from documentation of how the original engine works (
 |---|-----------|-------|
 | 1 | Disc access (ISO9660, raw .img/.bin, .cue/.ccd, mounted CD), formats (BRG, Smacker, WAV, .res, texts), font, framebuffer, sky + background compositing, SDL3 host, scene viewer (all 43 locations render) | done |
 | 2 | Audio mixer (music, ambience, effects, speech), SDL3 output, option volumes | done |
-| 3 | Animations and sprites (named anims, packed sheets, depth sorting, mask occlusion, scaling) | |
-| 4 | Actors: hero state animations, walk paths/areas, route finding, avoidance | |
+| 3 | Sprites (one per image, depth sorted), named animations with loops and end-of-animation object switches, object on/off with location hooks, global task scheduler | done |
+| 4 | Actors: hero state animations, walk paths/areas, route finding, avoidance, scaling with distance, hiding behind scenery (mask) | |
 | 5 | Task scheduler (actor queues, global tasks, wait-for handles, delays) | |
 | 6 | Dialogue (speech lines, talking heads, choice menus, skip) | |
 | 7 | Cursor, hover labels, click handling, inventory (rucksack, drag/drop, combine) | |

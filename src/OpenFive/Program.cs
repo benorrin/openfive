@@ -52,6 +52,7 @@ sealed class Options
     public string? Viewer;
     public string? Screenshot;
     public string? Track;
+    public List<string> Anims = new();
     public int Frames = -1;
 
     public const string Help =
@@ -61,6 +62,7 @@ sealed class Options
         "  --fullscreen       start in fullscreen (F11 or Alt+Enter toggles)\n" +
         "  --sharp            sharp pixel scaling instead of smooth (F12 toggles)\n" +
         "  --view LOCATION    developer scene viewer (e.g. loc05)\n" +
+        "  --anim NAME        viewer: loop a named animation (repeatable)\n" +
         "  --track PATH       viewer: play a background track (e.g. wav/atmo/Geheim.WAV)\n" +
         "  --screenshot FILE  with --frames N: render N frames off-screen, save a BMP and exit\n";
 
@@ -81,6 +83,7 @@ sealed class Options
                 case "--screenshot": o.Screenshot = Next(); break;
                 case "--frames": o.Frames = int.Parse(Next()); break;
                 case "--track": o.Track = Next(); break;
+                case "--anim": o.Anims.Add(Next()); break;
                 case "-h":
                 case "--help": o.ShowHelp = true; break;
                 default:
@@ -102,11 +105,19 @@ static class Viewer
     {
         var fb = new Framebuffer();
         var font = new BitmapFont(data.Image("bmp/common/misc/char.brg"));
-        var scene = new Scene(data, opt.Viewer!);
+        var mixer = new AudioMixer();
+        var audio = new GameAudio(data, mixer);
+        var world = new GameWorld(data, audio);
+        world.LoadLocation(opt.Viewer!);
+        var scene = world.Scene!;
+        if (opt.Track != null)
+            audio.SetBackgroundTrack(opt.Track);
+        foreach (string a in opt.Anims)
+            if (world.PlayAnim(a, -1) == null)
+                Console.Error.WriteLine($"unknown animation {a}");
         void Render(int mx, int my)
         {
-            scene.DrawBackground(fb);
-            scene.DrawObjects(fb);
+            world.Draw(fb);
             var o = scene.ObjectAt(mx, my);
             string label = o != null ? data.ObjectTexts.Get(o.Name)?.Over ?? "" : "";
             if (label.Length > 0)
@@ -115,10 +126,6 @@ static class Viewer
                 font.Draw(fb, label, Math.Clamp(mx - w / 2, 0, Framebuffer.Width - w), Math.Max(0, my - 24));
             }
         }
-        var mixer = new AudioMixer();
-        var audio = new GameAudio(data, mixer);
-        if (opt.Track != null)
-            audio.SetBackgroundTrack(opt.Track);
         if (opt.Screenshot != null)
         {
             if (opt.Track != null)
@@ -128,8 +135,12 @@ static class Viewer
                 double rms = Math.Sqrt(buf.Average(x => (double)x * x));
                 Console.WriteLine($"audio: {opt.Track} rms over 1s = {rms:F4}");
             }
-            for (int i = 0; i < Math.Max(1, opt.Frames); i++)
+            int frames = Math.Max(1, opt.Frames);
+            for (int i = 0; i < frames; i++)
+            {
                 scene.Update(100);
+                world.Update();
+            }
             int mx = 400, my = 300;
             var hover = scene.Script.Objects.FirstOrDefault(o => scene.IsVisible(o) && o.Click.Length >= 3 &&
                                                                  data.ObjectTexts.Get(o.Name)?.Over is { Length: > 0 });
@@ -142,7 +153,7 @@ static class Viewer
         }
         using var host = new Host(opt.Fullscreen, !opt.Sharp);
         using var output = new AudioOutput(mixer);
-        ulong last = Sdl.GetTicks();
+        ulong last = Sdl.GetTicks(), tickClock = 0;
         int frame = 0;
         while (!host.Input.QuitRequested && (opt.Frames < 0 || frame++ < opt.Frames))
         {
@@ -152,7 +163,13 @@ static class Viewer
                     host.Input.QuitRequested = true;
             ulong now = Sdl.GetTicks();
             scene.Update(now - last);
+            tickClock += now - last;
             last = now;
+            while (tickClock >= 100)
+            {
+                tickClock -= 100;
+                world.Update();
+            }
             Render(host.Input.MouseX, host.Input.MouseY);
             host.Present(fb);
         }

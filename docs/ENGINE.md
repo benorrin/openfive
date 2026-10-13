@@ -74,3 +74,20 @@ rested for one tick, using the object's "over" text, or the character's name for
 * **Speech** recordings are looked up by name in the language's speech folders.
 * The option sliders (0-100) map to attenuation of (volume - 100) x 100 millibels, so 100 is full
   volume and 0 is silent.
+
+## Sprites and animations
+
+* Every image resource has one **sprite**: visible flag, depth, source rectangle (or frame of a
+  packed sheet), screen position. Objects and animations that use the same image share it.
+* When a location loads, each object with a picture puts its sprite at the object's position and
+  depth, visible if the object is on. Packed sheets default to depth 8000.
+* A **named animation** ("anim Name,res,w,h,x,y:frame,dx,dy;...") shows frame *k* of its image as
+  the strip `[w*k, 0, w, h]` (or sheet frame *k*) at `(x+dx, y+dy)`. Scripts can move an
+  animation's `(x, y)`.
+* Playing: each tick advances one frame (the very first tick already shows frame 1). After the last
+  frame it restarts while loops remain (-1 = forever). Then it hides the sprite, optionally
+  switches an object on/off, and ends. If another animation on the same image is still running,
+  the sprite stays visible.
+* Switching an object on/off updates the location, the persistent object list ("object.res"),
+  and tells the location's script (this is how picking things up grants items).
+* Moving an object shifts its picture and its click polygon together.
