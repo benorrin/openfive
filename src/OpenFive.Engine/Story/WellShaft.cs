@@ -142,9 +142,9 @@ public sealed partial class WellShaft : StoryScript
             Episode = 5;
             Quest = 8;
             SetVar(Vars.V6511a4, 1);
-            SetVar(Vars.V650bbc, 0);
-            SetVar(Vars.V650b84, 0);
-            SetVar(Vars.V650bf4, 0);
+            SetVar(Vars.AnneCastleTalk, 0);
+            SetVar(Vars.GeorgeCastleTalk, 0);
+            SetVar(Vars.JulianCastleTalk, 0);
         }
         return;
     }

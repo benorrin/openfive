@@ -196,11 +196,11 @@ public sealed partial class TreasureChamber : StoryScript
                 }
             }
             else if ((CurrentSpeaker == Who.Anne) && Text("t63bedc") == "Anne") {
-                SetAfter(Vars.V64efe4, 10, param_1, 0);
-                SetAfter(Vars.V64efe8, 2, param_1, 0);
+                SetAfter(Vars.QuestNumber, 10, param_1, 0);
+                SetAfter(Vars.EpisodeNumber, 2, param_1, 0);
                 PointerAfter(false, param_1, 0, 400, 400);
                 ChangeLocation("loc28", param_1, 4);
-                SetVar(Vars.V651054, 0);
+                SetVar(Vars.GeorgeDungeonTalk, 0);
                 SetText("t63bedc", "");
             }
         }

@@ -47,11 +47,11 @@ public sealed partial class Cave : StoryScript
                 WalkAfter(Hero, 785, 362, (uVar4), 50);
                 WalkAfter(Timmy, 765, 362, (uVar4), 55);
                 ChangeLocation("loc05", (uVar4), 6);
-                SetVar(Vars.V650024, 0);
-                SetVar(Vars.V65005c, 0);
-                SetVar(Vars.V64ffec, 0);
-                SetVar(Vars.V64ffb4, 0);
-                SetVar(Vars.V64ff7c, 0);
+                SetVar(Vars.AnneTalk, 0);
+                SetVar(Vars.JulianTalk, 0);
+                SetVar(Vars.DickTalk, 0);
+                SetVar(Vars.QuentinKitchenTalk, 0);
+                SetVar(Vars.FannyTalk, 0);
             }
             else if ((Episode == 1) && ((Quest == 8 && (Var(Vars.V6503a4) == 1)))) {
                 PointerAfter(false, Chain, 0, 300, 400);
@@ -226,13 +226,13 @@ public sealed partial class Cave : StoryScript
             Place(Anne, 400, 346, 12);
             Place(Julian, 300, 346, 12);
             ShowParty();
-            SetVar(Vars.V6506b4, 0);
-            SetVar(Vars.V650414, 0);
-            SetVar(Vars.V6504f4, 0);
-            SetVar(Vars.V650484, 0);
-            SetVar(Vars.V650794, 0);
+            SetVar(Vars.AlfTalk, 0);
+            SetVar(Vars.AnneBeachTalk, 0);
+            SetVar(Vars.DickBeachTalk, 0);
+            SetVar(Vars.JulianBeachTalk, 0);
+            SetVar(Vars.AnneIslandTalk, 0);
             SetVar(Vars.V650804, 0);
-            SetVar(Vars.V6507cc, 0);
+            SetVar(Vars.JulianIslandTalk, 0);
             if (Var(Vars.V65108c) == 0) {
                 SetVar(Vars.V64ef78, -1);
                 SetVar(Vars.V64ef74, -1);

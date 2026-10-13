@@ -52,7 +52,7 @@ public sealed partial class WreckCabin : StoryScript
                         local_20 = Chain;
                         Chain = Say(0, "KAJUETE0024", 6, true, local_20, 0);
                         ObjAfter("LOC16Dose", false, local_20, 5);
-                        IncAfter(Vars.V6511dc, local_20, 0);
+                        IncAfter(Vars.TinTaken, local_20, 0);
                     }
                     else {
                         if (Same(name, "LOC16Schrank")) {
@@ -96,9 +96,9 @@ public sealed partial class WreckCabin : StoryScript
     // from FUN_0044c721
     void OnObjectChanged(string name, int param_2)
     {
-        if (((param_2 == 0) && Same(name, "LOC16Dose")) && (Var(Vars.V6511dc) == 1)) {
+        if (((param_2 == 0) && Same(name, "LOC16Dose")) && (Var(Vars.TinTaken) == 1)) {
             Give(3);
-            SetVar(Vars.V6511dc, 2);
+            SetVar(Vars.TinTaken, 2);
         }
         return;
     }
@@ -114,7 +114,7 @@ public sealed partial class WreckCabin : StoryScript
         State(Hero, 7);
         MoveObj("LOC16SchrankZu", 629, 136);
         MoveObj("LOC16SchrankAuf", 675, 131);
-        if (Var(Vars.V65098c) == 0) {
+        if (Var(Vars.CabinCupboardOpen) == 0) {
             Obj("LOC16SchrankZu", true);
             Obj("LOC16Scharnier", true);
             Obj("LOC16SchrankAuf", false);
@@ -124,7 +124,7 @@ public sealed partial class WreckCabin : StoryScript
             Obj("LOC16Scharnier", false);
             Obj("LOC16SchrankAuf", true);
         }
-        if (Var(Vars.V6511dc) == 0) {
+        if (Var(Vars.TinTaken) == 0) {
             Obj("LOC16Dose", true);
         }
         else {
@@ -132,15 +132,15 @@ public sealed partial class WreckCabin : StoryScript
         }
         if ((Episode == 3) && (Quest == 6)) {
             Episode = 4;
-            SetVar(Vars.V650414, 0);
-            SetVar(Vars.V650794, 0);
-            SetVar(Vars.V6508ac, 0);
-            SetVar(Vars.V650484, 0);
-            SetVar(Vars.V6507cc, 0);
-            SetVar(Vars.V6508e4, 0);
+            SetVar(Vars.AnneBeachTalk, 0);
+            SetVar(Vars.AnneIslandTalk, 0);
+            SetVar(Vars.AnneWreckTalk, 0);
+            SetVar(Vars.JulianBeachTalk, 0);
+            SetVar(Vars.JulianIslandTalk, 0);
+            SetVar(Vars.JulianWreckTalk, 0);
             SetVar(Vars.V65044c, 0);
-            SetVar(Vars.V65083c, 0);
-            SetVar(Vars.V650954, 0);
+            SetVar(Vars.GeorgeIslandTalk, 0);
+            SetVar(Vars.GeorgeWreckTalk, 0);
             SetVar(Vars.V65075c, 1);
         }
         return;

@@ -92,15 +92,15 @@ public sealed partial class Loc01 : StoryScript
         ObjAfter("LOC01_ZUMMENUE1", false, null, 0);
         ObjAfter("LOC01_EZUMMENUE", false, null, 0);
         ObjAfter("LOC01_EZUMMENUE1", false, null, 0);
-        if (Var(Vars.V64efd4) != 0) {
-            if (Var(Vars.V64efd4) < 2) {
+        if (Var(Vars.LanguageNumber) != 0) {
+            if (Var(Vars.LanguageNumber) < 2) {
                 Obj("LOC01gruss", true);
                 MoveObj("LOC01_ZUMMENUE", 30, 550);
                 ObjAfter("LOC01_ZUMMENUE", true, null, 0);
                 MoveObj("LOC01_ZUMMENUE1", 30, 550);
                 ObjAfter("LOC01_ZUMMENUE1", false, null, 0);
             }
-            else if (Var(Vars.V64efd4) == 2) {
+            else if (Var(Vars.LanguageNumber) == 2) {
                 Obj("LOC01greet", true);
                 MoveObj("LOC01_EZUMMENUE", -50, 560);
                 ObjAfter("LOC01_EZUMMENUE", true, null, 0);
@@ -187,11 +187,11 @@ public sealed partial class Loc01 : StoryScript
     // from FUN_00423318
     void F423318()
     {
-        if (Var(Vars.V64efd4) != 0) {
-            if (Var(Vars.V64efd4) < 2) {
+        if (Var(Vars.LanguageNumber) != 0) {
+            if (Var(Vars.LanguageNumber) < 2) {
                 Obj("LOC01l01o1g", true);
             }
-            else if (Var(Vars.V64efd4) == 2) {
+            else if (Var(Vars.LanguageNumber) == 2) {
                 Obj("LOC01l01o1e", true);
             }
         }
@@ -201,11 +201,11 @@ public sealed partial class Loc01 : StoryScript
     // from FUN_0042337d
     void F42337d()
     {
-        if (Var(Vars.V64efd4) != 0) {
-            if (Var(Vars.V64efd4) < 2) {
+        if (Var(Vars.LanguageNumber) != 0) {
+            if (Var(Vars.LanguageNumber) < 2) {
                 Obj("LOC01l01o2g", true);
             }
-            else if (Var(Vars.V64efd4) == 2) {
+            else if (Var(Vars.LanguageNumber) == 2) {
                 Obj("LOC01l01o2e", true);
             }
         }
@@ -215,11 +215,11 @@ public sealed partial class Loc01 : StoryScript
     // from FUN_004233e2
     void F4233e2()
     {
-        if (Var(Vars.V64efd4) != 0) {
-            if (Var(Vars.V64efd4) < 2) {
+        if (Var(Vars.LanguageNumber) != 0) {
+            if (Var(Vars.LanguageNumber) < 2) {
                 Obj("LOC01l01o3g", true);
             }
-            else if (Var(Vars.V64efd4) == 2) {
+            else if (Var(Vars.LanguageNumber) == 2) {
                 Obj("LOC01l01o3e", true);
             }
         }

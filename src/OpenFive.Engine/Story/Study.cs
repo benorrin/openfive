@@ -59,9 +59,9 @@ public sealed partial class Study : StoryScript
                 if ((Episode == 4) && (Quest == 7)) {
                     if (Var(Vars.V64f3ac) == 2) {
                         Episode = 5;
-                        SetVar(Vars.V650024, 0);
-                        SetVar(Vars.V64ffec, 0);
-                        SetVar(Vars.V65005c, 0);
+                        SetVar(Vars.AnneTalk, 0);
+                        SetVar(Vars.DickTalk, 0);
+                        SetVar(Vars.JulianTalk, 0);
                         SetVar(Vars.V651134, 0);
                         Walk(Hero, 228, 435);
                         local_20 = State(Hero, 20);
@@ -113,7 +113,7 @@ public sealed partial class Study : StoryScript
                 }
                 else {
                     iVar1 = Same(name, "LOC03WindowClickObj") ? 0 : 1;
-                    if ((iVar1 == 0) && (Var(Vars.V64f374) == 0)) {
+                    if ((iVar1 == 0) && (Var(Vars.StudyWindowOpen) == 0)) {
                         Walk(Hero, 530, 346);
                         local_20 = State(Hero, 26);
                         if ((Episode == 3) && (Quest == 7)) {
@@ -123,28 +123,28 @@ public sealed partial class Study : StoryScript
                         }
                         else {
                             if ((Episode == 4) && (Quest == 7)) {
-                                if (Var(Vars.V64f304) < 2) {
+                                if (Var(Vars.StudyFire) < 2) {
                                     Chain = local_20;
                                     PointerAfter(false, local_20, 0, 300, 400);
                                     Chain = Say(5, "ARBEIT0032", 11, true, local_20, 0);
                                     SetAfter(Vars.V64f3ac, 1, local_20, 0);
                                     return;
                                 }
-                                if (Var(Vars.V64f304) == 2) {
+                                if (Var(Vars.StudyFire) == 2) {
                                     Chain = local_20;
                                     PointerAfter(false, local_20, 0, 300, 400);
                                     Chain = Say(5, "ARBEIT0032", 15, true, local_20, 0);
                                     SetAfter(Vars.V64f3ac, 2, local_20, 0);
                                 }
                             }
-                            SetVar(Vars.V64f374, 1);
+                            SetVar(Vars.StudyWindowOpen, 1);
                             Depth(@"bmp\obj\locs\loc03\l03w0.brg", 6000);
                             Depth(@"bmp\obj\locs\loc03\l03w0_04.brg", 6000);
                             AnimPos("DoOpenWindow", 515, 174);
                             MoveObj("LOC03OpenWindowObj", 515, 174);
                             local_20 = Anim("DoOpenWindow", 1, local_20, 6, "LOC03OpenWindowObj", true);
                             Sound(@"wav\fx\Fensauf.wav", local_20, 0);
-                            SetVar(Vars.V64f374, 1);
+                            SetVar(Vars.StudyWindowOpen, 1);
                         }
                     }
                     else {
@@ -196,9 +196,9 @@ public sealed partial class Study : StoryScript
                                         SetText("t63bdb4", "Schiff");
                                         Chain = local_20;
                                         Chain = Say(5, "ARBEIT0029", 8, true, local_20, 0);
-                                        SetAfter(Vars.V650024, 0, local_20, 0);
-                                        SetAfter(Vars.V64ffec, 0, local_20, 0);
-                                        SetAfter(Vars.V65005c, 0, local_20, 0);
+                                        SetAfter(Vars.AnneTalk, 0, local_20, 0);
+                                        SetAfter(Vars.DickTalk, 0, local_20, 0);
+                                        SetAfter(Vars.JulianTalk, 0, local_20, 0);
                                     }
                                     else if ((Episode == 4) && (Quest == 7)) {
                                         SetVar(Vars.V64d464, 700);
@@ -547,7 +547,7 @@ public sealed partial class Study : StoryScript
             MoveObj("LOC03Holz2", 235, 352);
             ObjAfter("LOC03Holz2", true, null, 0);
             Give(9);
-            SetVar(Vars.V64f41c, 1);
+            SetVar(Vars.StudyWoodTaken, 1);
         }
         return;
     }
@@ -565,7 +565,7 @@ public sealed partial class Study : StoryScript
         Depth(@"bmp\obj\locs\loc03\l03f2.brg", 8100);
         Depth(@"bmp\obj\locs\loc03\l03f3.brg", 8100);
         if (Var(Vars.V64f301) == 1) {
-            switch(Var(Vars.V64f304)) {
+            switch(Var(Vars.StudyFire)) {
                 case 0:
                 Anim("FeuerKlein", -1);
                 break;
@@ -586,11 +586,11 @@ public sealed partial class Study : StoryScript
     void F4274ca()
     {
         if (Var(Vars.V64f419) == 1) {
-            if (Var(Vars.V64f41c) == 0) {
+            if (Var(Vars.StudyWoodTaken) == 0) {
                 MoveObj("LOC03Holz1", 235, 346);
                 Obj("LOC03Holz1", true);
             }
-            else if (Var(Vars.V64f41c) == 1) {
+            else if (Var(Vars.StudyWoodTaken) == 1) {
                 MoveObj("LOC03Holz2", 235, 352);
                 Obj("LOC03Holz2", true);
             }
@@ -752,11 +752,11 @@ public sealed partial class Study : StoryScript
         StopAnim("DoOpenWindow");
         StopAnim("DoCloseWindow");
         Obj("LOC03WindowClickObj", true);
-        if ((Var(Vars.V64f371) == 1) && (Var(Vars.V64f374) != 0)) {
-            if (Var(Vars.V64f374) < 2) {
+        if ((Var(Vars.V64f371) == 1) && (Var(Vars.StudyWindowOpen) != 0)) {
+            if (Var(Vars.StudyWindowOpen) < 2) {
                 Obj("LOC03OpenWindowObj", true);
             }
-            else if (Var(Vars.V64f374) == 2) {
+            else if (Var(Vars.StudyWindowOpen) == 2) {
                 Obj("LOC03WindowClickObj", false);
             }
         }
@@ -871,19 +871,19 @@ public sealed partial class Study : StoryScript
             ShowParty();
             SetVar(Vars.V64f4fc, 0);
             Obj("LOC03QuentinSit", true);
-            SetVar(Vars.V64f304, 0);
-            SetVar(Vars.V64f41c, 1);
+            SetVar(Vars.StudyFire, 0);
+            SetVar(Vars.StudyWoodTaken, 1);
             Obj("LOC03Bild", false);
-            SetVar(Vars.V64f374, 2);
+            SetVar(Vars.StudyWindowOpen, 2);
             SetVar(Vars.V64f48c, 1);
         }
         else if ((Episode == 3) && (Quest == 5)) {
             SetVar(Vars.V64f4fc, 0);
             Obj("LOC03QuentinSit", true);
-            SetVar(Vars.V64f304, 0);
-            SetVar(Vars.V64f41c, 1);
+            SetVar(Vars.StudyFire, 0);
+            SetVar(Vars.StudyWoodTaken, 1);
             Obj("LOC03Bild", false);
-            SetVar(Vars.V64f374, 2);
+            SetVar(Vars.StudyWindowOpen, 2);
             SetVar(Vars.V64f48c, 1);
             Place(Hero, 208, 403, 12);
             Show(Hero);
@@ -921,10 +921,10 @@ public sealed partial class Study : StoryScript
                 ShowParty();
                 SetVar(Vars.V64f4fc, 0);
                 Obj("LOC03QuentinSit", true);
-                SetVar(Vars.V64f304, 0);
-                SetVar(Vars.V64f41c, 1);
+                SetVar(Vars.StudyFire, 0);
+                SetVar(Vars.StudyWoodTaken, 1);
                 Obj("LOC03Bild", false);
-                SetVar(Vars.V64f374, 2);
+                SetVar(Vars.StudyWindowOpen, 2);
                 SetVar(Vars.V64f48c, 1);
             }
             else if ((Episode == 3) && (Quest == 7)) {
@@ -933,10 +933,10 @@ public sealed partial class Study : StoryScript
                 Walk(Hero, 250, 430);
                 ShowParty();
                 SetVar(Vars.V64f4fc, 0);
-                SetVar(Vars.V64f304, 0);
-                SetVar(Vars.V64f41c, 1);
+                SetVar(Vars.StudyFire, 0);
+                SetVar(Vars.StudyWoodTaken, 1);
                 Obj("LOC03Bild", true);
-                SetVar(Vars.V64f374, 0);
+                SetVar(Vars.StudyWindowOpen, 0);
                 SetVar(Vars.V64f48c, 1);
                 Chain = null;
                 local_278 = null;
@@ -950,9 +950,9 @@ public sealed partial class Study : StoryScript
                 Show(Hero);
                 SetVar(Vars.V64f4fc, 0);
                 if (Var(Vars.V6510fc) == 0) {
-                    SetVar(Vars.V64f304, 1);
+                    SetVar(Vars.StudyFire, 1);
                 }
-                SetVar(Vars.V64f41c, 0);
+                SetVar(Vars.StudyWoodTaken, 0);
                 Obj("LOC03Bild", true);
                 SetVar(Vars.V64f48c, 1);
                 SetVar(Vars.V6510fc, 1);
@@ -1015,10 +1015,10 @@ public sealed partial class Study : StoryScript
             ShowParty();
             SetVar(Vars.V64f4fc, 0);
             Obj("LOC03QuentinSit", true);
-            SetVar(Vars.V64f304, 0);
-            SetVar(Vars.V64f41c, 1);
+            SetVar(Vars.StudyFire, 0);
+            SetVar(Vars.StudyWoodTaken, 1);
             Obj("LOC03Bild", false);
-            SetVar(Vars.V64f374, 2);
+            SetVar(Vars.StudyWindowOpen, 2);
             SetVar(Vars.V64f48c, 1);
         }
         return;
@@ -1185,9 +1185,9 @@ public sealed partial class Study : StoryScript
                     AnimScale("QuentinWrite", 0.95);
                     Anim("QuentinWrite", -1, param_1, 0);
                     Episode = 4;
-                    SetVar(Vars.V650024, 0);
-                    SetVar(Vars.V64ffec, 0);
-                    SetVar(Vars.V65005c, 0);
+                    SetVar(Vars.AnneTalk, 0);
+                    SetVar(Vars.DickTalk, 0);
+                    SetVar(Vars.JulianTalk, 0);
                     SetVar(Vars.V64ef64, -1);
                     SetVar(Vars.V64ef60, -1);
                     SetVar(Vars.V64ef54, 1);

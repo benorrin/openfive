@@ -92,7 +92,7 @@ public sealed partial class Courtyard : StoryScript
             else if ((Episode == 1) && (Quest == 11)) {
                 Walk(Hero, 586, 490);
                 Chain = State(Hero, 10);
-                if (1 < Var(Vars.V6513d4)) {
+                if (1 < Var(Vars.CourtyardFree)) {
                     local_20 = Chain;
                     PointerAfter(false, Chain, 0, 400, 400);
                     Chain = Say(0, "RUINE0053", 12, false, local_20, 10);
@@ -111,7 +111,7 @@ public sealed partial class Courtyard : StoryScript
                     local_20 = State(Hero, 45);
                     PointerOff();
                     PointerAfter(true, local_20, 8, 400, 400);
-                    SetVar(Vars.V650a6c, 0);
+                    SetVar(Vars.RopeOnStone, 0);
                     StopAnimAfter("Seil", local_20, 6);
                     local_a4 = 1;
                     Give(12);
@@ -127,18 +127,18 @@ public sealed partial class Courtyard : StoryScript
                         WalkAfter(Hero, 429, 450, null, 5);
                         Chain = State(Hero, 12);
                         local_ac = Chain;
-                        if (Var(Vars.V650b84) < 2) {
-                            if (Var(Vars.V650b84) == 1) {
+                        if (Var(Vars.GeorgeCastleTalk) < 2) {
+                            if (Var(Vars.GeorgeCastleTalk) == 1) {
                                 Chain = Say(1, "RUINE0038", 25, false, local_ac, 0);
                                 Chain = Say(0, "RUINE0038", 26, true, local_ac, 0);
-                                IncAfter(Vars.V650b84, local_ac, 0);
+                                IncAfter(Vars.GeorgeCastleTalk, local_ac, 0);
                             }
                         }
-                        else if (Var(Vars.V650b84) < 3) {
+                        else if (Var(Vars.GeorgeCastleTalk) < 3) {
                             Chain = Say(1, "RUINE0038", 29, true, local_ac, 0);
-                            IncAfter(Vars.V650b84, local_ac, 0);
+                            IncAfter(Vars.GeorgeCastleTalk, local_ac, 0);
                         }
-                        else if (Var(Vars.V650b84) == 3) {
+                        else if (Var(Vars.GeorgeCastleTalk) == 3) {
                             Chain = Say(1, "RUINE0038", 32, true, local_ac, 0);
                             Sound(@"wav\timmy\timmy01.wav", local_ac, 8);
                         }
@@ -148,16 +148,16 @@ public sealed partial class Courtyard : StoryScript
                         Chain = State(Hero, 12);
                         local_104 = Chain;
                         if (Var(Vars.V650c2c) == 0) {
-                            if (Var(Vars.V650b84) == 0) {
+                            if (Var(Vars.GeorgeCastleTalk) == 0) {
                                 Chain = Say(1, "RUINE0040", 15, false, local_104, 0);
                                 Chain = Say(0, "RUINE0040", 16, true, local_104, 0);
-                                IncAfter(Vars.V650b84, local_104, 0);
+                                IncAfter(Vars.GeorgeCastleTalk, local_104, 0);
                             }
-                            else if (Var(Vars.V650b84) < 2) {
+                            else if (Var(Vars.GeorgeCastleTalk) < 2) {
                                 Chain = Say(1, "RUINE0040", 19, true, local_104, 0);
-                                IncAfter(Vars.V650b84, local_104, 0);
+                                IncAfter(Vars.GeorgeCastleTalk, local_104, 0);
                             }
-                            else if (Var(Vars.V650b84) == 2) {
+                            else if (Var(Vars.GeorgeCastleTalk) == 2) {
                                 Chain = Say(1, "RUINE0040", 20, true, local_104, 0);
                             }
                         }
@@ -173,12 +173,12 @@ public sealed partial class Courtyard : StoryScript
                         WalkAfter(Hero, 429, 450, null, 5);
                         Chain = State(Hero, 12);
                         local_1c0 = Chain;
-                        if (Var(Vars.V650b84) == 0) {
+                        if (Var(Vars.GeorgeCastleTalk) == 0) {
                             Chain = Say(1, "RUINE0043", 16, false, local_1c0, 0);
                             Chain = Say(0, "RUINE0043", 17, true, local_1c0, 0);
-                            IncAfter(Vars.V650b84, local_1c0, 0);
+                            IncAfter(Vars.GeorgeCastleTalk, local_1c0, 0);
                         }
-                        else if (Var(Vars.V650b84) == 1) {
+                        else if (Var(Vars.GeorgeCastleTalk) == 1) {
                             Chain = Say(1, "RUINE0043", 18, false, local_1c0, 0);
                             Chain = Say(0, "RUINE0043", 19, true, local_1c0, 0);
                         }
@@ -190,17 +190,17 @@ public sealed partial class Courtyard : StoryScript
                             WalkAfter(Hero, 429, 450, null, 5);
                             Chain = State(Hero, 12);
                             local_218 = Chain;
-                            if (Var(Vars.V650bbc) < 2) {
-                                if (Var(Vars.V650bbc) == 1) {
+                            if (Var(Vars.AnneCastleTalk) < 2) {
+                                if (Var(Vars.AnneCastleTalk) == 1) {
                                     Chain = Say(3, "RUINE0038", 27, true, local_218, 0);
-                                    IncAfter(Vars.V650bbc, local_218, 0);
+                                    IncAfter(Vars.AnneCastleTalk, local_218, 0);
                                 }
                             }
-                            else if (Var(Vars.V650bbc) < 3) {
+                            else if (Var(Vars.AnneCastleTalk) < 3) {
                                 Chain = Say(3, "RUINE0038", 30, true, local_218, 0);
-                                IncAfter(Vars.V650bbc, local_218, 0);
+                                IncAfter(Vars.AnneCastleTalk, local_218, 0);
                             }
-                            else if (Var(Vars.V650bbc) == 3) {
+                            else if (Var(Vars.AnneCastleTalk) == 3) {
                                 Chain = Say(3, "RUINE0038", 33, true, local_218, 0);
                             }
                         }
@@ -209,16 +209,16 @@ public sealed partial class Courtyard : StoryScript
                             Chain = State(Hero, 12);
                             local_25c = Chain;
                             if (Var(Vars.V650c2c) == 0) {
-                                if (Var(Vars.V650bbc) == 0) {
+                                if (Var(Vars.AnneCastleTalk) == 0) {
                                     Chain = Say(3, "RUINE0040", 15, false, local_25c, 0);
                                     Chain = Say(0, "RUINE0040", 16, true, local_25c, 0);
-                                    IncAfter(Vars.V650bbc, local_25c, 0);
+                                    IncAfter(Vars.AnneCastleTalk, local_25c, 0);
                                 }
-                                else if (Var(Vars.V650bbc) < 2) {
+                                else if (Var(Vars.AnneCastleTalk) < 2) {
                                     Chain = Say(3, "RUINE0040", 17, true, local_25c, 0);
-                                    IncAfter(Vars.V650bbc, local_25c, 0);
+                                    IncAfter(Vars.AnneCastleTalk, local_25c, 0);
                                 }
-                                else if (Var(Vars.V650bbc) == 2) {
+                                else if (Var(Vars.AnneCastleTalk) == 2) {
                                     Chain = Say(3, "RUINE0040", 18, true, local_25c, 0);
                                 }
                             }
@@ -240,17 +240,17 @@ public sealed partial class Courtyard : StoryScript
                                 WalkAfter(Hero, 429, 450, null, 5);
                                 Chain = State(Hero, 12);
                                 local_318 = Chain;
-                                if (Var(Vars.V650bf4) < 2) {
-                                    if (Var(Vars.V650bf4) == 1) {
+                                if (Var(Vars.JulianCastleTalk) < 2) {
+                                    if (Var(Vars.JulianCastleTalk) == 1) {
                                         Chain = Say(2, "RUINE0038", 28, true, local_318, 0);
-                                        IncAfter(Vars.V650bf4, local_318, 0);
+                                        IncAfter(Vars.JulianCastleTalk, local_318, 0);
                                     }
                                 }
-                                else if (Var(Vars.V650bf4) < 3) {
+                                else if (Var(Vars.JulianCastleTalk) < 3) {
                                     Chain = Say(2, "RUINE0038", 31, true, local_318, 0);
-                                    IncAfter(Vars.V650bf4, local_318, 0);
+                                    IncAfter(Vars.JulianCastleTalk, local_318, 0);
                                 }
-                                else if (Var(Vars.V650bf4) == 3) {
+                                else if (Var(Vars.JulianCastleTalk) == 3) {
                                     SetText("t63be5c", "exit");
                                     Chain = Say(2, "RUINE0038", 34, true, local_318, 0);
                                 }
@@ -260,12 +260,12 @@ public sealed partial class Courtyard : StoryScript
                                 Chain = State(Hero, 12);
                                 local_35c = Chain;
                                 if (Var(Vars.V650c2c) == 0) {
-                                    if (Var(Vars.V650bf4) == 0) {
+                                    if (Var(Vars.JulianCastleTalk) == 0) {
                                         Chain = Say(2, "RUINE0040", 15, false, local_35c, 0);
                                         Chain = Say(0, "RUINE0040", 16, true, local_35c, 0);
-                                        IncAfter(Vars.V650bf4, local_35c, 0);
+                                        IncAfter(Vars.JulianCastleTalk, local_35c, 0);
                                     }
-                                    else if (Var(Vars.V650bf4) == 1) {
+                                    else if (Var(Vars.JulianCastleTalk) == 1) {
                                         Chain = Say(2, "RUINE0040", 21, false, local_35c, 0);
                                         Chain = Say(0, "RUINE0040", 22, false, local_35c, 0);
                                         Chain = Say(2, "RUINE0040", 23, true, local_35c, 0);
@@ -283,16 +283,16 @@ public sealed partial class Courtyard : StoryScript
                                 WalkAfter(Hero, 429, 450, null, 5);
                                 Chain = State(Hero, 12);
                                 local_42c = Chain;
-                                if (Var(Vars.V650bf4) == 0) {
+                                if (Var(Vars.JulianCastleTalk) == 0) {
                                     Chain = Say(2, "RUINE0043", 6, false, local_42c, 0);
                                     Chain = Say(0, "RUINE0043", 7, false, local_42c, 0);
                                     Chain = Say(3, "RUINE0043", 8, false, local_42c, 0);
                                     Chain = Say(1, "RUINE0043", 9, false, local_42c, 0);
                                     Chain = Say(2, "RUINE0043", 10, false, local_42c, 0);
                                     Chain = Say(3, "RUINE0043", 11, true, local_42c, 0);
-                                    IncAfter(Vars.V650bf4, local_42c, 0);
+                                    IncAfter(Vars.JulianCastleTalk, local_42c, 0);
                                 }
-                                else if (Var(Vars.V650bf4) == 1) {
+                                else if (Var(Vars.JulianCastleTalk) == 1) {
                                     Chain = Say(2, "RUINE0043", 12, false, local_42c, 0);
                                     Chain = Say(0, "RUINE0043", 13, true, local_42c, 0);
                                 }
@@ -407,7 +407,7 @@ public sealed partial class Courtyard : StoryScript
                                         else if ((Episode == 1) && (Quest == 11)) {
                                             Walk(Hero, 431, 442);
                                             Chain = State(Hero, 10);
-                                            if (1 < Var(Vars.V6513d4)) {
+                                            if (1 < Var(Vars.CourtyardFree)) {
                                                 local_20 = Chain;
                                                 PointerAfter(false, Chain, 0, 400, 400);
                                                 Chain = Say(0, "RUINE0053", 11, true, local_20, 10);
@@ -465,7 +465,7 @@ public sealed partial class Courtyard : StoryScript
                                                 }
                                                 else {
                                                     if (Same(name, "LOC17bigStone")) {
-                                                        if (((Episode == 1) && (Quest == 11)) && (Var(Vars.V6514b4) != 1)) {
+                                                        if (((Episode == 1) && (Quest == 11)) && (Var(Vars.RopeOnIvy) != 1)) {
                                                             Walk(Hero, 1, 455);
                                                             Chain = State(Hero, 96);
                                                             local_20 = Chain;
@@ -485,11 +485,11 @@ public sealed partial class Courtyard : StoryScript
                                                         }
                                                         else {
                                                             if (Same(name, "LOC17Steinhaufen")) {
-                                                                if (((Episode == 1) && (Quest == 11)) && (Var(Vars.V6513d4) < 2)) {
-                                                                    SetVar(Vars.V6513d4, 1);
+                                                                if (((Episode == 1) && (Quest == 11)) && (Var(Vars.CourtyardFree) < 2)) {
+                                                                    SetVar(Vars.CourtyardFree, 1);
                                                                 }
                                                                 Walk(Hero, 633, 436);
-                                                                if (Var(Vars.V650c9c) < 3) {
+                                                                if (Var(Vars.StonesTaken) < 3) {
                                                                     local_20 = State(Hero, 45);
                                                                 }
                                                                 else {
@@ -497,19 +497,19 @@ public sealed partial class Courtyard : StoryScript
                                                                 }
                                                                 Chain = local_20;
                                                                 if ((Episode == 3) && (Quest == 8)) {
-                                                                    switch(Var(Vars.V650c9c)) {
+                                                                    switch(Var(Vars.StonesTaken)) {
                                                                         case 0:
                                                                         PointerAfter(false, local_20, 0, 300, 400);
                                                                         Chain = Say(0, "RUINE0040", 3, true, local_20, 14);
-                                                                        IncAfter(Vars.V650c9c, local_20, 0);
+                                                                        IncAfter(Vars.StonesTaken, local_20, 0);
                                                                         break;
                                                                         case 1:
                                                                         PointerAfter(false, local_20, 0, 300, 400);
                                                                         Chain = Say(0, "RUINE0040", 4, true, local_20, 14);
-                                                                        IncAfter(Vars.V650c9c, local_20, 0);
+                                                                        IncAfter(Vars.StonesTaken, local_20, 0);
                                                                         break;
                                                                         case 2:
-                                                                        IncAfter(Vars.V650c9c, local_20, 0);
+                                                                        IncAfter(Vars.StonesTaken, local_20, 0);
                                                                         PointerAfter(false, local_20, 0, 300, 400);
                                                                         Chain = Say(0, "RUINE0040", 5, true, local_20, 14);
                                                                         break;
@@ -521,14 +521,14 @@ public sealed partial class Courtyard : StoryScript
                                                                 }
                                                                 else if ((Episode < 4) || (Quest != 8)) {
                                                                     if (8 < Quest) {
-                                                                        if (((Episode == 1) && (Quest == 11)) && (Var(Vars.V6513d4) < 2)) {
-                                                                            SetAfter(Vars.V6513d4, 0, local_20, 0);
+                                                                        if (((Episode == 1) && (Quest == 11)) && (Var(Vars.CourtyardFree) < 2)) {
+                                                                            SetAfter(Vars.CourtyardFree, 0, local_20, 0);
                                                                         }
-                                                                        IncAfter(Vars.V650c9c, local_20, 0);
+                                                                        IncAfter(Vars.StonesTaken, local_20, 0);
                                                                     }
                                                                 }
                                                                 else {
-                                                                    IncAfter(Vars.V650c9c, local_20, 0);
+                                                                    IncAfter(Vars.StonesTaken, local_20, 0);
                                                                 }
                                                             }
                                                             else {
@@ -591,8 +591,8 @@ public sealed partial class Courtyard : StoryScript
                 Place(Hero, 820, 450, 12);
                 Show(Hero);
                 if ((Episode == 1) && (Quest == 11)) {
-                    if (Var(Vars.V6513d4) < 2) {
-                        SetVar(Vars.V6513d4, 1);
+                    if (Var(Vars.CourtyardFree) < 2) {
+                        SetVar(Vars.CourtyardFree, 1);
                     }
                 }
                 else {
@@ -707,8 +707,8 @@ public sealed partial class Courtyard : StoryScript
             PointerAfter(true, turned, 4, 400, 400);
             MoveObj("LOC17bigStone", -60, 400);
             Obj("LOC17ExitToLoc21", true);
-            if (Var(Vars.V6513d4) < 2)
-                SetAfter(Vars.V6513d4, 0, turned, 0);
+            if (Var(Vars.CourtyardFree) < 2)
+                SetAfter(Vars.CourtyardFree, 0, turned, 0);
             F450642(0, 0, 0, 0);
             F45058c();
             if (!Has(12)) {
@@ -729,7 +729,7 @@ public sealed partial class Courtyard : StoryScript
         Depth(@"bmp\obj\locs\loc17\fstein.brg", 2990);
         AnimPos("FallendeSteine", -100, -100);
         AnimPos("begrabendeSteine", -100, -100);
-        if ((Var(Vars.V6514b4) != 0) && (Var(Vars.V6514b4) == 1)) {
+        if ((Var(Vars.RopeOnIvy) != 0) && (Var(Vars.RopeOnIvy) == 1)) {
             Anim("begrabendeSteine", -1);
             Obj("LOC17ExitToLoc21", false);
             Obj("LOC17Funkgeraet", true);
@@ -764,7 +764,7 @@ public sealed partial class Courtyard : StoryScript
         AnimPos("ProfHangUp", 320, 340);
         AnimPos("Radio", 320, 340);
         AnimPos("ProfTelefon", 320, 340);
-        if (Var(Vars.V6513d4) < 2) {
+        if (Var(Vars.CourtyardFree) < 2) {
             Anim("ProfTelefon", -1);
         }
         else {
@@ -831,7 +831,7 @@ public sealed partial class Courtyard : StoryScript
             }
         }
         else if ((Episode == 1) && (Quest == 11)) {
-            if (!IsBusy(Hero) || (Var(Vars.V6513d4) != 0)) {
+            if (!IsBusy(Hero) || (Var(Vars.CourtyardFree) != 0)) {
                 if (IsAnimShown("ProfWalkRight")) {
                     SetVar(Vars.V63be74, Var(Vars.V63be74) + 2);
                     if (419 < Var(Vars.V63be74)) {
@@ -865,16 +865,16 @@ public sealed partial class Courtyard : StoryScript
             }
         }
         if (!Has(17)) {
-            if (Var(Vars.V650c9c) == 1) {
+            if (Var(Vars.StonesTaken) == 1) {
                 if (!Has(15)) {
                     Give(15);
                 }
             }
-            else if (Var(Vars.V650c9c) == 2) {
+            else if (Var(Vars.StonesTaken) == 2) {
                 Take(15);
                 Give(16);
             }
-            else if (2 < Var(Vars.V650c9c)) {
+            else if (2 < Var(Vars.StonesTaken)) {
                 Take(16);
                 Give(17);
             }
@@ -887,7 +887,7 @@ public sealed partial class Courtyard : StoryScript
     {
         if ((Episode == 1) && (Quest == 11)) {
             if (CurrentSpeaker == Who.Professor) {
-                if (Var(Vars.V6513d4) < 2) {
+                if (Var(Vars.CourtyardFree) < 2) {
                     StopAnimAfter("ProfStandLeft", param_1, 0);
                     Anim("ProfSpeakLeft", -1, param_1, 0);
                 }
@@ -897,7 +897,7 @@ public sealed partial class Courtyard : StoryScript
                     StateAfter(Hero, 114, param_1, 0);
                     SetText("t63be5c", "Kueche");
                 }
-                else if (1 < Var(Vars.V6513d4)) {
+                else if (1 < Var(Vars.CourtyardFree)) {
                     StateAfter(Hero, 27, param_1, 0);
                 }
             }
@@ -978,7 +978,7 @@ public sealed partial class Courtyard : StoryScript
         TaskHandle? local_30 = null;
         if ((Episode == 1) && (Quest == 11)) {
             if (CurrentSpeaker == Who.Professor) {
-                if (Var(Vars.V6513d4) < 2) {
+                if (Var(Vars.CourtyardFree) < 2) {
                     StopAnimAfter("ProfSpeakLeft", param_1, 0);
                     StopAnimAfter("Radio", param_1, 0);
                     local_28 = Anim("ProfPickUp", 1, param_1, 0);
@@ -987,7 +987,7 @@ public sealed partial class Courtyard : StoryScript
             }
             else if (CurrentSpeaker == Who.Dick) {
                 if (Text("t63be5c") != "Kueche") {
-                    if (1 < Var(Vars.V6513d4)) {
+                    if (1 < Var(Vars.CourtyardFree)) {
                         StateAfter(Hero, 7, param_1, 0);
                     }
                 }
@@ -995,8 +995,8 @@ public sealed partial class Courtyard : StoryScript
                     StateAfter(Hero, 113, param_1, 0);
                     PointerAfter(false, param_1, 0, 400, 400);
                     ChangeLocation("loc05", param_1, 0);
-                    SetAfter(Vars.V64efe8, 1, param_1, 0);
-                    SetAfter(Vars.V64efe4, 12, param_1, 0);
+                    SetAfter(Vars.EpisodeNumber, 1, param_1, 0);
+                    SetAfter(Vars.QuestNumber, 12, param_1, 0);
                 }
                 if (Text("t63be5c") == "EfeuMitSeil") {
                     PointerAfter(false, param_1, 0, 400, 400);
@@ -1194,7 +1194,7 @@ public sealed partial class Courtyard : StoryScript
         StopAnim("Seil");
         Depth(@"bmp\obj\locs\loc17\seil.brg", 4000);
         AnimScale("Seil", 0.5);
-        if ((Var(Vars.V650a6c) != 0) && (Var(Vars.V650a6c) == 1)) {
+        if ((Var(Vars.RopeOnStone) != 0) && (Var(Vars.RopeOnStone) == 1)) {
             Anim("Seil", -1);
         }
         return;

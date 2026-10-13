@@ -49,7 +49,7 @@ public sealed partial class Dungeon28 : StoryScript
             local_20 = Chain;
             uVar4 = Sound(@"wav\fx\tuerruet.wav", Chain, 0);
             if ((Episode == 2) && (Quest == 10)) {
-                if (Var(Vars.V65132c) == 0) {
+                if (Var(Vars.CellCrackUsed) == 0) {
                     Chain = Say(0, "VERLIES0048", 2, true, local_20, 0);
                     return;
                 }
@@ -68,13 +68,13 @@ public sealed partial class Dungeon28 : StoryScript
         }
         else {
             iVar1 = Same(name, "LOC28Spalte") ? 0 : 1;
-            if ((((iVar1 == 0) && (Episode == 2)) && (Quest == 10)) && (Var(Vars.V65132c) == 0)) {
+            if ((((iVar1 == 0) && (Episode == 2)) && (Quest == 10)) && (Var(Vars.CellCrackUsed) == 0)) {
                 Walk(Timmy, 552, 399);
                 Chain = State(Timmy, 109);
                 local_20 = Chain;
                 PointerAfter(false, Chain, 0, 400, 400);
-                IncAfter(Vars.V65132c, local_20, 0);
-                SetAfter(Vars.V651054, 3, local_20, 0);
+                IncAfter(Vars.CellCrackUsed, local_20, 0);
+                SetAfter(Vars.GeorgeDungeonTalk, 3, local_20, 0);
                 SetAfter(Vars.V6512bc, 3, local_20, 0);
                 SetAfter(Vars.V6512f4, 3, local_20, 0);
                 Chain = Say(0, "VERLIES0048", 14, false, local_20, 6);
@@ -97,30 +97,30 @@ public sealed partial class Dungeon28 : StoryScript
             Chain = State(Hero, 12);
             local_20 = Chain;
             if ((Episode == 1) && (Quest == 9)) {
-                if (Var(Vars.V651054) == 0) {
-                    IncAfter(Vars.V651054, Chain, 0);
+                if (Var(Vars.GeorgeDungeonTalk) == 0) {
+                    IncAfter(Vars.GeorgeDungeonTalk, Chain, 0);
                     Chain = Say(1, "LABYRINTH0044", 8, false, local_20, 0);
                     Chain = Say(0, "LABYRINTH0044", 9, true, Chain, 0);
                 }
-                else if (Var(Vars.V651054) < 2) {
-                    IncAfter(Vars.V651054, Chain, 0);
+                else if (Var(Vars.GeorgeDungeonTalk) < 2) {
+                    IncAfter(Vars.GeorgeDungeonTalk, Chain, 0);
                     Chain = Say(1, "LABYRINTH0044", 10, true, local_20, 0);
                 }
-                else if (Var(Vars.V651054) == 2) {
+                else if (Var(Vars.GeorgeDungeonTalk) == 2) {
                     Chain = Say(1, "LABYRINTH0044", 11, true, local_20, 0);
                 }
             }
             else if ((Episode == 2) && (Quest == 10)) {
-                if (Var(Vars.V651054) == 0) {
-                    IncAfter(Vars.V651054, Chain, 0);
+                if (Var(Vars.GeorgeDungeonTalk) == 0) {
+                    IncAfter(Vars.GeorgeDungeonTalk, Chain, 0);
                     Chain = Say(1, "VERLIES0048", 10, false, local_20, 0);
                     Chain = Say(0, "VERLIES0048", 11, true, local_20, 0);
                 }
-                else if (Var(Vars.V651054) < 2) {
-                    IncAfter(Vars.V651054, Chain, 0);
+                else if (Var(Vars.GeorgeDungeonTalk) < 2) {
+                    IncAfter(Vars.GeorgeDungeonTalk, Chain, 0);
                     Chain = Say(1, "VERLIES0048", 12, true, local_20, 0);
                 }
-                else if (Var(Vars.V651054) == 2) {
+                else if (Var(Vars.GeorgeDungeonTalk) == 2) {
                     Chain = Say(1, "VERLIES0048", 13, true, local_20, 0);
                 }
             }
@@ -277,7 +277,7 @@ public sealed partial class Dungeon28 : StoryScript
             if (Text("t63bef0") == "Tuer") {
                 PointerAfter(false, param_1, 0, 400, 400);
                 ChangeLocation("loc25", param_1, 4);
-                SetAfter(Vars.V64efe8, 3, param_1, 0);
+                SetAfter(Vars.EpisodeNumber, 3, param_1, 0);
             }
             SetText("t63bef0", "");
         }

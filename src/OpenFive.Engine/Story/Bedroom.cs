@@ -388,9 +388,9 @@ public sealed partial class Bedroom : StoryScript
             SetVar(Vars.V64f17c, 2);
             SetVar(Vars.V64f224, 1);
             SetVar(Vars.V6514ec, 1);
-            SetVar(Vars.V650024, 3);
-            SetVar(Vars.V64ffec, 3);
-            SetVar(Vars.V65005c, 3);
+            SetVar(Vars.AnneTalk, 3);
+            SetVar(Vars.DickTalk, 3);
+            SetVar(Vars.JulianTalk, 3);
             Episode = 6;
         }
         else if ((Episode == 6) && (Quest == 5)) {

@@ -48,41 +48,41 @@ public sealed partial class Wreck : StoryScript
             if (!Same(name, "LOC15Reling")) {
                 if (Same(name, "LOC15Anne")) {
                     if ((Episode == 4) && (Quest == 6)) {
-                        if (Var(Vars.V6508ac) == 0) {
-                            IncAfter(Vars.V6508ac, local_20, 0);
-                            IncAfter(Vars.V650414, local_20, 0);
-                            IncAfter(Vars.V650794, local_20, 0);
+                        if (Var(Vars.AnneWreckTalk) == 0) {
+                            IncAfter(Vars.AnneWreckTalk, local_20, 0);
+                            IncAfter(Vars.AnneBeachTalk, local_20, 0);
+                            IncAfter(Vars.AnneIslandTalk, local_20, 0);
                             Chain = Say(3, "ALL0024", 5, true, local_20, 0);
                         }
-                        else if (Var(Vars.V6508ac) == 1) {
+                        else if (Var(Vars.AnneWreckTalk) == 1) {
                             Chain = Say(3, "ALL0024", 6, false, local_20, 0);
                             Chain = Say(0, "ALL0024", 7, true, Chain, 0);
                         }
                     }
                     else if ((Episode == 3) && (Quest == 6)) {
-                        if (Var(Vars.V6508ac) == 0) {
-                            SetVar(Vars.V6508ac, 1);
+                        if (Var(Vars.AnneWreckTalk) == 0) {
+                            SetVar(Vars.AnneWreckTalk, 1);
                             Chain = Say(3, "WRACK0023", 5, false, local_20, 0);
                             Chain = Say(0, "WRACK0023", 6, true, Chain, 0);
                         }
-                        else if (Var(Vars.V6508ac) == 1) {
+                        else if (Var(Vars.AnneWreckTalk) == 1) {
                             Chain = Say(3, "WRACK0023", 7, true, local_20, 0);
                         }
                     }
                     else if ((Episode == 1) && (Quest == 7)) {
-                        if (Var(Vars.V6508ac) == 0) {
-                            IncAfter(Vars.V6508ac, local_20, 0);
+                        if (Var(Vars.AnneWreckTalk) == 0) {
+                            IncAfter(Vars.AnneWreckTalk, local_20, 0);
                             Chain = Say(3, "WRACK0025", 11, true, local_20, 0);
                         }
-                        else if (Var(Vars.V6508ac) == 1) {
+                        else if (Var(Vars.AnneWreckTalk) == 1) {
                             Chain = Say(3, "WRACK0025", 12, true, local_20, 0);
                         }
-                        else if (Var(Vars.V6508ac) == 2) {
-                            IncAfter(Vars.V6508ac, local_20, 0);
+                        else if (Var(Vars.AnneWreckTalk) == 2) {
+                            IncAfter(Vars.AnneWreckTalk, local_20, 0);
                             Chain = Say(3, "WRACK0025", 19, false, local_20, 0);
                             Chain = Say(0, "WRACK0025", 20, true, local_20, 0);
                         }
-                        else if (Var(Vars.V6508ac) == 3) {
+                        else if (Var(Vars.AnneWreckTalk) == 3) {
                             Chain = Say(3, "WRACK0025", 21, true, local_20, 0);
                         }
                     }
@@ -90,10 +90,10 @@ public sealed partial class Wreck : StoryScript
                 else {
                     if (Same(name, "LOC15George")) {
                         if ((Episode == 4) && (Quest == 6)) {
-                            if (Var(Vars.V650954) == 0) {
-                                IncAfter(Vars.V650954, local_20, 0);
+                            if (Var(Vars.GeorgeWreckTalk) == 0) {
+                                IncAfter(Vars.GeorgeWreckTalk, local_20, 0);
                                 IncAfter(Vars.V65044c, local_20, 0);
-                                IncAfter(Vars.V65083c, local_20, 0);
+                                IncAfter(Vars.GeorgeIslandTalk, local_20, 0);
                                 Chain = Say(1, "ALL0024", 10, true, local_20, 0);
                                 if (Var(Vars.V64eff8) == 0) {
                                     Chain = Say(0, "ALL0024", 16, false, Chain, 0);
@@ -119,20 +119,20 @@ public sealed partial class Wreck : StoryScript
                                     }
                                 }
                             }
-                            else if (Var(Vars.V650954) == 1) {
+                            else if (Var(Vars.GeorgeWreckTalk) == 1) {
                                 Chain = Say(1, "ALL0024", 20, true, local_20, 0);
                             }
                         }
                         else if ((Episode == 3) && (Quest == 6)) {
-                            if (Var(Vars.V650954) == 0) {
+                            if (Var(Vars.GeorgeWreckTalk) == 0) {
                                 Chain = Say(1, "WRACK0023", 13, true, local_20, 0);
-                                SetVar(Vars.V650954, 1);
+                                SetVar(Vars.GeorgeWreckTalk, 1);
                             }
-                            else if (Var(Vars.V650954) == 1) {
+                            else if (Var(Vars.GeorgeWreckTalk) == 1) {
                                 Chain = Say(1, "WRACK0023", 14, true, local_20, 0);
-                                SetVar(Vars.V650954, 2);
+                                SetVar(Vars.GeorgeWreckTalk, 2);
                             }
-                            else if (Var(Vars.V650954) == 2) {
+                            else if (Var(Vars.GeorgeWreckTalk) == 2) {
                                 Chain = Say(1, "WRACK0023", 15, true, local_20, 0);
                                 if (!(Has(12))) {
                                     Chain = Say(2, "WRACK0023", 16, true, local_20, 0);
@@ -140,10 +140,10 @@ public sealed partial class Wreck : StoryScript
                             }
                         }
                         else if ((Episode == 1) && (Quest == 7)) {
-                            if (Var(Vars.V650954) == 0) {
+                            if (Var(Vars.GeorgeWreckTalk) == 0) {
                                 Chain = Say(1, "WRACK0025", 14, true, local_20, 0);
                             }
-                            else if (Var(Vars.V650954) == 2) {
+                            else if (Var(Vars.GeorgeWreckTalk) == 2) {
                                 Chain = Say(1, "WRACK0025", 18, true, local_20, 0);
                             }
                         }
@@ -151,40 +151,40 @@ public sealed partial class Wreck : StoryScript
                     else {
                         if (Same(name, "LOC15Julian")) {
                             if ((Episode == 4) && (Quest == 6)) {
-                                if (Var(Vars.V6508e4) == 0) {
-                                    IncAfter(Vars.V6508e4, local_20, 0);
-                                    IncAfter(Vars.V650484, local_20, 0);
-                                    IncAfter(Vars.V6507cc, local_20, 0);
+                                if (Var(Vars.JulianWreckTalk) == 0) {
+                                    IncAfter(Vars.JulianWreckTalk, local_20, 0);
+                                    IncAfter(Vars.JulianBeachTalk, local_20, 0);
+                                    IncAfter(Vars.JulianIslandTalk, local_20, 0);
                                     Chain = Say(2, "ALL0024", 8, true, local_20, 0);
                                 }
-                                else if (Var(Vars.V6508e4) == 1) {
+                                else if (Var(Vars.JulianWreckTalk) == 1) {
                                     Chain = Say(2, "ALL0024", 9, true, local_20, 0);
                                 }
                             }
                             else if ((Episode == 3) && (Quest == 6)) {
-                                if (Var(Vars.V6508e4) == 0) {
+                                if (Var(Vars.JulianWreckTalk) == 0) {
                                     Chain = Say(2, "WRACK0023", 8, false, local_20, 0);
                                     Chain = Say(1, "WRACK0023", 9, true, Chain, 0);
-                                    SetVar(Vars.V6508e4, 1);
+                                    SetVar(Vars.JulianWreckTalk, 1);
                                 }
-                                else if (Var(Vars.V6508e4) == 1) {
+                                else if (Var(Vars.JulianWreckTalk) == 1) {
                                     Chain = Say(2, "WRACK0023", 10, false, local_20, 0);
                                     Chain = Say(1, "WRACK0023", 11, true, Chain, 0);
-                                    SetVar(Vars.V6508e4, 2);
+                                    SetVar(Vars.JulianWreckTalk, 2);
                                 }
-                                else if (Var(Vars.V6508e4) == 2) {
+                                else if (Var(Vars.JulianWreckTalk) == 2) {
                                     Chain = Say(2, "WRACK0023", 12, true, local_20, 0);
                                 }
                             }
                             else if ((Episode == 1) && (Quest == 7)) {
-                                if (Var(Vars.V6508e4) == 0) {
+                                if (Var(Vars.JulianWreckTalk) == 0) {
                                     Chain = Say(2, "WRACK0025", 13, true, local_20, 0);
                                 }
-                                else if (Var(Vars.V6508e4) == 2) {
-                                    IncAfter(Vars.V6508e4, local_20, 0);
+                                else if (Var(Vars.JulianWreckTalk) == 2) {
+                                    IncAfter(Vars.JulianWreckTalk, local_20, 0);
                                     Chain = Say(2, "WRACK0025", 16, true, local_20, 0);
                                 }
-                                else if (Var(Vars.V6508e4) == 3) {
+                                else if (Var(Vars.JulianWreckTalk) == 3) {
                                     Chain = Say(2, "WRACK0025", 17, true, local_20, 0);
                                 }
                             }
@@ -340,21 +340,21 @@ public sealed partial class Wreck : StoryScript
             if (Var(Vars.V64ef9c) == Var(Vars.V64ef90)) {
                 Chain = Say(3, "WRACK0025", 9, false, Chain, 0);
                 Chain = Say(1, "WRACK0025", 10, true, Chain, 0);
-                SetAfter(Vars.V6508ac, 0, Chain, 0);
-                SetAfter(Vars.V6508e4, 0, Chain, 0);
-                SetAfter(Vars.V650954, 0, Chain, 0);
+                SetAfter(Vars.AnneWreckTalk, 0, Chain, 0);
+                SetAfter(Vars.JulianWreckTalk, 0, Chain, 0);
+                SetAfter(Vars.GeorgeWreckTalk, 0, Chain, 0);
             }
             else if (Var(Vars.V64ef9c) == Var(Vars.V64ef94)) {
                 PointerAfter(true, Chain, 0, 100, 200);
-                SetAfter(Vars.V6508ac, 2, Chain, 0);
-                SetAfter(Vars.V6508e4, 2, Chain, 0);
-                SetAfter(Vars.V650954, 2, Chain, 0);
+                SetAfter(Vars.AnneWreckTalk, 2, Chain, 0);
+                SetAfter(Vars.JulianWreckTalk, 2, Chain, 0);
+                SetAfter(Vars.GeorgeWreckTalk, 2, Chain, 0);
             }
             else if (Var(Vars.V64ef9c) == Var(Vars.V64ef98)) {
                 PointerAfter(true, Chain, 0, 100, 200);
-                SetAfter(Vars.V6508ac, 4, Chain, 0);
-                SetAfter(Vars.V6508e4, 4, Chain, 0);
-                SetAfter(Vars.V650954, 4, Chain, 0);
+                SetAfter(Vars.AnneWreckTalk, 4, Chain, 0);
+                SetAfter(Vars.JulianWreckTalk, 4, Chain, 0);
+                SetAfter(Vars.GeorgeWreckTalk, 4, Chain, 0);
             }
             SetVar(Vars.V64ef11, 0);
         }

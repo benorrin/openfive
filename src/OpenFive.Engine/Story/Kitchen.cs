@@ -118,12 +118,12 @@ public sealed partial class Kitchen : StoryScript
                         Walk(Hero, 100, 450);
                         Chain = State(Hero, 12);
                         local_20 = Chain;
-                        if (Var(Vars.V65005c) == 0) {
+                        if (Var(Vars.JulianTalk) == 0) {
                             Chain = Say(2, "KUECHE", 3, false, local_20, 0);
                             Chain = Say(0, "KUECHE", 3, true, Chain, 0);
-                            SetVar(Vars.V65005c, 1);
+                            SetVar(Vars.JulianTalk, 1);
                         }
-                        else if (Var(Vars.V65005c) == 1) {
+                        else if (Var(Vars.JulianTalk) == 1) {
                             Chain = Say(2, "KUECHE", 4, true, local_20, 0);
                         }
                     }
@@ -131,22 +131,22 @@ public sealed partial class Kitchen : StoryScript
                         Walk(Hero, 100, 450);
                         Chain = State(Hero, 12);
                         local_20 = Chain;
-                        if (Var(Vars.V65005c) == 0) {
+                        if (Var(Vars.JulianTalk) == 0) {
                             Chain = Say(2, "KUECHE0003-05", 2, false, local_20, 0);
                             Chain = Say(0, "KUECHE0003-05", 2, true, Chain, 0);
-                            SetVar(Vars.V65005c, 1);
+                            SetVar(Vars.JulianTalk, 1);
                         }
-                        else if (Var(Vars.V65005c) == 1) {
+                        else if (Var(Vars.JulianTalk) == 1) {
                             Chain = Say(2, "KUECHE0003-05", 21, false, local_20, 0);
                             Chain = Say(0, "KUECHE0003-05", 21, true, Chain, 0);
                         }
-                        else if (Var(Vars.V65005c) == 2) {
+                        else if (Var(Vars.JulianTalk) == 2) {
                             Chain = Say(2, "KUECHE0003-03-05", 1, false, local_20, 0);
                             Chain = Say(0, "KUECHE0003-03-05", 2, false, Chain, 0);
                             Chain = Say(2, "KUECHE0003-03-05", 11, true, local_20, 0);
-                            SetVar(Vars.V65005c, 3);
+                            SetVar(Vars.JulianTalk, 3);
                         }
-                        else if (Var(Vars.V65005c) == 3) {
+                        else if (Var(Vars.JulianTalk) == 3) {
                             Chain = Say(2, "KUECHE0003-03-05", 2, false, local_20, 0);
                             Chain = Say(0, "KUECHE0003-03-05", 21, false, Chain, 0);
                             Chain = Say(2, "KUECHE0003-03-05", 21, true, local_20, 0);
@@ -160,16 +160,16 @@ public sealed partial class Kitchen : StoryScript
                     else if ((Quest == 3) && (Episode == 3)) {
                         local_20 = null;
                         Chain = null;
-                        if (Var(Vars.V65005c) < 2) {
+                        if (Var(Vars.JulianTalk) < 2) {
                             Chain = Say(2, "KUECHE0005-05", 29, true, Chain, 0);
                         }
-                        else if (Var(Vars.V65005c) == 2) {
+                        else if (Var(Vars.JulianTalk) == 2) {
                             Chain = Say(2, "KUECHE0005-05", 39, true, Chain, 0);
                         }
-                        else if (Var(Vars.V65005c) == 3) {
+                        else if (Var(Vars.JulianTalk) == 3) {
                             Chain = Say(2, "KUECHE0005-05", 40, true, Chain, 0);
                         }
-                        else if (Var(Vars.V65005c) == 4) {
+                        else if (Var(Vars.JulianTalk) == 4) {
                             Chain = Say(2, "KUECHE0005-05", 52, true, Chain, 0);
                         }
                     }
@@ -185,7 +185,7 @@ public sealed partial class Kitchen : StoryScript
                         local_20 = null;
                         Chain = null;
                         SetText("t63bdf0", "");
-                        if (Var(Vars.V65005c) == 0) {
+                        if (Var(Vars.JulianTalk) == 0) {
                             SetText("t63bdf0", "Julian");
                             Chain = Say(2, "KUECHE0014-05", 3, true, local_20, 0);
                         }
@@ -198,10 +198,10 @@ public sealed partial class Kitchen : StoryScript
                         Chain = null;
                         if (0 < Var(Vars.V64f294)) {
                             SetText("t63bdf0", "");
-                            if (Var(Vars.V65005c) == 3) {
+                            if (Var(Vars.JulianTalk) == 3) {
                                 Chain = Say(2, "KUECHE0015-05", 16, true, local_20, 0);
                             }
-                            else if (Var(Vars.V65005c) == 4) {
+                            else if (Var(Vars.JulianTalk) == 4) {
                                 Chain = Say(2, "KUECHE0015-05", 17, true, local_20, 0);
                             }
                             else {
@@ -215,43 +215,43 @@ public sealed partial class Kitchen : StoryScript
                         Walk(Hero, 100, 450);
                         Chain = State(Hero, 12);
                         local_20 = Chain;
-                        if (Var(Vars.V65005c) == 0) {
-                            IncAfter(Vars.V65005c, Chain, 0);
+                        if (Var(Vars.JulianTalk) == 0) {
+                            IncAfter(Vars.JulianTalk, Chain, 0);
                             Chain = Say(2, "KUECHE0031", 9, true, local_20, 0);
                         }
-                        else if (Var(Vars.V65005c) == 1) {
+                        else if (Var(Vars.JulianTalk) == 1) {
                             Chain = Say(2, "KUECHE0031", 10, true, local_20, 0);
                         }
-                        else if (Var(Vars.V65005c) == 2) {
-                            IncAfter(Vars.V65005c, Chain, 0);
+                        else if (Var(Vars.JulianTalk) == 2) {
+                            IncAfter(Vars.JulianTalk, Chain, 0);
                             Chain = Say(2, "KUECHE0031", 18, true, local_20, 0);
                         }
-                        else if (Var(Vars.V65005c) == 3) {
+                        else if (Var(Vars.JulianTalk) == 3) {
                             Chain = Say(2, "KUECHE0031", 19, true, local_20, 0);
                         }
-                        else if (Var(Vars.V65005c) == 6) {
-                            IncAfter(Vars.V65005c, Chain, 0);
+                        else if (Var(Vars.JulianTalk) == 6) {
+                            IncAfter(Vars.JulianTalk, Chain, 0);
                             Chain = Say(2, "KUECHE0032", 14, true, local_20, 0);
                         }
-                        else if (Var(Vars.V65005c) == 7) {
-                            IncAfter(Vars.V65005c, Chain, 0);
+                        else if (Var(Vars.JulianTalk) == 7) {
+                            IncAfter(Vars.JulianTalk, Chain, 0);
                             Chain = Say(2, "KUECHE0032", 15, true, local_20, 0);
                         }
-                        else if (Var(Vars.V65005c) == 8) {
+                        else if (Var(Vars.JulianTalk) == 8) {
                             Chain = Say(2, "KUECHE0032", 16, false, local_20, 0);
                             Chain = Say(1, "KUECHE0032", 17, true, local_20, 0);
                         }
-                        else if (Var(Vars.V65005c) == 9) {
-                            IncAfter(Vars.V65005c, Chain, 0);
+                        else if (Var(Vars.JulianTalk) == 9) {
+                            IncAfter(Vars.JulianTalk, Chain, 0);
                             Chain = Say(2, "KUECHE0032", 32, true, local_20, 0);
                         }
-                        else if (Var(Vars.V65005c) == 10) {
+                        else if (Var(Vars.JulianTalk) == 10) {
                             Chain = Say(2, "KUECHE0032", 33, false, local_20, 0);
                             Chain = Say(1, "KUECHE0032", 34, false, local_20, 0);
                             Chain = Say(0, "KUECHE0032", 35, false, local_20, 0);
                             Chain = Say(1, "KUECHE0032", 36, true, local_20, 0);
                         }
-                        else if (Var(Vars.V65005c) == 11) {
+                        else if (Var(Vars.JulianTalk) == 11) {
                             Chain = Say(2, "KUECHE0032", 47, false, local_20, 0);
                             Chain = Say(1, "KUECHE0032", 48, true, local_20, 0);
                         }
@@ -270,12 +270,12 @@ public sealed partial class Kitchen : StoryScript
                             Walk(Hero, 100, 450);
                             Chain = State(Hero, 12);
                             local_20 = Chain;
-                            if (Var(Vars.V650024) == 0) {
+                            if (Var(Vars.AnneTalk) == 0) {
                                 Chain = Say(3, "KUECHE", 5, false, local_20, 0);
                                 Chain = Say(0, "KUECHE", 5, true, Chain, 0);
-                                SetVar(Vars.V650024, 1);
+                                SetVar(Vars.AnneTalk, 1);
                             }
-                            else if (Var(Vars.V650024) == 1) {
+                            else if (Var(Vars.AnneTalk) == 1) {
                                 Chain = Say(3, "KUECHE", 6, true, local_20, 0);
                             }
                         }
@@ -283,23 +283,23 @@ public sealed partial class Kitchen : StoryScript
                             Walk(Hero, 100, 450);
                             Chain = State(Hero, 12);
                             local_20 = Chain;
-                            if (Var(Vars.V650024) == 0) {
+                            if (Var(Vars.AnneTalk) == 0) {
                                 Chain = Say(3, "KUECHE0003-05", 3, false, local_20, 0);
                                 Chain = Say(0, "KUECHE0003-05", 3, false, local_20, 0);
                                 Chain = Say(3, "KUECHE0003-05", 31, true, local_20, 0);
-                                SetVar(Vars.V650024, 1);
+                                SetVar(Vars.AnneTalk, 1);
                             }
-                            else if (Var(Vars.V650024) == 1) {
+                            else if (Var(Vars.AnneTalk) == 1) {
                                 Chain = Say(3, "KUECHE0003-05", 32, false, local_20, 0);
                                 Chain = Say(0, "KUECHE0003-05", 32, false, Chain, 0);
                                 Chain = Say(3, "KUECHE0003-05", 33, true, Chain, 0);
                             }
-                            else if (Var(Vars.V650024) == 2) {
+                            else if (Var(Vars.AnneTalk) == 2) {
                                 Chain = Say(3, "KUECHE0003-03-05", 1, false, local_20, 0);
                                 Chain = Say(0, "KUECHE0003-03-05", 3, true, Chain, 0);
-                                SetVar(Vars.V650024, 3);
+                                SetVar(Vars.AnneTalk, 3);
                             }
-                            else if (Var(Vars.V650024) == 3) {
+                            else if (Var(Vars.AnneTalk) == 3) {
                                 Chain = Say(3, "KUECHE0003-03-05", 2, false, local_20, 0);
                                 Chain = Say(0, "KUECHE0003-03-05", 31, true, Chain, 0);
                             }
@@ -318,16 +318,16 @@ public sealed partial class Kitchen : StoryScript
                         else if ((Quest == 3) && (Episode == 3)) {
                             local_20 = null;
                             Chain = null;
-                            if (Var(Vars.V650024) == 0) {
+                            if (Var(Vars.AnneTalk) == 0) {
                                 Chain = Say(3, "KUECHE0005-05", 26, true, Chain, 0);
                             }
-                            else if (Var(Vars.V650024) == 2) {
+                            else if (Var(Vars.AnneTalk) == 2) {
                                 Chain = Say(3, "KUECHE0005-05", 35, true, Chain, 0);
                             }
-                            else if (Var(Vars.V650024) == 3) {
+                            else if (Var(Vars.AnneTalk) == 3) {
                                 Chain = Say(3, "KUECHE0005-05", 36, true, Chain, 0);
                             }
-                            else if (Var(Vars.V650024) == 4) {
+                            else if (Var(Vars.AnneTalk) == 4) {
                                 Chain = Say(3, "KUECHE0005-05", 53, true, Chain, 0);
                             }
                         }
@@ -340,7 +340,7 @@ public sealed partial class Kitchen : StoryScript
                             local_20 = null;
                             Chain = null;
                             SetText("t63bdf0", "");
-                            if (Var(Vars.V650024) == 0) {
+                            if (Var(Vars.AnneTalk) == 0) {
                                 SetText("t63bdf0", "Anne");
                                 Chain = Say(3, "KUECHE0014-05", 1, true, local_20, 0);
                             }
@@ -352,7 +352,7 @@ public sealed partial class Kitchen : StoryScript
                             local_20 = null;
                             Chain = null;
                             if (0 < Var(Vars.V64f294)) {
-                                if (Var(Vars.V650024) == 3) {
+                                if (Var(Vars.AnneTalk) == 3) {
                                     Chain = Say(3, "KUECHE0015-05", 21, true, local_20, 0);
                                     Chain = Say(1, "KUECHE0015-05", 22, true, Chain, 0);
                                 }
@@ -365,38 +365,38 @@ public sealed partial class Kitchen : StoryScript
                             Walk(Hero, 399, 391);
                             Chain = State(Hero, 12);
                             local_20 = Chain;
-                            if (Var(Vars.V650024) == 0) {
-                                IncAfter(Vars.V650024, Chain, 0);
+                            if (Var(Vars.AnneTalk) == 0) {
+                                IncAfter(Vars.AnneTalk, Chain, 0);
                                 Chain = Say(3, "KUECHE0031", 7, true, local_20, 0);
                             }
-                            else if (Var(Vars.V650024) == 1) {
+                            else if (Var(Vars.AnneTalk) == 1) {
                                 Chain = Say(3, "KUECHE0031", 8, true, local_20, 0);
                             }
-                            else if (Var(Vars.V650024) == 2) {
+                            else if (Var(Vars.AnneTalk) == 2) {
                                 Chain = Say(3, "KUECHE0031", 13, false, local_20, 0);
                                 Chain = Say(1, "KUECHE0031", 14, false, local_20, 0);
                                 Chain = Say(3, "KUECHE0031", 15, true, local_20, 0);
                             }
-                            else if (Var(Vars.V650024) == 4) {
-                                IncAfter(Vars.V650024, Chain, 0);
+                            else if (Var(Vars.AnneTalk) == 4) {
+                                IncAfter(Vars.AnneTalk, Chain, 0);
                                 Chain = Say(3, "KUECHE0032", 5, false, local_20, 0);
                                 Chain = Say(2, "KUECHE0032", 6, true, local_20, 0);
                             }
-                            else if (Var(Vars.V650024) == 5) {
+                            else if (Var(Vars.AnneTalk) == 5) {
                                 Chain = Say(3, "KUECHE0032", 7, true, local_20, 0);
                             }
-                            else if (Var(Vars.V650024) == 6) {
-                                IncAfter(Vars.V650024, Chain, 0);
+                            else if (Var(Vars.AnneTalk) == 6) {
+                                IncAfter(Vars.AnneTalk, Chain, 0);
                                 Chain = Say(3, "KUECHE0032", 18, true, local_20, 0);
                             }
-                            else if (Var(Vars.V650024) == 7) {
+                            else if (Var(Vars.AnneTalk) == 7) {
                                 Chain = Say(3, "KUECHE0032", 19, true, local_20, 0);
                             }
-                            else if (Var(Vars.V650024) == 9) {
-                                IncAfter(Vars.V650024, Chain, 0);
+                            else if (Var(Vars.AnneTalk) == 9) {
+                                IncAfter(Vars.AnneTalk, Chain, 0);
                                 Chain = Say(3, "KUECHE0032", 30, true, local_20, 0);
                             }
-                            else if (Var(Vars.V650024) == 10) {
+                            else if (Var(Vars.AnneTalk) == 10) {
                                 Chain = Say(3, "KUECHE0032", 31, true, local_20, 0);
                             }
                         }
@@ -448,7 +448,7 @@ public sealed partial class Kitchen : StoryScript
                                         local_20 = null;
                                         Chain = null;
                                         if (Var(Vars.Distracted) == 0) {
-                                            if (Var(Vars.V64ffb4) == 0) {
+                                            if (Var(Vars.QuentinKitchenTalk) == 0) {
                                                 SetText("t63bdf0", "Quentin");
                                                 Chain = Say(5, "KUECHE0005-05", 30, false, local_20, 0);
                                                 Chain = Say(1, "KUECHE0005-05", 31, false, local_20, 0);
@@ -456,16 +456,16 @@ public sealed partial class Kitchen : StoryScript
                                                 Chain = Say(0, "KUECHE0005-05", 33, false, local_20, 0);
                                                 Chain = Say(0, "KUECHE0005-05", 70, true, local_20, 0);
                                             }
-                                            else if (Var(Vars.V64ffb4) == 2) {
+                                            else if (Var(Vars.QuentinKitchenTalk) == 2) {
                                                 Chain = Say(5, "KUECHE0005-05", 41, true, local_20, 0);
                                             }
-                                            else if (Var(Vars.V64ffb4) == 3) {
+                                            else if (Var(Vars.QuentinKitchenTalk) == 3) {
                                                 Chain = Say(5, "KUECHE0005-05", 42, true, local_20, 0);
                                             }
-                                            else if (Var(Vars.V64ffb4) == 4) {
+                                            else if (Var(Vars.QuentinKitchenTalk) == 4) {
                                                 Chain = Say(5, "KUECHE0005-05", 54, true, local_20, 0);
                                             }
-                                            else if (Var(Vars.V64ffb4) == 5) {
+                                            else if (Var(Vars.QuentinKitchenTalk) == 5) {
                                                 Chain = Say(5, "KUECHE0005-05", 55, true, local_20, 0);
                                             }
                                         }
@@ -473,7 +473,7 @@ public sealed partial class Kitchen : StoryScript
                                     else {
                                         Chain = local_20;
                                         if ((Quest == 3) && ((Episode == 4 && (Var(Vars.V64f684) == 5)))) {
-                                            if (Var(Vars.V64ffb4) == 0) {
+                                            if (Var(Vars.QuentinKitchenTalk) == 0) {
                                                 Chain = Say(5, "KUECHE0006-05", 13, true, local_20, 0);
                                             }
                                             else {
@@ -494,22 +494,22 @@ public sealed partial class Kitchen : StoryScript
                                         if ((Quest == 3) && (Episode == 3)) {
                                             local_20 = null;
                                             Chain = null;
-                                            if (Var(Vars.V64ffec) == 0) {
+                                            if (Var(Vars.DickTalk) == 0) {
                                                 Chain = Say(0, "KUECHE0005-05", 27, true, Chain, 0);
                                             }
-                                            else if (Var(Vars.V64ffec) == 1) {
+                                            else if (Var(Vars.DickTalk) == 1) {
                                                 Chain = Say(0, "KUECHE0005-05", 28, true, Chain, 0);
                                             }
-                                            else if (Var(Vars.V64ffec) == 2) {
+                                            else if (Var(Vars.DickTalk) == 2) {
                                                 Chain = Say(0, "KUECHE0005-05", 37, true, Chain, 0);
                                             }
-                                            else if (Var(Vars.V64ffec) == 3) {
+                                            else if (Var(Vars.DickTalk) == 3) {
                                                 Chain = Say(0, "KUECHE0005-05", 38, true, Chain, 0);
                                             }
-                                            else if (Var(Vars.V64ffec) == 4) {
+                                            else if (Var(Vars.DickTalk) == 4) {
                                                 Chain = Say(0, "KUECHE0005-05", 50, true, Chain, 0);
                                             }
-                                            else if (Var(Vars.V64ffec) == 5) {
+                                            else if (Var(Vars.DickTalk) == 5) {
                                                 Chain = Say(0, "KUECHE0005-05", 51, true, Chain, 0);
                                             }
                                         }
@@ -517,7 +517,7 @@ public sealed partial class Kitchen : StoryScript
                                             Chain = local_20;
                                             if ((Quest == 3) && (Episode == 4)) {
                                                 if (Var(Vars.V64f684) < 5) {
-                                                    if (Var(Vars.V64ffec) == 0) {
+                                                    if (Var(Vars.DickTalk) == 0) {
                                                         Chain = Say(0, "KUECHE0006-05", 6, false, local_20, 0);
                                                         Chain = Say(1, "KUECHE0006-05", 7, true, Chain, 0);
                                                         if (Var(Vars.V64ef24) == 1) {
@@ -527,7 +527,7 @@ public sealed partial class Kitchen : StoryScript
                                                             Chain = Say(0, "KUECHE0006-05", 9, true, Chain, 0);
                                                         }
                                                     }
-                                                    else if (Var(Vars.V64ffec) == 1) {
+                                                    else if (Var(Vars.DickTalk) == 1) {
                                                         if (Var(Vars.V64ef24) == 1) {
                                                             Chain = Say(0, "KUECHE0006-05", 8, true, Chain, 0);
                                                         }
@@ -536,12 +536,12 @@ public sealed partial class Kitchen : StoryScript
                                                         }
                                                     }
                                                 }
-                                                else if (Var(Vars.V64ffec) == 0) {
+                                                else if (Var(Vars.DickTalk) == 0) {
                                                     Chain = Say(0, "KUECHE0006-05", 16, true, Chain, 0);
                                                     Chain = Say(1, "KUECHE0006-05", 17, true, Chain, 0);
-                                                    IncAfter(Vars.V64ffec, local_20, 0);
+                                                    IncAfter(Vars.DickTalk, local_20, 0);
                                                 }
-                                                else if (Var(Vars.V64ffec) == 1) {
+                                                else if (Var(Vars.DickTalk) == 1) {
                                                     Chain = Say(0, "KUECHE0006-05", 18, false, Chain, 0);
                                                     Chain = Say(1, "KUECHE0006-05", 19, true, Chain, 0);
                                                     Chain = Say(0, "KUECHE0006-05", 20, true, Chain, 0);
@@ -554,15 +554,15 @@ public sealed partial class Kitchen : StoryScript
                                                 local_20 = null;
                                                 Chain = null;
                                                 SetText("t63bdf0", "");
-                                                if (Var(Vars.V64ffec) == 0) {
+                                                if (Var(Vars.DickTalk) == 0) {
                                                     SetText("t63bdf0", "Dick");
                                                     Chain = Say(0, "KUECHE0014-05", 2, true, local_20, 0);
                                                 }
                                                 else if (Var(Vars.V64ef24) == 1) {
-                                                    if (Var(Vars.V64ffec) == 1) {
+                                                    if (Var(Vars.DickTalk) == 1) {
                                                         Chain = Say(0, "KUECHE0014-05", 5, true, local_20, 0);
                                                     }
-                                                    else if (Var(Vars.V64ffec) == 2) {
+                                                    else if (Var(Vars.DickTalk) == 2) {
                                                         Chain = Say(0, "KUECHE0014-05", 6, true, local_20, 0);
                                                     }
                                                 }
@@ -571,7 +571,7 @@ public sealed partial class Kitchen : StoryScript
                                                 local_20 = null;
                                                 Chain = null;
                                                 if (0 < Var(Vars.V64f294)) {
-                                                    if (Var(Vars.V64ffec) == 3) {
+                                                    if (Var(Vars.DickTalk) == 3) {
                                                         Chain = Say(0, "KUECHE0015-05", 13, true, local_20, 0);
                                                         Chain = Say(1, "KUECHE0015-05", 14, true, local_20, 0);
                                                     }
@@ -584,29 +584,29 @@ public sealed partial class Kitchen : StoryScript
                                                 Walk(Hero, 100, 450);
                                                 Chain = State(Hero, 12);
                                                 local_20 = Chain;
-                                                if (Var(Vars.V64ffec) == 0) {
-                                                    IncAfter(Vars.V64ffec, Chain, 0);
+                                                if (Var(Vars.DickTalk) == 0) {
+                                                    IncAfter(Vars.DickTalk, Chain, 0);
                                                     Chain = Say(0, "KUECHE0031", 11, true, local_20, 0);
                                                 }
-                                                else if (Var(Vars.V64ffec) == 1) {
+                                                else if (Var(Vars.DickTalk) == 1) {
                                                     Chain = Say(0, "KUECHE0031", 12, true, local_20, 0);
                                                 }
-                                                else if (Var(Vars.V64ffec) == 2) {
-                                                    IncAfter(Vars.V64ffec, Chain, 0);
+                                                else if (Var(Vars.DickTalk) == 2) {
+                                                    IncAfter(Vars.DickTalk, Chain, 0);
                                                     Chain = Say(0, "KUECHE0031", 16, true, local_20, 0);
                                                 }
-                                                else if (Var(Vars.V64ffec) == 3) {
+                                                else if (Var(Vars.DickTalk) == 3) {
                                                     Chain = Say(0, "KUECHE0031", 17, true, local_20, 0);
                                                 }
-                                                else if (Var(Vars.V64ffec) == 4) {
-                                                    IncAfter(Vars.V64ffec, Chain, 0);
+                                                else if (Var(Vars.DickTalk) == 4) {
+                                                    IncAfter(Vars.DickTalk, Chain, 0);
                                                     Chain = Say(0, "KUECHE0032", 8, true, local_20, 0);
                                                 }
-                                                else if (Var(Vars.V64ffec) == 5) {
+                                                else if (Var(Vars.DickTalk) == 5) {
                                                     Chain = Say(0, "KUECHE0032", 9, true, local_20, 0);
                                                 }
-                                                else if (Var(Vars.V64ffec) == 6) {
-                                                    IncAfter(Vars.V64ffec, Chain, 0);
+                                                else if (Var(Vars.DickTalk) == 6) {
+                                                    IncAfter(Vars.DickTalk, Chain, 0);
                                                     Chain = Say(0, "KUECHE0032", 20, true, local_20, 0);
                                                     if (Var(Vars.V6501e4) == 1) {
                                                         Chain = Say(1, "KUECHE0032", 21, false, local_20, 0);
@@ -616,15 +616,15 @@ public sealed partial class Kitchen : StoryScript
                                                         Chain = Say(1, "KUECHE0032", 23, true, local_20, 0);
                                                     }
                                                 }
-                                                else if (Var(Vars.V64ffec) == 7) {
+                                                else if (Var(Vars.DickTalk) == 7) {
                                                     Chain = Say(0, "KUECHE0032", 24, true, local_20, 0);
                                                 }
-                                                else if (Var(Vars.V64ffec) == 9) {
-                                                    IncAfter(Vars.V64ffec, Chain, 0);
+                                                else if (Var(Vars.DickTalk) == 9) {
+                                                    IncAfter(Vars.DickTalk, Chain, 0);
                                                     Chain = Say(0, "KUECHE0032", 37, false, local_20, 0);
                                                     Chain = Say(1, "KUECHE0032", 38, true, local_20, 0);
                                                 }
-                                                else if (Var(Vars.V64ffec) == 10) {
+                                                else if (Var(Vars.DickTalk) == 10) {
                                                     Chain = Say(0, "KUECHE0032", 39, true, local_20, 0);
                                                 }
                                             }
@@ -645,12 +645,12 @@ public sealed partial class Kitchen : StoryScript
                                                 Walk(Hero, 300, 200);
                                                 Chain = State(Hero, 7);
                                                 local_20 = Chain;
-                                                if (Var(Vars.V64ff7c) == 0) {
+                                                if (Var(Vars.FannyTalk) == 0) {
                                                     Chain = Say(6, "KUECHE", 1, false, local_20, 0);
                                                     Chain = Say(0, "KUECHE", 1, true, Chain, 0);
-                                                    SetVar(Vars.V64ff7c, 1);
+                                                    SetVar(Vars.FannyTalk, 1);
                                                 }
-                                                else if (Var(Vars.V64ff7c) == 1) {
+                                                else if (Var(Vars.FannyTalk) == 1) {
                                                     Chain = Say(6, "KUECHE", 2, true, local_20, 0);
                                                 }
                                             }
@@ -658,23 +658,23 @@ public sealed partial class Kitchen : StoryScript
                                                 Walk(Hero, 300, 200);
                                                 Chain = State(Hero, 7);
                                                 local_20 = Chain;
-                                                if (Var(Vars.V64ff7c) == 0) {
+                                                if (Var(Vars.FannyTalk) == 0) {
                                                     Chain = Say(6, "KUECHE0003-05", 1, false, local_20, 0);
                                                     Chain = Say(0, "KUECHE0003-05", 1, false, Chain, 0);
                                                     Chain = Say(6, "KUECHE0003-05", 11, true, local_20, 0);
-                                                    SetVar(Vars.V64ff7c, 1);
+                                                    SetVar(Vars.FannyTalk, 1);
                                                 }
-                                                else if (Var(Vars.V64ff7c) == 1) {
+                                                else if (Var(Vars.FannyTalk) == 1) {
                                                     Chain = Say(6, "KUECHE0003-05", 2, true, local_20, 0);
                                                 }
-                                                else if (Var(Vars.V64ff7c) == 2) {
+                                                else if (Var(Vars.FannyTalk) == 2) {
                                                     Chain = Say(6, "KUECHE0003-03-05", 1, false, local_20, 0);
                                                     Chain = Say(0, "KUECHE0003-03-05", 1, false, Chain, 0);
                                                     Chain = Say(6, "KUECHE0003-03-05", 11, false, local_20, 0);
                                                     Chain = Say(0, "KUECHE0003-03-05", 11, true, Chain, 0);
-                                                    SetVar(Vars.V64ff7c, 3);
+                                                    SetVar(Vars.FannyTalk, 3);
                                                 }
-                                                else if (Var(Vars.V64ff7c) == 3) {
+                                                else if (Var(Vars.FannyTalk) == 3) {
                                                     Chain = Say(6, "KUECHE0003-03-05", 2, true, local_20, 0);
                                                 }
                                             }
@@ -693,16 +693,16 @@ public sealed partial class Kitchen : StoryScript
                                             else if ((Quest == 3) && (Episode == 3)) {
                                                 local_20 = null;
                                                 Chain = null;
-                                                if (Var(Vars.V64ff7c) == 5) {
+                                                if (Var(Vars.FannyTalk) == 5) {
                                                     Chain = Say(6, "KUECHE0005-05", 24, true, Chain, 0);
                                                 }
-                                                else if (Var(Vars.V64ff7c) == 6) {
+                                                else if (Var(Vars.FannyTalk) == 6) {
                                                     Chain = Say(6, "KUECHE0005-05", 25, true, Chain, 0);
                                                 }
-                                                else if (Var(Vars.V64ff7c) == 7) {
+                                                else if (Var(Vars.FannyTalk) == 7) {
                                                     Chain = Say(6, "KUECHE0005-05", 34, true, Chain, 0);
                                                 }
-                                                else if (Var(Vars.V64ff7c) == 8) {
+                                                else if (Var(Vars.FannyTalk) == 8) {
                                                     Chain = Say(6, "KUECHE0005-05", 49, true, Chain, 0);
                                                 }
                                             }
@@ -789,8 +789,8 @@ public sealed partial class Kitchen : StoryScript
                                                                                 if (Same(name, "LOC05Dosenoeffner")) {
                                                                                     Walk(Hero, 500, 400);
                                                                                     State(Hero, 11);
-                                                                                    if (Var(Vars.V64fe9c) == 0) {
-                                                                                        SetVar(Vars.V64fe9c, 1);
+                                                                                    if (Var(Vars.TinOpened) == 0) {
+                                                                                        SetVar(Vars.TinOpened, 1);
                                                                                     }
                                                                                 }
                                                                                 else {
@@ -1120,9 +1120,9 @@ public sealed partial class Kitchen : StoryScript
         SetVar(Vars.Distracted, 0);
         Obj("LOC05Tisch", false);
         F436144();
-        SetVar(Vars.V64fdf4, 1);
+        SetVar(Vars.KitchenSandwich, 1);
         if (((Quest == 7) && (Episode == 4)) && (!Has(21))) {
-            SetVar(Vars.V64fdf4, 0);
+            SetVar(Vars.KitchenSandwich, 0);
         }
         F4356f1();
         F435caa();
@@ -1173,7 +1173,7 @@ public sealed partial class Kitchen : StoryScript
         StopAnim("FannyStandRight");
         ObjAfter("LOC05FannyStand", false, null, 0);
         if (Var(Vars.V64ff79) == 1) {
-            switch(Var(Vars.V64ff7c)) {
+            switch(Var(Vars.FannyTalk)) {
                 case 0:
                 AnimPos("FannyStandRight", 190, 237);
                 AnimScale("FannyStandRight", 0.45);
@@ -1296,13 +1296,13 @@ public sealed partial class Kitchen : StoryScript
     {
         SetVar(Vars.V63bdec, 0);
         if (Var(Vars.V64fdf1) == 1) {
-            if (Var(Vars.V64fdf4) == 0) {
+            if (Var(Vars.KitchenSandwich) == 0) {
                 Obj("LOC05Toast", true);
             }
-            else if (Var(Vars.V64fdf4) < 2) {
+            else if (Var(Vars.KitchenSandwich) < 2) {
                 Obj("LOC05Toast", false);
             }
-            else if (Var(Vars.V64fdf4) == 2) {
+            else if (Var(Vars.KitchenSandwich) == 2) {
                 Obj("LOC05Toast", false);
             }
         }
@@ -1421,15 +1421,15 @@ public sealed partial class Kitchen : StoryScript
     {
         SetVar(Vars.V63bded, 0);
         if (Var(Vars.V64fc31) == 1) {
-            if (Var(Vars.V64fc34) == 0) {
+            if (Var(Vars.KitchenTeapot) == 0) {
                 MoveObj("LOC05Kanne", 81, 307);
                 Obj("LOC05Kanne", true);
             }
-            else if (Var(Vars.V64fc34) < 2) {
+            else if (Var(Vars.KitchenTeapot) < 2) {
                 MoveObj("LOC05Kanne", 81, 307);
                 Obj("LOC05Kanne", false);
             }
-            else if (Var(Vars.V64fc34) == 2) {
+            else if (Var(Vars.KitchenTeapot) == 2) {
                 MoveObj("LOC05Kanne", 81, 307);
                 Obj("LOC05Kanne", false);
             }
@@ -1462,7 +1462,7 @@ public sealed partial class Kitchen : StoryScript
                         if ((bool)Has(21)) {
                             local_34 = 1;
                         }
-                        SetVar(Vars.V64fdf4, 2);
+                        SetVar(Vars.KitchenSandwich, 2);
                         SetVar(Vars.V63bdec, 0);
                         if ((Episode == 4) && (Quest == 7)) {
                             Chain = null;
@@ -1479,7 +1479,7 @@ public sealed partial class Kitchen : StoryScript
                         if ((bool)Has(1)) {
                             local_58 = 1;
                         }
-                        SetVar(Vars.V64fc34, 2);
+                        SetVar(Vars.KitchenTeapot, 2);
                         SetVar(Vars.V63bded, 0);
                         if (Episode == 4) {
                             Chain = null;
@@ -1825,7 +1825,7 @@ public sealed partial class Kitchen : StoryScript
         }
         if ((Episode < 5) && (Quest == 3)) {
             if (CurrentSpeaker == Who.Dick) {
-                SetVar(Vars.V64ffec, 1);
+                SetVar(Vars.DickTalk, 1);
                 StopAnimAfter("DicksBreadStill", param_1, 0);
                 StopAnimAfter("DickSitSpeakDownRight", param_1, 0);
                 Anim("DicksBread", -1, param_1, 0);
@@ -1837,7 +1837,7 @@ public sealed partial class Kitchen : StoryScript
                 ObjAfter("LOC05Tasse", false, param_1, 0);
                 Anim("QuentinDrink", -1, param_1, 0);
                 if (Var(Vars.V64f684) == 5) {
-                    SetVar(Vars.V64ffb4, 1);
+                    SetVar(Vars.QuentinKitchenTalk, 1);
                 }
             }
             else if (CurrentSpeaker == Who.Fanny) {
@@ -1983,7 +1983,7 @@ public sealed partial class Kitchen : StoryScript
         }
         else if ((Episode == 1) && (Quest == 12)) {
             if (CurrentSpeaker == Who.Dick) {
-                SetVar(Vars.V64ffec, 1);
+                SetVar(Vars.DickTalk, 1);
                 StopAnimAfter("DicksBreadStill", param_1, 0);
                 StopAnimAfter("DickSitSpeakDownRight", param_1, 0);
                 Anim("DicksBread", -1, param_1, 0);
@@ -2110,23 +2110,23 @@ public sealed partial class Kitchen : StoryScript
             if (CurrentSpeaker == Who.Dick) {
                 if (Episode == 3) {
                     if (Text("t63bdf0") != "Quentin") {
-                        if (Var(Vars.V64ffec) == 0) {
-                            SetVar(Vars.V64ffec, 1);
+                        if (Var(Vars.DickTalk) == 0) {
+                            SetVar(Vars.DickTalk, 1);
                         }
-                        else if (Var(Vars.V64ffec) == 2) {
-                            SetVar(Vars.V64ffec, 3);
+                        else if (Var(Vars.DickTalk) == 2) {
+                            SetVar(Vars.DickTalk, 3);
                         }
-                        else if (Var(Vars.V64ffec) == 4) {
-                            SetVar(Vars.V64ffec, 5);
+                        else if (Var(Vars.DickTalk) == 4) {
+                            SetVar(Vars.DickTalk, 5);
                         }
                     }
                     else {
                         SetText("t63bdf0", "");
-                        SetVar(Vars.V64ffb4, 2);
-                        SetVar(Vars.V64ffec, 2);
-                        SetVar(Vars.V64ff7c, 7);
-                        SetVar(Vars.V650024, 2);
-                        SetVar(Vars.V65005c, 2);
+                        SetVar(Vars.QuentinKitchenTalk, 2);
+                        SetVar(Vars.DickTalk, 2);
+                        SetVar(Vars.FannyTalk, 7);
+                        SetVar(Vars.AnneTalk, 2);
+                        SetVar(Vars.JulianTalk, 2);
                     }
                 }
                 StopAnimAfter("DicksBreadStill", param_1, 0);
@@ -2141,7 +2141,7 @@ public sealed partial class Kitchen : StoryScript
                 Anim("QuentinDrink", -1, param_1, 0);
                 if (Episode == 4) {
                     if (Var(Vars.V64f684) == 5) {
-                        SetVar(Vars.V64ffb4, 1);
+                        SetVar(Vars.QuentinKitchenTalk, 1);
                     }
                 }
                 else if (Episode == 3) {
@@ -2192,11 +2192,11 @@ public sealed partial class Kitchen : StoryScript
                             Anim("QuentinDrink", -1, uVar3, 0);
                             if (Var(Vars.V64fc6c) == 0) {
                                 SetVar(Vars.V64fc6c, 1);
-                                SetVar(Vars.V64ff7c, 8);
-                                SetVar(Vars.V64ffec, 4);
-                                SetVar(Vars.V65005c, 4);
-                                SetVar(Vars.V650024, 4);
-                                SetVar(Vars.V64ffb4, 4);
+                                SetVar(Vars.FannyTalk, 8);
+                                SetVar(Vars.DickTalk, 4);
+                                SetVar(Vars.JulianTalk, 4);
+                                SetVar(Vars.AnneTalk, 4);
+                                SetVar(Vars.QuentinKitchenTalk, 4);
                             }
                             else if (Var(Vars.V64fc6c) == 1) {
                                 SetVar(Vars.V64fc6c, 2);
@@ -2205,11 +2205,11 @@ public sealed partial class Kitchen : StoryScript
                         }
                     }
                     else {
-                        if (Var(Vars.V64ffb4) == 2) {
-                            SetVar(Vars.V64ffb4, 3);
+                        if (Var(Vars.QuentinKitchenTalk) == 2) {
+                            SetVar(Vars.QuentinKitchenTalk, 3);
                         }
-                        if (Var(Vars.V64ffb4) == 4) {
-                            SetVar(Vars.V64ffb4, 5);
+                        if (Var(Vars.QuentinKitchenTalk) == 4) {
+                            SetVar(Vars.QuentinKitchenTalk, 5);
                         }
                     }
                 }
@@ -2218,11 +2218,11 @@ public sealed partial class Kitchen : StoryScript
                 StopAnimAfter("FannyStandRightTalk", param_1, 0);
                 Anim("FannyStandRight", -1, param_1, 0);
                 if (Episode == 3) {
-                    if (Var(Vars.V64ff7c) == 5) {
-                        SetVar(Vars.V64ff7c, 6);
+                    if (Var(Vars.FannyTalk) == 5) {
+                        SetVar(Vars.FannyTalk, 6);
                     }
-                    else if (Var(Vars.V64ff7c) == 7) {
-                        SetVar(Vars.V64ff7c, 7);
+                    else if (Var(Vars.FannyTalk) == 7) {
+                        SetVar(Vars.FannyTalk, 7);
                     }
                 }
             }
@@ -2232,8 +2232,8 @@ public sealed partial class Kitchen : StoryScript
                 Anim("AnnesBread", -1, param_1, 0);
                 Anim("AnneEat", -1, param_1, 0);
                 Anim("AnneEatArm", -1, param_1, 0);
-                if ((Episode == 3) && (Var(Vars.V650024) == 2)) {
-                    SetVar(Vars.V650024, 3);
+                if ((Episode == 3) && (Var(Vars.AnneTalk) == 2)) {
+                    SetVar(Vars.AnneTalk, 3);
                 }
             }
             else if (CurrentSpeaker == Who.George) {
@@ -2253,11 +2253,11 @@ public sealed partial class Kitchen : StoryScript
                     SetText("t63bdf0", "");
                 }
                 if (Episode == 3) {
-                    if (Var(Vars.V65005c) == 0) {
-                        SetVar(Vars.V65005c, 1);
+                    if (Var(Vars.JulianTalk) == 0) {
+                        SetVar(Vars.JulianTalk, 1);
                     }
-                    else if (Var(Vars.V65005c) == 2) {
-                        SetVar(Vars.V65005c, 3);
+                    else if (Var(Vars.JulianTalk) == 2) {
+                        SetVar(Vars.JulianTalk, 3);
                     }
                 }
             }
@@ -2266,41 +2266,41 @@ public sealed partial class Kitchen : StoryScript
             if (CurrentSpeaker == Who.Anne) {
                 StopAnimAfter("AnneSitSpeakDownLeft", param_1, 0);
                 Anim("AnneSitDownLeft", -1, param_1, 0);
-                if ((Episode < 5) && (Var(Vars.V650024) == 0)) {
+                if ((Episode < 5) && (Var(Vars.AnneTalk) == 0)) {
                     PointerAfter(false, param_1, 0, 100, 200);
                     Ask(1, "KUECHE0014-05", 4, 0, param_1);
                 }
                 if (0 < Var(Vars.V64f294)) {
-                    SetVar(Vars.V650024, 4);
+                    SetVar(Vars.AnneTalk, 4);
                 }
             }
             else if (CurrentSpeaker == Who.Dick) {
                 StopAnimAfter("DickSitSpeakDownRight", param_1, 0);
                 Anim("DickSitDownRight", -1, param_1, 0);
-                if ((Episode < 5) && (Var(Vars.V64ffec) == 0)) {
+                if ((Episode < 5) && (Var(Vars.DickTalk) == 0)) {
                     PointerAfter(false, param_1, 0, 100, 200);
                     Ask(1, "KUECHE0014-05", 4, 0, param_1);
                 }
                 if (0 < Var(Vars.V64f294)) {
-                    SetVar(Vars.V64ffec, 4);
+                    SetVar(Vars.DickTalk, 4);
                 }
-                if (Var(Vars.V64ffec) == 1) {
-                    SetVar(Vars.V64ffec, 2);
+                if (Var(Vars.DickTalk) == 1) {
+                    SetVar(Vars.DickTalk, 2);
                 }
             }
             else if (CurrentSpeaker == Who.Julian) {
                 StopAnimAfter("JulianSitSpeakDownLeft", param_1, 0);
                 Anim("JulianSitDownLeft", -1, param_1, 0);
-                if ((Episode < 5) && (Var(Vars.V65005c) == 0)) {
+                if ((Episode < 5) && (Var(Vars.JulianTalk) == 0)) {
                     PointerAfter(false, param_1, 0, 100, 200);
                     Ask(1, "KUECHE0014-05", 4, 0, param_1);
                 }
                 if (0 < Var(Vars.V64f294)) {
-                    if (Var(Vars.V65005c) == 3) {
-                        SetVar(Vars.V65005c, 4);
+                    if (Var(Vars.JulianTalk) == 3) {
+                        SetVar(Vars.JulianTalk, 4);
                     }
-                    else if (Var(Vars.V65005c) == 4) {
-                        SetVar(Vars.V65005c, 5);
+                    else if (Var(Vars.JulianTalk) == 4) {
+                        SetVar(Vars.JulianTalk, 5);
                     }
                 }
             }
@@ -2420,7 +2420,7 @@ public sealed partial class Kitchen : StoryScript
             SetVar(Vars.V64f684, 1);
             F43c1b9(1, 1);
             F43c86a();
-            SetVar(Vars.V64ff7c, 5);
+            SetVar(Vars.FannyTalk, 5);
             Place(Timmy, 200, 564, 35);
             ShowParty();
             Obj("LOC05Timmy", true);
@@ -2454,7 +2454,7 @@ public sealed partial class Kitchen : StoryScript
         else if ((Episode == 4) && (Quest == 3)) {
             F43c1b9(0, 1);
             F43c86a();
-            SetVar(Vars.V64ff7c, 5);
+            SetVar(Vars.FannyTalk, 5);
             Chain = null;
             local_58 = null;
             if (Var(Vars.V64f684) < 5) {
@@ -2467,7 +2467,7 @@ public sealed partial class Kitchen : StoryScript
         else if ((Episode == 1) && (Quest == 4)) {
             F43c1b9(0, 1);
             F43c86a();
-            SetVar(Vars.V64ff7c, 5);
+            SetVar(Vars.FannyTalk, 5);
             Place(Hero, 570, 444, 7);
             Show(Hero);
             ShowParty();
@@ -2480,7 +2480,7 @@ public sealed partial class Kitchen : StoryScript
             SetVar(Vars.V64f9cc, 5);
             SetVar(Vars.V64f80c, 0);
             SetVar(Vars.V64f7d4, 0);
-            SetVar(Vars.V64ff7c, 4);
+            SetVar(Vars.FannyTalk, 4);
             SetVar(Vars.V683260, 0);
             Place(Quentin, 540, 440, 7);
             Place(Timmy, 799, 440, 7);
@@ -2508,15 +2508,15 @@ public sealed partial class Kitchen : StoryScript
             Walk(Hero, 300, 300);
             State(Hero, 7);
             SetVar(Vars.V64f64c, 1);
-            SetVar(Vars.V64ff7c, 4);
+            SetVar(Vars.FannyTalk, 4);
         }
         else if ((Episode == 2) && (Quest == 5)) {
             SetVar(Vars.V64f64c, 1);
-            SetVar(Vars.V64ff7c, 4);
+            SetVar(Vars.FannyTalk, 4);
         }
         else if ((Episode == 4) && (Quest == 5)) {
-            SetVar(Vars.V64ff7c, 4);
-            SetVar(Vars.V64fc34, 1);
+            SetVar(Vars.FannyTalk, 4);
+            SetVar(Vars.KitchenTeapot, 1);
             F43cdab();
             F43cede();
             Obj("LOC05Quentin", false);
@@ -2524,8 +2524,8 @@ public sealed partial class Kitchen : StoryScript
             Obj("LOC05George", false);
         }
         else if ((Quest == 5) && (Episode == 5)) {
-            SetVar(Vars.V64ff7c, 4);
-            SetVar(Vars.V64fc34, 1);
+            SetVar(Vars.FannyTalk, 4);
+            SetVar(Vars.KitchenTeapot, 1);
             F43cdab();
             F43cede();
             Obj("LOC05Quentin", false);
@@ -2544,8 +2544,8 @@ public sealed partial class Kitchen : StoryScript
             Chain = Say(0, "KUECHE0014-05", 14, true, Chain, 0);
         }
         else if ((Quest == 5) && (5 < Episode)) {
-            SetVar(Vars.V64ff7c, 4);
-            SetVar(Vars.V64fc34, 1);
+            SetVar(Vars.FannyTalk, 4);
+            SetVar(Vars.KitchenTeapot, 1);
             F43cdab();
             F43cede();
             Obj("LOC05Quentin", false);
@@ -2581,8 +2581,8 @@ public sealed partial class Kitchen : StoryScript
             }
         }
         else if ((Quest == 6) && (Episode == 1)) {
-            SetVar(Vars.V64ff7c, 4);
-            SetVar(Vars.V64fc34, 1);
+            SetVar(Vars.FannyTalk, 4);
+            SetVar(Vars.KitchenTeapot, 1);
             F43cdab();
             F43cede();
             Obj("LOC05Quentin", false);
@@ -2613,13 +2613,13 @@ public sealed partial class Kitchen : StoryScript
             Chain = Say(0, "KUECHE0016-05", 12, true, Chain, 0);
         }
         else if ((Quest == 7) && (Episode == 4)) {
-            SetVar(Vars.V64ff7c, 4);
+            SetVar(Vars.FannyTalk, 4);
             F43c1b9(0, 0);
             F43c959();
             Place(Timmy, 799, 440, 7);
             Show(Timmy);
             if (Var(Vars.V6510fc) == 1) {
-                if ((Var(Vars.V651134) == 2) || (Var(Vars.V64eff9) != 0)) {
+                if ((Var(Vars.V651134) == 2) || (Var(Vars.StudyFireOut) != 0)) {
                     Chain = null;
                     local_378 = null;
                     PointerOff();
@@ -2628,18 +2628,18 @@ public sealed partial class Kitchen : StoryScript
                         Chain = Say(0, "KUECHE0032", 44, false, Chain, 8);
                         Chain = Say(1, "KUECHE0032", 45, false, Chain, 0);
                         Chain = Say(2, "KUECHE0032", 46, true, Chain, 0);
-                        SetVar(Vars.V650024, 11);
-                        SetVar(Vars.V64ffec, 11);
-                        SetVar(Vars.V65005c, 11);
+                        SetVar(Vars.AnneTalk, 11);
+                        SetVar(Vars.DickTalk, 11);
+                        SetVar(Vars.JulianTalk, 11);
                     }
-                    else if ((Var(Vars.V64f304) == 0) && (Var(Vars.V64f3e4) == 0)) {
+                    else if ((Var(Vars.StudyFire) == 0) && (Var(Vars.V64f3e4) == 0)) {
                         Chain = Say(1, "KUECHE0032", 40, false, Chain, 10);
                         Chain = Say(0, "KUECHE0032", 41, false, Chain, 0);
                         Chain = Say(1, "KUECHE0032", 42, false, Chain, 0);
                         Chain = Say(3, "KUECHE0032", 43, true, Chain, 0);
-                        SetVar(Vars.V650024, 11);
-                        SetVar(Vars.V64ffec, 11);
-                        SetVar(Vars.V65005c, 11);
+                        SetVar(Vars.AnneTalk, 11);
+                        SetVar(Vars.DickTalk, 11);
+                        SetVar(Vars.JulianTalk, 11);
                     }
                     else if (Var(Vars.V64f3ac) == 1) {
                         Chain = Say(1, "KUECHE0032", 26, false, Chain, 10);
@@ -2651,26 +2651,26 @@ public sealed partial class Kitchen : StoryScript
                         else {
                             SetText("t63bdf0", "change");
                         }
-                        if (Var(Vars.V650024) < 10) {
-                            SetVar(Vars.V650024, 9);
+                        if (Var(Vars.AnneTalk) < 10) {
+                            SetVar(Vars.AnneTalk, 9);
                         }
-                        if (Var(Vars.V64ffec) < 10) {
-                            SetVar(Vars.V64ffec, 9);
+                        if (Var(Vars.DickTalk) < 10) {
+                            SetVar(Vars.DickTalk, 9);
                         }
-                        if (Var(Vars.V65005c) < 10) {
-                            SetVar(Vars.V65005c, 9);
+                        if (Var(Vars.JulianTalk) < 10) {
+                            SetVar(Vars.JulianTalk, 9);
                         }
                     }
                 }
                 else if (Var(Vars.V64effa) == 0) {
-                    if (Var(Vars.V650024) < 7) {
-                        SetVar(Vars.V650024, 6);
+                    if (Var(Vars.AnneTalk) < 7) {
+                        SetVar(Vars.AnneTalk, 6);
                     }
-                    if (Var(Vars.V64ffec) < 7) {
-                        SetVar(Vars.V64ffec, 6);
+                    if (Var(Vars.DickTalk) < 7) {
+                        SetVar(Vars.DickTalk, 6);
                     }
-                    if (Var(Vars.V65005c) < 7) {
-                        SetVar(Vars.V65005c, 6);
+                    if (Var(Vars.JulianTalk) < 7) {
+                        SetVar(Vars.JulianTalk, 6);
                     }
                     Chain = null;
                     local_4c0 = null;
@@ -2681,14 +2681,14 @@ public sealed partial class Kitchen : StoryScript
                     Chain = Say(1, "KUECHE0032", 13, true, Chain, 0);
                 }
                 else {
-                    if (Var(Vars.V650024) < 5) {
-                        SetVar(Vars.V650024, 4);
+                    if (Var(Vars.AnneTalk) < 5) {
+                        SetVar(Vars.AnneTalk, 4);
                     }
-                    if (Var(Vars.V64ffec) < 5) {
-                        SetVar(Vars.V64ffec, 4);
+                    if (Var(Vars.DickTalk) < 5) {
+                        SetVar(Vars.DickTalk, 4);
                     }
-                    if (Var(Vars.V65005c) < 5) {
-                        SetVar(Vars.V65005c, 4);
+                    if (Var(Vars.JulianTalk) < 5) {
+                        SetVar(Vars.JulianTalk, 4);
                     }
                     Chain = null;
                     local_46c = null;
@@ -2712,34 +2712,34 @@ public sealed partial class Kitchen : StoryScript
                 Chain = Say(3, "KUECHE0031", 4, true, Chain, 0);
             }
             else if (Var(Vars.V651134) == 1) {
-                if (Var(Vars.V650024) < 3) {
-                    SetVar(Vars.V650024, 2);
+                if (Var(Vars.AnneTalk) < 3) {
+                    SetVar(Vars.AnneTalk, 2);
                 }
-                if (Var(Vars.V64ffec) < 3) {
-                    SetVar(Vars.V64ffec, 2);
+                if (Var(Vars.DickTalk) < 3) {
+                    SetVar(Vars.DickTalk, 2);
                 }
-                if (Var(Vars.V65005c) < 3) {
-                    SetVar(Vars.V65005c, 2);
+                if (Var(Vars.JulianTalk) < 3) {
+                    SetVar(Vars.JulianTalk, 2);
                 }
             }
             Obj("LOC05Quentin", false);
             Obj("LOC05Timmy", false);
             Obj("LOC05George", false);
             if (!Has(1)) {
-                SetVar(Vars.V64fc34, 0);
+                SetVar(Vars.KitchenTeapot, 0);
             }
             if (!Has(21)) {
-                SetVar(Vars.V64fdf4, 0);
+                SetVar(Vars.KitchenSandwich, 0);
             }
         }
         else if ((Quest == 7) && (Episode == 5)) {
             if (!(Has(1))) {
-                SetVar(Vars.V64fc34, 0);
+                SetVar(Vars.KitchenTeapot, 0);
             }
             if (!(Has(21))) {
-                SetVar(Vars.V64fdf4, 0);
+                SetVar(Vars.KitchenSandwich, 0);
             }
-            SetVar(Vars.V64ff7c, 4);
+            SetVar(Vars.FannyTalk, 4);
             F43c1b9(0, 0);
             F43c959();
             Place(Timmy, 799, 440, 7);
@@ -2766,7 +2766,7 @@ public sealed partial class Kitchen : StoryScript
             StopAnim("AnneSitDownLeft");
             StopAnim("JulianSitDownLeft");
             StopAnim("DickSitDownLeft");
-            SetVar(Vars.V64ff7c, 4);
+            SetVar(Vars.FannyTalk, 4);
             Place(Hero, 570, 444, 7);
             Show(Hero);
             ShowParty();
@@ -2782,7 +2782,7 @@ public sealed partial class Kitchen : StoryScript
             SetVar(Vars.V64fb8c, 0);
             SetVar(Vars.V64fbc4, 0);
             F43c1b9(1, 1);
-            SetVar(Vars.V64ff7c, 5);
+            SetVar(Vars.FannyTalk, 5);
             Depth(@"bmp\obj\polizist\post\post.brg", 6000);
             AnimPos("PolizistStandRight", 100, 230);
             AnimScale("PolizistStandRight", 1.0);
@@ -2824,7 +2824,7 @@ public sealed partial class Kitchen : StoryScript
                     StopAnim("AnneSitDownLeft");
                     StopAnim("JulianSitDownLeft");
                     StopAnim("DickSitDownLeft");
-                    SetVar(Vars.V64ff7c, 4);
+                    SetVar(Vars.FannyTalk, 4);
                     Place(Hero, 570, 444, 7);
                     Show(Hero);
                     ShowParty();
@@ -2837,8 +2837,8 @@ public sealed partial class Kitchen : StoryScript
                     Obj("LOC05Zettel", true);
                     Obj("LOC05ZettelObj", true);
                 }
-                if (Var(Vars.V64fdf4) == 1) {
-                    SetVar(Vars.V64fdf4, 0);
+                if (Var(Vars.KitchenSandwich) == 1) {
+                    SetVar(Vars.KitchenSandwich, 0);
                 }
                 if (Var(Vars.V64fc6c) == 1) {
                     SetVar(Vars.V64fc6c, 0);
@@ -2850,7 +2850,7 @@ public sealed partial class Kitchen : StoryScript
                 StopAnim("AnneSitDownLeft");
                 StopAnim("JulianSitDownLeft");
                 StopAnim("DickSitDownLeft");
-                SetVar(Vars.V64ff7c, 4);
+                SetVar(Vars.FannyTalk, 4);
                 if ((Episode != 2) && (Episode != 3)) {
                     Place(Hero, 570, 444, 7);
                     Show(Hero);
@@ -2870,7 +2870,7 @@ public sealed partial class Kitchen : StoryScript
             StopAnim("AnneSitDownLeft");
             StopAnim("JulianSitDownLeft");
             StopAnim("DickSitDownLeft");
-            SetVar(Vars.V64ff7c, 4);
+            SetVar(Vars.FannyTalk, 4);
             Place(Hero, 570, 444, 7);
             Show(Hero);
             ShowParty();
@@ -3027,9 +3027,9 @@ public sealed partial class Kitchen : StoryScript
                     SetVar(Vars.V64ef24, -1);
                     PointerAfter(true, null, 30, 300, 400);
                 }
-                SetVar(Vars.V650024, 1);
-                SetVar(Vars.V64ffec, 1);
-                SetVar(Vars.V65005c, 1);
+                SetVar(Vars.AnneTalk, 1);
+                SetVar(Vars.DickTalk, 1);
+                SetVar(Vars.JulianTalk, 1);
             }
             else {
                 if (Var(Vars.V64ef60) == Var(Vars.V64ef54)) {
@@ -3045,11 +3045,11 @@ public sealed partial class Kitchen : StoryScript
                     PointerOn();
                     PointerAfter(true, null, 0, 200, 300);
                 }
-                SetVar(Vars.V650024, 0);
-                SetVar(Vars.V64ffec, 0);
-                SetVar(Vars.V64ffb4, 0);
-                SetVar(Vars.V65005c, 0);
-                SetVar(Vars.V64ff7c, 0);
+                SetVar(Vars.AnneTalk, 0);
+                SetVar(Vars.DickTalk, 0);
+                SetVar(Vars.QuentinKitchenTalk, 0);
+                SetVar(Vars.JulianTalk, 0);
+                SetVar(Vars.FannyTalk, 0);
             }
             SetVar(Vars.V64ef64, -1);
             SetVar(Vars.V64ef60, -1);

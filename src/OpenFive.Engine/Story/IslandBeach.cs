@@ -49,9 +49,9 @@ public sealed partial class IslandBeach : StoryScript
             }
             else if ((Episode == 2) && (Quest == 7)) {
                 SetText("t63be48", "");
-                SetAfter(Vars.V650794, 2, (uVar4), 0);
-                SetAfter(Vars.V65083c, 2, (uVar4), 0);
-                SetAfter(Vars.V6507cc, 2, (uVar4), 0);
+                SetAfter(Vars.AnneIslandTalk, 2, (uVar4), 0);
+                SetAfter(Vars.GeorgeIslandTalk, 2, (uVar4), 0);
+                SetAfter(Vars.JulianIslandTalk, 2, (uVar4), 0);
                 Chain = Say(2, "INSELSTRAND0025", 9, false, (uVar4), 0);
                 Chain = Say(0, "INSELSTRAND0025", 10, false, (uVar4), 0);
                 Chain = Say(2, "INSELSTRAND0025", 11, false, (uVar4), 0);
@@ -78,10 +78,10 @@ public sealed partial class IslandBeach : StoryScript
                     if (Same(name, "LOC14Fass9")) {
                         SetVar(Vars.V650724, 0);
                         if (German) {
-                            SetVar(Vars.V64efd4, 2);
+                            SetVar(Vars.LanguageNumber, 2);
                         }
                         else {
-                            SetVar(Vars.V64efd4, 1);
+                            SetVar(Vars.LanguageNumber, 1);
                         }
                         // (reloads the object texts; not needed)
                     }
@@ -90,13 +90,13 @@ public sealed partial class IslandBeach : StoryScript
                             Walk(Hero, 336, 455);
                             Chain = State(Hero, 7);
                             if (((Var(Vars.V65075c) == 0) && (Episode == 3)) && (Quest == 6)) {
-                                if (Var(Vars.V650794) == 0) {
+                                if (Var(Vars.AnneIslandTalk) == 0) {
                                     Chain = Say(0, "INSELSTRAND0022", 2, true, Chain, 0);
                                 }
-                                else if (Var(Vars.V650794) == 1) {
+                                else if (Var(Vars.AnneIslandTalk) == 1) {
                                     Chain = Say(3, "INSELSTRAND0022", 3, true, (uVar4), 0);
                                 }
-                                else if (Var(Vars.V650794) == 2) {
+                                else if (Var(Vars.AnneIslandTalk) == 2) {
                                     Chain = Say(3, "INSELSTRAND0022", 9, true, (uVar4), 0);
                                 }
                             }
@@ -104,17 +104,17 @@ public sealed partial class IslandBeach : StoryScript
                                 if (Var(Vars.V650874) == 2) {
                                     if (Var(Vars.V64eff7) == 0) {
                                         if ((Has(12))) {
-                                            if (Var(Vars.V650794) == 0) {
+                                            if (Var(Vars.AnneIslandTalk) == 0) {
                                                 Chain = Say(3, "ALL0023", 1, true, (uVar4), 0);
                                             }
-                                            else if (Var(Vars.V650794) == 1) {
+                                            else if (Var(Vars.AnneIslandTalk) == 1) {
                                                 Chain = Say(3, "ALL0023", 2, true, (uVar4), 0);
                                             }
                                         }
-                                        else if (Var(Vars.V650794) == 0) {
+                                        else if (Var(Vars.AnneIslandTalk) == 0) {
                                             Chain = Say(3, "ALL0023", 7, true, (uVar4), 0);
                                         }
-                                        else if (Var(Vars.V650794) == 1) {
+                                        else if (Var(Vars.AnneIslandTalk) == 1) {
                                             Chain = Say(3, "ALL0023", 8, true, (uVar4), 0);
                                         }
                                     }
@@ -124,45 +124,45 @@ public sealed partial class IslandBeach : StoryScript
                                 }
                             }
                             else if ((Episode == 4) && (Quest == 6)) {
-                                if (Var(Vars.V650794) == 0) {
-                                    IncAfter(Vars.V6508ac, Chain, 0);
-                                    IncAfter(Vars.V650414, (uVar4), 0);
-                                    IncAfter(Vars.V650794, (uVar4), 0);
+                                if (Var(Vars.AnneIslandTalk) == 0) {
+                                    IncAfter(Vars.AnneWreckTalk, Chain, 0);
+                                    IncAfter(Vars.AnneBeachTalk, (uVar4), 0);
+                                    IncAfter(Vars.AnneIslandTalk, (uVar4), 0);
                                     Chain = Say(3, "ALL0024", 5, true, (uVar4), 0);
                                 }
-                                else if (Var(Vars.V650794) == 1) {
+                                else if (Var(Vars.AnneIslandTalk) == 1) {
                                     Chain = Say(3, "ALL0024", 6, false, (uVar4), 0);
                                     Chain = Say(0, "ALL0024", 7, true, Chain, 0);
                                 }
                             }
                             else if ((Episode == 2) && (Quest == 7)) {
-                                if (Var(Vars.V650794) == 0) {
-                                    IncAfter(Vars.V650794, Chain, 0);
+                                if (Var(Vars.AnneIslandTalk) == 0) {
+                                    IncAfter(Vars.AnneIslandTalk, Chain, 0);
                                     Chain = Say(3, "INSELSTRAND0025", 1, true, (uVar4), 0);
                                 }
-                                else if (Var(Vars.V650794) == 1) {
+                                else if (Var(Vars.AnneIslandTalk) == 1) {
                                     Chain = Say(3, "INSELSTRAND0025", 2, true, (uVar4), 0);
                                 }
-                                else if (Var(Vars.V650794) == 2) {
+                                else if (Var(Vars.AnneIslandTalk) == 2) {
                                     Chain = Say(3, "INSELSTRAND0025", 13, true, (uVar4), 0);
                                 }
                             }
                             else if ((Episode == 2) && (Quest == 8)) {
-                                if (Var(Vars.V650794) == 0) {
-                                    IncAfter(Vars.V650794, Chain, 0);
+                                if (Var(Vars.AnneIslandTalk) == 0) {
+                                    IncAfter(Vars.AnneIslandTalk, Chain, 0);
                                     Chain = Say(3, "STRAND0037", 3, false, (uVar4), 0);
                                     Chain = Say(1, "STRAND0037", 4, true, (uVar4), 0);
                                 }
-                                else if (Var(Vars.V650794) == 1) {
+                                else if (Var(Vars.AnneIslandTalk) == 1) {
                                     Chain = Say(3, "STRAND0037", 5, true, (uVar4), 0);
                                 }
                             }
                             else if ((Episode == 1) && (Quest == 11)) {
-                                if (Var(Vars.V650794) == 0) {
-                                    IncAfter(Vars.V650794, Chain, 0);
+                                if (Var(Vars.AnneIslandTalk) == 0) {
+                                    IncAfter(Vars.AnneIslandTalk, Chain, 0);
                                     Chain = Say(3, "STRAND0052", 7, true, (uVar4), 0);
                                 }
-                                else if (Var(Vars.V650794) == 1) {
+                                else if (Var(Vars.AnneIslandTalk) == 1) {
                                     Chain = Say(3, "STRAND0052", 8, true, (uVar4), 0);
                                 }
                             }
@@ -172,10 +172,10 @@ public sealed partial class IslandBeach : StoryScript
                                 Walk(Hero, 350, 500);
                                 Chain = State(Hero, 7);
                                 if (((Var(Vars.V65075c) == 0) && (Episode == 3)) && (Quest == 6)) {
-                                    if (Var(Vars.V65083c) == 0) {
+                                    if (Var(Vars.GeorgeIslandTalk) == 0) {
                                         Chain = Say(1, "INSELSTRAND0022", 4, true, (uVar4), 0);
                                     }
-                                    else if (Var(Vars.V65083c) == 2) {
+                                    else if (Var(Vars.GeorgeIslandTalk) == 2) {
                                         Chain = Say(1, "INSELSTRAND0022", 10, true, (uVar4), 0);
                                     }
                                 }
@@ -183,17 +183,17 @@ public sealed partial class IslandBeach : StoryScript
                                     if (Var(Vars.V650874) == 2) {
                                         if (Var(Vars.V64eff7) == 0) {
                                             if ((Has(12))) {
-                                                if (Var(Vars.V65083c) == 0) {
+                                                if (Var(Vars.GeorgeIslandTalk) == 0) {
                                                     Chain = Say(1, "ALL0023", 5, true, (uVar4), 0);
                                                 }
-                                                else if (Var(Vars.V65083c) == 1) {
+                                                else if (Var(Vars.GeorgeIslandTalk) == 1) {
                                                     Chain = Say(1, "ALL0023", 6, true, (uVar4), 0);
                                                 }
                                             }
-                                            else if (Var(Vars.V65083c) == 0) {
+                                            else if (Var(Vars.GeorgeIslandTalk) == 0) {
                                                 Chain = Say(1, "ALL0023", 11, true, (uVar4), 0);
                                             }
-                                            else if (Var(Vars.V65083c) == 1) {
+                                            else if (Var(Vars.GeorgeIslandTalk) == 1) {
                                                 Chain = Say(1, "ALL0023", 12, true, (uVar4), 0);
                                             }
                                         }
@@ -204,10 +204,10 @@ public sealed partial class IslandBeach : StoryScript
                                     }
                                 }
                                 else if ((Episode == 4) && (Quest == 6)) {
-                                    if (Var(Vars.V65083c) == 0) {
-                                        IncAfter(Vars.V650954, Chain, 0);
+                                    if (Var(Vars.GeorgeIslandTalk) == 0) {
+                                        IncAfter(Vars.GeorgeWreckTalk, Chain, 0);
                                         IncAfter(Vars.V65044c, (uVar4), 0);
-                                        IncAfter(Vars.V65083c, (uVar4), 0);
+                                        IncAfter(Vars.GeorgeIslandTalk, (uVar4), 0);
                                         Chain = Say(1, "ALL0024", 10, true, (uVar4), 0);
                                         if (Var(Vars.V64eff8) == 0) {
                                             Chain = Say(0, "ALL0024", 16, false, Chain, 0);
@@ -233,20 +233,20 @@ public sealed partial class IslandBeach : StoryScript
                                             }
                                         }
                                     }
-                                    else if (Var(Vars.V65083c) == 1) {
+                                    else if (Var(Vars.GeorgeIslandTalk) == 1) {
                                         Chain = Say(1, "ALL0024", 20, true, (uVar4), 0);
                                     }
                                 }
                                 else if ((Episode == 2) && (Quest == 7)) {
-                                    if (Var(Vars.V65083c) == 0) {
-                                        IncAfter(Vars.V65083c, Chain, 0);
+                                    if (Var(Vars.GeorgeIslandTalk) == 0) {
+                                        IncAfter(Vars.GeorgeIslandTalk, Chain, 0);
                                         Chain = Say(1, "INSELSTRAND0025", 3, false, (uVar4), 0);
                                         Chain = Say(0, "INSELSTRAND0025", 4, true, Chain, 0);
                                     }
-                                    else if (Var(Vars.V65083c) == 1) {
+                                    else if (Var(Vars.GeorgeIslandTalk) == 1) {
                                         Chain = Say(1, "INSELSTRAND0025", 5, true, (uVar4), 0);
                                     }
-                                    else if (Var(Vars.V65083c) == 2) {
+                                    else if (Var(Vars.GeorgeIslandTalk) == 2) {
                                         Chain = Say(1, "INSELSTRAND0025", 14, true, (uVar4), 0);
                                     }
                                 }
@@ -259,8 +259,8 @@ public sealed partial class IslandBeach : StoryScript
                                         Chain = Say(0, "STRAND0037", 6, true, (uVar4), 0);
                                     }
                                 }
-                                else if (((Episode == 1) && (Quest == 11)) && (Var(Vars.V65083c) == 0)) {
-                                    IncAfter(Vars.V65083c, Chain, 0);
+                                else if (((Episode == 1) && (Quest == 11)) && (Var(Vars.GeorgeIslandTalk) == 0)) {
+                                    IncAfter(Vars.GeorgeIslandTalk, Chain, 0);
                                     Chain = Say(1, "STRAND0052", 9, true, (uVar4), 0);
                                 }
                             }
@@ -269,10 +269,10 @@ public sealed partial class IslandBeach : StoryScript
                                     Walk(Hero, 203, 507);
                                     Chain = State(Hero, 7);
                                     if (((Var(Vars.V65075c) == 0) && (Episode == 3)) && (Quest == 6)) {
-                                        if (Var(Vars.V6507cc) == 0) {
+                                        if (Var(Vars.JulianIslandTalk) == 0) {
                                             Chain = Say(2, "INSELSTRAND0022", 5, true, (uVar4), 0);
                                         }
-                                        else if (Var(Vars.V6507cc) == 2) {
+                                        else if (Var(Vars.JulianIslandTalk) == 2) {
                                             Chain = Say(2, "INSELSTRAND0022", 11, true, (uVar4), 0);
                                         }
                                     }
@@ -280,17 +280,17 @@ public sealed partial class IslandBeach : StoryScript
                                         if (Var(Vars.V650874) == 2) {
                                             if (Var(Vars.V64eff7) == 0) {
                                                 if ((Has(12))) {
-                                                    if (Var(Vars.V6507cc) == 0) {
+                                                    if (Var(Vars.JulianIslandTalk) == 0) {
                                                         Chain = Say(2, "ALL0023", 3, true, (uVar4), 0);
                                                     }
-                                                    else if (Var(Vars.V6507cc) == 1) {
+                                                    else if (Var(Vars.JulianIslandTalk) == 1) {
                                                         Chain = Say(2, "ALL0023", 4, true, (uVar4), 0);
                                                     }
                                                 }
-                                                else if (Var(Vars.V6507cc) == 0) {
+                                                else if (Var(Vars.JulianIslandTalk) == 0) {
                                                     Chain = Say(2, "ALL0023", 9, true, (uVar4), 0);
                                                 }
-                                                else if (Var(Vars.V6507cc) == 1) {
+                                                else if (Var(Vars.JulianIslandTalk) == 1) {
                                                     Chain = Say(2, "ALL0023", 10, true, (uVar4), 0);
                                                 }
                                             }
@@ -300,43 +300,43 @@ public sealed partial class IslandBeach : StoryScript
                                         }
                                     }
                                     else if ((Episode == 4) && (Quest == 6)) {
-                                        if (Var(Vars.V6507cc) == 0) {
-                                            IncAfter(Vars.V6508e4, Chain, 0);
-                                            IncAfter(Vars.V650484, (uVar4), 0);
-                                            IncAfter(Vars.V6507cc, (uVar4), 0);
+                                        if (Var(Vars.JulianIslandTalk) == 0) {
+                                            IncAfter(Vars.JulianWreckTalk, Chain, 0);
+                                            IncAfter(Vars.JulianBeachTalk, (uVar4), 0);
+                                            IncAfter(Vars.JulianIslandTalk, (uVar4), 0);
                                             Chain = Say(2, "ALL0024", 8, true, (uVar4), 0);
                                         }
-                                        else if (Var(Vars.V6507cc) == 1) {
+                                        else if (Var(Vars.JulianIslandTalk) == 1) {
                                             Chain = Say(2, "ALL0024", 9, true, (uVar4), 0);
                                         }
                                     }
                                     else if ((Episode == 2) && (Quest == 7)) {
-                                        if (Var(Vars.V6507cc) == 0) {
-                                            IncAfter(Vars.V6507cc, Chain, 0);
+                                        if (Var(Vars.JulianIslandTalk) == 0) {
+                                            IncAfter(Vars.JulianIslandTalk, Chain, 0);
                                             Chain = Say(2, "INSELSTRAND0025", 6, false, (uVar4), 0);
                                             Chain = Say(0, "INSELSTRAND0025", 7, true, Chain, 0);
                                         }
-                                        else if (Var(Vars.V6507cc) == 1) {
+                                        else if (Var(Vars.JulianIslandTalk) == 1) {
                                             Chain = Say(2, "INSELSTRAND0025", 8, true, (uVar4), 0);
                                         }
-                                        else if (Var(Vars.V6507cc) == 2) {
+                                        else if (Var(Vars.JulianIslandTalk) == 2) {
                                             Chain = Say(2, "INSELSTRAND0025", 15, true, (uVar4), 0);
                                         }
                                     }
                                     else if ((Episode == 2) && (Quest == 8)) {
-                                        if (Var(Vars.V6507cc) == 0) {
-                                            IncAfter(Vars.V6507cc, Chain, 0);
+                                        if (Var(Vars.JulianIslandTalk) == 0) {
+                                            IncAfter(Vars.JulianIslandTalk, Chain, 0);
                                             Chain = Say(2, "STRAND0037", 1, true, (uVar4), 0);
                                         }
-                                        else if (Var(Vars.V6507cc) == 1) {
-                                            IncAfter(Vars.V6507cc, Chain, 0);
+                                        else if (Var(Vars.JulianIslandTalk) == 1) {
+                                            IncAfter(Vars.JulianIslandTalk, Chain, 0);
                                             Chain = Say(2, "STRAND0037", 7, true, (uVar4), 0);
                                         }
-                                        else if (Var(Vars.V6507cc) == 2) {
+                                        else if (Var(Vars.JulianIslandTalk) == 2) {
                                             Chain = Say(2, "STRAND0037", 8, true, (uVar4), 0);
                                         }
                                     }
-                                    else if (((Episode == 1) && (Quest == 11)) && (Var(Vars.V6507cc) == 0)) {
+                                    else if (((Episode == 1) && (Quest == 11)) && (Var(Vars.JulianIslandTalk) == 0)) {
                                         Chain = Say(2, "STRAND0052", 10, true, (uVar4), 0);
                                     }
                                 }
@@ -546,26 +546,26 @@ public sealed partial class IslandBeach : StoryScript
     void OnConversationEnding(TaskHandle? param_1)
     {
         if (Text("t63be48") == "Exit") {
-            SetVar(Vars.V650794, 2);
-            SetVar(Vars.V65083c, 2);
-            SetVar(Vars.V6507cc, 2);
+            SetVar(Vars.AnneIslandTalk, 2);
+            SetVar(Vars.GeorgeIslandTalk, 2);
+            SetVar(Vars.JulianIslandTalk, 2);
         }
         if ((Episode == 3) && (Quest == 6)) {
             if (CurrentSpeaker == Who.Anne) {
                 StateAfter(Anne, 12, param_1, 0);
-                if (Var(Vars.V650794) == 0) {
-                    SetVar(Vars.V650794, 1);
+                if (Var(Vars.AnneIslandTalk) == 0) {
+                    SetVar(Vars.AnneIslandTalk, 1);
                 }
             }
             else if (CurrentSpeaker == Who.Julian) {
                 StateAfter(Julian, 12, param_1, 0);
-                if (Var(Vars.V6507cc) == 0) {
-                    SetVar(Vars.V6507cc, 1);
+                if (Var(Vars.JulianIslandTalk) == 0) {
+                    SetVar(Vars.JulianIslandTalk, 1);
                 }
             }
             else if (CurrentSpeaker == Who.George) {
-                if (Var(Vars.V65083c) == 0) {
-                    SetVar(Vars.V65083c, 1);
+                if (Var(Vars.GeorgeIslandTalk) == 0) {
+                    SetVar(Vars.GeorgeIslandTalk, 1);
                 }
             }
             else if (CurrentSpeaker == Who.Dick) {
@@ -580,8 +580,8 @@ public sealed partial class IslandBeach : StoryScript
                 else if (CurrentSpeaker == Who.Julian) {
                     StateAfter(Julian, 12, param_1, 0);
                 }
-                else if ((CurrentSpeaker == Who.Dick) && Seq(() => StateAfter(Hero, 7, param_1, 0), () => Var(Vars.V650794) == 0)) {
-                    SetVar(Vars.V650794, 1);
+                else if ((CurrentSpeaker == Who.Dick) && Seq(() => StateAfter(Hero, 7, param_1, 0), () => Var(Vars.AnneIslandTalk) == 0)) {
+                    SetVar(Vars.AnneIslandTalk, 1);
                 }
             }
             else if (Hero == George) {

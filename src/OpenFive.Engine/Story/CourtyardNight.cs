@@ -67,8 +67,8 @@ public sealed partial class CourtyardNight : StoryScript
                 local_3c = 30;
                 PointerAfter(false, Chain, 0, 400, 400);
                 Chain = Say(0, "RUINE0043", 35, true, local_20, 0);
-                SetAfter(Vars.V64efe8, 1, local_20, 0);
-                SetAfter(Vars.V64efe4, 9, local_20, 0);
+                SetAfter(Vars.EpisodeNumber, 1, local_20, 0);
+                SetAfter(Vars.QuestNumber, 9, local_20, 0);
             }
             ChangeLocation("loc21", null, local_3c);
         }
@@ -231,7 +231,7 @@ public sealed partial class CourtyardNight : StoryScript
     void F453299()
     {
         Obj("LOC17bbigStone", true);
-        if (Var(Vars.V651594) == 0) {
+        if (Var(Vars.BigStonePushed) == 0) {
             MoveObj("LOC17bbigStone", 84, 427);
             Obj("LOC17bExitToLOC21", false);
         }
@@ -269,7 +269,7 @@ public sealed partial class CourtyardNight : StoryScript
                 Chain = Say(2, "RUINE0043", 21, false, Chain, 0);
                 Chain = Say(3, "RUINE0043", 22, true, Chain, 0);
             }
-            else if (Var(Vars.V651594) == 0) {
+            else if (Var(Vars.BigStonePushed) == 0) {
                 Place(Anne, 165, 566, 7);
                 PlaceAfter(Hero, 492, 442, 7, local_20, 0);
                 PlaceAfter(George, 750, 510, 7, local_20, 8);
@@ -493,7 +493,7 @@ public sealed partial class CourtyardNight : StoryScript
     {
         if ((Episode == 5) && (Quest == 8)) {
             if ((Julian.State == 97) && (Hero.State == 97)) {
-                SetVar(Vars.V651594, 1);
+                SetVar(Vars.BigStonePushed, 1);
                 Hero.X = Hero.X + -10.0;
                 Julian.X = Julian.X + -10.0;
                 Hero.Y = Hero.Y + 5.0;

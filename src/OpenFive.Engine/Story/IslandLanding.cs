@@ -40,12 +40,12 @@ public sealed partial class IslandLanding : StoryScript
                 if (Var(Vars.V650874) == 1) {
                     SetVar(Vars.V650874, 2);
                     SetVar(Vars.V64eff6, 1);
-                    SetVar(Vars.V6504f4, 0);
+                    SetVar(Vars.DickBeachTalk, 0);
                     SetVar(Vars.V65044c, 0);
-                    SetVar(Vars.V650414, 0);
+                    SetVar(Vars.AnneBeachTalk, 0);
                     SetVar(Vars.V650804, 0);
-                    SetVar(Vars.V65083c, 0);
-                    SetVar(Vars.V650794, 0);
+                    SetVar(Vars.GeorgeIslandTalk, 0);
+                    SetVar(Vars.AnneIslandTalk, 0);
                 }
             }
             else {
@@ -74,12 +74,12 @@ public sealed partial class IslandLanding : StoryScript
                         if (Var(Vars.V650874) == 1) {
                             SetVar(Vars.V650874, 2);
                             SetVar(Vars.V64eff7, 1);
-                            SetVar(Vars.V6504f4, 0);
+                            SetVar(Vars.DickBeachTalk, 0);
                             SetVar(Vars.V65044c, 0);
-                            SetVar(Vars.V650414, 0);
+                            SetVar(Vars.AnneBeachTalk, 0);
                             SetVar(Vars.V650804, 0);
-                            SetVar(Vars.V65083c, 0);
-                            SetVar(Vars.V650794, 0);
+                            SetVar(Vars.GeorgeIslandTalk, 0);
+                            SetVar(Vars.AnneIslandTalk, 0);
                         }
                     }
                     else {

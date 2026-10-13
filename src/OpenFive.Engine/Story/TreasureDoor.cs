@@ -47,7 +47,7 @@ public sealed partial class TreasureDoor : StoryScript
             Walk(Hero, 363, 253);
             Chain = State(Hero, 11);
             local_20 = Chain;
-            if (((Episode == 1) && (Quest == 9)) && (Var(Vars.V650fac) == 1)) {
+            if (((Episode == 1) && (Quest == 9)) && (Var(Vars.TreasureDoorDiscussed) == 1)) {
                 Chain = Say(0, "LABYRINTH0046", 12, true, local_20, 0);
             }
             else {
@@ -60,12 +60,12 @@ public sealed partial class TreasureDoor : StoryScript
                 Chain = State(Hero, 22);
                 local_20 = Chain;
                 if ((Episode == 1) && (Quest == 9)) {
-                    if (Var(Vars.V650fac) == 0) {
+                    if (Var(Vars.TreasureDoorDiscussed) == 0) {
                         Sound(@"wav\fx\tuerruet.wav", Chain, 3);
                         Chain = Say(0, "LABYRINTH0046", 1, true, local_20, 0);
                         return;
                     }
-                    if (Var(Vars.V650fe4) < 1) {
+                    if (Var(Vars.TreasureDoorBroken) < 1) {
                         Sound(@"wav\fx\tuerruet.wav", Chain, 3);
                         return;
                     }
@@ -85,7 +85,7 @@ public sealed partial class TreasureDoor : StoryScript
     {
         TaskHandle? local_20 = null;
         local_20 = null;
-        if ((((param_1 == George) && (Episode == 1)) && (Quest == 9)) && (Var(Vars.V650fac) < 1)) {
+        if ((((param_1 == George) && (Episode == 1)) && (Quest == 9)) && (Var(Vars.TreasureDoorDiscussed) < 1)) {
             if (George.X <= Hero.X) {
                 local_20 = State(Hero, 7);
             }
@@ -122,7 +122,7 @@ public sealed partial class TreasureDoor : StoryScript
         AnimPos("TuerClose", 412, 110);
         StopAnim("TuerClose");
         StopAnim("Tuer");
-        if (Var(Vars.V650fe4) == 0) {
+        if (Var(Vars.TreasureDoorBroken) == 0) {
             Obj("LOC24Tuer", true);
         }
         else {
@@ -145,7 +145,7 @@ public sealed partial class TreasureDoor : StoryScript
         }
         if ((Episode == 1) && (Quest == 9)) {
             Place(George, 363, 253, 8);
-            if (Var(Vars.V650fac) == 0) {
+            if (Var(Vars.TreasureDoorDiscussed) == 0) {
                 PointerOff();
                 Hero.Follower = Hero;
                 PointerAfter(true, null, 120, 1, 1);
@@ -247,7 +247,7 @@ public sealed partial class TreasureDoor : StoryScript
                     WalkAfter(George, 381, 250, param_1, 0);
                     local_2c = State(George, 8);
                     HideAfter(George, local_2c, 0);
-                    SetVar(Vars.V650fac, 1);
+                    SetVar(Vars.TreasureDoorDiscussed, 1);
                     Hero.Follower = null;
                     WalkAfter(Hero, 348, 380, null, 5);
                     PointerAfter(false, param_1, 0, 400, 400);
@@ -257,7 +257,7 @@ public sealed partial class TreasureDoor : StoryScript
                     Sound(@"wav\fx\axt2.wav", param_1, 18);
                     Sound(@"wav\fx\axt2.wav", param_1, 28);
                     Chain = Say(0, "LABYRINTH0046", 7, true, param_1, 31);
-                    SetVar(Vars.V650fe4, 1);
+                    SetVar(Vars.TreasureDoorBroken, 1);
                     ObjAfter("LOC24Tuer", false, param_1, 6);
                     Anim("TuerClose", -1, param_1, 6);
                     SetText("t63becc", "Tuer");
@@ -288,7 +288,7 @@ public sealed partial class TreasureDoor : StoryScript
                 local_28 = State(George, 8);
                 PointerAfter(true, param_1, 100, 400, 400);
                 HideAfter(George, local_28, 0);
-                SetVar(Vars.V650fac, 1);
+                SetVar(Vars.TreasureDoorDiscussed, 1);
                 Hero.Follower = null;
             }
         }

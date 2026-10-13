@@ -61,10 +61,10 @@ public sealed partial class WellBottom : StoryScript
             PointerOff();
             Chain = local_20;
             Chain = Say(0, "BRUNNEN0050", 1, true, local_20, 10);
-            SetVar(Vars.V650794, 0);
+            SetVar(Vars.AnneIslandTalk, 0);
             SetVar(Vars.V650804, 0);
-            SetVar(Vars.V6507cc, 0);
-            SetVar(Vars.V65083c, 0);
+            SetVar(Vars.JulianIslandTalk, 0);
+            SetVar(Vars.GeorgeIslandTalk, 0);
         }
         return;
     }
@@ -80,8 +80,8 @@ public sealed partial class WellBottom : StoryScript
             PointerAfter(false, param_1, 0, 400, 400);
             ChangeLocation("loc14", param_1, 4);
             SetVar(Vars.V683260, 0);
-            SetAfter(Vars.V64efe8, 1, param_1, 0);
-            SetAfter(Vars.V64efe4, 11, param_1, 0);
+            SetAfter(Vars.EpisodeNumber, 1, param_1, 0);
+            SetAfter(Vars.QuestNumber, 11, param_1, 0);
         }
         return;
     }

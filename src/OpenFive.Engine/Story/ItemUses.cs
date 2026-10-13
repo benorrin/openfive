@@ -154,9 +154,9 @@ public sealed partial class ItemUses : StoryScript
                     StopAnimAfter("FeuerGross", local_cc, 5);
                     StopAnimAfter("FeuerMittel", local_cc, 5);
                     Anim("FeuerKlein", -1, local_cc, 5);
-                    SetVar(Vars.V64f304, 0);
+                    SetVar(Vars.StudyFire, 0);
                     if ((Episode == 4) && (Quest == 7)) {
-                        SetVar(Vars.V64eff9, 1);
+                        SetVar(Vars.StudyFireOut, 1);
                     }
                 }
                 else {
@@ -209,7 +209,7 @@ public sealed partial class ItemUses : StoryScript
                             Chain = State(Hero, 83);
                             local_11c = Chain;
                             PointerOff();
-                            SetVar(Vars.V64fe9c, 1);
+                            SetVar(Vars.TinOpened, 1);
                             Chain = Say(0, "KUECHE0027", 3, true, local_11c, 0);
                             PointerAfter(true, Chain, 0, 100, 200);
                             Episode = 3;
@@ -307,18 +307,18 @@ public sealed partial class ItemUses : StoryScript
                                         ObjAfter("LOC16Schrank", false, (uVar7), 0);
                                         ObjAfter("LOC16Scharnier", false, (uVar7), 0);
                                         Anim("DoOpenSchrank", 1, (uVar7), 0, "LOC16SchrankAuf", true);
-                                        SetVar(Vars.V65098c, 1);
+                                        SetVar(Vars.CabinCupboardOpen, 1);
                                         Episode = 1;
                                         Quest = 7;
-                                        SetVar(Vars.V650414, 0);
-                                        SetVar(Vars.V650794, 0);
-                                        SetVar(Vars.V6508ac, 0);
-                                        SetVar(Vars.V650484, 0);
-                                        SetVar(Vars.V6507cc, 0);
-                                        SetVar(Vars.V6508e4, 0);
+                                        SetVar(Vars.AnneBeachTalk, 0);
+                                        SetVar(Vars.AnneIslandTalk, 0);
+                                        SetVar(Vars.AnneWreckTalk, 0);
+                                        SetVar(Vars.JulianBeachTalk, 0);
+                                        SetVar(Vars.JulianIslandTalk, 0);
+                                        SetVar(Vars.JulianWreckTalk, 0);
                                         SetVar(Vars.V65044c, 0);
-                                        SetVar(Vars.V65083c, 0);
-                                        SetVar(Vars.V650954, 0);
+                                        SetVar(Vars.GeorgeIslandTalk, 0);
+                                        SetVar(Vars.GeorgeWreckTalk, 0);
                                         SetVar(Vars.V65075c, 1);
                                     }
                                     else {
@@ -360,7 +360,7 @@ public sealed partial class ItemUses : StoryScript
                                             PointerOff();
                                             Chain = Say(2, "RUINE0040", 2, true, local_284, 0);
                                             IncAfter(Vars.V650c2c, local_284, 0);
-                                            SetVar(Vars.V650a6c, 1);
+                                            SetVar(Vars.RopeOnStone, 1);
                                             if (false) {
                                                 Take(12);
                                             }
@@ -392,7 +392,7 @@ public sealed partial class ItemUses : StoryScript
                                         else {
                                             if (Same(target, "LOC17Efeu")) {
                                                 if ((Episode == 1) && (Quest == 11)) {
-                                                    if (Var(Vars.V6514b4) != 0) {
+                                                    if (Var(Vars.RopeOnIvy) != 0) {
                                                         return false;
                                                     }
                                                     PointerOff();
@@ -401,7 +401,7 @@ public sealed partial class ItemUses : StoryScript
                                                     local_2ac = Chain;
                                                     Chain = Say(0, "RUINE0053", 15, true, local_2ac, 0);
                                                     SetText("t63be5c", "EfeuMitSeil");
-                                                    SetVar(Vars.V6514b4, 1);
+                                                    SetVar(Vars.RopeOnIvy, 1);
                                                     Obj("LOC17ExitToLoc21", false);
                                                     Obj("LOC17Funkgeraet", true);
                                                 }
@@ -438,14 +438,14 @@ public sealed partial class ItemUses : StoryScript
                                                 }
                                             }
                                             else if ((Episode == 1) && (Quest == 11)) {
-                                                if (Var(Vars.V65147c) == 0) {
-                                                    SetVar(Vars.V65147c, 1);
-                                                                                                        if (Session.InventoryOpen || (2 < Var(Vars.V65140c))) {
+                                                if (Var(Vars.ProfessorDistracted) == 0) {
+                                                    SetVar(Vars.ProfessorDistracted, 1);
+                                                                                                        if (Session.InventoryOpen || (2 < Var(Vars.StonesThrown))) {
                                                         return false;
                                                     }
                                                     local_30c = State(Hero, 111);
                                                     Sound(@"wav\fx\steinbru.wav", local_30c, 8);
-                                                    if (Var(Vars.V65140c) == 0) {
+                                                    if (Var(Vars.StonesThrown) == 0) {
                                                         StopAnimAfter("ProfTelefon", local_30c, 5);
                                                         Chain =
                                                         Anim("ProfHangUp", 1, local_30c, 5);
@@ -453,10 +453,10 @@ public sealed partial class ItemUses : StoryScript
                                                         Anim("ProfStandLeft", -1, Chain, 0);
                                                         Anim("Radio", -1, local_30c, 0);
                                                         PointerAfter(false, local_30c, 0, 400, 400);
-                                                        IncAfter(Vars.V65140c, local_30c, 0);
+                                                        IncAfter(Vars.StonesThrown, local_30c, 0);
                                                         Chain = Say(9, "RUINE0053", 5, true, local_30c, 9);
                                                     }
-                                                    else if (Var(Vars.V65140c) == 1) {
+                                                    else if (Var(Vars.StonesThrown) == 1) {
                                                         StopAnimAfter("ProfTelefon", local_30c, 5);
                                                         Chain =
                                                         Anim("ProfHangUp", 1, local_30c, 5);
@@ -464,10 +464,10 @@ public sealed partial class ItemUses : StoryScript
                                                         Anim("ProfStandLeft", -1, Chain, 0);
                                                         Anim("Radio", -1, local_30c, 0);
                                                         PointerAfter(false, local_30c, 0, 400, 400);
-                                                        IncAfter(Vars.V65140c, local_30c, 0);
+                                                        IncAfter(Vars.StonesThrown, local_30c, 0);
                                                         Chain = Say(9, "RUINE0053", 6, true, local_30c, 9);
                                                     }
-                                                    else if (Var(Vars.V65140c) == 2) {
+                                                    else if (Var(Vars.StonesThrown) == 2) {
                                                         StopAnimAfter("ProfTelefon", local_30c, 5);
                                                         Chain =
                                                         Anim("ProfHangUp", 1, local_30c, 5);
@@ -478,10 +478,10 @@ public sealed partial class ItemUses : StoryScript
                                                         Chain = Say(9, "RUINE0053", 7, true, local_30c, 9);
                                                     }
                                                 }
-                                                else if (Var(Vars.V65147c) == 1) {
-                                                    SetVar(Vars.V65140c, 3);
-                                                    SetVar(Vars.V65147c, 2);
-                                                    SetVar(Vars.V6513d4, 2);
+                                                else if (Var(Vars.ProfessorDistracted) == 1) {
+                                                    SetVar(Vars.StonesThrown, 3);
+                                                    SetVar(Vars.ProfessorDistracted, 2);
+                                                    SetVar(Vars.CourtyardFree, 2);
                                                     local_34c = State(Hero, 111);
                                                     Sound(@"wav\fx\steinbru.wav", local_34c, 8);
                                                     StopAnimAfter("ProfTelefon", local_34c, 5);
@@ -520,12 +520,12 @@ public sealed partial class ItemUses : StoryScript
                                             }
                                             else {
                                                 if ((Episode == 1) && (Quest == 11)) {
-                                                                                                        if (Session.InventoryOpen || (2 < Var(Vars.V65140c))) {
+                                                                                                        if (Session.InventoryOpen || (2 < Var(Vars.StonesThrown))) {
                                                         return false;
                                                     }
                                                     local_3a8 = State(Hero, 111);
                                                     Sound(@"wav\fx\steinste.wav", local_3a8, 8);
-                                                    if (Var(Vars.V65140c) == 0) {
+                                                    if (Var(Vars.StonesThrown) == 0) {
                                                         StopAnimAfter("ProfTelefon", local_3a8, 5);
                                                         Chain =
                                                         Anim("ProfHangUp", 1, local_3a8, 5);
@@ -533,10 +533,10 @@ public sealed partial class ItemUses : StoryScript
                                                         Anim("ProfStandLeft", -1, Chain, 0);
                                                         Anim("Radio", -1, local_3a8, 0);
                                                         PointerAfter(false, local_3a8, 0, 400, 400);
-                                                        IncAfter(Vars.V65140c, local_3a8, 0);
+                                                        IncAfter(Vars.StonesThrown, local_3a8, 0);
                                                         Chain = Say(9, "RUINE0053", 5, true, local_3a8, 9);
                                                     }
-                                                    else if (Var(Vars.V65140c) == 1) {
+                                                    else if (Var(Vars.StonesThrown) == 1) {
                                                         StopAnimAfter("ProfTelefon", local_3a8, 5);
                                                         Chain =
                                                         Anim("ProfHangUp", 1, local_3a8, 5);
@@ -544,10 +544,10 @@ public sealed partial class ItemUses : StoryScript
                                                         Anim("ProfStandLeft", -1, Chain, 0);
                                                         Anim("Radio", -1, local_3a8, 0);
                                                         PointerAfter(false, local_3a8, 0, 400, 400);
-                                                        IncAfter(Vars.V65140c, local_3a8, 0);
+                                                        IncAfter(Vars.StonesThrown, local_3a8, 0);
                                                         Chain = Say(9, "RUINE0053", 6, true, local_3a8, 9);
                                                     }
-                                                    else if (Var(Vars.V65140c) == 2) {
+                                                    else if (Var(Vars.StonesThrown) == 2) {
                                                         StopAnimAfter("ProfTelefon", local_3a8, 5);
                                                         Chain =
                                                         Anim("ProfHangUp", 1, local_3a8, 5);
@@ -602,7 +602,7 @@ public sealed partial class ItemUses : StoryScript
                                                                 return false;
                                                             }
                                                             if ((Episode == 4) && (Quest == 7)) {
-                                                                if (Var(Vars.V64eff9) == 0) {
+                                                                if (Var(Vars.StudyFireOut) == 0) {
                                                                     Chain = local_3f0;
                                                                     PointerAfter(false, local_3f0, 0, 300, 400);
                                                                     SetAfter(Vars.V64f3e4, 1, local_3f0, 0);
@@ -617,7 +617,7 @@ public sealed partial class ItemUses : StoryScript
                                                             StopAnimAfter("FeuerKlein", local_3f0, 5);
                                                             StopAnimAfter("FeuerMittel", local_3f0, 5);
                                                             local_3f0 = Anim("FeuerGross", -1, local_3f0, 5);
-                                                            SetVar(Vars.V64f304, 2);
+                                                            SetVar(Vars.StudyFire, 2);
                                                             Take(9);
                                                         }
                                                         else {
@@ -661,9 +661,9 @@ public sealed partial class ItemUses : StoryScript
                                                                         PointerAfter(false, local_468, 0, 400, 400);
                                                                         Chain = State(Hero, 100);
                                                                         local_468 = Chain;
-                                                                        IncAfter(Vars.V650bbc, Chain, 0);
-                                                                        IncAfter(Vars.V650b84, local_468, 0);
-                                                                        IncAfter(Vars.V650bf4, local_468, 0);
+                                                                        IncAfter(Vars.AnneCastleTalk, Chain, 0);
+                                                                        IncAfter(Vars.GeorgeCastleTalk, local_468, 0);
+                                                                        IncAfter(Vars.JulianCastleTalk, local_468, 0);
                                                                         PointerAfter(false, local_468, 0, 400, 400);
                                                                         ObjAfter("LOC17BuschObj", false, local_468, 28);
                                                                         Sound(@"wav\fx\axtgestr.wav", local_468, 8);
@@ -677,8 +677,8 @@ public sealed partial class ItemUses : StoryScript
                                                                     if (Same(target, "LOC24ExitToLoc27")) {
                                                                         if ((Episode == 1) && (Quest == 9)) {
                                                                             local_46c = null;
-                                                                            if (Var(Vars.V650fac) == 0) {
-                                                                                if (Var(Vars.V650fe4) == 1) {
+                                                                            if (Var(Vars.TreasureDoorDiscussed) == 0) {
+                                                                                if (Var(Vars.TreasureDoorBroken) == 1) {
                                                                                     return false;
                                                                                 }
                                                                                 if (George.X <= Hero.X) {
@@ -694,8 +694,8 @@ public sealed partial class ItemUses : StoryScript
                                                                                 Chain = Say(0, "LABYRINTH0046", 5, true, local_46c, 0);
                                                                                 SetText("t63becc", "geh2");
                                                                             }
-                                                                            else if (Var(Vars.V650fac) == 1) {
-                                                                                if (Var(Vars.V650fe4) == 1) {
+                                                                            else if (Var(Vars.TreasureDoorDiscussed) == 1) {
+                                                                                if (Var(Vars.TreasureDoorBroken) == 1) {
                                                                                     return false;
                                                                                 }
                                                                                 WalkAfter(Hero, 348, 380, null, 5);
@@ -706,7 +706,7 @@ public sealed partial class ItemUses : StoryScript
                                                                                 Sound(@"wav\fx\axt2.wav", local_46c, 18);
                                                                                 Sound(@"wav\fx\axt2.wav", local_46c, 28);
                                                                                 Chain = Say(0, "LABYRINTH0046", 7, true, local_46c, 31);
-                                                                                SetVar(Vars.V650fe4, 1);
+                                                                                SetVar(Vars.TreasureDoorBroken, 1);
                                                                                 ObjAfter("LOC24Tuer", false, local_46c, 6);
                                                                                 Anim("TuerClose", -1, local_46c, 6);
                                                                                 SetText("t63becc", "Tuer");
@@ -871,11 +871,11 @@ public sealed partial class ItemUses : StoryScript
                                                                                             if (Var(Vars.V64efc0) != 0) {
                                                                                             }
                                                                                             SetVar(Vars.V64f684, 5);
-                                                                                            SetVar(Vars.V650024, 0);
-                                                                                            SetVar(Vars.V64ffec, 0);
-                                                                                            SetVar(Vars.V65005c, 0);
-                                                                                            SetVar(Vars.V64ff7c, 0);
-                                                                                            SetVar(Vars.V64ffb4, 0);
+                                                                                            SetVar(Vars.AnneTalk, 0);
+                                                                                            SetVar(Vars.DickTalk, 0);
+                                                                                            SetVar(Vars.JulianTalk, 0);
+                                                                                            SetVar(Vars.FannyTalk, 0);
+                                                                                            SetVar(Vars.QuentinKitchenTalk, 0);
                                                                                         }
                                                                                         else {
                                                                                             local_18 = 0;
@@ -922,9 +922,9 @@ public sealed partial class ItemUses : StoryScript
                                                                                                     SetText("t63bdb4", "Schiff");
                                                                                                     Chain = local_63c;
                                                                                                     Chain = Say(5, "ARBEIT0029", 8, true, local_63c, 0);
-                                                                                                    SetAfter(Vars.V650024, 0, local_63c, 0);
-                                                                                                    SetAfter(Vars.V64ffec, 0, local_63c, 0);
-                                                                                                    SetAfter(Vars.V65005c, 0, local_63c, 0);
+                                                                                                    SetAfter(Vars.AnneTalk, 0, local_63c, 0);
+                                                                                                    SetAfter(Vars.DickTalk, 0, local_63c, 0);
+                                                                                                    SetAfter(Vars.JulianTalk, 0, local_63c, 0);
                                                                                                 }
                                                                                                 if ((Episode == 6) && (Quest == 7)) {
                                                                                                     PointerOff();
