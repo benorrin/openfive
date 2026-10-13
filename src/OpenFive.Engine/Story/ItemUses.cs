@@ -971,4 +971,20 @@ public sealed partial class ItemUses : StoryScript
         return (local_18 != 0);
     }
 
+    // from FUN_0041c126 (the rucksack items)
+    /// <summary>An item clicked in the open rucksack. False when it is simply taken in hand.</summary>
+    public bool Click(int item)
+    {
+        if (item == 14) {
+            // The treasure map is looked at in its own close-up.
+            Session.CloseInventory();
+            ChangeLocation("locKarte", null, 5);
+            return true;
+        }
+        if ((item == 3) && (Episode == 1) && (Quest == 7) && (LocationId != 5)) {
+            Chain = Say(0, "KAJUETE0024", 7, true, null, 0);
+            return true;
+        }
+        return false;
+    }
 }

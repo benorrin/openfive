@@ -380,6 +380,8 @@ public sealed class GameSession
         if (InventoryOpen)
         {
             int item = target is { } t ? Inventory.ItemOf(t.Name) : 0;
+            if (item != 0 && new Story.ItemUses(this).Click(item))
+                return;
             if (item != 0)
             {
                 // The item is taken in hand; the rucksack stays open (so it can be used on another

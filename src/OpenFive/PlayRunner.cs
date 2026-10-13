@@ -188,6 +188,14 @@ sealed class PlayRunner
                     s.Script.Click(a.Name);
                 return where;
             }
+            case "lines":
+                // Lists every entry of a dialogue scene (all speakers and story steps).
+                foreach (var d in w.Data.Dialogs.All
+                             .Where(d => d.Scene.Equals(cmd[1], StringComparison.OrdinalIgnoreCase))
+                             .OrderBy(d => d.Id))
+                    Console.WriteLine($"  {d.Speaker} {(d.IsChoice ? "DLG" : "V")} Q{d.Quest} E{d.Episode} {d.Id}: " +
+                                      string.Join(" | ", d.Options.Select(o => o.Text)));
+                return where;
             case "at":
                 s.MoveMouse(int.Parse(cmd[1]), int.Parse(cmd[2]));
                 s.Click();

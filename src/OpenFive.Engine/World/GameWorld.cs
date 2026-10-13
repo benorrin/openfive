@@ -328,10 +328,11 @@ public sealed class GameWorld
         UpdatePerspective(a);
     }
 
+    /// <summary>Hides a character. Its queue keeps running (a location change queued on the hero
+    /// still happens), as in the original.</summary>
     public void HideActor(Actor a)
     {
         a.Visible = false;
-        a.ClearQueue();
     }
 
     void UpdatePerspective(Actor a)

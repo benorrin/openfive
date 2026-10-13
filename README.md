@@ -107,6 +107,7 @@ distributions is planned; the same `dotnet publish` command works with `-r win-x
 * `--play FILE` plays through the game off-screen from a list of commands (`click OBJECT`,
   `use ITEM TARGET`, `choose OPTION`, `expect LOCATION`, `save SLOT`, `load SLOT`, ...; see
   `src/OpenFive/PlayRunner.cs`), skipping speech, and reports anything that did not work.
+  `lines SCENE` lists every line of a dialogue scene with its quest and episode.
 * Setting `OPENFIVE_TRACE=1` prints clicks, dialogue lines, story variables and pointer changes.
 * `--view LOCATION` opens a scene viewer (e.g. `--view loc05`): the location's background and
   objects, with hover labels.
