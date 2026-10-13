@@ -1,0 +1,124 @@
+# OpenFive
+
+OpenFive is an open-source reimplementation of the game engine of **The Famous Five: Treasure
+Island** (*5 Freunde auf Schatzsuche*, Ravensburger Interactive, 1999), written in C# for modern
+systems. It lets you play the original adventure natively, in a resizable window or fullscreen,
+at any resolution.
+
+OpenFive contains **no code, graphics, text, speech or music from the original game**. You need
+your own copy of the game CD (or a disc image of it): OpenFive reads all game data from the disc
+every time it runs.
+
+> **Status:** early development. The disc reader, file formats, rendering and a scene viewer
+> work; the story logic is being reimplemented location by location. See
+> [docs/PROGRESS.md](docs/PROGRESS.md) for what works today.
+
+## What you need
+
+* The original *Famous Five: Treasure Island* CD (English or German release), either:
+  * a disc image: `.cue` + `.bin`, `.ccd` + `.img`, a raw `.img`/`.bin`, or an `.iso`, or
+  * the physical CD, mounted (for example at `/run/media/$USER/FAMOUS5`).
+* SDL3 (`libSDL3-0` on openSUSE).
+* To build from source: the .NET 8 SDK.
+
+### Making a disc image
+
+If you have the CD, an image keeps the drive free and loads faster. On Linux:
+
+```sh
+dd if=/dev/sr0 of=famous5.iso bs=2048 status=progress
+```
+
+Images made by other tools (CloneCD `.ccd/.img/.sub`, `.cue/.bin`) work as they are; point
+OpenFive at the `.cue` or `.ccd` file.
+
+## Playing
+
+```sh
+openfive --disc ~/Games/famous5/FAMOUS5.cue
+```
+
+Instead of `--disc` you can set the `OPENFIVE_DISC` environment variable.
+
+| Option | Meaning |
+|--------|---------|
+| `--disc PATH` | disc image or mounted CD |
+| `--lang en` / `--lang de` | English or German (both languages are on every CD) |
+| `--fullscreen` | start fullscreen |
+| `--sharp` | sharp pixel scaling instead of smooth |
+
+### Controls
+
+* **Mouse:** move the pointer over the scene; names of things appear above it. Click to walk,
+  look at things, talk to people and pick things up. Left and right buttons do the same.
+* **Rucksack (inventory):** click the character you are playing. To use an item, hold the button
+  on it, drag it onto something in the scene, and release.
+* **Conversations:** click (or press Space) to skip the line being spoken. When you are offered
+  choices, click the one you want.
+* **F1:** main menu (load, save, options, quit).
+* **F11** or **Alt+Enter:** toggle fullscreen. **F12:** toggle smooth/sharp scaling.
+
+### How to play
+
+You play the Famous Five (mostly George and Dick) on the trail of a treasure on Kirrin Island.
+Explore each place, talk to everyone, and look closely at things: the pointer flashes red over
+anything you can interact with. Items you collect go into the rucksack; many puzzles are solved by
+dragging an item onto a person or an object. If you are stuck, talk to the others again: they
+often give hints.
+
+## Building from source
+
+### openSUSE Tumbleweed
+
+```sh
+sudo zypper install dotnet-sdk-8.0 libSDL3-0
+git clone <repository-url> openfive
+cd openfive
+dotnet build -c Release
+dotnet run -c Release --project src/OpenFive -- --disc /path/to/FAMOUS5.cue
+```
+
+A self-contained build (no .NET runtime needed on the target machine):
+
+```sh
+dotnet publish src/OpenFive -c Release -r linux-x64 --self-contained -o out/linux-x64
+./out/linux-x64/OpenFive --disc /path/to/FAMOUS5.cue
+```
+
+### Other platforms
+
+The code is platform-neutral (.NET 8 + SDL3). Packaging for Windows, macOS and other Linux
+distributions is planned; the same `dotnet publish` command works with `-r win-x64`,
+`-r osx-arm64`, etc., with the matching SDL3 library placed next to the executable
+(`SDL3.dll`, `libSDL3.0.dylib`).
+
+## Developer tools
+
+* `--view LOCATION` opens a scene viewer (e.g. `--view loc05`): the location's background and
+  objects, with hover labels.
+* `--view LOCATION --screenshot out.bmp --frames N` renders off-screen and saves a picture
+  (useful in automated tests, together with `SDL_VIDEO_DRIVER=offscreen`).
+
+## Project layout
+
+| Path | Contents |
+|------|----------|
+| `src/OpenFive.Engine/IO` | Reading the CD: ISO 9660 images (cooked and raw sectors, cue/ccd sheets), mounted discs |
+| `src/OpenFive.Engine/Formats` | File formats: BRG images, Smacker video, WAV audio, `.res` location files, object and dialogue texts |
+| `src/OpenFive.Engine/Graphics` | 800x600 framebuffer, bitmap font, screenshots |
+| `src/OpenFive.Engine/World` | Scenes, objects, actors, walking, tasks, dialogue |
+| `src/OpenFive` | The application: SDL3 window, audio and input |
+| `docs/ENGINE.md` | How the engine behaves |
+| `docs/PROGRESS.md` | Milestones and per-location status |
+
+## Legal
+
+OpenFive is an independent project, not affiliated with or endorsed by Ravensburger or the
+rights holders of *The Famous Five*. "The Famous Five" is a trademark of its respective owner.
+You need a legally obtained copy of the original game to play.
+
+OpenFive is free software: you can redistribute it and/or modify it under the terms of the GNU
+General Public License, version 2, as published by the Free Software Foundation (see
+[LICENSE](LICENSE)). It is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+PURPOSE.
