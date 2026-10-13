@@ -91,3 +91,33 @@ rested for one tick, using the object's "over" text, or the character's name for
 * Switching an object on/off updates the location, the persistent object list ("object.res"),
   and tells the location's script (this is how picking things up grants items).
 * Moving an object shifts its picture and its click polygon together.
+
+## Characters
+
+* Six scripted characters: Dick, George, Julian, Anne, Timmy, Quentin. Each state (1-116) shows
+  the animation "a&lt;Name&gt;_&lt;state&gt;" from the common data, e.g. 5 = walk right,
+  11 = stand facing right.
+* **Walkable space** is made of paths (polylines) and areas (convex polygons) joined by link
+  points. A point is "on" a path when its y matches the line at that x; points on an area's edge
+  count as inside. The nearest walkable point is the closest of the nearest point on any path
+  (perpendicular foot, clamped to the segment) and the nearest in any area.
+* **Routes** chain shapes from the character's shape to the target's through link points,
+  choosing the cheapest chain (distance along paths, straight-line across areas). A walk is a
+  list of straight legs: across an area directly, along a path via its corners. A disabled shape
+  ends the route there.
+* **Speed** is 10 pixels per tick horizontally and 4 vertically, times the character's scale;
+  the shorter axis is slowed in proportion (counted in whole speed units) and once the longer
+  axis is under one unit away the rest is covered at once. A leg ends only when the character is
+  exactly on its end point. Direction: slope shallower than 1:4 is sideways, else diagonal.
+* **Scale and depth** come from the shape's per-point values at the character's height (scale
+  values are percent x 2). Sheets stored at double resolution (about 400 pixels tall) are drawn at
+  half the scale. The sheet frame is drawn so the frame's offset point (x halved) sits on the
+  character's position.
+* **Hiding behind scenery**: each mask region gets a depth from the location's sample points; a
+  character's pixel is hidden where the region in front is nearer than the character.
+* **Queues**: walk legs, "walk there (plan the route when reached)", state changes, and actions
+  to run on arrival. Tasks waiting on a queue entry start once the character reaches it.
+* **Followers**: while a character walks, a follower more than 100 pixels away (scaled) on
+  either axis is sent walking to the leader.
+* The original also steers walking characters around each other; OpenFive leaves this out for
+  now, because it can make characters oscillate and block scenes.

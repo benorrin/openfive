@@ -9,8 +9,8 @@ namespace OpenFive.Engine.World;
 /// </summary>
 public sealed class Sprite
 {
-    public readonly ResourceEntry Resource;
-    public readonly bool Packed;
+    public ResourceEntry? Resource;
+    public bool Packed;
     public bool Visible;
     /// <summary>Larger depth = further away (drawn earlier).</summary>
     public int Depth;
@@ -22,6 +22,9 @@ public sealed class Sprite
     public bool Mirror;
     /// <summary>Depth at which the background mask hides this sprite (actors), or null.</summary>
     public int? MaskDepth;
+
+    /// <summary>A sprite owned by a character; its image changes with the character's animation.</summary>
+    public Sprite() { }
 
     public Sprite(ResourceEntry resource, bool packed, int width, int height)
     {
@@ -75,7 +78,7 @@ public sealed class SpriteBank
     {
         string needle = pathPart.Replace('/', '\\');
         foreach (var s in _order)
-            if (s.Resource.Path.Replace('/', '\\').Contains(needle, StringComparison.OrdinalIgnoreCase))
+            if (s.Resource != null && s.Resource.Path.Replace('/', '\\').Contains(needle, StringComparison.OrdinalIgnoreCase))
                 return s;
         return null;
     }
@@ -87,15 +90,16 @@ public sealed class SpriteBank
                 _order.Remove(s);
     }
 
-    /// <summary>Draws visible sprites, furthest first; equal depths keep load order.</summary>
-    public void Draw(Framebuffer fb, Func<Sprite, Func<int, int, bool>?>? occlusion = null)
+    /// <summary>Draws visible sprites (plus extra ones), furthest first; equal depths keep load order.</summary>
+    public void Draw(Framebuffer fb, IEnumerable<Sprite>? extra = null, Func<Sprite, Func<int, int, bool>?>? occlusion = null)
     {
-        foreach (var s in _order.Where(s => s.Visible).OrderByDescending(s => s.Depth))
+        var all = extra == null ? _order : _order.Concat(extra);
+        foreach (var s in all.Where(s => s.Visible && s.Resource != null).OrderByDescending(s => s.Depth))
         {
             var hidden = occlusion?.Invoke(s);
             if (s.Packed)
             {
-                var sheet = _data.Packed(s.Resource.Path);
+                var sheet = _data.Packed(s.Resource!.Path);
                 int n = sheet.FrameWidth * sheet.FrameHeight;
                 if (_frameBuffer.Length < n)
                     _frameBuffer = new byte[n];
@@ -105,7 +109,7 @@ public sealed class SpriteBank
             }
             else
             {
-                var img = _data.Image(s.Resource.Path);
+                var img = _data.Image(s.Resource!.Path);
                 fb.Blit(img, s.X, s.Y, img.Pixels.Length > 0 ? img.Pixels[0] : -1, s.SrcX, s.SrcY, s.SrcW, s.SrcH);
             }
         }

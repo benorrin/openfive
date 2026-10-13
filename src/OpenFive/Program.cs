@@ -53,6 +53,8 @@ sealed class Options
     public string? Screenshot;
     public string? Track;
     public List<string> Anims = new();
+    public List<(string Name, int X, int Y)> Place = new();
+    public List<(int X, int Y)> WalkTargets = new();
     public int Frames = -1;
 
     public const string Help =
@@ -63,6 +65,8 @@ sealed class Options
         "  --sharp            sharp pixel scaling instead of smooth (F12 toggles)\n" +
         "  --view LOCATION    developer scene viewer (e.g. loc05)\n" +
         "  --anim NAME        viewer: loop a named animation (repeatable)\n" +
+        "  --place NAME:X,Y   viewer: put a character (Dick, George, ...) at X,Y; the first one is the hero\n" +
+        "  --walk X,Y         viewer: hero walks to X,Y (repeatable, one after another)\n" +
         "  --track PATH       viewer: play a background track (e.g. wav/atmo/Geheim.WAV)\n" +
         "  --screenshot FILE  with --frames N: render N frames off-screen, save a BMP and exit\n";
 
@@ -84,6 +88,18 @@ sealed class Options
                 case "--frames": o.Frames = int.Parse(Next()); break;
                 case "--track": o.Track = Next(); break;
                 case "--anim": o.Anims.Add(Next()); break;
+                case "--place":
+                {
+                    string[] p = Next().Split(':', ',');
+                    o.Place.Add((p[0], int.Parse(p[1]), int.Parse(p[2])));
+                    break;
+                }
+                case "--walk":
+                {
+                    string[] p = Next().Split(',');
+                    o.WalkTargets.Add((int.Parse(p[0]), int.Parse(p[1])));
+                    break;
+                }
                 case "-h":
                 case "--help": o.ShowHelp = true; break;
                 default:
@@ -112,6 +128,26 @@ static class Viewer
         var scene = world.Scene!;
         if (opt.Track != null)
             audio.SetBackgroundTrack(opt.Track);
+        foreach (var (name, x, y) in opt.Place)
+        {
+            var actor = world.Actors.FirstOrDefault(a => a.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+            if (actor == null)
+            {
+                Console.Error.WriteLine($"unknown character {name}");
+                continue;
+            }
+            world.PlaceActor(actor, x, y, Engine.World.ActorStates.StandDownRight);
+            if (name == opt.Place[0].Name)
+                world.Hero = actor;
+        }
+        // Further placed characters follow the one before them (the party following the hero).
+        for (int i = 1; i < opt.Place.Count; i++)
+        {
+            var lead = world.Actors.First(a => a.Name.Equals(opt.Place[i - 1].Name, StringComparison.OrdinalIgnoreCase));
+            lead.Follower = world.Actors.First(a => a.Name.Equals(opt.Place[i].Name, StringComparison.OrdinalIgnoreCase));
+        }
+        foreach (var (x, y) in opt.WalkTargets)
+            world.WalkToAfter(world.Hero, x, y);
         foreach (string a in opt.Anims)
             if (world.PlayAnim(a, -1) == null)
                 Console.Error.WriteLine($"unknown animation {a}");
@@ -148,6 +184,8 @@ static class Viewer
                 (mx, my) = ((int)hover.Click.Average(p => p.X), (int)hover.Click.Average(p => p.Y));
             Render(mx, my);
             Screenshot.SaveBmp(fb, opt.Screenshot);
+            foreach (var a in world.Actors.Where(a => a.Visible))
+                Console.WriteLine($"{a.Name}: ({a.X},{a.Y}) state {a.State} shape {a.Shape} scale {a.Scale:F3} depth {a.Depth} queue {a.Queue.Count}");
             Console.WriteLine($"saved {opt.Screenshot} (hover at {mx},{my})");
             return 0;
         }
@@ -161,6 +199,8 @@ static class Viewer
             while (host.Input.KeysPressed.TryDequeue(out int k))
                 if (k == Keys.Escape)
                     host.Input.QuitRequested = true;
+            if (host.Input.Clicked && world.Hero.Visible)
+                world.WalkTo(world.Hero, host.Input.MouseX, host.Input.MouseY);
             ulong now = Sdl.GetTicks();
             scene.Update(now - last);
             tickClock += now - last;
