@@ -33,6 +33,33 @@ public static class ActorStates
         "handsoutpocket_right",
     };
 
+    /// <summary>
+    /// The pose a character changes to when an action animation has played to its end (for
+    /// example kneel - examine - get up - stand). States not listed loop (talking, sitting...).
+    /// </summary>
+    public static readonly Dictionary<int, int> FollowUp = BuildFollowUp();
+
+    static Dictionary<int, int> BuildFollowUp()
+    {
+        var f = new Dictionary<int, int>
+        {
+            [13] = 15, [14] = 16, [17] = 8, [18] = 11,
+            [45] = 53, [46] = 54, [47] = 55, [48] = 56, [49] = 8, [50] = 11, [53] = 49, [54] = 50,
+            [29] = 7, [30] = 7, [31] = 7, [32] = 12,
+            [51] = 8, [52] = 11, [57] = 59, [58] = 60,
+            [61] = 7, [62] = 12, [63] = 7, [64] = 12, [65] = 7, [66] = 12,
+            [67] = 8, [68] = 11, [69] = 8, [70] = 11, [71] = 73, [72] = 74, [75] = 77, [76] = 78,
+            [79] = 8, [80] = 8, [81] = 11, [82] = 11, [83] = 8, [84] = 11, [85] = 86, [87] = 11,
+            [89] = 11, [90] = 11, [91] = 12, [92] = 12, [93] = 8, [94] = 35, [95] = 7, [96] = 11,
+            [97] = 8, [98] = 11, [99] = 8, [100] = 10, [101] = 10, [102] = 9, [103] = 12, [104] = 105,
+            [106] = 9, [107] = 108, [109] = 107, [111] = 7, [112] = 113, [115] = 7, [116] = 12,
+        };
+        for (int s = 19; s <= 22; s++) f[s] = s - 11; // take (middle height) -> stand
+        for (int s = 23; s <= 26; s++) f[s] = s - 15; // take (low) -> stand
+        for (int s = 37; s <= 40; s++) f[s] = s - 4;  // sitting down -> sit
+        return f;
+    }
+
     public static bool IsWalk(int s) => s is >= WalkDownLeft and <= WalkDownRight;
     public static bool IsStand(int s) => s is >= StandDownLeft and <= StandDownRight;
 

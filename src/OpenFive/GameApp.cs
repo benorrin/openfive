@@ -19,6 +19,7 @@ sealed class GameApp
     readonly GameSession _session;
     readonly Settings _settings;
     MoviePlayer? _movie;
+    readonly float[] _silence = new float[Engine.Formats.Wav.OutputRate / 10 * 2];
     int _movieMusic;
 
     public GameApp(GameData data, Options opt, Settings settings)
@@ -172,6 +173,8 @@ sealed class GameApp
             _movie?.Update(100);
             if (_movie is { Finished: true })
                 EndMovie();
+            // No audio device off-screen: consume a tick's worth of sound so recordings end.
+            _mixer.Mix(_silence);
             Tick();
         }
         if (_opt.Screenshot != null)

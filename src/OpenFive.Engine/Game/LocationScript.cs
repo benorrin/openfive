@@ -80,6 +80,7 @@ public abstract class LocationScript : ILocationHooks, IDialogueHooks
     }
 
     public virtual void ObjectChanged(GameWorld world, string name, bool on) { }
+    public virtual void LineStarting(GameWorld world, int speaker) { }
     public virtual void LineQueued(GameWorld world, TaskHandle end) { }
     public virtual void ConversationEnding(GameWorld world, TaskHandle end) { }
     public virtual void ChoiceOpened(GameWorld world) { }

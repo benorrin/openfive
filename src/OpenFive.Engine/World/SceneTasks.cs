@@ -67,7 +67,9 @@ public sealed class SpeechTask : GameTask
     {
         if (_voice == -1)
         {
-            _voice = _speech.Length > 0 ? world.Audio.PlaySpeech(_speech) : 0;
+            _voice = _speech.Length == 0 ? 0
+                : _speech.Contains('\\') || _speech.Contains('/') ? world.Audio.PlayEffect(_speech)
+                : world.Audio.PlaySpeech(_speech);
             if (_text != null)
                 world.Texts.Add(_text);
             _fallbackTicks = _voice == 0 ? 10 + (_text?.Text.Length ?? 0) * 6 / 10 : 0;

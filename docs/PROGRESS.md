@@ -26,4 +26,4 @@ Behaviour is reimplemented from documentation of how the original engine works (
 
 | Location | Description | State |
 |----------|-------------|-------|
-| (none yet) | | |
+| loc06 | Garden of Kirrin Cottage: opening scene, Aunt Fanny's questions, bucket, doors | done |

@@ -8,6 +8,9 @@ public sealed record Speaker(int Code, string Folder, string HeadStill, string H
 /// <summary>Called by the dialogue system so a location's script can continue a conversation.</summary>
 public interface IDialogueHooks
 {
+    /// <summary>A line is about to be spoken by <paramref name="speaker"/> (speaker code).</summary>
+    void LineStarting(GameWorld world, int speaker) { }
+
     /// <summary>A line (not the last of its conversation) has been queued; <paramref name="end"/> is released when it has been spoken.</summary>
     void LineQueued(GameWorld world, TaskHandle end) { }
 
@@ -72,8 +75,26 @@ public sealed class DialogueSystem
     /// <summary>Persisted state: options already asked.</summary>
     public Dictionary<string, HashSet<int>> AskedOptions => _asked;
 
-    internal DialogEntry? Lookup(Speaker s, string scene, int line) =>
-        _world.Data.Dialogs.Get(s.Folder, _world.Quest, _world.Episode, scene, line);
+    internal DialogEntry? Lookup(Speaker s, bool choice, string scene, int line) =>
+        _world.Data.Dialogs.Get(s.Folder, choice, _world.Quest, _world.Episode, scene, line);
+
+    /// <summary>Options of a choice menu that have not been asked yet.</summary>
+    public IReadOnlyCollection<int> AskedFor(int speaker, string scene, int line) =>
+        Asked(MenuKey(SpeakerFor(speaker) ?? Speakers[0], scene, line));
+
+    /// <summary>Marks options of a choice menu as asked (they will not be offered again).</summary>
+    public void MarkAsked(int speaker, string scene, int line, params int[] options)
+    {
+        var set = Asked(MenuKey(SpeakerFor(speaker) ?? Speakers[0], scene, line));
+        foreach (int o in options)
+            set.Add(o);
+    }
+
+    /// <summary>Makes all options of a choice menu available again.</summary>
+    public void ResetMenu(int speaker, string scene, int line) =>
+        Asked(MenuKey(SpeakerFor(speaker) ?? Speakers[0], scene, line)).Clear();
+
+    internal void LineStarting(int speaker) => Hooks?.LineStarting(_world, speaker);
 
     /// <summary>
     /// Queues a line of <paramref name="speaker"/> from dialogue scene <paramref name="scene"/>.
@@ -83,10 +104,10 @@ public sealed class DialogueSystem
     /// current sequence.
     /// </summary>
     public TaskHandle Say(int speaker, string scene, int line, TaskHandle? after = null, int menuPosition = 2,
-        bool last = false, int delay = 0)
+        bool last = false, int delay = 0, bool choice = false)
     {
         var s = SpeakerFor(speaker) ?? Speakers[0];
-        var task = _world.Tasks.Add(new DialogueTask(this, s, scene, line, menuPosition, last)
+        var task = _world.Tasks.Add(new DialogueTask(this, s, scene, line, menuPosition, last, choice)
         {
             WaitFor = after ?? _world.Chain,
             Delay = delay,
@@ -126,12 +147,13 @@ public sealed class DialogueTask : GameTask
     readonly Speaker _speaker;
     readonly string _scene;
     readonly int _line, _menuPosition;
-    readonly bool _last;
+    readonly bool _last, _choice;
     GameTask? _inner;
     bool _started;
 
-    internal DialogueTask(DialogueSystem sys, Speaker speaker, string scene, int line, int menuPosition, bool last)
+    internal DialogueTask(DialogueSystem sys, Speaker speaker, string scene, int line, int menuPosition, bool last, bool choice)
     {
+        _choice = choice;
         Name = "DIALOG";
         _sys = sys;
         _speaker = speaker;
@@ -146,10 +168,10 @@ public sealed class DialogueTask : GameTask
         if (!_started)
         {
             _started = true;
-            var entry = _sys.Lookup(_speaker, _scene, _line);
+            var entry = _sys.Lookup(_speaker, _choice, _scene, _line);
             if (entry == null)
             {
-                Console.Error.WriteLine($"dialogue: no line {_speaker.Folder} Q{world.Quest} E{world.Episode} {_scene} {_line}");
+                Console.Error.WriteLine($"dialogue: no {(_choice ? "menu" : "line")} {_speaker.Folder} Q{world.Quest} E{world.Episode} {_scene} {_line}");
                 _sys.LineQueued(this, _last);
                 return true;
             }
@@ -202,6 +224,7 @@ sealed class SpokenLine : GameTask
     {
         if (_speech == null)
         {
+            _sys.LineStarting(_speaker.Code);
             world.CursorVisible = false;
             if (world.DialogueBox)
             {

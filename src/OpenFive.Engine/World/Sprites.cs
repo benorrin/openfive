@@ -110,7 +110,11 @@ public sealed class SpriteBank
             else
             {
                 var img = _data.Image(s.Resource!.Path);
-                fb.Blit(img, s.X, s.Y, img.Pixels.Length > 0 ? img.Pixels[0] : -1, s.SrcX, s.SrcY, s.SrcW, s.SrcH);
+                int key = img.Pixels.Length > 0 ? img.Pixels[0] : -1;
+                if (Math.Abs(s.Scale - 1) < 0.001)
+                    fb.Blit(img, s.X, s.Y, key, s.SrcX, s.SrcY, s.SrcW, s.SrcH);
+                else
+                    fb.BlitScaled(img, s.X, s.Y, key, s.SrcX, s.SrcY, s.SrcW, s.SrcH, s.Scale);
             }
         }
     }

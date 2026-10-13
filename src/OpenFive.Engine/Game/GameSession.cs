@@ -283,10 +283,12 @@ public sealed class GameSession
         Script.Hover(MouseX, MouseY);
         var hover = World.CursorVisible ? FindTarget(MouseX, MouseY) : null;
         Hover = hover;
-        if (MouseX == _lastMouseX && MouseY == _lastMouseY)
+        bool moved = MouseX != _lastMouseX || MouseY != _lastMouseY;
+        if (!moved)
             _restTicks++;
         else
             _restTicks = 0;
+        World.UpdateIdle(moved, InventoryOpen || Dragging != 0 || World.Dialogue.OpenMenu != null || IsMenu(World.Scene?.Name ?? ""));
         (_lastMouseX, _lastMouseY) = (MouseX, MouseY);
         if (hover is { Object: { Command: ObjectCommand.ChangeLocation } o })
             _pointerFrame = ArrowFrame(o.CommandArg) + (int)(World.Tick / 3 % 2);

@@ -38,6 +38,27 @@ public sealed class Framebuffer
         }
     }
 
+    /// <summary>Draws part of an RGB565 image scaled.</summary>
+    public void BlitScaled(Image16 img, int dx, int dy, int key, int sx, int sy, int w, int h, double scale)
+    {
+        int ow = (int)Math.Round(w * scale), oh = (int)Math.Round(h * scale);
+        for (int y = 0; y < oh; y++)
+        {
+            int ty = dy + y, srcY = sy + Math.Min(h - 1, (int)(y / scale));
+            if (ty < 0 || ty >= Height || srcY < 0 || srcY >= img.Height)
+                continue;
+            for (int x = 0; x < ow; x++)
+            {
+                int tx = dx + x, srcX = sx + Math.Min(w - 1, (int)(x / scale));
+                if (tx < 0 || tx >= Width || srcX < 0 || srcX >= img.Width)
+                    continue;
+                ushort p = img.Pixels[srcY * img.Width + srcX];
+                if (p != key)
+                    Pixels[ty * Width + tx] = p;
+            }
+        }
+    }
+
     /// <summary>
     /// Draws palette-indexed pixels, optionally scaled, skipping the transparent index and any pixel
     /// hidden by the occlusion test (screen x, y) => true.

@@ -213,6 +213,13 @@ public sealed class GameWorld
             (a.X, a.Y) = (x, y);
     }
 
+    public void SetAnimScale(string name, double scale)
+    {
+        var a = FindAnim(name);
+        if (a != null)
+            a.Scale = scale;
+    }
+
     /// <summary>Finds an object of the location or of the common set.</summary>
     public ObjectDef? FindObject(string name) =>
         Scene?.Script.Objects.FirstOrDefault(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase)) ??
@@ -490,6 +497,14 @@ public sealed class GameWorld
             a._frame = 0;
         else if (a._frame < anim.Def.Frames.Length - 1)
             a._frame++;
+        else if (ActorStates.FollowUp.TryGetValue(state, out int next))
+        {
+            a.State = next;
+            UpdateDisplay(a);
+            return;
+        }
+        else
+            a._frame = 0;
         var f = anim.Def.Frames[a._frame];
         if (sprite.Resource != anim.Resource)
         {
@@ -513,6 +528,33 @@ public sealed class GameWorld
             sprite.SrcW = anim.Def.Width;
             sprite.SrcH = anim.Def.Height;
         }
+    }
+
+    int _idle = 200;
+
+    /// <summary>
+    /// After the hero has stood still for 20 seconds without the pointer moving, they put their
+    /// hands in their pockets; ten seconds later they take them out again.
+    /// </summary>
+    public void UpdateIdle(bool pointerMoved, bool busy)
+    {
+        var h = Hero;
+        if (pointerMoved || busy || h.Queue.Count > 0 || !h.Visible || !CursorVisible)
+        {
+            _idle = 200;
+            return;
+        }
+        if (--_idle > 0)
+            return;
+        _idle = 100;
+        h.State = h.State switch
+        {
+            ActorStates.StandDownLeft or ActorStates.StandLeft => 57,
+            ActorStates.StandDownRight or ActorStates.StandRight => 58,
+            60 => 116,
+            59 => 115,
+            _ => h.State,
+        };
     }
 
     /// <summary>Advances the game by one tick (1/10 s).</summary>

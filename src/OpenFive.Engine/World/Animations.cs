@@ -9,6 +9,8 @@ public sealed class AnimInfo
     public required ResourceEntry Resource;
     /// <summary>Current position (scripts may move an animation).</summary>
     public int X, Y;
+    /// <summary>Drawing scale (scripts may scale an animation).</summary>
+    public double Scale = 1;
 }
 
 /// <summary>
@@ -81,6 +83,7 @@ public sealed class AnimTask : GameTask
         }
         s.X = Anim.X + f.X;
         s.Y = Anim.Y + f.Y;
+        s.Scale = Anim.Scale;
     }
 }
 
