@@ -19,11 +19,13 @@ Behaviour is reimplemented from documentation of how the original engine works (
 | 6 | Dialogue: lines with box, talking head, recording and text; choice menus (remaining options, auto-pick of the last one); skip; location hooks | done |
 | 7 | Pointer (game cursor frames, exit arrows), hover labels on objects and characters, click dispatch to location scripts, rucksack (open by clicking the hero, drag items onto things) | done |
 | 8 | Intro movie, main menu (with quit confirmation), load and save screens (named slots, own JSON format), options (toggles, volume sliders, language), F1 menu, settings file. Not yet: character shadows, the ending | done |
-| 9 | Story logic, location by location (loc01 ... loc29, ship, extro) | |
+| 9 | Story logic, location by location (loc01 ... loc29, ship, extro) | converted; being played through |
 | 10 | Packaging: openSUSE first; later Windows, macOS, other Linux distributions | |
 
 ## Story logic status
 
 | Location | Description | State |
 |----------|-------------|-------|
-| loc06 | Garden of Kirrin Cottage: opening scene, Aunt Fanny's questions, bucket, doors | done |
+| loc06 | Garden of Kirrin Cottage: opening scene, Aunt Fanny's questions, bucket, doors | played through |
+| loc04 | Hall of Kirrin Cottage | converted, entering tested |
+| loc01-loc29, ending | All other locations and the item uses | converted, load without errors; not yet played through |

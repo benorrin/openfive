@@ -213,6 +213,10 @@ public sealed class GameWorld
             (a.X, a.Y) = (x, y);
     }
 
+    public bool IsAnimShown(string name) =>
+        FindAnim(name) is { } a && Sprites.For(a.Resource) is { Visible: true } &&
+        Tasks.OfType<AnimTask>().Any(t => t.Anim == a && t.WaitFor == null);
+
     public void SetAnimScale(string name, double scale)
     {
         var a = FindAnim(name);

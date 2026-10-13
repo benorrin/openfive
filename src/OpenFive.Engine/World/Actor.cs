@@ -86,7 +86,8 @@ public abstract class ActorStep : TaskHandle
 {
     public TaskHandle? WaitFor;
     public int Delay;
-    internal bool Started, Completed;
+    public bool Started { get; internal set; }
+    public bool Completed { get; internal set; }
     public override bool Released => Started || Completed;
 }
 

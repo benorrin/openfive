@@ -15,6 +15,7 @@ public abstract class LocationScript : ILocationHooks, IDialogueHooks
     protected GameWorld World => Session.World;
 
     internal void Attach(GameSession session) => Session = session;
+    protected void AttachTo(GameSession session) => Session = session;
 
     /// <summary>The location has been loaded; <paramref name="from"/> is the location the hero came from.</summary>
     public virtual void Enter(string from) { }
@@ -81,10 +82,14 @@ public abstract class LocationScript : ILocationHooks, IDialogueHooks
 
     public virtual void ObjectChanged(GameWorld world, string name, bool on) { }
     public virtual void LineStarting(GameWorld world, int speaker) { }
+
+    /// <summary>Called every game tick while the location is shown.</summary>
+    public virtual void EveryTick() { }
     public virtual void LineQueued(GameWorld world, TaskHandle end) { }
     public virtual void ConversationEnding(GameWorld world, TaskHandle end) { }
     public virtual void ChoiceOpened(GameWorld world) { }
     public virtual void ChoiceMade(GameWorld world, string scene, int line, int option) { }
+    public virtual IReadOnlyList<int>? AvailableOptions(GameWorld world, string scene, int line, int count) => null;
 }
 
 /// <summary>A location without story logic yet: objects show their names, exits lead to the next place.</summary>

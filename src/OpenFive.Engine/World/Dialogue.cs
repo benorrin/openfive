@@ -22,6 +22,12 @@ public interface IDialogueHooks
 
     /// <summary>The player picked option <paramref name="option"/> (1-3, numbered as in the dialogue file).</summary>
     void ChoiceMade(GameWorld world, string scene, int line, int option) { }
+
+    /// <summary>
+    /// The options of a menu still on offer, in display order, or null to let the dialogue system
+    /// keep track itself (each option is offered until asked).
+    /// </summary>
+    IReadOnlyList<int>? AvailableOptions(GameWorld world, string scene, int line, int count) => null;
 }
 
 /// <summary>
@@ -95,6 +101,22 @@ public sealed class DialogueSystem
         Asked(MenuKey(SpeakerFor(speaker) ?? Speakers[0], scene, line)).Clear();
 
     internal void LineStarting(int speaker) => Hooks?.LineStarting(_world, speaker);
+
+    /// <summary>
+    /// The player picked <paramref name="option"/>: the asking character says it, then the
+    /// location continues the conversation after it.
+    /// </summary>
+    internal GameTask Choose(GameWorld world, DialogueTask owner, Speaker speaker, DialogEntry entry, string scene, int line,
+        int option, string key)
+    {
+        Asked(key).Add(option);
+        LastChoice = option;
+        var spoken = new SpokenLine(this, speaker, entry.Options[option - 1]);
+        world.Chain = owner;
+        Hooks?.LineQueued(world, owner);
+        Hooks?.ChoiceMade(world, scene, line, option);
+        return spoken;
+    }
 
     /// <summary>
     /// Queues a line of <paramref name="speaker"/> from dialogue scene <paramref name="scene"/>.
@@ -179,22 +201,26 @@ public sealed class DialogueTask : GameTask
             {
                 var key = DialogueSystem.MenuKey(_speaker, _scene, _line);
                 var asked = _sys.Asked(key);
-                var open = Enumerable.Range(1, entry.Options.Count).Where(i => !asked.Contains(i) && entry.Options[i - 1].Text.Length > 0).ToList();
+                var open = _sys.Hooks?.AvailableOptions(world, _scene, _line, entry.Options.Count)?.ToList()
+                           ?? Enumerable.Range(1, entry.Options.Count).Where(i => !asked.Contains(i)).ToList();
+                open = open.Where(i => i >= 1 && i <= entry.Options.Count && entry.Options[i - 1].Text.Length > 0).ToList();
                 if (open.Count == 0)
-                    open = Enumerable.Range(1, entry.Options.Count).ToList();
+                {
+                    _sys.LineQueued(this, _last);
+                    return true;
+                }
                 if (open.Count == 1)
                 {
-                    asked.Add(open[0]);
-                    _sys.LastChoice = open[0];
-                    _sys.Hooks?.ChoiceMade(world, _scene, _line, open[0]);
-                    _inner = new SpokenLine(_sys, _speaker, entry.Options[open[0] - 1]);
+                    _inner = _sys.Choose(world, this, _speaker, entry, _scene, _line, open[0], key);
+                    return _inner.Run(world);
                 }
                 else
                 {
-                    var menu = new ChoiceTask(_sys, _speaker, entry, open, _scene, _line, _menuPosition, key);
+                    var menu = new ChoiceTask(_sys, this, _speaker, entry, open, _scene, _line, _menuPosition, key);
                     _sys.OpenMenu = menu;
                     _sys.Hooks?.ChoiceOpened(world);
                     _inner = menu;
+                    return _inner.Run(world);
                 }
             }
             else
@@ -252,12 +278,15 @@ public sealed class ChoiceTask : GameTask
     readonly string _scene, _key;
     readonly int _line, _top;
     readonly List<TextItem> _texts = new();
-    SpokenLine? _spoken;
     bool _shown;
 
-    internal ChoiceTask(DialogueSystem sys, Speaker speaker, DialogEntry entry, List<int> options, string scene, int line,
+    readonly DialogueTask _owner;
+    GameTask? _answer;
+
+    internal ChoiceTask(DialogueSystem sys, DialogueTask owner, Speaker speaker, DialogEntry entry, List<int> options, string scene, int line,
         int position, string key)
     {
+        _owner = owner;
         Name = "CHOICE";
         _sys = sys;
         _speaker = speaker;
@@ -283,10 +312,7 @@ public sealed class ChoiceTask : GameTask
             if (y < y0 || y >= y1)
                 continue;
             Close(world);
-            _sys.Asked(_key).Add(option);
-            _sys.LastChoice = option;
-            _sys.Hooks?.ChoiceMade(world, _scene, _line, option);
-            _spoken = new SpokenLine(_sys, _speaker, _entry.Options[option - 1]);
+            _answer = _sys.Choose(world, _owner, _speaker, _entry, _scene, _line, option, _key);
             return true;
         }
         return false;
@@ -320,9 +346,9 @@ public sealed class ChoiceTask : GameTask
             world.CursorVisible = true;
             world.CursorWarp = (50, _top + 10);
         }
-        if (_spoken == null)
+        if (_answer == null)
             return false;
         world.StopAnim(_speaker.HeadStill);
-        return _spoken.Run(world);
+        return _answer.Run(world);
     }
 }

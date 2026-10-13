@@ -67,6 +67,7 @@ sealed class GameApp
         if (_opt.StartLocation != null)
         {
             _session.Reset();
+            StoryScript.NewGameMenus(_session);
             _session.InGame = true;
             _world.Quest = _opt.Quest;
             _world.Episode = _opt.Episode;

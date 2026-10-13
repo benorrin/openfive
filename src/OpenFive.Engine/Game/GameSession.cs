@@ -22,6 +22,9 @@ public sealed class GameSession
     public Dictionary<string, int> Vars { get; } = new(StringComparer.OrdinalIgnoreCase);
 
     public int Var(string name) => Vars.TryGetValue(name, out int v) ? v : 0;
+
+    /// <summary>Remembered texts of the story scripts (saved with the game).</summary>
+    public Dictionary<string, string> Texts { get; } = new(StringComparer.OrdinalIgnoreCase);
     public void SetVar(string name, int value) => Vars[name] = value;
 
     /// <summary>The location the hero is in (menus are locations too, this one is not one of them).</summary>
@@ -78,6 +81,13 @@ public sealed class GameSession
             GameLocation = name;
         }
         World.LoadLocation(name);
+        if (Story.Ambience.Tracks.TryGetValue(name, out var track))
+        {
+            if (track.Length == 0)
+                World.Audio.StopBackgroundTrack();
+            else
+                World.Audio.SetBackgroundTrack(track);
+        }
         Script = _scriptFactory(name);
         Script.Attach(this);
         World.Hooks = Script;
@@ -98,6 +108,7 @@ public sealed class GameSession
         // The rucksack starts with Dick's pocket knife and the newspaper.
         Inventory.Give(6);
         Inventory.Give(27);
+        StoryScript.NewGameMenus(this);
         World.Hero = World.Dick;
         ChangeLocation(NewGameLocation);
     }
@@ -135,6 +146,7 @@ public sealed class GameSession
     {
         Inventory.Clear();
         Vars.Clear();
+        Texts.Clear();
         World.ResetState();
         PreviousLocation = "";
         GameLocation = "";
@@ -281,6 +293,8 @@ public sealed class GameSession
             EnterLocation(next, World.Scene?.Name ?? "");
         }
         Script.Hover(MouseX, MouseY);
+        if (!IsMenu(World.Scene?.Name ?? ""))
+            Script.EveryTick();
         var hover = World.CursorVisible ? FindTarget(MouseX, MouseY) : null;
         Hover = hover;
         bool moved = MouseX != _lastMouseX || MouseY != _lastMouseY;
@@ -363,7 +377,9 @@ public sealed class GameSession
     {
         int item = Dragging;
         Dragging = 0;
-        if (target != null)
+        if (target == null)
+            return;
+        if (!new Story.ItemUses(this).Use(Inventory.ObjectName(item), target.Value.Name))
             Script.UseItem(item, target.Value.Name);
     }
 

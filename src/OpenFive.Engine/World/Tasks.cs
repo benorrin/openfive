@@ -17,6 +17,8 @@ public abstract class GameTask : TaskHandle
     public TaskHandle? WaitFor;
     public int Delay;
     public bool Finished { get; internal set; }
+    /// <summary>True once the task has begun acting (its wait and delay are over).</summary>
+    public bool Started { get; internal set; }
     public override bool Released => Finished;
 
     /// <summary>Called each tick once ready; return true when the task is complete.</summary>
@@ -94,6 +96,7 @@ public sealed class TaskScheduler
                 t.Delay--;
                 continue;
             }
+            t.Started = true;
             if (t.Run(world))
             {
                 t.Finished = true;

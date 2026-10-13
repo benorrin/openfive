@@ -174,3 +174,15 @@ rested for one tick, using the object's "over" text, or the character's name for
   and music volume sliders (0-100), and the language flag.
 * A new game starts in the garden of Kirrin Cottage with the pocket knife and the newspaper in
   the rucksack.
+
+## Story logic
+
+Each location's behaviour (what clicks do, how characters arrive, what happens after each line
+of conversation, menus, item uses) is reimplemented in `src/OpenFive.Engine/Story`, one class per
+location, on top of the commands in `StoryScript`. The first drafts were produced with a helper
+that rewrites the original routines into those commands; they are then reviewed and tested by
+playing. Story state lives in named variables (`Vars`), saved with the game.
+
+Choice menus: each location with menus keeps, for original options 1-3, the row each is shown in
+(or "none" once asked), the row the player picked, and the "none" value; scripts compare the
+picked row with the option rows to know which question was asked, and remove asked options.

@@ -55,6 +55,118 @@ public abstract class StoryScript : LocationScript
     protected TaskHandle Do(Action action, TaskHandle? after, int delay = 0) =>
         World.Tasks.Add(new ActionTask("DO", _ => action()) { WaitFor = after, Delay = delay });
 
+    protected TaskHandle ToggleAfter(string name, TaskHandle? after, int delay = 0) =>
+        Do(() => Session.SetVar(name, Session.Var(name) == 0 ? 1 : 0), after, delay);
+
+    /// <summary>Remembered texts (for example which character was clicked).</summary>
+    protected void SetText(string name, string value) => Session.Texts[name] = value;
+    protected string Text(string name) => Session.Texts.TryGetValue(name, out var v) ? v : "";
+
+    // ---- choice menus -------------------------------------------------------------------------
+
+    /// <summary>
+    /// Locations with choice menus keep, per original option 1-3, the row it is shown in (or
+    /// "none" once asked), the row the player picked, and the value meaning "none".
+    /// </summary>
+    static readonly Dictionary<string, (string S1, string S2, string S3, string Chosen, string None)> MenuSlots =
+        new(StringComparer.OrdinalIgnoreCase)
+        {
+            ["loc03"] = ("v64ef40", "v64ef44", "v64ef48", "v64ef4c", "v64ef50"),
+            ["loc05"] = ("v64ef54", "v64ef58", "v64ef5c", "v64ef60", "v64ef64"),
+            ["loc06"] = ("v64ef2c", "v64ef30", "v64ef34", "v64ef38", "v64ef3c"),
+            ["loc08"] = ("v64ef68", "v64ef6c", "v64ef70", "v64ef74", "v64ef78"),
+            ["loc09"] = ("v64ef7c", "v64ef80", "v64ef84", "v64ef88", "v64ef8c"),
+            ["loc15"] = ("v64ef90", "v64ef94", "v64ef98", "v64ef9c", "v64efa0"),
+            ["loc17"] = ("v64efa4", "v64efa8", "v64efac", "v64efb0", "v64efb4"),
+        };
+
+    /// <summary>Sets up the menu slots of a new game: all options on offer, in order.</summary>
+    public static void NewGameMenus(GameSession session)
+    {
+        foreach (var g in MenuSlots.Values)
+        {
+            session.SetVar(g.S1, 1);
+            session.SetVar(g.S2, 2);
+            session.SetVar(g.S3, 3);
+            session.SetVar(g.Chosen, -1);
+            session.SetVar(g.None, -1);
+        }
+    }
+
+    public override IReadOnlyList<int>? AvailableOptions(GameWorld world, string scene, int line, int count)
+    {
+        if (!MenuSlots.TryGetValue(Location, out var g))
+            return null;
+        int none = Var(g.None);
+        var rows = new List<(int Option, int Row)>();
+        string[] slots = { g.S1, g.S2, g.S3 };
+        for (int i = 0; i < 3 && i < count; i++)
+            if (Var(slots[i]) != none)
+                rows.Add((i + 1, Var(slots[i])));
+        return rows.OrderBy(r => r.Row).Select(r => r.Option).ToList();
+    }
+
+    public override void ChoiceMade(GameWorld world, string scene, int line, int option)
+    {
+        if (MenuSlots.TryGetValue(Location, out var g))
+        {
+            string[] slots = { g.S1, g.S2, g.S3 };
+            SetVar(g.Chosen, Var(slots[option - 1]));
+            SetVar(ChoicePending, 1);
+        }
+        AfterChoice(scene, line, option);
+    }
+
+    /// <summary>Set while a picked menu option has not been answered yet.</summary>
+    protected const string ChoicePending = "v64ef11";
+
+    /// <summary>The location answers the option the player picked (Chain is the end of the spoken option).</summary>
+    protected virtual void AfterChoice(string scene, int line, int option) { }
+
+    /// <summary>Takes every option off this location's menu.</summary>
+    protected void CloseMenu()
+    {
+        if (!MenuSlots.TryGetValue(Location, out var g))
+            return;
+        foreach (var sl in new[] { g.S1, g.S2, g.S3 })
+            SetVar(sl, Var(g.None));
+    }
+
+    /// <summary>True when no option is left on this location's menu.</summary>
+    protected bool MenuExhausted() =>
+        MenuSlots.TryGetValue(Location, out var g) && new[] { g.S1, g.S2, g.S3 }.All(sl => Var(sl) == Var(g.None));
+
+    /// <summary>Takes the picked option off the menu (later options move up one row).</summary>
+    protected void RemoveChosenOption()
+    {
+        if (!MenuSlots.TryGetValue(Location, out var g))
+            return;
+        int none = Var(g.None), chosen = Var(g.Chosen);
+        string[] slots = { g.S1, g.S2, g.S3 };
+        int k = Array.FindIndex(slots, sl => Var(sl) == chosen && chosen != none);
+        if (k < 0)
+            return;
+        for (int j = k + 1; j < 3; j++)
+            if (Var(slots[j]) != none)
+                SetVar(slots[j], Var(slots[j]) - 1);
+        SetVar(slots[k], none);
+    }
+
+    /// <summary>Runs an action, then evaluates a condition (the game did both inside one test).</summary>
+    protected static bool Seq(Action action, Func<bool> condition)
+    {
+        action();
+        return condition();
+    }
+
+    /// <summary>Case-insensitive name comparison.</summary>
+    protected static bool Same(string? a, string b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase);
+
+    /// <summary>The speaker of the line being spoken (set when a line starts).</summary>
+    protected int CurrentSpeaker { get; set; } = -1;
+
+    protected bool German => World.Data.Language == Language.German;
+
     // ---- items -------------------------------------------------------------------------------
 
     protected bool Has(int item) => Session.Inventory.Has(item);
@@ -65,7 +177,7 @@ public abstract class StoryScript : LocationScript
 
     // ---- characters --------------------------------------------------------------------------
 
-    protected Actor Hero => World.Hero;
+    protected Actor Hero { get => World.Hero; set => World.Hero = value; }
     protected Actor Dick => World.Dick;
     protected Actor George => World.George;
     protected Actor Julian => World.Julian;
@@ -83,6 +195,33 @@ public abstract class StoryScript : LocationScript
         World.Tasks.Add(new PlaceActorTask(a, x, y, state) { WaitFor = after, Delay = delay });
 
     protected void Hide(Actor a) => World.HideActor(a);
+
+    /// <summary>Makes a character visible again (where they are).</summary>
+    protected void Show(Actor a) => a.Visible = true;
+
+    protected bool IsShown(Actor a) => a.Visible && a.Location.Equals(Location, StringComparison.OrdinalIgnoreCase);
+
+    protected void ClearQueue(Actor a) => a.ClearQueue();
+
+    /// <summary>Is the character still doing something (walking, an action)?</summary>
+    protected bool IsBusy(Actor a) => a.Queue.Count > 0;
+
+    /// <summary>Is an animation currently on screen?</summary>
+    protected bool IsAnimShown(string anim) => World.IsAnimShown(anim);
+
+    /// <summary>Has the task or queue entry not finished yet?</summary>
+    protected static bool IsRunning(TaskHandle? h) => h != null && !h.Released;
+
+    /// <summary>Is the task acting right now (started and not finished)?</summary>
+    protected static bool IsActive(TaskHandle? h) => h is GameTask { Started: true, Finished: false } ||
+                                                    h is ActorStep { Started: true } st && !st.Completed;
+
+    /// <summary>Allows or blocks walking in an area of this location.</summary>
+    protected void AreaEnable(int area, bool on)
+    {
+        if (World.Walk != null && World.Walk.PathCount + area < World.Walk.Enabled.Count)
+            World.Walk.Enabled[World.Walk.PathCount + area] = on;
+    }
 
     protected TaskHandle HideAfter(Actor a, TaskHandle? after, int delay = 0) =>
         World.Tasks.Add(new HideActorTask(a) { WaitFor = after, Delay = delay });
@@ -124,6 +263,8 @@ public abstract class StoryScript : LocationScript
         World.SetAnimScale(anim, scale);
     }
 
+    protected void AnimScale(string anim, double scale) => World.SetAnimScale(anim, scale);
+
     protected TaskHandle? Anim(string anim, int loops = 1, TaskHandle? after = null, int delay = 0,
         string? endObject = null, bool endObjectOn = false) =>
         World.PlayAnim(anim, loops, after, delay, endObject, endObjectOn);
@@ -141,6 +282,21 @@ public abstract class StoryScript : LocationScript
         World.Tasks.Add(new SpeechTask(path, "", 0, 0) { WaitFor = after, Delay = delay });
 
     protected void Music(string path) => World.Audio.SetBackgroundTrack(path);
+
+    /// <summary>Plays a recording with a text shown at (x, y) once <paramref name="after"/> is released.</summary>
+    protected TaskHandle Speech(string text, string path, int x, int y, TaskHandle? after = null, int delay = 0) =>
+        World.Tasks.Add(new SpeechTask(path, text, x, y) { WaitFor = after, Delay = delay });
+
+    /// <summary>Plays a sound effect at a volume (0-100).</summary>
+    protected TaskHandle Sfx(string path, int volume, TaskHandle? after = null, int delay = 0) =>
+        Do(() => World.Audio.PlayEffect(path.Contains('\\') || path.Contains('/') ? path : $@"wav\fx\{path}.wav", volume), after, delay);
+
+    /// <summary>Allows or blocks walking on a path of this location.</summary>
+    protected void PathEnable(int path, bool on)
+    {
+        if (World.Walk != null && path >= 0 && path < World.Walk.Enabled.Count)
+            World.Walk.Enabled[path] = on;
+    }
 
     // ---- pointer, conversations, location changes ----------------------------------------
 
@@ -175,6 +331,26 @@ public abstract class StoryScript : LocationScript
 
     /// <summary>Where the hero came from (location name).</summary>
     protected string From { get; private set; } = "";
+
+    /// <summary>The game's number of a location ("loc14" = 14, "loc17b" = 117, main menu = 50).</summary>
+    public static int IdOf(string location) => location.ToLowerInvariant() switch
+    {
+        "loc17b" => 117,
+        "menue" => 50,
+        "load" => 52,
+        "save" => 51,
+        "options" => 53,
+        "locextro" => 70,
+        var l when l.StartsWith("loc") && int.TryParse(l[3..], out int n) => n,
+        _ => 0,
+    };
+
+    /// <summary>Number of the location the hero came from.</summary>
+    protected int FromId => IdOf(From);
+    protected int LocationId => IdOf(Location);
+
+    /// <summary>Changes location immediately (at the start of the next tick).</summary>
+    protected void ChangeLocationNow(string location) => Session.ChangeLocation(location);
 
     public sealed override void Enter(string from)
     {

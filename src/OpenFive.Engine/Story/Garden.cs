@@ -231,9 +231,9 @@ public sealed class Garden : StoryScript
         }
     }
 
-    public override void ChoiceMade(GameWorld world, string scene, int line, int option)
+    protected override void AfterChoice(string scene, int line, int option)
     {
-        if (scene != FannyScene)
+        if (scene != FannyScene || Var(ChoicePending) == 0)
             return;
         switch (option)
         {
@@ -248,13 +248,15 @@ public sealed class Garden : StoryScript
             case 3:
                 // "Where is George?" ends the questions.
                 Say(Who.Fanny, FannyScene, 3);
-                World.Dialogue.MarkAsked(Who.Dick, FannyScene, 1, 1, 2, 3);
+                CloseMenu();
                 break;
         }
-        if (Asked(Who.Dick, FannyScene, 1).Count >= 3)
+        RemoveChosenOption();
+        if (MenuExhausted())
             Say(Who.Fanny, FannyScene, 0, last: true);
         else
             Ask(Who.Dick, FannyScene, 1);
+        SetVar(ChoicePending, 0);
     }
 
     // ---- clicks ------------------------------------------------------------------------------
