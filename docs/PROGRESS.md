@@ -18,14 +18,26 @@ Behaviour is reimplemented from documentation of how the original engine works (
 | 5 | Task scheduler: actor queues, global tasks, wait-for handles, delays; speech, text, pointer, place/hide character tasks | done |
 | 6 | Dialogue: lines with box, talking head, recording and text; choice menus (remaining options, auto-pick of the last one); skip; location hooks | done |
 | 7 | Pointer (game cursor frames, exit arrows), hover labels on objects and characters, click dispatch to location scripts, rucksack (open by clicking the hero, drag items onto things) | done |
-| 8 | Intro movie, main menu (with quit confirmation), load and save screens (named slots, own JSON format), options (toggles, volume sliders, language), F1 menu, settings file. Not yet: character shadows, the ending | done |
-| 9 | Story logic, location by location (loc01 ... loc29, ship, extro) | converted; being played through |
+| 8 | Intro movie, main menu (with quit confirmation), load and save screens (named slots, own JSON format), options (toggles, volume sliders, language), F1 menu, settings file, ending and credits. Not yet: character shadows, logo scene | done |
+| 9 | Story logic, location by location (loc01 ... loc29, ship, extro) | done: the game plays from a new game to the credits |
 | 10 | Packaging: openSUSE first; later Windows, macOS, other Linux distributions | |
 
 ## Story logic status
 
+The whole story has been played through with the automated play-through (`--play`), following a
+published walkthrough, from a new game to the closing credits.
+
 | Location | Description | State |
 |----------|-------------|-------|
 | loc06 | Garden of Kirrin Cottage: opening scene, Aunt Fanny's questions, bucket, doors | played through |
-| loc04 | Hall of Kirrin Cottage | converted, entering tested |
-| loc01-loc29, ending | All other locations and the item uses | converted, load without errors; not yet played through |
+| loc07, loc08 | Shed, cave | played through |
+| loc05 | Kitchen: breakfasts, tea scene, sandwiches, the diary, the tin opener, the note, the teapot | played through |
+| loc04 | Hall: umbrella, keyhole, suitcase, the study door | played through |
+| loc02 | Guest room: cupboard, bag, rug and the diary | played through |
+| loc03 | Study: Quentin, the ship's layout, the tea, the fire, the window, the model ship | played through |
+| schiff, morgen/morning, hand/hand2, schiffc1-3, locKarte | Close-ups | played through |
+| loc09, loc13, loc15, loc16 | Beach and fisherman, boat, the wreck, the cabin | played through |
+| loc14, loc17, loc17b, loc18, loc19 | Kirrin Island: beach, castle courtyard, the well, the big stone | played through |
+| loc21-loc28 | Dungeon stairs, labyrinth, treasure door and room, the cell, the hole in the well wall | played through |
+| loc17 (quest 11), locextro | Distracting the professor, the rope on the ivy, the radio, the ending and credits | played through |
+| loc01, loc20, loc29 | Other locations, and side paths everywhere | converted; not all tried |

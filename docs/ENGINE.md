@@ -25,7 +25,14 @@ There are two kinds of queues:
 
 * the **global task list** (up to 600 entries), and
 * a **queue per actor** (walks, state changes, actor animations), processed in order: only the
-  head of an actor's queue runs, and it is removed when it finishes.
+  head of an actor's queue runs, and it is removed when it finishes. One entry is handled per
+  tick; only the legs of a walk follow each other within a tick. A state set by an entry is
+  therefore seen for at least one tick before the next entry changes it. Hiding an actor does
+  not empty its queue (a location change queued on a hidden hero still happens).
+
+Each tick runs the actor queues first, then the global tasks. The current location's own
+per-tick routine is one of those tasks, created when the location is set up, so it sees what the
+characters did this tick.
 
 A global task waiting on a handle is released when the handle's task has finished (global task
 handle) or when the actor queue entry it names has finished (actor task handle). Then its delay
@@ -44,7 +51,7 @@ Global task kinds:
 | object on/off | Switch a named object on or off |
 | cursor | Show/hide the mouse cursor and optionally move it |
 | speech line | Play a speech recording, showing its text while it plays; finishes when the recording ends |
-| dialogue line | Start a line from the dialogue files (scene id + line number), shown in the dialogue box with the speaker's talking head |
+| dialogue line | Start a line from the dialogue files (scene id + line number), shown in the dialogue box with the speaker's talking head. The location hears of each line twice, in this order: first "line starts" (handle: what the line waits for; scripts use it to give the speaker a talking pose), then "line queued", or "conversation ends" for the last line (handle: the end of the line). A line is found only for the exact quest and episode it is stored under |
 | flag | Set or clear a boolean |
 | toggle | Invert a boolean |
 | increment | Add one to a counter (scripts use this to advance puzzle states when an action completes) |
@@ -155,7 +162,9 @@ rested for one tick, using the object's "over" text, or the character's name for
   screen with the rucksack picture to its left and the items in rows of up to six, 60 pixels
   apart horizontally and 50 vertically. Clicking an item picks it up; it then follows the
   pointer until the next click, which uses it on whatever is under the pointer. Clicking
-  anything else closes the rucksack.
+  anything else closes the rucksack. Two items act when clicked instead: the treasure map
+  closes the rucksack and shows the map close-up (clicking it returns to the location), and
+  the closed tin, before it has been opened and away from the kitchen, only gets a remark.
 * Other clicks go to the location's script; if it does not handle them, the hero walks to the
   clicked point.
 
