@@ -21,7 +21,14 @@ public sealed class GameSession
     /// <summary>Story state kept by the location scripts (puzzle progress etc.), saved with the game.</summary>
     public Dictionary<string, int> Vars { get; } = new(StringComparer.OrdinalIgnoreCase);
 
-    public int Var(string name) => Vars.TryGetValue(name, out int v) ? v : 0;
+    public int Var(string name) => name switch
+    {
+        // Some of the original's globals that the scripts read and write are engine state.
+        "v64efe4" => World.Quest,
+        "v64efe8" => World.Episode,
+        "v64efd4" => World.Data.Language == Language.German ? 1 : 2,
+        _ => Vars.TryGetValue(name, out int v) ? v : 0,
+    };
 
     /// <summary>Remembered texts of the story scripts (saved with the game).</summary>
     public Dictionary<string, string> Texts { get; } = new(StringComparer.OrdinalIgnoreCase);
@@ -29,7 +36,13 @@ public sealed class GameSession
     {
         if (Trace.On && Var(name) != value)
             Trace.Log($"{World.Tick}: var {name} = {value}");
-        Vars[name] = value;
+        switch (name)
+        {
+            case "v64efe4": World.Quest = value; break;
+            case "v64efe8": World.Episode = value; break;
+            case "v64efd4": break;
+            default: Vars[name] = value; break;
+        }
     }
 
     /// <summary>The location the hero is in (menus are locations too, this one is not one of them).</summary>
@@ -61,6 +74,11 @@ public sealed class GameSession
     public GameSession(GameWorld world, Func<string, LocationScript>? scripts = null, Settings? settings = null)
     {
         World = world;
+        World.LocationTick = () =>
+        {
+            if (!IsMenu(World.Scene?.Name ?? ""))
+                Script.EveryTick();
+        };
         Settings = settings ?? new Settings();
         _scriptFactory = scripts ?? (n => new PlainLocation(n));
         Script = new PlainLocation("");
@@ -314,8 +332,6 @@ public sealed class GameSession
         if (InventoryOpen && Dragging != 0 && !InRucksack(MouseX, MouseY))
             CloseInventory();
         Script.Hover(MouseX, MouseY);
-        if (!IsMenu(World.Scene?.Name ?? ""))
-            Script.EveryTick();
         var hover = World.CursorVisible ? FindTarget(MouseX, MouseY) : null;
         Hover = hover;
         bool moved = MouseX != _lastMouseX || MouseY != _lastMouseY;

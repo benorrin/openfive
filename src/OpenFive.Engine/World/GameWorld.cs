@@ -572,11 +572,17 @@ public sealed class GameWorld
         Tick++;
         if (SkipRequested)
             Audio.Mixer.StopSpeech();
-        Tasks.Tick(this);
-        SkipRequested = false;
+        // As in the original: the characters' queues first, then the location's own tick
+        // (it sees what the characters are doing now), then the other tasks.
         foreach (var a in Actors)
             UpdateActor(a);
+        LocationTick?.Invoke();
+        Tasks.Tick(this);
+        SkipRequested = false;
     }
+
+    /// <summary>The current location's per-tick routine (run after the characters move).</summary>
+    public Action? LocationTick;
 
     public void Draw(Framebuffer fb)
     {
