@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=OpenFive
+GenericName=Adventure game engine
+Comment=Play The Famous Five: Treasure Island from your own CD
+Exec=openfive %f
+Icon=io.github.benorrin.openfive
+Terminal=false
+Categories=Game;AdventureGame;
+Keywords=Famous Five;Enid Blyton;Treasure Island;adventure;point and click;
+MimeType=application/x-cue;application/x-cd-image;application/x-iso9660-image;application/x-raw-disk-image;

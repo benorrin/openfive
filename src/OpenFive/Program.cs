@@ -18,14 +18,19 @@ static class Program
             return 0;
         }
         var settings = Engine.Game.Settings.Load();
-        opt.Disc ??= settings.Disc;
+        // The disc given now, the one used last time (if it is still there), or a mounted CD.
+        if (opt.Disc == null && settings.Disc != null && (File.Exists(settings.Disc) || Directory.Exists(settings.Disc)))
+            opt.Disc = settings.Disc;
+        opt.Disc ??= FindMountedDisc();
         if (opt.Language == null)
             opt.Language = settings.Language.StartsWith("de", StringComparison.OrdinalIgnoreCase) ? Language.German : Language.English;
         if (opt.Disc == null)
         {
-            Console.Error.WriteLine("OpenFive needs your Famous Five: Treasure Island CD or a disc image of it.\n" +
-                                    "Pass it with --disc PATH (a .cue/.ccd/.img/.bin/.iso file or the mounted CD), " +
-                                    "or set OPENFIVE_DISC.\n\n" + Options.Help);
+            Fail("OpenFive needs your Famous Five: Treasure Island CD or a disc image of it.\n\n" +
+                 "Insert the CD, or start OpenFive with the image: openfive --disc PATH " +
+                 "(a .cue, .ccd, .img, .bin or .iso file, or the mounted CD). " +
+                 "You can also open the image file with OpenFive from your file manager.\n\n" +
+                 "The disc is remembered, so this is needed only once.", Options.Help);
             return 2;
         }
         GameData data;
@@ -35,7 +40,7 @@ static class Program
         }
         catch (Exception e) when (e is IOException or InvalidDataException or UnauthorizedAccessException)
         {
-            Console.Error.WriteLine("Cannot read the game disc: " + e.Message);
+            Fail("Cannot read the game disc: " + e.Message);
             return 2;
         }
         using (data)
@@ -49,6 +54,58 @@ static class Program
             if (opt.Viewer != null)
                 return Viewer.Run(data, opt);
             return new GameApp(data, opt, settings).Run();
+        }
+    }
+
+    /// <summary>A mounted Famous Five CD (the usual places desktops mount removable media).</summary>
+    static string? FindMountedDisc()
+    {
+        if (!OperatingSystem.IsLinux())
+            return null;
+        string user = Environment.UserName;
+        var roots = new[] { $"/run/media/{user}", $"/media/{user}", "/media", "/mnt" };
+        foreach (string root in roots)
+        {
+            if (!Directory.Exists(root))
+                continue;
+            string[] dirs;
+            try
+            {
+                dirs = Directory.GetDirectories(root);
+            }
+            catch (Exception e) when (e is IOException or UnauthorizedAccessException)
+            {
+                continue;
+            }
+            foreach (string dir in dirs)
+            {
+                try
+                {
+                    using var files = GameFiles.Open(dir);
+                    if (files.Exists(GameData.ResPath("common.res")))
+                        return dir;
+                }
+                catch (Exception e) when (e is IOException or UnauthorizedAccessException)
+                {
+                }
+            }
+        }
+        return null;
+    }
+
+    /// <summary>Reports a problem on the terminal and, when there is a desktop, in a message box.</summary>
+    static void Fail(string message, string? details = null)
+    {
+        Console.Error.WriteLine(message + (details != null ? "\n\n" + details : ""));
+        // Started from a terminal, the message there is enough.
+        if (!Console.IsInputRedirected && !Console.IsErrorRedirected)
+            return;
+        try
+        {
+            Sdl.ShowSimpleMessageBox(Sdl.MESSAGEBOX_ERROR, "OpenFive", message, IntPtr.Zero);
+        }
+        catch (Exception e) when (e is DllNotFoundException or EntryPointNotFoundException)
+        {
         }
     }
 }

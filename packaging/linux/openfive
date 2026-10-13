@@ -1,0 +1,3 @@
+#!/bin/sh
+# Starts OpenFive with the system's .NET runtime.
+exec dotnet /usr/lib/openfive/OpenFive.dll "$@"

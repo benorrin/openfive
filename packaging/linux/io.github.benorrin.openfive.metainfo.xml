@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.benorrin.openfive</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-2.0-only</project_license>
+  <name>OpenFive</name>
+  <summary>Play The Famous Five: Treasure Island from your own CD</summary>
+  <description>
+    <p>
+      OpenFive is an open-source reimplementation of the engine of the 1999 adventure game
+      The Famous Five: Treasure Island (5 Freunde auf Schatzsuche). It plays the original
+      adventure natively, in a window or fullscreen.
+    </p>
+    <p>
+      OpenFive contains no code, graphics, text, speech or music from the original game.
+      You need your own copy of the game CD, English or German, or a disc image of it.
+    </p>
+  </description>
+  <launchable type="desktop-id">io.github.benorrin.openfive.desktop</launchable>
+  <url type="homepage">https://github.com/benorrin/openfive</url>
+  <url type="bugtracker">https://github.com/benorrin/openfive/issues</url>
+  <developer id="io.github.benorrin">
+    <name>OpenFive contributors</name>
+  </developer>
+  <categories>
+    <category>Game</category>
+    <category>AdventureGame</category>
+  </categories>
+  <content_rating type="oars-1.1"/>
+  <releases>
+    <release version="0.1.0" date="2026-10-14"/>
+  </releases>
+</component>

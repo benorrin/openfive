@@ -84,6 +84,12 @@ internal static unsafe class Sdl
     [DllImport(Lib, EntryPoint = "SDL_GetTicks")] public static extern ulong GetTicks();
     [DllImport(Lib, EntryPoint = "SDL_Delay")] public static extern void Delay(uint ms);
 
+    public const uint MESSAGEBOX_ERROR = 0x10, MESSAGEBOX_INFORMATION = 0x40;
+
+    [DllImport(Lib, EntryPoint = "SDL_ShowSimpleMessageBox")] [return: MarshalAs(UnmanagedType.U1)]
+    public static extern bool ShowSimpleMessageBox(uint flags, [MarshalAs(UnmanagedType.LPUTF8Str)] string title,
+        [MarshalAs(UnmanagedType.LPUTF8Str)] string message, IntPtr window);
+
     [DllImport(Lib, EntryPoint = "SDL_CreateWindow")]
     public static extern IntPtr CreateWindow([MarshalAs(UnmanagedType.LPUTF8Str)] string title, int w, int h, ulong flags);
     [DllImport(Lib, EntryPoint = "SDL_DestroyWindow")] public static extern void DestroyWindow(IntPtr window);
