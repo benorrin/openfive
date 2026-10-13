@@ -9,9 +9,10 @@ OpenFive contains **no code, graphics, text, speech or music from the original g
 your own copy of the game CD (or a disc image of it): OpenFive reads all game data from the disc
 every time it runs.
 
-> **Status:** early development. The disc reader, file formats, rendering and a scene viewer
-> work; the story logic is being reimplemented location by location. See
-> [docs/PROGRESS.md](docs/PROGRESS.md) for what works today.
+> **Status:** in development. The engine works (intro, menus, saving and loading, walking,
+> conversations, the rucksack); the story logic is being reimplemented location by location, so
+> the adventure cannot be finished yet. See [docs/PROGRESS.md](docs/PROGRESS.md) for what works
+> today.
 
 ## What you need
 
@@ -38,7 +39,8 @@ OpenFive at the `.cue` or `.ccd` file.
 openfive --disc ~/Games/famous5/FAMOUS5.cue
 ```
 
-Instead of `--disc` you can set the `OPENFIVE_DISC` environment variable.
+Instead of `--disc` you can set the `OPENFIVE_DISC` environment variable. OpenFive remembers the
+disc you used last, so afterwards plain `openfive` is enough.
 
 | Option | Meaning |
 |--------|---------|
@@ -46,6 +48,10 @@ Instead of `--disc` you can set the `OPENFIVE_DISC` environment variable.
 | `--lang en` / `--lang de` | English or German (both languages are on every CD) |
 | `--fullscreen` | start fullscreen |
 | `--sharp` | sharp pixel scaling instead of smooth |
+| `--skip-intro` | start at the main menu |
+
+Settings and saved games are kept in `~/.local/share/openfive/` (`$XDG_DATA_HOME/openfive`;
+on Windows and macOS in the application data folder). Set `OPENFIVE_HOME` to use another folder.
 
 ### Controls
 
@@ -55,7 +61,8 @@ Instead of `--disc` you can set the `OPENFIVE_DISC` environment variable.
   on it, drag it onto something in the scene, and release.
 * **Conversations:** click (or press Space) to skip the line being spoken. When you are offered
   choices, click the one you want.
-* **F1:** main menu (load, save, options, quit).
+* **F1:** main menu (load, save, options, quit). **Escape** in a menu returns to the game.
+* **Saving:** choose *Save game* in the main menu, click a slot, type a name, press **Enter**.
 * **F11** or **Alt+Enter:** toggle fullscreen. **F12:** toggle smooth/sharp scaling.
 
 ### How to play
@@ -94,6 +101,9 @@ distributions is planned; the same `dotnet publish` command works with `-r win-x
 
 ## Developer tools
 
+* `--loc NAME` starts a game directly in a location (with `--from`, `--quest Q,E`, `--item N`).
+* `--script FILE --frames N` runs the game off-screen with scripted input
+  (`TICK move X Y`, `TICK click X Y`, `TICK key SCANCODE`, `TICK shot FILE.bmp`), for automated tests.
 * `--view LOCATION` opens a scene viewer (e.g. `--view loc05`): the location's background and
   objects, with hover labels.
 * `--view LOCATION --screenshot out.bmp --frames N` renders off-screen and saves a picture

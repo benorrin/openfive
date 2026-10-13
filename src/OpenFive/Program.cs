@@ -17,6 +17,10 @@ static class Program
             Console.WriteLine(Options.Help);
             return 0;
         }
+        var settings = Engine.Game.Settings.Load();
+        opt.Disc ??= settings.Disc;
+        if (opt.Language == null)
+            opt.Language = settings.Language.StartsWith("de", StringComparison.OrdinalIgnoreCase) ? Language.German : Language.English;
         if (opt.Disc == null)
         {
             Console.Error.WriteLine("OpenFive needs your Famous Five: Treasure Island CD or a disc image of it.\n" +
@@ -27,7 +31,7 @@ static class Program
         GameData data;
         try
         {
-            data = new GameData(GameFiles.Open(opt.Disc), opt.Language);
+            data = new GameData(GameFiles.Open(opt.Disc), opt.Language.Value);
         }
         catch (Exception e) when (e is IOException or InvalidDataException or UnauthorizedAccessException)
         {
@@ -36,10 +40,15 @@ static class Program
         }
         using (data)
         {
+            // Remember where the disc is, so it need not be given again.
+            if (settings.Disc != opt.Disc)
+            {
+                settings.Disc = Path.GetFullPath(opt.Disc);
+                settings.Save();
+            }
             if (opt.Viewer != null)
                 return Viewer.Run(data, opt);
-            Console.Error.WriteLine("The full game is not playable yet in this build; use --view LOCATION to explore scenes.");
-            return 1;
+            return new GameApp(data, opt, settings).Run();
         }
     }
 }
@@ -47,7 +56,9 @@ static class Program
 sealed class Options
 {
     public string? Disc = Environment.GetEnvironmentVariable("OPENFIVE_DISC");
-    public Language Language = Language.English;
+    public Language? Language;
+    public bool SkipIntro;
+    public string? StartLocation, From;
     public bool Fullscreen, Sharp, ShowHelp;
     public string? Viewer;
     public string? Screenshot;
@@ -67,6 +78,9 @@ sealed class Options
         "  --lang en|de       language (default en)\n" +
         "  --fullscreen       start in fullscreen (F11 or Alt+Enter toggles)\n" +
         "  --sharp            sharp pixel scaling instead of smooth (F12 toggles)\n" +
+        "  --skip-intro       start at the main menu\n" +
+        "developer options:\n" +
+        "  --loc NAME         start a game directly in a location (with --from PREVIOUS, --quest Q,E, --item N)\n" +
         "  --view LOCATION    developer scene viewer (e.g. loc05)\n" +
         "  --anim NAME        viewer: loop a named animation (repeatable)\n" +
         "  --place NAME:X,Y   viewer: put a character (Dick, George, ...) at X,Y; the first one is the hero\n" +
@@ -88,7 +102,10 @@ sealed class Options
             switch (a)
             {
                 case "--disc": o.Disc = Next(); break;
-                case "--lang": o.Language = Next().StartsWith("de", StringComparison.OrdinalIgnoreCase) ? Language.German : Language.English; break;
+                case "--lang": o.Language = Next().StartsWith("de", StringComparison.OrdinalIgnoreCase) ? Engine.Language.German : Engine.Language.English; break;
+                case "--skip-intro": o.SkipIntro = true; break;
+                case "--loc": o.StartLocation = Next(); break;
+                case "--from": o.From = Next(); break;
                 case "--fullscreen": o.Fullscreen = true; break;
                 case "--sharp": o.Sharp = true; break;
                 case "--view": o.Viewer = Next(); break;
@@ -145,7 +162,7 @@ static class Viewer
         var mixer = new AudioMixer();
         var audio = new GameAudio(data, mixer);
         var world = new GameWorld(data, audio);
-        var session = new Engine.Game.GameSession(world);
+        var session = new Engine.Game.GameSession(world, Engine.Game.Scripts.For);
         world.Quest = opt.Quest;
         world.Episode = opt.Episode;
         session.EnterLocation(opt.Viewer!);
@@ -279,6 +296,8 @@ sealed class InputScript
             int tick = int.Parse(p[0]);
             if (p[1] == "shot")
                 s._cmds.Add(new Command(tick, "shot", 0, 0, p[2]));
+            else if (p[1] == "key")
+                s._cmds.Add(new Command(tick, "key", int.Parse(p[2]), 0, ""));
             else if (p.Length >= 4)
                 s._cmds.Add(new Command(tick, p[1], int.Parse(p[2]), int.Parse(p[3]), ""));
         }

@@ -203,9 +203,12 @@ sealed class SpokenLine : GameTask
         if (_speech == null)
         {
             world.CursorVisible = false;
-            _sys.ShowBox(true);
-            world.SetAnimPosition(_speaker.HeadTalk, 10, DialogueSystem.BoxY - 8);
-            world.PlayAnim(_speaker.HeadTalk, -1);
+            if (world.DialogueBox)
+            {
+                _sys.ShowBox(true);
+                world.SetAnimPosition(_speaker.HeadTalk, 10, DialogueSystem.BoxY - 8);
+                world.PlayAnim(_speaker.HeadTalk, -1);
+            }
             _speech = new SpeechTask(_line.Speech, _line.Text, 50, DialogueSystem.BoxY);
         }
         if (!_speech.Run(world))

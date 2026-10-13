@@ -60,6 +60,23 @@ public sealed unsafe class Host : IDisposable
         Sdl.SetWindowFullscreen(_window, _fullscreen);
     }
 
+    public void SetSmooth(bool smooth)
+    {
+        if (smooth == _smooth)
+            return;
+        _smooth = smooth;
+        ApplyScaleMode();
+    }
+
+    /// <summary>Moves the system mouse to a point of the game picture (only while the window has focus).</summary>
+    public void WarpMouse(int gx, int gy)
+    {
+        if (!HasFocus)
+            return;
+        Sdl.RenderCoordinatesToWindow(_renderer, gx, gy, out float wx, out float wy);
+        Sdl.WarpMouseInWindow(_window, wx, wy);
+    }
+
     public bool HasFocus => (Sdl.GetWindowFlags(_window) & Sdl.WINDOW_INPUT_FOCUS) != 0;
 
     /// <summary>Processes pending window events into <see cref="Input"/>.</summary>

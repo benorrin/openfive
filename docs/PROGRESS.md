@@ -18,7 +18,7 @@ Behaviour is reimplemented from documentation of how the original engine works (
 | 5 | Task scheduler: actor queues, global tasks, wait-for handles, delays; speech, text, pointer, place/hide character tasks | done |
 | 6 | Dialogue: lines with box, talking head, recording and text; choice menus (remaining options, auto-pick of the last one); skip; location hooks | done |
 | 7 | Pointer (game cursor frames, exit arrows), hover labels on objects and characters, click dispatch to location scripts, rucksack (open by clicking the hero, drag items onto things) | done |
-| 8 | Menus: main menu, options, load/save (own save format), language switch, intro/extro videos | |
+| 8 | Intro movie, main menu (with quit confirmation), load and save screens (named slots, own JSON format), options (toggles, volume sliders, language), F1 menu, settings file. Not yet: character shadows, the ending | done |
 | 9 | Story logic, location by location (loc01 ... loc29, ship, extro) | |
 | 10 | Packaging: openSUSE first; later Windows, macOS, other Linux distributions | |
 

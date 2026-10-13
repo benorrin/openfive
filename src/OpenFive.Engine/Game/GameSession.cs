@@ -16,6 +16,25 @@ public sealed class GameSession
     public GameWorld World { get; }
     public Inventory Inventory { get; } = new();
     public LocationScript Script { get; private set; }
+    public Settings Settings { get; }
+
+    /// <summary>Story state kept by the location scripts (puzzle progress etc.), saved with the game.</summary>
+    public Dictionary<string, int> Vars { get; } = new(StringComparer.OrdinalIgnoreCase);
+
+    public int Var(string name) => Vars.TryGetValue(name, out int v) ? v : 0;
+    public void SetVar(string name, int value) => Vars[name] = value;
+
+    /// <summary>The location the hero is in (menus are locations too, this one is not one of them).</summary>
+    public string GameLocation { get; private set; } = "";
+    /// <summary>The location the hero came from.</summary>
+    public string PreviousLocation { get; private set; } = "";
+    /// <summary>True once a game has been started or loaded.</summary>
+    public bool InGame { get; set; }
+    public bool QuitRequested { get; set; }
+
+    /// <summary>Raised when the session wants a movie played (path relative to the disc, music track).</summary>
+    public event Action<string, string>? MovieRequested;
+    public void PlayMovie(string path, string music) => MovieRequested?.Invoke(path, music);
     readonly Func<string, LocationScript> _scriptFactory;
 
     // Pointer
@@ -31,23 +50,113 @@ public sealed class GameSession
     public const int BoxX = 268, BoxY = 146, BoxW = 448, BoxH = 308;
     const int ItemsX = BoxX + 60 + 30, ItemsY = BoxY + 30, ItemStepX = 60, ItemStepY = 50, ItemsPerRow = 6;
 
-    public GameSession(GameWorld world, Func<string, LocationScript>? scripts = null)
+    public GameSession(GameWorld world, Func<string, LocationScript>? scripts = null, Settings? settings = null)
     {
         World = world;
+        Settings = settings ?? new Settings();
         _scriptFactory = scripts ?? (n => new PlainLocation(n));
         Script = new PlainLocation("");
     }
+
+    /// <summary>Menu screens are locations too, but do not count as where the hero is.</summary>
+    public static bool IsMenu(string name) =>
+        name.ToLowerInvariant() is "menue" or "load" or "save" or "options" or "logo" or "locdummy";
 
     /// <summary>Loads a location and runs its script's entry logic.</summary>
     public void EnterLocation(string name, string from = "")
     {
         CloseInventory();
+        Dragging = 0;
+        World.Tasks.Clear();
+        World.Texts.Clear();
+        World.Chain = null;
+        World.CursorVisible = true;
+        if (!IsMenu(name))
+        {
+            if (!IsMenu(from) && from.Length > 0)
+                PreviousLocation = from;
+            GameLocation = name;
+        }
         World.LoadLocation(name);
         Script = _scriptFactory(name);
         Script.Attach(this);
         World.Hooks = Script;
         World.Dialogue.Hooks = Script;
         Script.Enter(from);
+    }
+
+    public void ButtonReleased() => Script.ButtonReleased();
+
+    /// <summary>Text input (save names); returns true if it was used.</summary>
+    public bool KeyTyped(char c) => Script.KeyTyped(c);
+
+    /// <summary>Starts a new game: the Five arrive at Kirrin Cottage.</summary>
+    public void NewGame()
+    {
+        Reset();
+        InGame = true;
+        // The rucksack starts with Dick's pocket knife and the newspaper.
+        Inventory.Give(6);
+        Inventory.Give(27);
+        World.Hero = World.Dick;
+        ChangeLocation(NewGameLocation);
+    }
+
+    public const string NewGameLocation = "loc06";
+
+    public void SwitchLanguage(Language language)
+    {
+        World.Data.Language = language;
+        World.Data.LoadTexts();
+        Settings.Language = language == Language.German ? "de" : "en";
+        Settings.Save();
+        ChangeLocation(World.Scene?.Name ?? "menue");
+    }
+
+    // ---- saving -------------------------------------------------------------------------------
+
+    public SaveGame Capture(string name) => new()
+    {
+        Name = name,
+        Saved = DateTime.Now,
+        Location = GameLocation,
+        PreviousLocation = PreviousLocation,
+        Quest = World.Quest,
+        Episode = World.Episode,
+        Hero = World.Hero.Name,
+        Items = Inventory.Items.ToList(),
+        Vars = new Dictionary<string, int>(Vars),
+        Objects = new Dictionary<string, bool>(World.GlobalObjects),
+        AskedOptions = World.Dialogue.AskedOptions.ToDictionary(kv => kv.Key, kv => kv.Value.ToList()),
+    };
+
+    /// <summary>Resets everything for a new game (the scripts then set the starting state).</summary>
+    public void Reset()
+    {
+        Inventory.Clear();
+        Vars.Clear();
+        World.ResetState();
+        PreviousLocation = "";
+        GameLocation = "";
+    }
+
+    public void Restore(SaveGame s)
+    {
+        Reset();
+        foreach (int i in s.Items)
+            Inventory.Give(i);
+        foreach (var (k, v) in s.Vars)
+            Vars[k] = v;
+        foreach (var (k, v) in s.Objects)
+            World.GlobalObjects[k] = v;
+        foreach (var (k, v) in s.AskedOptions)
+            World.Dialogue.AskedOptions[k] = new HashSet<int>(v);
+        World.Quest = s.Quest;
+        World.Episode = s.Episode;
+        World.Hero = World.Actors.FirstOrDefault(a => a.Name == s.Hero) ?? World.Dick;
+        PreviousLocation = s.PreviousLocation;
+        InGame = true;
+        EnterLocation(s.Location, s.PreviousLocation);
     }
 
     // ---- items -----------------------------------------------------------------------------
@@ -149,9 +258,29 @@ public sealed class GameSession
         return buf[sy * sheet.FrameWidth + sx] != key;
     }
 
+    /// <summary>A location change requested by a script; applied at the start of the next tick.</summary>
+    string? _pendingLocation;
+
+    /// <summary>Changes location once <paramref name="after"/> is released (now if null).</summary>
+    public void ChangeLocation(string name, TaskHandle? after = null)
+    {
+        if (after == null)
+        {
+            _pendingLocation = name;
+            return;
+        }
+        World.Tasks.Add(new ActionTask("CHANGELOC", _ => _pendingLocation = name) { WaitFor = after });
+    }
+
     /// <summary>Called once per game tick: updates the hover target, pointer frame and label timing.</summary>
     public void Tick()
     {
+        if (_pendingLocation is { } next)
+        {
+            _pendingLocation = null;
+            EnterLocation(next, World.Scene?.Name ?? "");
+        }
+        Script.Hover(MouseX, MouseY);
         var hover = World.CursorVisible ? FindTarget(MouseX, MouseY) : null;
         Hover = hover;
         if (MouseX == _lastMouseX && MouseY == _lastMouseY)
@@ -177,7 +306,7 @@ public sealed class GameSession
     };
 
     /// <summary>The label to show above the pointer (after it has rested for a tick), or null.</summary>
-    public string? Label => _restTicks >= 1 && Hover is { Label.Length: > 0 } h ? h.Label : null;
+    public string? Label => Settings.HoverLabels && _restTicks >= 1 && Hover is { Label.Length: > 0 } h ? h.Label : null;
 
     // ---- clicks ------------------------------------------------------------------------------
 
@@ -185,6 +314,8 @@ public sealed class GameSession
     public void Click()
     {
         int x = MouseX, y = MouseY;
+        if (Script.HandleClick(x, y))
+            return;
         if (World.Dialogue.OpenMenu is { } menu)
         {
             menu.Click(World, x, y);

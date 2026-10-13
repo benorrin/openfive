@@ -104,8 +104,29 @@ public sealed class GameWorld
     /// <summary>The game's font (read from the disc).</summary>
     public BitmapFont Font { get; }
 
+    /// <summary>Show the dialogue box and talking heads (option); off shows the text only.</summary>
+    public bool DialogueBox { get; set; } = true;
+
     /// <summary>Set for one tick when the player asks to skip the line being spoken.</summary>
     public bool SkipRequested { get; set; }
+
+    /// <summary>Back to the state of a new game: objects, story step, characters.</summary>
+    public void ResetState()
+    {
+        GlobalObjects.Clear();
+        LoadGlobalObjects();
+        Dialogue.AskedOptions.Clear();
+        Quest = 1;
+        Episode = 1;
+        foreach (var a in Actors)
+        {
+            a.Visible = false;
+            a.Location = "";
+            a.Follower = null;
+            a.ClearQueue();
+        }
+        Hero = Dick;
+    }
 
     void LoadGlobalObjects()
     {

@@ -158,3 +158,19 @@ rested for one tick, using the object's "over" text, or the character's name for
   anything else closes the rucksack.
 * Other clicks go to the location's script; if it does not handle them, the hero walks to the
   clicked point.
+
+## Menus
+
+* The intro is the language's Smacker movie with its title song; a click or key skips it.
+* Menu screens are locations of their own. Buttons are pairs of objects, the plain picture and
+  the highlighted one (name + "1"), swapped while the pointer is over the button. German and
+  English screens use different objects.
+* Main menu: new game, load, save (only during a game), quit (with a yes/no box), options, back
+  to the game (only during a game).
+* Load/save: ten slots listed as "n.) NAME". Saving asks for a name typed on the keyboard.
+  OpenFive saves in its own JSON format (location, story step, rucksack, story variables, object
+  switches, questions already asked), not the original's binary files.
+* Options: shadows, background animation, smoothing, dialogue box, pointer labels (on/off), speech
+  and music volume sliders (0-100), and the language flag.
+* A new game starts in the garden of Kirrin Cottage with the pocket knife and the newspaper in
+  the rucksack.
