@@ -57,6 +57,8 @@ sealed class Options
     public List<(int X, int Y)> WalkTargets = new();
     public List<(int Speaker, string Scene, int Line)> Say = new();
     public int Quest = 1, Episode = 1;
+    public List<int> Items = new();
+    public string? Script;
     public int Frames = -1;
 
     public const string Help =
@@ -70,6 +72,8 @@ sealed class Options
         "  --place NAME:X,Y   viewer: put a character (Dick, George, ...) at X,Y; the first one is the hero\n" +
         "  --quest Q,E        viewer: story step for dialogue lookups\n" +
         "  --say S,SCENE,N    viewer: speaker code S says line N of SCENE (repeatable, in order)\n" +
+        "  --item N           viewer: put item N (1-32) in the rucksack (repeatable)\n" +
+        "  --script FILE      viewer: scripted input (\"TICK move X Y | click X Y | shot FILE\"), run --frames ticks\n" +
         "  --walk X,Y         viewer: hero walks to X,Y (repeatable, one after another)\n" +
         "  --track PATH       viewer: play a background track (e.g. wav/atmo/Geheim.WAV)\n" +
         "  --screenshot FILE  with --frames N: render N frames off-screen, save a BMP and exit\n";
@@ -110,6 +114,8 @@ sealed class Options
                     (o.Quest, o.Episode) = (int.Parse(p[0]), int.Parse(p[1]));
                     break;
                 }
+                case "--item": o.Items.Add(int.Parse(Next())); break;
+                case "--script": o.Script = Next(); break;
                 case "--walk":
                 {
                     string[] p = Next().Split(',');
@@ -130,18 +136,19 @@ sealed class Options
     }
 }
 
-/// <summary>Developer scene viewer: shows a location with its objects and hover labels.</summary>
+/// <summary>Developer scene viewer: a location with characters, pointer, labels and the rucksack.</summary>
 static class Viewer
 {
     public static int Run(GameData data, Options opt)
     {
         var fb = new Framebuffer();
-        var font = new BitmapFont(data.Image("bmp/common/misc/char.brg"));
         var mixer = new AudioMixer();
         var audio = new GameAudio(data, mixer);
         var world = new GameWorld(data, audio);
-        world.LoadLocation(opt.Viewer!);
-        var scene = world.Scene!;
+        var session = new Engine.Game.GameSession(world);
+        world.Quest = opt.Quest;
+        world.Episode = opt.Episode;
+        session.EnterLocation(opt.Viewer!);
         if (opt.Track != null)
             audio.SetBackgroundTrack(opt.Track);
         foreach (var (name, x, y) in opt.Place)
@@ -162,53 +169,67 @@ static class Viewer
             var lead = world.Actors.First(a => a.Name.Equals(opt.Place[i - 1].Name, StringComparison.OrdinalIgnoreCase));
             lead.Follower = world.Actors.First(a => a.Name.Equals(opt.Place[i].Name, StringComparison.OrdinalIgnoreCase));
         }
+        foreach (int item in opt.Items)
+            session.GiveItem(item);
         foreach (var (x, y) in opt.WalkTargets)
             world.WalkToAfter(world.Hero, x, y);
-        world.Quest = opt.Quest;
-        world.Episode = opt.Episode;
         for (int i = 0; i < opt.Say.Count; i++)
             world.Dialogue.Say(opt.Say[i].Speaker, opt.Say[i].Scene, opt.Say[i].Line, last: i == opt.Say.Count - 1);
         foreach (string a in opt.Anims)
             if (world.PlayAnim(a, -1) == null)
                 Console.Error.WriteLine($"unknown animation {a}");
-        void Render(int mx, int my)
+        var scene = world.Scene!;
+
+        void Tick()
+        {
+            scene.Update(100);
+            session.Tick();
+            world.Update();
+        }
+
+        void Render()
         {
             world.Draw(fb);
-            var o = scene.ObjectAt(mx, my);
-            string label = o != null ? data.ObjectTexts.Get(o.Name)?.Over ?? "" : "";
-            if (label.Length > 0)
-            {
-                int w = font.MeasureWidth(label);
-                font.Draw(fb, label, Math.Clamp(mx - w / 2, 0, Framebuffer.Width - w), Math.Max(0, my - 24));
-            }
+            session.DrawOverlay(fb);
         }
-        if (opt.Screenshot != null)
+
+        if (opt.Screenshot != null || opt.Script != null)
         {
-            if (opt.Track != null)
-            {
-                var buf = new float[44100 * 2];
-                mixer.Mix(buf);
-                double rms = Math.Sqrt(buf.Average(x => (double)x * x));
-                Console.WriteLine($"audio: {opt.Track} rms over 1s = {rms:F4}");
-            }
+            var script = opt.Script != null ? InputScript.Load(opt.Script) : new InputScript();
             int frames = Math.Max(1, opt.Frames);
-            for (int i = 0; i < frames; i++)
+            for (int t = 0; t < frames; t++)
             {
-                scene.Update(100);
-                world.Update();
+                foreach (var cmd in script.At(t))
+                {
+                    switch (cmd.Op)
+                    {
+                        case "move":
+                            session.MoveMouse(cmd.X, cmd.Y);
+                            break;
+                        case "click":
+                            session.MoveMouse(cmd.X, cmd.Y);
+                            session.Click();
+                            break;
+                        case "shot":
+                            Render();
+                            Screenshot.SaveBmp(fb, cmd.Arg);
+                            Console.WriteLine($"tick {t}: saved {cmd.Arg}");
+                            break;
+                    }
+                }
+                Tick();
             }
-            int mx = 400, my = 300;
-            var hover = scene.Script.Objects.FirstOrDefault(o => scene.IsVisible(o) && o.Click.Length >= 3 &&
-                                                                 data.ObjectTexts.Get(o.Name)?.Over is { Length: > 0 });
-            if (hover != null)
-                (mx, my) = ((int)hover.Click.Average(p => p.X), (int)hover.Click.Average(p => p.Y));
-            Render(mx, my);
-            Screenshot.SaveBmp(fb, opt.Screenshot);
+            if (opt.Screenshot != null)
+            {
+                Render();
+                Screenshot.SaveBmp(fb, opt.Screenshot);
+                Console.WriteLine($"saved {opt.Screenshot}");
+            }
             foreach (var a in world.Actors.Where(a => a.Visible))
-                Console.WriteLine($"{a.Name}: ({a.X},{a.Y}) state {a.State} shape {a.Shape} scale {a.Scale:F3} depth {a.Depth} queue {a.Queue.Count}");
-            Console.WriteLine($"saved {opt.Screenshot} (hover at {mx},{my})");
+                Console.WriteLine($"{a.Name}: ({a.X},{a.Y}) state {a.State} shape {a.Shape} scale {a.Scale:F3} depth {a.Depth} queue {a.Queue.Count} sprite ({a.Sprite.X},{a.Sprite.Y}) x{a.Sprite.Scale:F3} frame {a.Sprite.Frame} visible {a.Sprite.Visible} packed {a.Sprite.Packed}");
             return 0;
         }
+
         using var host = new Host(opt.Fullscreen, !opt.Sharp);
         using var output = new AudioOutput(mixer);
         ulong last = Sdl.GetTicks(), tickClock = 0;
@@ -217,26 +238,52 @@ static class Viewer
         {
             host.PumpEvents();
             while (host.Input.KeysPressed.TryDequeue(out int k))
+            {
                 if (k == Keys.Escape)
                     host.Input.QuitRequested = true;
-            if (host.Input.Clicked && world.Dialogue.OpenMenu is { } menu)
-                menu.Click(world, host.Input.MouseX, host.Input.MouseY);
-            else if (host.Input.Clicked && !world.CursorVisible)
-                world.SkipRequested = true;
-            else if (host.Input.Clicked && world.Hero.Visible)
-                world.WalkTo(world.Hero, host.Input.MouseX, host.Input.MouseY);
+                else if (k == Keys.Space && !world.CursorVisible)
+                    world.SkipRequested = true;
+            }
+            session.MoveMouse(host.Input.MouseX, host.Input.MouseY);
+            if (host.Input.Clicked)
+                session.Click();
             ulong now = Sdl.GetTicks();
-            scene.Update(now - last);
             tickClock += now - last;
             last = now;
             while (tickClock >= 100)
             {
                 tickClock -= 100;
-                world.Update();
+                Tick();
             }
-            Render(host.Input.MouseX, host.Input.MouseY);
-            host.Present(fb);
+            Render();
+            host.Present(fb, host.Input.MouseInside);
         }
         return 0;
     }
+}
+
+/// <summary>Scripted input for automated tests: lines of "TICK move X Y | click X Y | shot FILE".</summary>
+sealed class InputScript
+{
+    public readonly record struct Command(int Tick, string Op, int X, int Y, string Arg);
+    readonly List<Command> _cmds = new();
+
+    public static InputScript Load(string path)
+    {
+        var s = new InputScript();
+        foreach (string raw in File.ReadAllLines(path))
+        {
+            string[] p = raw.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            if (p.Length < 2 || p[0].StartsWith('#'))
+                continue;
+            int tick = int.Parse(p[0]);
+            if (p[1] == "shot")
+                s._cmds.Add(new Command(tick, "shot", 0, 0, p[2]));
+            else if (p.Length >= 4)
+                s._cmds.Add(new Command(tick, p[1], int.Parse(p[2]), int.Parse(p[3]), ""));
+        }
+        return s;
+    }
+
+    public IEnumerable<Command> At(int tick) => _cmds.Where(c => c.Tick == tick);
 }

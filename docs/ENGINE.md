@@ -140,3 +140,21 @@ rested for one tick, using the object's "over" text, or the character's name for
   file) was picked. When only one option is left it is asked without showing the menu.
 * A click (or Space) while a line is being spoken skips to its end (an addition over the
   original).
+
+## Pointer, labels and the rucksack
+
+* The pointer is a 13-frame strip (32x32 each): frame 0 plain blue arrow, 1-4 the blue arrow
+  with a pulsing outline over anything clickable, then red arrows for exits (down, left, up,
+  right, two frames each, alternating). The hot spot is one pixel in from the top-left.
+* The nearest clickable thing (lowest depth) under the pointer wins: objects by their click
+  polygon, characters by a non-transparent pixel of their current frame.
+* The label (object's "over" text, or the character's name) is drawn about 20 pixels above the
+  pointer once the mouse has rested for a tick, or below it near the bottom edge. OpenFive keeps
+  long labels fully on screen.
+* Clicking the character you are playing opens the **rucksack**: a 448x308 panel centred on the
+  screen with the rucksack picture to its left and the items in rows of up to six, 60 pixels
+  apart horizontally and 50 vertically. Clicking an item picks it up; it then follows the
+  pointer until the next click, which uses it on whatever is under the pointer. Clicking
+  anything else closes the rucksack.
+* Other clicks go to the location's script; if it does not handle them, the hero walks to the
+  clicked point.

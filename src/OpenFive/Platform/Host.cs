@@ -20,6 +20,7 @@ public sealed unsafe class Host : IDisposable
     IntPtr _window, _renderer, _texture;
     bool _fullscreen;
     bool _smooth = true;
+    bool _pointerHidden;
     public InputState Input { get; } = new();
     static volatile bool s_signalled;
     readonly List<System.Runtime.InteropServices.PosixSignalRegistration> _signals = new();
@@ -118,8 +119,14 @@ public sealed unsafe class Host : IDisposable
         Input.MouseInside = gx >= 0 && gy >= 0 && gx < Framebuffer.Width && gy < Framebuffer.Height;
     }
 
-    public void Present(Framebuffer fb)
+    /// <summary>Shows a frame; the system pointer is hidden while it is over the game picture (the game draws its own).</summary>
+    public void Present(Framebuffer fb, bool hideSystemPointer = false)
     {
+        if (hideSystemPointer != _pointerHidden)
+        {
+            _pointerHidden = hideSystemPointer;
+            if (hideSystemPointer) Sdl.HideCursor(); else Sdl.ShowCursor();
+        }
         fixed (ushort* p = fb.Pixels)
             Sdl.UpdateTexture(_texture, IntPtr.Zero, p, Framebuffer.Width * 2);
         Sdl.SetRenderDrawColor(_renderer, 0, 0, 0, 255);
