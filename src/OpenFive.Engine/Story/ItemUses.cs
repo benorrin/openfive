@@ -85,7 +85,7 @@ public sealed partial class ItemUses : StoryScript
         TaskHandle? uVar6 = null;
         TaskHandle? uVar7 = null;
         local_18 = 1;
-        if (Same(name, "LOC02UntermBett")) {
+        if (Same(target, "LOC02UntermBett")) {
             local_2c = null;
             SetVar(Vars.V63bda8, Var(Vars.V64f294));
             SetVar(Vars.V64f294, 2);
@@ -95,7 +95,7 @@ public sealed partial class ItemUses : StoryScript
             ObjAfter("LOC02UntermBett", false, local_2c, 0);
         }
         else {
-            if (Same(name, "COMMON_INV03")) {
+            if (Same(target, "COMMON_INV03")) {
                 Chain = null;
                 local_30 = null;
                 if (Var(Vars.V6510c4) == 0) {
@@ -107,7 +107,7 @@ public sealed partial class ItemUses : StoryScript
                 }
             }
             else {
-                if (Same(name, "COMMON_INV21")) {
+                if (Same(target, "COMMON_INV21")) {
                     Chain = null;
                     local_5c = null;
                     if ((Episode == 3) && (Quest == 8)) {
@@ -141,14 +141,14 @@ public sealed partial class ItemUses : StoryScript
         }
         iVar1 = Same(name, "COMMON_INV13") ? 0 : 1;
         if ((((iVar1 == 0) || (Episode != 1)) || (Quest != 9)) || (LocationId != 24)) {
-            if (Same(name, "LOC16Schloss")) {
+            if (Same(target, "LOC16Schloss")) {
                 SetVar(Vars.V64eff8, 1);
             }
             if (Same(name, "COMMON_INV01")) {
                 if (Hero != George) {
                     return false;
                 }
-                if (Same(name, "LOC03Kamin")) {
+                if (Same(target, "LOC03Kamin")) {
                     Walk(Hero, 380, 368);
                     local_cc = State(Hero, 99);
                     StopAnimAfter("FeuerGross", local_cc, 5);
@@ -160,7 +160,7 @@ public sealed partial class ItemUses : StoryScript
                     }
                 }
                 else {
-                    if (Same(name, "LOC03Tasse")) {
+                    if (Same(target, "LOC03Tasse")) {
                         Walk(Hero, 450, 436);
                         SetVar(Vars.V64d464, 2000);
                         Chain = State(Hero, 98);
@@ -175,7 +175,7 @@ public sealed partial class ItemUses : StoryScript
             }
             else {
                 if (Same(name, "COMMON_INV02")) {
-                    if (Same(name, "LOC19SeilKlick")) {
+                    if (Same(target, "LOC19SeilKlick")) {
                         if (((Episode == 4) && (Quest == 8)) && (Var(Vars.V650ecc) == 0)) {
                             PointerOff();
                             SetVar(Vars.V650ecc, 1);
@@ -200,7 +200,7 @@ public sealed partial class ItemUses : StoryScript
                 }
                 else {
                     if (Same(name, "COMMON_INV03")) {
-                        if (Same(name, "LOC05Dosenoeffner")) {
+                        if (Same(target, "LOC05Dosenoeffner")) {
                             if (Hero == George) {
                                 return false;
                             }
@@ -225,7 +225,7 @@ public sealed partial class ItemUses : StoryScript
                     else {
                         iVar1 = Same(name, "COMMON_INV06") ? 0 : 1;
                         if ((iVar1 == 0) || Same(name, "COMMON_INV05")) {
-                            iVar1 = Same(name, "LOC16Scharnier") ? 0 : 1;
+                            iVar1 = Same(target, "LOC16Scharnier") ? 0 : 1;
                             if ((iVar1 == 0) || Same(target, "LOC16Schloss"))
                             {
                                 Walk(Hero, 620, 464);
@@ -249,7 +249,7 @@ public sealed partial class ItemUses : StoryScript
                                 Chain = Say(0, "KAJUETE0024", 10, true, local_144, 0);
                             }
                             else {
-                                if (Same(name, "LOC04Schluesselloch")) {
+                                if (Same(target, "LOC04Schluesselloch")) {
                                     if ((Episode != 1) && (Quest != 5)) {
                                         return false;
                                     }
@@ -299,7 +299,7 @@ public sealed partial class ItemUses : StoryScript
                             {
                                 iVar1 = Same(name, "COMMON_INV26") ? 0 : 1;
                                 if ((iVar1 == 0) && ((Quest == 6 && (Episode == 4)))) {
-                                    if (Same(name, "LOC16Scharnier")) {
+                                    if (Same(target, "LOC16Scharnier")) {
                                         Walk(Hero, 547, 464);
                                         Chain = State(Hero, 26);
                                         Chain = Say(0, "KAJUETE0024", 5, true, (uVar7), 6);
@@ -322,7 +322,7 @@ public sealed partial class ItemUses : StoryScript
                                         SetVar(Vars.V65075c, 1);
                                     }
                                     else {
-                                        if (Same(name, "LOC16Schloss")) {
+                                        if (Same(target, "LOC16Schloss")) {
                                             Walk(Hero, 547, 464);
                                             Chain = State(Hero, 26);
                                             local_240 = Chain;
@@ -334,7 +334,7 @@ public sealed partial class ItemUses : StoryScript
                                     }
                                 }
                                 else {
-                                    iVar1 = Same(name, "LOC04TueschlossLoc03") ? 0 : 1;
+                                    iVar1 = Same(target, "LOC04TueschlossLoc03") ? 0 : 1;
                                     if ((iVar1 == 0) && ((Episode == 4 && (Quest == 7)))) {
                                         PointerOff();
                                         Walk(Hero, 193, 517);
@@ -352,7 +352,7 @@ public sealed partial class ItemUses : StoryScript
                             }
                             else {
                                 if (Same(name, "COMMON_INV12")) {
-                                    if (Same(name, "LOC17Stein")) {
+                                    if (Same(target, "LOC17Stein")) {
                                         Walk(Hero, 490, 458);
                                         if ((Episode == 3) && (Quest == 8)) {
                                             Chain = State(Hero, 101);
@@ -370,7 +370,7 @@ public sealed partial class ItemUses : StoryScript
                                         }
                                     }
                                     else {
-                                        if (Same(name, "LOC15Reling")) {
+                                        if (Same(target, "LOC15Reling")) {
                                             local_2a8 = State(Anne, 36);
                                             HideAfter(Hero, local_2a8, 0);
                                             PointerAfter(false, local_2a8, 0, 400, 400);
@@ -390,7 +390,7 @@ public sealed partial class ItemUses : StoryScript
                                             ChangeLocation("loc16", local_2a8, 0);
                                         }
                                         else {
-                                            if (Same(name, "LOC17Efeu")) {
+                                            if (Same(target, "LOC17Efeu")) {
                                                 if ((Episode == 1) && (Quest == 11)) {
                                                     if (Var(Vars.V6514b4) != 0) {
                                                         return false;
@@ -421,7 +421,7 @@ public sealed partial class ItemUses : StoryScript
                                 else {
                                     iVar1 = Same(name, "COMMON_INV15") ? 0 : 1;
                                     if (((iVar1 == 0) || Same(name, "COMMON_INV16")) || Same(name, "COMMON_INV17")) {
-                                        if (Same(name, "LOC17Busch")) {
+                                        if (Same(target, "LOC17Busch")) {
                                             if ((Episode == 3) && (Quest == 8)) {
                                                 Walk(Hero, 410, 442);
                                                 Chain = State(Hero, 103);
@@ -508,7 +508,7 @@ public sealed partial class ItemUses : StoryScript
                                             }
                                         }
                                         else {
-                                            if (Same(name, "LOC19Loch")) {
+                                            if (Same(target, "LOC19Loch")) {
                                                 Walk(Hero, 257, 522);
                                                 Chain = State(Hero, 103);
                                                 local_390 = Chain;
@@ -564,11 +564,11 @@ public sealed partial class ItemUses : StoryScript
                                     }
                                     else {
                                         if (Same(name, "COMMON_INV23")) {
-                                            if (Same(name, "COMMON_INV25")) {
+                                            if (Same(target, "COMMON_INV25")) {
                                                 Take(23);
                                                 Take(25);
                                                 Give(24);
-                                                // TODO rucksack(0x64dc8c,1);
+                                                ShowRucksack();
                                             }
                                             else {
                                                 local_18 = 0;
@@ -580,11 +580,11 @@ public sealed partial class ItemUses : StoryScript
                                             }
                                             else {
                                                 if (Same(name, "COMMON_INV25")) {
-                                                    if (Same(name, "COMMON_INV23")) {
+                                                    if (Same(target, "COMMON_INV23")) {
                                                         Take(23);
                                                         Take(25);
                                                         Give(24);
-                                                        // TODO rucksack(0x64dc8c,1);
+                                                        ShowRucksack();
                                                     }
                                                     else {
                                                         local_18 = 0;
@@ -592,7 +592,7 @@ public sealed partial class ItemUses : StoryScript
                                                 }
                                                 else {
                                                     if (Same(name, "COMMON_INV09")) {
-                                                        if (Same(name, "LOC03Kamin")) {
+                                                        if (Same(target, "LOC03Kamin")) {
                                                             Walk(Hero, 395, 377);
                                                             local_3f0 = State(Hero, 45);
                                                             if ((Episode == 3) && (Quest == 7)) {
@@ -626,20 +626,20 @@ public sealed partial class ItemUses : StoryScript
                                                     }
                                                     else {
                                                         if (Same(name, "COMMON_INV10")) {
-                                                            if (Same(name, "COMMON_INV29")) {
+                                                            if (Same(target, "COMMON_INV29")) {
                                                                 Take(29);
                                                                 Give(28);
-                                                                // TODO rucksack(0x64dc8c,1);
+                                                                ShowRucksack();
                                                             }
                                                             else {
-                                                                if (Same(name, "LOC16Schloss")) {
+                                                                if (Same(target, "LOC16Schloss")) {
                                                                     Walk(Hero, 547, 464);
                                                                     Chain = State(Hero, 26);
                                                                     local_438 = Chain;
                                                                     Chain = Say(0, "KAJUETE0024", 3, true, local_438, 4);
                                                                 }
                                                                 else {
-                                                                    if (Same(name, "LOC16Scharnier")) {
+                                                                    if (Same(target, "LOC16Scharnier")) {
                                                                         Walk(Hero, 620, 464);
                                                                         Chain = State(Hero, 26);
                                                                         local_450 = Chain;
@@ -653,7 +653,7 @@ public sealed partial class ItemUses : StoryScript
                                                         }
                                                         else {
                                                             if (Same(name, "COMMON_INV13")) {
-                                                                if (Same(name, "LOC17Busch")) {
+                                                                if (Same(target, "LOC17Busch")) {
                                                                     if (Var(Vars.V650b4c) == 1) {
                                                                         local_468 = null;
                                                                         SetVar(Vars.V650b4c, 2);
@@ -674,7 +674,7 @@ public sealed partial class ItemUses : StoryScript
                                                                     }
                                                                 }
                                                                 else {
-                                                                    if (Same(name, "LOC24ExitToLoc27")) {
+                                                                    if (Same(target, "LOC24ExitToLoc27")) {
                                                                         if ((Episode == 1) && (Quest == 9)) {
                                                                             local_46c = null;
                                                                             if (Var(Vars.V650fac) == 0) {
@@ -720,7 +720,7 @@ public sealed partial class ItemUses : StoryScript
                                                             }
                                                             else {
                                                                 if (Same(name, "COMMON_INV19")) {
-                                                                    if (Same(name, "LOC17Busch")) {
+                                                                    if (Same(target, "LOC17Busch")) {
                                                                         if (Var(Vars.V650b4c) == 1) {
                                                                             local_4d4 = null;
                                                                             WalkAfter(Hero, 431, 442, null, 5);
@@ -736,7 +736,7 @@ public sealed partial class ItemUses : StoryScript
                                                                 }
                                                                 else {
                                                                     if (Same(name, "COMMON_INV22")) {
-                                                                        iVar1 = Same(name, "LOC17Busch") ? 0 : 1;
+                                                                        iVar1 = Same(target, "LOC17Busch") ? 0 : 1;
                                                                         if ((iVar1 == 0) && (Var(Vars.V650b4c) == 1)) {
                                                                             local_4ec = null;
                                                                             WalkAfter(Hero, 431, 442, null, 5);
@@ -748,8 +748,8 @@ public sealed partial class ItemUses : StoryScript
                                                                             Chain = Say(0, "RUINE0038", 22, false, Chain, 0);
                                                                             Chain = Say(1, "RUINE0038", 23, true, Chain, 0);
                                                                         }
-                                                                        if (Same(name, "LOC05Timmy")) {
-                                                                            if (Var(Vars.V63be01) == 0) {
+                                                                        if (Same(target, "LOC05Timmy")) {
+                                                                            if (Var(Vars.Distracted) == 0) {
                                                                                 Chain = null;
                                                                                 local_540 = null;
                                                                                 StopAnimAfter("GeorgesBreadStill", null, 3);
@@ -799,7 +799,7 @@ public sealed partial class ItemUses : StoryScript
                                                                         if (Same(name, "COMMON_INV27")) {
                                                                             Chain = null;
                                                                             local_5a8 = null;
-                                                                            if (Same(name, "LOC04Tuerspalte2")) {
+                                                                            if (Same(target, "LOC04Tuerspalte2")) {
                                                                                 if (Quest < 5) {
                                                                                     return false;
                                                                                 }
@@ -813,7 +813,7 @@ public sealed partial class ItemUses : StoryScript
                                                                                 Take(27);
                                                                             }
                                                                             else {
-                                                                                if (Same(name, "LOC04Tuerspalte4")) {
+                                                                                if (Same(target, "LOC04Tuerspalte4")) {
                                                                                     if ((Episode == 4) && (Quest == 7)) {
                                                                                         PointerOff();
                                                                                         Walk(Hero, 193, 517);
@@ -833,7 +833,7 @@ public sealed partial class ItemUses : StoryScript
                                                                                 if (Quest < 3) {
                                                                                     return false;
                                                                                 }
-                                                                                iVar1 = Same(name, "LOC04ExitToLOC03") ? 0 : 1;
+                                                                                iVar1 = Same(target, "LOC04ExitToLOC03") ? 0 : 1;
                                                                                 if ((iVar1 == 0) || (Same(target, "LOC04TueschlossLoc03"))) {
                                                                                     Walk(Hero, 193, 517);
                                                                                     local_5d4 = State(Hero, 19);
@@ -856,13 +856,13 @@ public sealed partial class ItemUses : StoryScript
                                                                             }
                                                                             else {
                                                                                 if (Same(name, "COMMON_INV29")) {
-                                                                                    if (Same(name, "COMMON_INV10")) {
+                                                                                    if (Same(target, "COMMON_INV10")) {
                                                                                         Take(29);
                                                                                         Give(28);
-                                                                                        // TODO rucksack(0x64dc8c,1);
+                                                                                        ShowRucksack();
                                                                                     }
                                                                                     else {
-                                                                                        if (Same(name, "LOC04ExitToLOC03")) {
+                                                                                        if (Same(target, "LOC04ExitToLOC03")) {
                                                                                             Walk(Hero, 193, 517);
                                                                                             local_5ec = State(Hero, 19);
                                                                                             SetVar(Vars.V63bdc5, 1);
@@ -884,7 +884,7 @@ public sealed partial class ItemUses : StoryScript
                                                                                 }
                                                                                 else {
                                                                                     if (Same(name, "COMMON_INV31")) {
-                                                                                        if (Same(name, "LOC04Koffer")) {
+                                                                                        if (Same(target, "LOC04Koffer")) {
                                                                                             if ((Episode == 2) && (Quest == 5)) {
                                                                                                 if (Var(Vars.V64f72c) == 0) {
                                                                                                     Walk(Hero, 270, 570);
@@ -914,7 +914,7 @@ public sealed partial class ItemUses : StoryScript
                                                                                     }
                                                                                     else {
                                                                                         if (Same(name, "COMMON_INV32")) {
-                                                                                            if (Same(name, "LOC03Schiff")) {
+                                                                                            if (Same(target, "LOC03Schiff")) {
                                                                                                 Walk(Hero, 367, 360);
                                                                                                 local_63c = State(Hero, 79);
                                                                                                 if ((Episode == 3) && (Quest == 7)) {

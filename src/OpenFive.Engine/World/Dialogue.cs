@@ -36,6 +36,9 @@ public interface IDialogueHooks
 /// </summary>
 public sealed class DialogueSystem
 {
+    /// <summary>Speaker code of the line being started or spoken (-1 before the first line).</summary>
+    public int CurrentSpeaker = -1;
+
     /// <summary>Speaker codes used by the scripts.</summary>
     public static readonly Speaker[] Speakers =
     {
@@ -129,6 +132,7 @@ public sealed class DialogueSystem
         bool last = false, int delay = 0, bool choice = false)
     {
         var s = SpeakerFor(speaker) ?? Speakers[0];
+        Trace.Log($"say {s.Folder} {scene} {line}{(choice ? " (menu)" : "")}{(last ? " last" : "")}");
         var task = _world.Tasks.Add(new DialogueTask(this, s, scene, line, menuPosition, last, choice)
         {
             WaitFor = after ?? _world.Chain,
@@ -154,7 +158,7 @@ public sealed class DialogueSystem
     {
         if (last)
         {
-            _world.Tasks.Add(new CursorTask(true, 400, 300) { WaitFor = end });
+            Trace.Log($"conversation ending, speaker {CurrentSpeaker}");
             Hooks?.ConversationEnding(_world, end);
         }
         else
@@ -185,11 +189,29 @@ public sealed class DialogueTask : GameTask
         _last = last;
     }
 
+    public override string ToString() => $"{Name} {_speaker.Folder} {_scene} {_line} {(_choice ? "menu" : "line")} -> {_inner?.GetType().Name}";
+
     protected internal override bool Run(GameWorld world)
+    {
+        bool done = RunLine(world);
+        if (done && _last)
+        {
+            // The pointer comes back after the last line, before anything waiting for the line
+            // runs (so a script that keeps it hidden for a following scene has the last word).
+            world.CursorVisible = true;
+            world.CursorWarp = (400, 300);
+        }
+        return done;
+    }
+
+    bool RunLine(GameWorld world)
     {
         if (!_started)
         {
             _started = true;
+            // As in the original, the speaker is current from the moment the line's task starts,
+            // so the location's hooks called for it below already see who is speaking.
+            _sys.CurrentSpeaker = _speaker.Code;
             var entry = _sys.Lookup(_speaker, _choice, _scene, _line);
             if (entry == null)
             {

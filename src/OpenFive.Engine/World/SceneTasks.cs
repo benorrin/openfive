@@ -100,6 +100,7 @@ public sealed class CursorTask : GameTask
 
     protected internal override bool Run(GameWorld world)
     {
+        Trace.Log($"{world.Tick}: pointer {(_visible ? "on" : "off")}");
         world.CursorVisible = _visible;
         if (_x != -1)
             world.CursorWarp = (_x, _y);

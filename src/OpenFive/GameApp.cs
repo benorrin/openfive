@@ -143,6 +143,32 @@ sealed class GameApp
         _ => '\0',
     };
 
+    /// <summary>Off-screen play-through from a command list (see PlayRunner).</summary>
+    int RunPlay()
+    {
+        var runner = new PlayRunner(_opt.Play!);
+        Start();
+        if (_movie != null)
+            EndMovie();
+        if (_opt.StartLocation == null)
+            _session.NewGame();
+        int maxTicks = _opt.Frames > 0 ? _opt.Frames : 200000;
+        for (int t = 0; t < maxTicks && !runner.Done && !_session.QuitRequested; t++)
+        {
+            string? msg = runner.Tick(_session, file =>
+            {
+                Render();
+                Screenshot.SaveBmp(_fb, file);
+            });
+            if (msg != null)
+                Console.WriteLine($"{t,6} {msg}");
+            _mixer.Mix(_silence);
+            Tick();
+        }
+        Console.WriteLine($"end: {_world.Scene?.Name} Q{_world.Quest} E{_world.Episode} items [{string.Join(",", _session.Inventory.Items)}] errors {runner.Errors}{(runner.Done ? "" : " (not finished)")}");
+        return runner.Errors == 0 && runner.Done ? 0 : 1;
+    }
+
     /// <summary>Off-screen run driven by an input script (for automated tests).</summary>
     int RunScripted()
     {
@@ -189,6 +215,8 @@ sealed class GameApp
 
     public int Run()
     {
+        if (_opt.Play != null)
+            return RunPlay();
         if (_opt.Script != null || _opt.Screenshot != null)
             return RunScripted();
         using var host = new Host(_opt.Fullscreen || _settings.Fullscreen, _settings.SmoothScaling && !_opt.Sharp);

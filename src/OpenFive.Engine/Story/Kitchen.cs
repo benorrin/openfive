@@ -415,7 +415,7 @@ public sealed partial class Kitchen : StoryScript
                             if (Same(name, "LOC05Timmy")) {
                                 if ((Quest == 3) && (Episode == 3)) {
                                     PointerOff();
-                                    if (Var(Vars.V63be01) != 0) {
+                                    if (Var(Vars.Distracted) != 0) {
                                         StopAnimAfter("QuentinDrink", null, 0);
                                         StopAnimAfter("QuentinDrinkAll", null, 0);
                                         Anim("QuentinDrink", -1, null, 0);
@@ -447,7 +447,7 @@ public sealed partial class Kitchen : StoryScript
                                     if ((Quest == 3) && (Episode == 3)) {
                                         local_20 = null;
                                         Chain = null;
-                                        if (Var(Vars.V63be01) == 0) {
+                                        if (Var(Vars.Distracted) == 0) {
                                             if (Var(Vars.V64ffb4) == 0) {
                                                 SetText("t63bdf0", "Quentin");
                                                 Chain = Say(5, "KUECHE0005-05", 30, false, local_20, 0);
@@ -940,7 +940,7 @@ public sealed partial class Kitchen : StoryScript
                                                                                                                                 iVar1 = Same(name, "LOC05ExitToLOC04") ? 0 : 1;
                                                                                                                                 if (iVar1 == 0) {
                                                                                                                                     if ((Episode == 3) && (Quest == 3) ) {
-                                                                                                                                        if (Var(Vars.V63be01) == 0) {
+                                                                                                                                        if (Var(Vars.Distracted) == 0) {
                                                                                                                                             local_cec = null;
                                                                                                                                             Depth(@"\bmp\obj\george\gesu\gesu06an.brg", 2200);
                                                                                                                                             AnimPos("GeorgeStandUpSitDown", 130, 252);
@@ -1019,7 +1019,7 @@ public sealed partial class Kitchen : StoryScript
                                                                                                                                 }
                                                                                                                                 else {
                                                                                                                                     iVar1 = Same(name, "LOC05Kanne") ? 0 : 1;
-                                                                                                                                    if ((iVar1 == 0) && (Var(Vars.V63be01) == 0)) {
+                                                                                                                                    if ((iVar1 == 0) && (Var(Vars.Distracted) == 0)) {
                                                                                                                                         if ((Episode == 3) && (Quest == 3) ) {
                                                                                                                                             PointerOff();
                                                                                                                                             SetText("t63bdf0", "Teekanne");
@@ -1117,7 +1117,7 @@ public sealed partial class Kitchen : StoryScript
         PathEnable(6, false);
         PathEnable(4, false);
         SetVar(Vars.V63be02, 0);
-        SetVar(Vars.V63be01, 0);
+        SetVar(Vars.Distracted, 0);
         Obj("LOC05Tisch", false);
         F436144();
         SetVar(Vars.V64fdf4, 1);
@@ -2162,23 +2162,34 @@ public sealed partial class Kitchen : StoryScript
                             }
                         }
                         else {
+                            // George gets up, takes the teapot from the stove, fills Quentin's cup,
+                            // puts the pot back and sits down again; Quentin then drinks it all,
+                            // which is the moment Timmy can be fed under the table.
                             PointerAfter(false, param_1, 0, 400, 300);
                             SetVar(Vars.V64d464, 600);
-                            F43c744(param_1,1,"GeorgeSitDownRight",60,456);
-                            uVar3 = ObjAfter("LOC05Kanne", false, (uVar3), 4);
-                            WalkAfter(Hero, 608, 456, (uVar3), 0);
+                            F43c744(param_1, 1, "GeorgeSitDownRight", 60, 456);
+                            uVar3 = State(Hero, 21);
+                            uVar3 = ObjAfter("LOC05Kanne", false, uVar3, 4);
+                            WalkAfter(Hero, 608, 456, uVar3, 0);
+                            uVar3 = State(Hero, 7);
                             AnimPos("Tee", 502, 243);
                             Depth(@"bmp\obj\george\gept\geptan.brg", 1900);
-                            Anim("Tee", 1, (uVar3), 7);
+                            Anim("Tee", 1, uVar3, 7);
                             WalkAfter(Hero, 50, 456, param_1, 12);
-                            uVar3 = ObjAfter("LOC05Kanne", true, (uVar3), 4);
+                            uVar3 = State(Hero, 21);
+                            uVar3 = ObjAfter("LOC05Kanne", true, uVar3, 4);
                             WalkAfter(Hero, 200, 557, param_1, 6);
-                            HideAfter(Hero, (uVar3), 0);
-                            Anim("GeorgeSitDownRight", -1, (uVar3), 0);
-                            StopAnimAfter("QuentinDrink", (uVar3), 0);
-                            PointerAfter(true, (uVar3), 0, 400, 300);
-                            SetAfter(Vars.Distracted, 1, (uVar3), 10);
-                            Anim("QuentinDrink", -1, (uVar3), 0);
+                            uVar3 = State(Hero, 12);
+                            HideAfter(Hero, uVar3, 0);
+                            uVar3 = Anim("GeorgeSitDown", 1, uVar3, 0);
+                            Anim("GeorgeSitDownRight", -1, uVar3, 0);
+                            StopAnimAfter("QuentinDrink", uVar3, 0);
+                            PointerAfter(true, uVar3, 0, 400, 300);
+                            uVar3 = Anim("QuentinDrinkAll", 1, uVar3, 0);
+                            // Quentin is busy with his tea until 10 ticks after he has finished it.
+                            SetVar(Vars.Distracted, 1);
+                            SetAfter(Vars.Distracted, 0, uVar3, 10);
+                            Anim("QuentinDrink", -1, uVar3, 0);
                             if (Var(Vars.V64fc6c) == 0) {
                                 SetVar(Vars.V64fc6c, 1);
                                 SetVar(Vars.V64ff7c, 8);

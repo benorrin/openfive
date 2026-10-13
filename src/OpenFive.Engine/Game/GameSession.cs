@@ -25,7 +25,12 @@ public sealed class GameSession
 
     /// <summary>Remembered texts of the story scripts (saved with the game).</summary>
     public Dictionary<string, string> Texts { get; } = new(StringComparer.OrdinalIgnoreCase);
-    public void SetVar(string name, int value) => Vars[name] = value;
+    public void SetVar(string name, int value)
+    {
+        if (Trace.On && Var(name) != value)
+            Trace.Log($"{World.Tick}: var {name} = {value}");
+        Vars[name] = value;
+    }
 
     /// <summary>The location the hero is in (menus are locations too, this one is not one of them).</summary>
     public string GameLocation { get; private set; } = "";
@@ -68,6 +73,8 @@ public sealed class GameSession
     /// <summary>Loads a location and runs its script's entry logic.</summary>
     public void EnterLocation(string name, string from = "")
     {
+        // Entering a place directly (loading a game) cancels a change that was still on its way.
+        _pendingLocation = null;
         CloseInventory();
         Dragging = 0;
         World.Tasks.Clear();
@@ -108,6 +115,7 @@ public sealed class GameSession
         // The rucksack starts with Dick's pocket knife and the newspaper.
         Inventory.Give(6);
         Inventory.Give(27);
+        Story.NewGameState.Apply(this);
         StoryScript.NewGameMenus(this);
         World.Hero = World.Dick;
         ChangeLocation(NewGameLocation);
@@ -157,6 +165,9 @@ public sealed class GameSession
         Reset();
         foreach (int i in s.Items)
             Inventory.Give(i);
+        // Start from the new-game state, so flags a save does not mention keep their defaults.
+        Story.NewGameState.Apply(this);
+        StoryScript.NewGameMenus(this);
         foreach (var (k, v) in s.Vars)
             Vars[k] = v;
         foreach (var (k, v) in s.Objects)
@@ -188,11 +199,19 @@ public sealed class GameSession
         foreach (int item in Inventory.Items)
         {
             string obj = Inventory.ObjectName(item);
+            if (item == Dragging)
+            {
+                World.ShowObject(obj, false);
+                continue;
+            }
             World.MoveObject(obj, ItemsX + i % ItemsPerRow * ItemStepX, ItemsY + i / ItemsPerRow * ItemStepY);
             World.ShowObject(obj, true);
             i++;
         }
     }
+
+    /// <summary>True when (x, y) is on the open rucksack panel.</summary>
+    public static bool InRucksack(int x, int y) => x >= BoxX && x < BoxX + BoxW && y >= BoxY && y < BoxY + BoxH;
 
     public void CloseInventory()
     {
@@ -292,6 +311,8 @@ public sealed class GameSession
             _pendingLocation = null;
             EnterLocation(next, World.Scene?.Name ?? "");
         }
+        if (InventoryOpen && Dragging != 0 && !InRucksack(MouseX, MouseY))
+            CloseInventory();
         Script.Hover(MouseX, MouseY);
         if (!IsMenu(World.Scene?.Name ?? ""))
             Script.EveryTick();
@@ -343,8 +364,16 @@ public sealed class GameSession
             return;
         }
         var target = FindTarget(x, y);
+        Trace.Log($"click {x},{y} on {target?.Name ?? "nothing"} in {World.Scene?.Name} Q{World.Quest}E{World.Episode}");
         if (Dragging != 0)
         {
+            if (InventoryOpen && (target == null || Inventory.ItemOf(target.Value.Name) == 0))
+            {
+                // Dropped back into the rucksack.
+                Dragging = 0;
+                OpenInventory();
+                return;
+            }
             DropItem(target);
             return;
         }
@@ -353,8 +382,10 @@ public sealed class GameSession
             int item = target is { } t ? Inventory.ItemOf(t.Name) : 0;
             if (item != 0)
             {
+                // The item is taken in hand; the rucksack stays open (so it can be used on another
+                // item) until the pointer leaves it.
                 Dragging = item;
-                CloseInventory();
+                OpenInventory();
             }
             else
                 CloseInventory();
@@ -373,6 +404,19 @@ public sealed class GameSession
             World.WalkTo(World.Hero, x, y);
     }
 
+    /// <summary>Uses a rucksack item on a named object or character (as if dragged there).</summary>
+    public void UseItemOn(int item, string target)
+    {
+        Dragging = item;
+        if (Inventory.ItemOf(target) != 0)
+            OpenInventory();
+        else
+            CloseInventory();
+        var o = World.FindObject(target);
+        var a = World.Actors.FirstOrDefault(x => x.Name.Equals(target, StringComparison.OrdinalIgnoreCase));
+        DropItem(new HoverTarget(target, "", o, a));
+    }
+
     void DropItem(HoverTarget? target)
     {
         int item = Dragging;
@@ -381,6 +425,8 @@ public sealed class GameSession
             return;
         if (!new Story.ItemUses(this).Use(Inventory.ObjectName(item), target.Value.Name))
             Script.UseItem(item, target.Value.Name);
+        if (InventoryOpen)
+            OpenInventory();
     }
 
     /// <summary>Draws the pointer, the dragged item and the hover label on top of the scene.</summary>

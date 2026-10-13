@@ -64,9 +64,19 @@ public sealed class GameData : IDisposable
     public ResScript Location(string name)
     {
         if (!_res.TryGetValue(name, out var r))
-            _res[name] = r = ResScript.Parse(Read(name + ".res"));
+            _res[name] = r = ResScript.Parse(Read(ResName(name) + ".res"));
         return r;
     }
+
+    /// <summary>The ".res" file of a location; a few close-up scenes are named differently.</summary>
+    public static string ResName(string location) => location.ToLowerInvariant() switch
+    {
+        "schiffc1" => "schiffcl1",
+        "schiffc2" => "schiffcl2",
+        "schiffc3" => "schiffcl3",
+        "lockarte" => "karte",
+        _ => location,
+    };
 
     public Image16 Image(string path)
     {

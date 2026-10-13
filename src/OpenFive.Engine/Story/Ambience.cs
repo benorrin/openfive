@@ -14,6 +14,6 @@ public static class Ambience
         ["loc23"] = @"wav\atmo\verlies1.wav", ["loc24"] = @"wav\atmo\verlies1.wav", ["loc25"] = @"wav\atmo\verlies1.wav",
         ["loc26"] = @"wav\atmo\verlies1.wav", ["loc27"] = @"wav\atmo\schatz.wav", ["loc28"] = @"wav\atmo\verlies1.wav",
         ["loc29"] = @"wav\atmo\verlies1.wav", ["schiff"] = "", ["morning"] = "", ["morgen"] = "", ["hand"] = "",
-        ["hand2"] = "", ["schiffcl1"] = "", ["schiffcl2"] = "", ["schiffcl3"] = "",
+        ["hand2"] = "", ["schiffc1"] = "", ["schiffc2"] = "", ["schiffc3"] = "", ["locKarte"] = "",
     };
 }

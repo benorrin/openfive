@@ -104,6 +104,10 @@ distributions is planned; the same `dotnet publish` command works with `-r win-x
 * `--loc NAME` starts a game directly in a location (with `--from`, `--quest Q,E`, `--item N`).
 * `--script FILE --frames N` runs the game off-screen with scripted input
   (`TICK move X Y`, `TICK click X Y`, `TICK key SCANCODE`, `TICK shot FILE.bmp`), for automated tests.
+* `--play FILE` plays through the game off-screen from a list of commands (`click OBJECT`,
+  `use ITEM TARGET`, `choose OPTION`, `expect LOCATION`, `save SLOT`, `load SLOT`, ...; see
+  `src/OpenFive/PlayRunner.cs`), skipping speech, and reports anything that did not work.
+* Setting `OPENFIVE_TRACE=1` prints clicks, dialogue lines, story variables and pointer changes.
 * `--view LOCATION` opens a scene viewer (e.g. `--view loc05`): the location's background and
   objects, with hover labels.
 * `--view LOCATION --screenshot out.bmp --frames N` renders off-screen and saves a picture

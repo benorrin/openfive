@@ -59,7 +59,11 @@ public abstract class StoryScript : LocationScript
         Do(() => Session.SetVar(name, Session.Var(name) == 0 ? 1 : 0), after, delay);
 
     /// <summary>Remembered texts (for example which character was clicked).</summary>
-    protected void SetText(string name, string value) => Session.Texts[name] = value;
+    protected void SetText(string name, string value)
+    {
+        Trace.Log($"text {name} = \"{value}\"");
+        Session.Texts[name] = value;
+    }
     protected string Text(string name) => Session.Texts.TryGetValue(name, out var v) ? v : "";
 
     // ---- choice menus -------------------------------------------------------------------------
@@ -163,7 +167,11 @@ public abstract class StoryScript : LocationScript
     protected static bool Same(string? a, string b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase);
 
     /// <summary>The speaker of the line being spoken (set when a line starts).</summary>
-    protected int CurrentSpeaker { get; set; } = -1;
+    protected int CurrentSpeaker
+    {
+        get => World.Dialogue.CurrentSpeaker;
+        set => World.Dialogue.CurrentSpeaker = value;
+    }
 
     protected bool German => World.Data.Language == Language.German;
 
@@ -171,6 +179,8 @@ public abstract class StoryScript : LocationScript
 
     protected bool Has(int item) => Session.Inventory.Has(item);
     protected void Give(int item) => Session.GiveItem(item);
+    /// <summary>Opens (or redraws) the rucksack, e.g. after two items were combined.</summary>
+    protected void ShowRucksack() => Session.OpenInventory();
     protected void Take(int item) => Session.TakeItem(item);
     protected TaskHandle GiveAfter(int item, TaskHandle? after, int delay = 0) => Do(() => Give(item), after, delay);
     protected TaskHandle TakeAfter(int item, TaskHandle? after, int delay = 0) => Do(() => Take(item), after, delay);
@@ -341,6 +351,15 @@ public abstract class StoryScript : LocationScript
         "save" => 51,
         "options" => 53,
         "locextro" => 70,
+        "schiff" => 56,
+        "morning" => 57,
+        "morgen" => 58,
+        "hand" => 59,
+        "hand2" => 60,
+        "schiffc1" => 61,
+        "schiffc2" => 62,
+        "schiffc3" => 63,
+        "lockarte" => 71,
         var l when l.StartsWith("loc") && int.TryParse(l[3..], out int n) => n,
         _ => 0,
     };

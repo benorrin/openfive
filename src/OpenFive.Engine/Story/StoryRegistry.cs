@@ -40,5 +40,14 @@ public static class StoryRegistry
         Scripts.Register("loc18", () => new WellTop());
         Scripts.Register("loc15", () => new Wreck());
         Scripts.Register("loc16", () => new WreckCabin());
+        Scripts.Register("schiff", () => new ShipPicture());
+        Scripts.Register("morgen", () => new NextMorning("morgen"));
+        Scripts.Register("morning", () => new NextMorning("morning"));
+        Scripts.Register("hand", () => new HandCloseUp("hand"));
+        Scripts.Register("hand2", () => new HandCloseUp("hand2"));
+        Scripts.Register("schiffc1", () => new ShipOpening(1));
+        Scripts.Register("schiffc2", () => new ShipOpening(2));
+        Scripts.Register("schiffc3", () => new ShipOpening(3));
+        Scripts.Register("locKarte", () => new MapCloseUp());
     }
 }

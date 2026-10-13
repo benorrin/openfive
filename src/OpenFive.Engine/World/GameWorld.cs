@@ -116,6 +116,7 @@ public sealed class GameWorld
         GlobalObjects.Clear();
         LoadGlobalObjects();
         Dialogue.AskedOptions.Clear();
+        Dialogue.CurrentSpeaker = -1;
         Quest = 1;
         Episode = 1;
         foreach (var a in Actors)
@@ -303,11 +304,11 @@ public sealed class GameWorld
 
     /// <summary>
     /// Puts a character into the current location at the walkable point nearest (x, y), facing
-    /// <paramref name="state"/>, and makes it visible.
+    /// <paramref name="state"/>, and makes it visible. Like the original, this leaves the
+    /// character's queue alone: scripts often queue a walk that starts from the new spot.
     /// </summary>
     public void PlaceActor(Actor a, int x, int y, int state)
     {
-        a.ClearQueue();
         a.Location = Scene?.Name ?? "";
         var near = Walk?.Nearest(x, y);
         if (near is { } n)

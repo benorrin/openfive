@@ -70,6 +70,7 @@ sealed class Options
     public int Quest = 1, Episode = 1;
     public List<int> Items = new();
     public string? Script;
+    public string? Play;
     public int Frames = -1;
 
     public const string Help =
@@ -88,6 +89,7 @@ sealed class Options
         "  --say S,SCENE,N    viewer: speaker code S says line N of SCENE (repeatable, in order)\n" +
         "  --item N           viewer: put item N (1-32) in the rucksack (repeatable)\n" +
         "  --script FILE      viewer: scripted input (\"TICK move X Y | click X Y | shot FILE\"), run --frames ticks\n" +
+        "  --play FILE        play through the game off-screen from a command list (see PlayRunner.cs)\n" +
         "  --walk X,Y         viewer: hero walks to X,Y (repeatable, one after another)\n" +
         "  --track PATH       viewer: play a background track (e.g. wav/atmo/Geheim.WAV)\n" +
         "  --screenshot FILE  with --frames N: render N frames off-screen, save a BMP and exit\n";
@@ -133,6 +135,7 @@ sealed class Options
                 }
                 case "--item": o.Items.Add(int.Parse(Next())); break;
                 case "--script": o.Script = Next(); break;
+                case "--play": o.Play = Next(); break;
                 case "--walk":
                 {
                     string[] p = Next().Split(',');
