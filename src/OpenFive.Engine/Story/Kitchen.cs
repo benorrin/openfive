@@ -863,7 +863,7 @@ public sealed class Kitchen : StoryScript
         TaskHandle? ready = null;
         Walk(Hero, 315, 400);
         ready = State(Hero, TakeMidUpLeft);
-        MoveObj("LOC03Brotkasten1", 257, 280);
+        MoveObj("LOC03Brotkasten1", 257, 280); // (sic) as in SetUpTheBreadBin
         if (Var(Vars.BreadBinOpen) == 0)
         {
             ObjAfter("LOC05Brotkasten1", true, ready, 3);
@@ -1308,7 +1308,7 @@ public sealed class Kitchen : StoryScript
     /// <remarks>The original's FUN_0043577e.</remarks>
     void SetUpTheBreadBin()
     {
-        MoveObj("LOC03Brotkasten1", 257, 280); // (sic) the original moves a hall object here
+        MoveObj("LOC03Brotkasten1", 257, 280); // (sic) the original moves a study (loc03) object here
         Obj("LOC05Brotkasten1", false);
         if (Var(Vars.BreadBinAvailable) == 1 && Var(Vars.BreadBinOpen) == 1)
             Obj("LOC05Brotkasten1", true);
