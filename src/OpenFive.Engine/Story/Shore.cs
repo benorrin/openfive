@@ -111,8 +111,8 @@ public sealed class Shore : IslandScript
         {
             SetStep(2, 3);
             Obj("LOC09KisteRechts", true);
-            if (Var(Vars.V64f4fc) > 0)
-                SetVar(Vars.V64f4fc, 3);
+            if (Var(Vars.QuentinStudyTalk) > 0)
+                SetVar(Vars.QuentinStudyTalk, 3);
             SetVar(Vars.FannyTalk, 0);
             SetVar(Vars.JulianTalk, 0);
             SetVar(Vars.AnneTalk, 0);

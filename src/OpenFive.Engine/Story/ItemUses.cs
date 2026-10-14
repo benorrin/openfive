@@ -175,7 +175,7 @@ public sealed class ItemUses : StoryScript
         if (Same(target, "LOC03Tasse"))
         {
             Walk(Hero, 450, 436);
-            SetVar(Vars.V64d464, 2000);
+            SetVar(Vars.GrumbleTimer, 2000);
             Chain = State(Hero, TeapotRight);
             PointerAfter(false, Chain, x: 300, y: 400);
             Say(Who.Quentin, "ARBEIT0032", 10, last: true);
@@ -543,11 +543,11 @@ public sealed class ItemUses : StoryScript
             PointerAfter(false, kneeling, x: 300, y: 400);
             if (Var(Vars.StudyFireOut) == 0)
             {
-                SetAfter(Vars.V64f3e4, 1, kneeling);
+                SetAfter(Vars.FirewoodTalk, 1, kneeling);
                 Say(Who.Quentin, "ARBEIT0032", 12, last: true);
                 return false;
             }
-            SetAfter(Vars.V64f3e4, 2, kneeling);
+            SetAfter(Vars.FirewoodTalk, 2, kneeling);
             Say(Who.Quentin, "ARBEIT0032", 14, last: true);
         }
         StopAnimAfter("FeuerKlein", kneeling, 5);

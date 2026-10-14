@@ -96,7 +96,7 @@ public sealed class Hall : StoryScript
         else if (At(5, 4))
         {
             Episode = 5;
-            SetVar(Vars.V64f534, 0);
+            SetVar(Vars.QuentinWontTalk, 0);
             Obj("LOC04ExitToLOC06", false);
         }
         else if (At(7, 3))

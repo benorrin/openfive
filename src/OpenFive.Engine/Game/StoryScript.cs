@@ -253,10 +253,10 @@ public abstract class StoryScript : LocationScript
             SetVar(slot, Var(menu.None));
     }
 
-    /// <summary>Puts every option back on this location's menu, in order.</summary>
-    protected void ReopenMenu()
+    /// <summary>Puts every option back on a location's menu (default: this one), in order.</summary>
+    protected void ReopenMenu(string? location = null)
     {
-        if (!Menus.TryGetValue(Location, out var menu))
+        if (!Menus.TryGetValue(location ?? Location, out var menu))
             return;
         SetVar(menu.None, -1);
         SetVar(menu.Chosen, -1);

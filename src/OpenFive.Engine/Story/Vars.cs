@@ -487,4 +487,199 @@ public static partial class Vars
 
     /// <summary>How often Dick has said he cannot go out while the professor is watching (quest 11).</summary>
     public const string HidingFromProfessorTalk = "v651444";
+
+    /// <summary>Quest 7, step 4: Uncle Quentin on the window: 1 he will not have it opened with the fire low, 2 opened with the fire high.</summary>
+    public const string StudyWindowTalk = "v64f3ac";
+
+    /// <summary>Quest 7, step 4: wood on the study fire: 1 Uncle Quentin objected, 2 it went on.</summary>
+    public const string FirewoodTalk = "v64f3e4";
+
+    /// <summary>Quest 7 in the kitchen: how far the plan to get into the study with the tea has got.</summary>
+    public const string TeaPlanStage = "v651134";
+
+    /// <summary>Uncle Quentin has once told George not to touch things in the study (quest 7, step 4).</summary>
+    public const string QuentinDisturbed = "v64f2cc";
+
+    /// <summary>How far talking to Uncle Quentin in the study has got (quest 2).</summary>
+    public const string QuentinStudyTalk = "v64f4fc";
+
+    /// <summary>Uncle Quentin has said his piece and will not talk again (quests 5-6).</summary>
+    public const string QuentinWontTalk = "v64f534";
+
+    /// <summary>How far talking to Anne in the study has got (quest 5, step 3).</summary>
+    public const string AnneStudyTalk = "v64f56c";
+
+    /// <summary>How far talking to Julian in the study has got (quest 5, step 3).</summary>
+    public const string JulianStudyTalk = "v64f5a4";
+
+    /// <summary>How far talking to Dick in the study has got (quest 5, step 3).</summary>
+    public const string DickStudyTalk = "v64f5dc";
+
+    /// <summary>Set while Anne is talking in the study.</summary>
+    public const string TalkingToAnneInStudy = "v63bdac";
+
+    /// <summary>Set while Julian is talking in the study.</summary>
+    public const string TalkingToJulianInStudy = "v63bdae";
+
+    /// <summary>Set while Dick is talking in the study.</summary>
+    public const string TalkingToDickInStudy = "v63bdad";
+
+    /// <summary>The professor's telephone call in the study is over (quest 4).</summary>
+    public const string ProfessorCallOver = "v63bdaf";
+
+    /// <summary>The professor stands by the telephone and talks with his own animation (quest 4).</summary>
+    public const string ProfessorStanding = "v63bdb0";
+
+    /// <summary>The walk path by the study door still has to be opened or closed (once the hero is in the room).</summary>
+    public const string StudyPathPending = "v63bdb1";
+
+    /// <summary>The model ship in the study is shown.</summary>
+    public const string StudyShipShown = "v64f454";
+
+    /// <summary>Uncle Quentin's cup is shown on the desk.</summary>
+    public const string StudyCupShown = "v64f48c";
+
+    /// <summary>The study door record is available (always, from a new game).</summary>
+    public const string StudyDoorAvailable = "v64f339";
+
+    /// <summary>The study window record is available (always, from a new game).</summary>
+    public const string StudyWindowAvailable = "v64f371";
+
+    /// <summary>The study fire record is available (always, from a new game).</summary>
+    public const string StudyFireAvailable = "v64f301";
+
+    /// <summary>The log basket record is available (always, from a new game).</summary>
+    public const string StudyWoodAvailable = "v64f419";
+
+    /// <summary>The study telephone record is available (always, from a new game).</summary>
+    public const string TelephoneAvailable = "v64f4c1";
+
+    /// <summary>The study telephone receiver is off the hook (the professor is calling).</summary>
+    public const string TelephoneOffHook = "v64f4c4";
+
+    /// <summary>Uncle Quentin is shown in the study (always, from a new game).</summary>
+    public const string QuentinAvailable = "v64f4f9";
+
+    /// <summary>Uncle Quentin has not yet had his tea and sandwiches (1 in a new game).</summary>
+    public const string TeaNotBrought = "v64effa";
+
+    /// <summary>Uncle Quentin has thanked George once for the tea (quest 7, step 4).</summary>
+    public const string QuentinTeaTalk = "v65116c";
+
+    /// <summary>Ticks until Uncle Quentin grumbles (in the study on quest 7; in the kitchen, Timmy begs). Each click in the kitchen adds some.</summary>
+    public const string GrumbleTimer = "v64d464";
+
+    /// <summary>The answer picked from the kitchen menu: 1 or 2, -1 none.</summary>
+    public const string KitchenMenuAnswer = "v64ef24";
+
+    /// <summary>How far George and Uncle Quentin's talk about the teapot has got (quest 3).</summary>
+    public const string QuentinTeapotTalk = "v64fc6c";
+
+    /// <summary>The kitchen cupboard with the olive oil is open.</summary>
+    public const string Cupboard4Open = "v64fb54";
+
+    /// <summary>The third kitchen cupboard is open.</summary>
+    public const string Cupboard3Open = "v64fb1c";
+
+    /// <summary>The low kitchen cupboard is open.</summary>
+    public const string Cupboard6Open = "v64fbc4";
+
+    /// <summary>The bread bin in the kitchen is open.</summary>
+    public const string BreadBinOpen = "v64fd4c";
+
+    /// <summary>The stove door in the kitchen is open.</summary>
+    public const string StoveOpen = "v64fa3c";
+
+    /// <summary>How often Uncle Quentin has stopped George leaving the breakfast table (quest 3).</summary>
+    public const string GeorgeLeavingTalk = "v64fbfc";
+
+    /// <summary>How often Uncle Quentin has noticed Timmy begging at the table (quest 3).</summary>
+    public const string TimmyBegsTalk = "v6500cc";
+
+    /// <summary>The olive oil has been taken from the kitchen cupboard.</summary>
+    public const string OliveOilTaken = "v64fdbc";
+
+    /// <summary>Set while the kitchen puts the olive oil in place (taking it does not count then).</summary>
+    public const string PlacingOliveOil = "v63be00";
+
+    /// <summary>Set while the hero takes the plate of sandwiches.</summary>
+    public const string TakingToast = "v63bdec";
+
+    /// <summary>Set while the hero takes the teapot.</summary>
+    public const string TakingTeapot = "v63bded";
+
+    /// <summary>Uncle Quentin has once noticed Timmy under the table (quest 3).</summary>
+    public const string TimmyTableTalk = "v650104";
+
+    /// <summary>The fifth kitchen cupboard has been looked at.</summary>
+    public const string Cupboard5Seen = "v64fb8c";
+
+    /// <summary>The first kitchen cupboard has been looked at.</summary>
+    public const string Cupboard1Seen = "v64faac";
+
+    /// <summary>The second kitchen cupboard has been looked at (never set: the original sets Cupboard3Open instead).</summary>
+    public const string Cupboard2Seen = "v64fae4";
+
+    /// <summary>Timmy's water bowl has been looked at.</summary>
+    public const string WaterBowlSeen = "v64ff44";
+
+    /// <summary>The kitchen bin has been looked at.</summary>
+    public const string KitchenBinSeen = "v64ff0c";
+
+    /// <summary>The dishcloth has been looked at.</summary>
+    public const string DishclothSeen = "v64fed4";
+
+    /// <summary>The fruit bowl has been looked at.</summary>
+    public const string FruitBowlSeen = "v64fe64";
+
+    /// <summary>The cups in the kitchen have been looked at.</summary>
+    public const string CupsSeen = "v64fe2c";
+
+    /// <summary>The vinegar bottles have been looked at.</summary>
+    public const string VinegarSeen = "v64fd84";
+
+    /// <summary>The cookbooks have been looked at.</summary>
+    public const string CookbooksSeen = "v64fd14";
+
+    /// <summary>The kitchen sink has been looked at.</summary>
+    public const string SinkSeen = "v64fcdc";
+
+    /// <summary>The kitchen window has been looked at.</summary>
+    public const string KitchenWindowSeen = "v64fca4";
+
+    /// <summary>The plate rack has been looked at.</summary>
+    public const string PlateRackSeen = "v64fa74";
+
+    /// <summary>Aunt Fanny can be in the kitchen (always, from a new game).</summary>
+    public const string FannyKitchenAvailable = "v64ff79";
+
+    /// <summary>The plate of sandwiches record is available (always, from a new game).</summary>
+    public const string ToastAvailable = "v64fdf1";
+
+    /// <summary>The bread bin record is available (always, from a new game).</summary>
+    public const string BreadBinAvailable = "v64fd49";
+
+    /// <summary>The teapot record is available (always, from a new game).</summary>
+    public const string TeapotAvailable = "v64fc31";
+
+    /// <summary>The kitchen door record is available (always, from a new game).</summary>
+    public const string KitchenDoorAvailable = "v64fbf9";
+
+    /// <summary>The low cupboard record is available (always, from a new game).</summary>
+    public const string Cupboard6Available = "v64fbc1";
+
+    /// <summary>The olive-oil cupboard record is available (always, from a new game).</summary>
+    public const string Cupboard4Available = "v64fb51";
+
+    /// <summary>The third cupboard record is available (always, from a new game).</summary>
+    public const string Cupboard3Available = "v64fb19";
+
+    /// <summary>The stove record is available (always, from a new game).</summary>
+    public const string StoveAvailable = "v64fa39";
+
+    /// <summary>The original's pointer to a menu entry (kept as the original sets it; OpenFive does not read it).</summary>
+    public const string OriginalMenuEntry = "v64ee04";
+
+    /// <summary>The original's menu-entry flag (kept as the original sets it; OpenFive does not read it).</summary>
+    public const string OriginalMenuEntryShown = "v64e2f9";
 }
