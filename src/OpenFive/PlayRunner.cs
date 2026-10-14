@@ -9,9 +9,15 @@ namespace OpenFive;
 ///
 ///   click OBJECT | actor NAME | at X Y | use ITEM TARGET | choose OPTION | wait TICKS | shot FILE
 ///   expect LOCATION | step Q E | items | save SLOT | load SLOT | until VAR VALUE | # comment
+///   explore SLOT
 ///
 /// A command written "!command" runs as soon as the pointer is shown, without waiting for the
 /// scene to settle (for moments such as feeding Timmy while Uncle Quentin drinks his tea).
+///
+/// "explore SLOT" tries everything at the saved moment: every object and character of the
+/// location is clicked and every rucksack item is used on each of them, each time from a fresh
+/// load of the slot, with the first option of any menu taken. Run with OPENFIVE_TRACE=1 and
+/// compare the output before and after a change to see whether the change altered the game.
 /// </summary>
 sealed class PlayRunner
 {
@@ -22,6 +28,8 @@ sealed class PlayRunner
     /// <summary>Speech is skipped unless "speech on" asks for lines at their real length
     /// (scenes timed against speech, such as pushing the stone at the castle).</summary>
     bool _skipSpeech = true;
+    /// <summary>Set while running the commands of an "explore": menus are answered automatically.</summary>
+    bool _exploring;
 
     public PlayRunner(string path)
     {
@@ -50,11 +58,37 @@ sealed class PlayRunner
         return (cx, cy);
     }
 
+    /// <summary>The commands an "explore" of save slot <paramref name="slot"/> expands to.</summary>
+    static IEnumerable<string[]> ExploreCommands(GameSession s, string slot)
+    {
+        var w = s.World;
+        var objects = w.Scene!.Script.Objects
+            .Where(o => o.Click.Length > 0 && w.IsObjectOn(o.Name))
+            .Select(o => o.Name)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToList();
+        var actors = w.Actors
+            .Where(a => a != w.Hero && a.Visible && a.Location.Equals(w.Scene.Name, StringComparison.OrdinalIgnoreCase))
+            .Select(a => a.Name)
+            .ToList();
+        var actions = objects.Select(o => new[] { "click", o })
+            .Concat(actors.Select(a => new[] { "actor", a }))
+            .Concat(s.Inventory.Items.ToList().SelectMany(i =>
+                objects.Concat(actors).Select(t => new[] { "use", i.ToString(), t })));
+        foreach (var action in actions)
+        {
+            yield return new[] { "load", slot };
+            yield return action;
+            yield return new[] { "wait", "20" };
+        }
+        yield return new[] { "explored" };
+    }
+
     bool Idle(GameSession s)
     {
         var w = s.World;
         return w.CursorVisible && w.Dialogue.OpenMenu == null && w.Hero.Queue.Count == 0 &&
-               !w.Tasks.Active.Any(t => t is not AnimTask and not SoundTask);
+               !w.Tasks.Active.Any(t => t is not AnimTask);
     }
 
     /// <summary>Called every tick; returns a message to print, if any.</summary>
@@ -71,6 +105,12 @@ sealed class PlayRunner
         if (now)
             cmd = new[] { cmd[0][1..] }.Concat(cmd.Skip(1)).ToArray();
         string where = $"[{_next + 1}] {string.Join(' ', cmd)} @ {w.Scene?.Name} Q{w.Quest}E{w.Episode}";
+        if (_exploring && w.Dialogue.OpenMenu is { } open && cmd[0] != "choose")
+        {
+            var first = open.Rows.First();
+            open.Click(w, 400, first.Y0 + 10);
+            return $"  (menu: option {first.Option})";
+        }
         if (cmd[0] == "choose")
         {
             if (w.Dialogue.OpenMenu is not { } menu)
@@ -123,6 +163,19 @@ sealed class PlayRunner
                 return "no save " + where;
             }
             s.Restore(g);
+            return where;
+        }
+        if (cmd[0] == "explore")
+        {
+            _next++;
+            _cmds.InsertRange(_next, ExploreCommands(s, cmd[1]));
+            _exploring = true;
+            return where;
+        }
+        if (cmd[0] == "explored")
+        {
+            _next++;
+            _exploring = false;
             return where;
         }
         if (cmd[0] == "expect" && w.Dialogue.OpenMenu != null)
