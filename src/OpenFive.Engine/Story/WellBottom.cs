@@ -9,34 +9,20 @@ public sealed partial class WellBottom : StoryScript
 {
     public override string Location => "loc20";
 
-    public override bool Click(string name)
-    {
-        OnClick(name);
-        return true;
-    }
-
-    protected override void Setup()
-    {
-        OnSetup();
-    }
-
     protected override void Arrive() { }
 
-    public override void ConversationEnding(GameWorld world, TaskHandle end) => OnConversationEnding(end);
-
-    public override void EveryTick() => OnEveryTick();
-
     // from FUN_004554d2
-    void OnClick(string name)
+    public override bool Click(string name)
     {
         if (Same(name, "LOC20ExitToLoc22"))
         {
             ChangeLocation("loc22");
         }
+        return true;
     }
 
     // from FUN_0045552e
-    void OnSetup()
+    protected override void Setup()
     {
         Hero.Follower = null;
         PointerOn();
@@ -47,14 +33,14 @@ public sealed partial class WellBottom : StoryScript
     void F4555ba()
     {
         TaskHandle? local_20 = null;
-        if (Episode == 1 && Quest == 9)
+        if (At(9, 1))
         {
             Chain = null;
             Say(Who.Dick, "BRUNNEN0046", 1, after: local_20);
             Say(Who.George, "BRUNNEN0046", 2, last: true, after: local_20);
             Hero.Follower = Hero;
         }
-        else if (Episode == 3 && Quest == 10)
+        else if (At(10, 3))
         {
             Place(Hero, 716, 448, CrawlRight);
             Show(Hero);
@@ -70,27 +56,27 @@ public sealed partial class WellBottom : StoryScript
     }
 
     // from FUN_00455773
-    void OnConversationEnding(TaskHandle? param_1)
+    public override void ConversationEnding(GameWorld world, TaskHandle end)
     {
-        if (Episode == 1 && Quest == 9)
+        if (At(9, 1))
         {
-            PointerAfter(false, param_1, x: 400, y: 400);
-            ChangeLocation("loc22", param_1);
+            PointerAfter(false, end, x: 400, y: 400);
+            ChangeLocation("loc22", end);
         }
-        else if (Episode == 3 && Quest == 10)
+        else if (At(10, 3))
         {
-            PointerAfter(false, param_1, x: 400, y: 400);
-            ChangeLocation("loc14", param_1, 4);
+            PointerAfter(false, end, x: 400, y: 400);
+            ChangeLocation("loc14", end, 4);
             SetVar(Vars.V683260, 0);
-            SetAfter(Vars.EpisodeNumber, 1, param_1);
-            SetAfter(Vars.QuestNumber, 11, param_1);
+            SetAfter(Vars.EpisodeNumber, 1, end);
+            SetAfter(Vars.QuestNumber, 11, end);
         }
     }
 
     // from FUN_00455877
-    void OnEveryTick()
+    public override void EveryTick()
     {
-        if (Hero.State == 110)
+        if (Hero.State == CrawlRight)
         {
             Hero.X = Hero.X + 10.0;
         }

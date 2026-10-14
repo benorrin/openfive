@@ -11,36 +11,17 @@ public sealed partial class TreasureDoor : StoryScript
 
     public override bool Click(string name)
     {
-        if (World.Actors.FirstOrDefault(a => a.Name == name) is { } who)
-        {
-            OnActorClicked(who);
-            return true;
-        }
-        OnClick(name);
+        if (World.Actors.FirstOrDefault(a => a.Name == name) is { } actor)
+            ClickActor(actor);
+        else
+            ClickObject(name);
         return true;
-    }
-
-    protected override void Setup()
-    {
-        OnSetup();
     }
 
     protected override void Arrive() { }
 
-    public override void LineStarting(GameWorld world, int speaker)
-    {
-        CurrentSpeaker = speaker;
-        OnLineStarting(null);
-    }
-
-    public override void LineQueued(GameWorld world, TaskHandle end) => OnLineQueued(end);
-
-    public override void ConversationEnding(GameWorld world, TaskHandle end) => OnConversationEnding(end);
-
-    public override void EveryTick() => OnEveryTick();
-
     // from FUN_0045702a
-    void OnClick(string name)
+    void ClickObject(string name)
     {
         TaskHandle? local_20 = null;
         if (Same(name, "LOC24ExitToLoc25"))
@@ -48,7 +29,7 @@ public sealed partial class TreasureDoor : StoryScript
             Walk(Hero, 363, 253);
             Chain = State(Hero, StandRight);
             local_20 = Chain;
-            if (Episode == 1 && Quest == 9 && Var(Vars.TreasureDoorDiscussed) == 1)
+            if (At(9, 1) && Var(Vars.TreasureDoorDiscussed) == 1)
             {
                 Say(Who.Dick, "LABYRINTH0046", 12, last: true, after: local_20);
             }
@@ -62,7 +43,7 @@ public sealed partial class TreasureDoor : StoryScript
             Walk(Hero, 399, 417);
             Chain = State(Hero, TakeMidRight);
             local_20 = Chain;
-            if (Episode == 1 && Quest == 9)
+            if (At(9, 1))
             {
                 if (Var(Vars.TreasureDoorDiscussed) == 0)
                 {
@@ -85,10 +66,10 @@ public sealed partial class TreasureDoor : StoryScript
     }
 
     // from FUN_004572a5
-    void OnActorClicked(Actor param_1)
+    void ClickActor(Actor actor)
     {
         TaskHandle? local_20 = null;
-        if (param_1 == George && Episode == 1 && Quest == 9 && Var(Vars.TreasureDoorDiscussed) < 1)
+        if (actor == George && Episode == 1 && Quest == 9 && Var(Vars.TreasureDoorDiscussed) < 1)
         {
             if (George.X <= Hero.X)
             {
@@ -108,7 +89,7 @@ public sealed partial class TreasureDoor : StoryScript
     }
 
     // from FUN_00457476
-    void OnSetup()
+    protected override void Setup()
     {
         Hero.Follower = null;
         PointerOn();
@@ -150,7 +131,7 @@ public sealed partial class TreasureDoor : StoryScript
             Place(Hero, 193, 500, StandDownLeft);
             Show(Hero);
         }
-        if (Episode == 1 && Quest == 9)
+        if (At(9, 1))
         {
             Place(George, 363, 253, StandLeft);
             if (Var(Vars.TreasureDoorDiscussed) == 0)
@@ -164,78 +145,79 @@ public sealed partial class TreasureDoor : StoryScript
     }
 
     // from FUN_004576d2
-    void OnLineStarting(TaskHandle? param_1)
+    public override void LineStarting(GameWorld world, int speaker)
     {
         if (CurrentSpeaker == Who.George)
         {
             if (George.X <= Hero.X)
             {
-                StateAfter(George, SpeakDownRight, param_1);
+                StateAfter(George, SpeakDownRight, null);
             }
             else
             {
-                StateAfter(George, SpeakDownLeft, param_1);
+                StateAfter(George, SpeakDownLeft, null);
             }
         }
         else if (CurrentSpeaker == Who.Dick)
         {
             if (George.X <= Hero.X)
             {
-                StateAfter(Hero, SpeakDownLeft, param_1);
+                StateAfter(Hero, SpeakDownLeft, null);
             }
             else
             {
-                StateAfter(Hero, SpeakDownRight, param_1);
+                StateAfter(Hero, SpeakDownRight, null);
             }
         }
         else if (CurrentSpeaker == Who.Julian)
         {
-            StateAfter(Julian, SpeakDownLeft, param_1);
+            StateAfter(Julian, SpeakDownLeft, null);
         }
         else if (CurrentSpeaker == Who.Anne)
         {
-            StateAfter(Anne, SpeakDownRight, param_1);
+            StateAfter(Anne, SpeakDownRight, null);
         }
     }
 
     // from FUN_004577f0
-    void OnLineQueued(TaskHandle? param_1)
+    public override void LineQueued(GameWorld world, TaskHandle end)
     {
         if (CurrentSpeaker == Who.George)
         {
             if (George.X <= Hero.X)
             {
-                StateAfter(George, StandDownRight, param_1);
+                StateAfter(George, StandDownRight, end);
             }
             else
             {
-                StateAfter(George, StandDownLeft, param_1);
+                StateAfter(George, StandDownLeft, end);
             }
         }
         else if (CurrentSpeaker == Who.Dick)
         {
             if (George.X <= Hero.X)
             {
-                StateAfter(Hero, StandDownLeft, param_1);
+                StateAfter(Hero, StandDownLeft, end);
             }
             else
             {
-                StateAfter(Hero, StandDownRight, param_1);
+                StateAfter(Hero, StandDownRight, end);
             }
         }
         else if (CurrentSpeaker == Who.Julian)
         {
-            StateAfter(Julian, StandDownLeft, param_1);
+            StateAfter(Julian, StandDownLeft, end);
         }
         else if (CurrentSpeaker == Who.Anne)
         {
-            StateAfter(Anne, StandDownRight, param_1);
+            StateAfter(Anne, StandDownRight, end);
         }
     }
 
     // from FUN_0045790e
-    void OnConversationEnding(TaskHandle? param_1)
+    public override void ConversationEnding(GameWorld world, TaskHandle end)
     {
+        TaskHandle? after = end;
         TaskHandle? local_28 = null;
         TaskHandle? local_2c = null;
         TaskHandle? local_44 = null;
@@ -243,69 +225,69 @@ public sealed partial class TreasureDoor : StoryScript
         {
             if (George.X <= Hero.X)
             {
-                StateAfter(George, StandDownRight, param_1);
+                StateAfter(George, StandDownRight, after);
             }
             else
             {
-                StateAfter(George, StandDownLeft, param_1);
+                StateAfter(George, StandDownLeft, after);
             }
         }
         else if (CurrentSpeaker == Who.Dick)
         {
             if (George.X <= Hero.X)
             {
-                StateAfter(Hero, StandDownLeft, param_1);
+                StateAfter(Hero, StandDownLeft, after);
             }
             else
             {
-                StateAfter(Hero, StandDownRight, param_1);
+                StateAfter(Hero, StandDownRight, after);
             }
         }
         else if (CurrentSpeaker == Who.Julian)
         {
-            StateAfter(Julian, StandDownLeft, param_1);
+            StateAfter(Julian, StandDownLeft, after);
         }
         else if (CurrentSpeaker == Who.Anne)
         {
-            StateAfter(Anne, StandDownRight, param_1);
+            StateAfter(Anne, StandDownRight, after);
         }
-        if (Episode == 1 && Quest == 9)
+        if (At(9, 1))
         {
             if (Text("t63becc") != "geh")
             {
                 if (Text("t63becc") == "geh2")
                 {
-                    PointerAfter(false, param_1, x: 400, y: 400);
-                    WalkAfter(George, 381, 250, param_1);
+                    PointerAfter(false, after, x: 400, y: 400);
+                    WalkAfter(George, 381, 250, after);
                     local_2c = State(George, StandLeft);
                     HideAfter(George, local_2c);
                     SetVar(Vars.TreasureDoorDiscussed, 1);
                     Hero.Follower = null;
                     WalkAfter(Hero, 348, 380, null, 5);
-                    PointerAfter(false, param_1, x: 400, y: 400);
+                    PointerAfter(false, after, x: 400, y: 400);
                     Chain = State(Hero, AxeRight);
-                    param_1 = Chain;
+                    after = Chain;
                     Sound(@"wav\fx\axt2.wav", Chain, 8);
-                    Sound(@"wav\fx\axt2.wav", param_1, 18);
-                    Sound(@"wav\fx\axt2.wav", param_1, 28);
-                    Say(Who.Dick, "LABYRINTH0046", 7, last: true, after: param_1, delay: 31);
+                    Sound(@"wav\fx\axt2.wav", after, 18);
+                    Sound(@"wav\fx\axt2.wav", after, 28);
+                    Say(Who.Dick, "LABYRINTH0046", 7, last: true, after: after, delay: 31);
                     SetVar(Vars.TreasureDoorBroken, 1);
-                    ObjAfter("LOC24Tuer", false, param_1, 6);
-                    Anim("TuerClose", -1, param_1, 6);
+                    ObjAfter("LOC24Tuer", false, after, 6);
+                    Anim("TuerClose", -1, after, 6);
                     SetText("t63becc", "Tuer");
                     goto LAB_00457f85;
                 }
                 if (Text("t63becc") == "Tuer")
                 {
-                    PointerAfter(false, param_1, x: 400, y: 400);
-                    PlaceAfter(George, 350, 253, StandLeft, param_1);
-                    PlaceAfter(Anne, 355, 253, StandLeft, param_1);
-                    PlaceAfter(Julian, 360, 253, StandLeft, param_1);
-                    PlaceAfter(Timmy, 365, 253, StandLeft, param_1);
-                    WalkAfter(George, 180, 400, param_1, 2);
-                    WalkAfter(Anne, 125, 288, param_1, 6);
-                    WalkAfter(Julian, 235, 253, param_1, 10);
-                    Chain = StateAfter(George, StandDownRight, param_1);
+                    PointerAfter(false, after, x: 400, y: 400);
+                    PlaceAfter(George, 350, 253, StandLeft, after);
+                    PlaceAfter(Anne, 355, 253, StandLeft, after);
+                    PlaceAfter(Julian, 360, 253, StandLeft, after);
+                    PlaceAfter(Timmy, 365, 253, StandLeft, after);
+                    WalkAfter(George, 180, 400, after, 2);
+                    WalkAfter(Anne, 125, 288, after, 6);
+                    WalkAfter(Julian, 235, 253, after, 10);
+                    Chain = StateAfter(George, StandDownRight, after);
                     local_44 = Chain;
                     Say(Who.Dick, "LABYRINTH0046", 8, after: local_44);
                     Say(Who.George, "LABYRINTH0046", 9);
@@ -316,10 +298,10 @@ public sealed partial class TreasureDoor : StoryScript
             }
             else
             {
-                PointerAfter(false, param_1, x: 400, y: 400);
-                WalkAfter(George, 381, 250, param_1);
+                PointerAfter(false, after, x: 400, y: 400);
+                WalkAfter(George, 381, 250, after);
                 local_28 = State(George, StandLeft);
-                PointerAfter(true, param_1, 100, 400, 400);
+                PointerAfter(true, after, 100, 400, 400);
                 HideAfter(George, local_28);
                 SetVar(Vars.TreasureDoorDiscussed, 1);
                 Hero.Follower = null;
@@ -331,7 +313,7 @@ public sealed partial class TreasureDoor : StoryScript
     }
 
     // from FUN_00457f91
-    void OnEveryTick()
+    public override void EveryTick()
     {
     }
 

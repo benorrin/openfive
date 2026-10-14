@@ -9,23 +9,10 @@ public sealed partial class Shed : StoryScript
 {
     public override string Location => "loc07";
 
-    public override bool Click(string name)
-    {
-        OnClick(name);
-        return true;
-    }
-
-    protected override void Setup()
-    {
-        OnSetup();
-    }
-
     protected override void Arrive() { }
 
-    public override void ObjectChanged(GameWorld world, string name, bool on) => OnObjectChanged(name, on ? 1 : 0);
-
     // from FUN_0043f248
-    void OnClick(string name)
+    public override bool Click(string name)
     {
         TaskHandle? iVar1 = null;
         if (Same(name, "LOC07Axt"))
@@ -129,10 +116,11 @@ public sealed partial class Shed : StoryScript
             ObjAfter("LOC07Schraubenzieher", false, iVar1, 4);
             Sound(@"wav\fx\holzholz.wav", iVar1, 3);
         }
+        return true;
     }
 
     // from FUN_0043f82c
-    void OnSetup()
+    protected override void Setup()
     {
         PointerOn();
         F43f97e();
@@ -205,9 +193,9 @@ public sealed partial class Shed : StoryScript
     }
 
     // from FUN_0043fb9a
-    void OnObjectChanged(string name, int param_2)
+    public override void ObjectChanged(GameWorld world, string name, bool on)
     {
-        if (param_2 == 0)
+        if (!on)
         {
             if (Same(name, "LOC07Axt") && Var(Vars.V63be03) == 0)
             {

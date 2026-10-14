@@ -9,42 +9,15 @@ public sealed partial class Study : StoryScript
 {
     public override string Location => "loc03";
 
-    public override bool Click(string name)
-    {
-        OnClick(name);
-        return true;
-    }
-
-    protected override void Setup()
-    {
-        OnSetup();
-    }
-
     protected override void Arrive() { }
 
-    protected override void AfterChoice(string scene, int line, int option) => OnAfterChoice();
-
-    public override void LineStarting(GameWorld world, int speaker)
-    {
-        CurrentSpeaker = speaker;
-        OnLineStarting(null);
-    }
-
-    public override void LineQueued(GameWorld world, TaskHandle end) => OnLineQueued(end);
-
-    public override void ConversationEnding(GameWorld world, TaskHandle end) => OnConversationEnding(end);
-
-    public override void ObjectChanged(GameWorld world, string name, bool on) => OnObjectChanged(name, on ? 1 : 0);
-
-    public override void EveryTick() => OnEveryTick();
-
     // from FUN_0042486f
-    void OnClick(string name)
+    public override bool Click(string name)
     {
         TaskHandle? local_20 = null;
         if (Same(name, "LOC03ExitToLOC04"))
         {
-            if (Episode == 3 && Quest == 5)
+            if (At(5, 3))
             {
                 local_20 = null;
                 Walk(Hero, 380, 399);
@@ -58,7 +31,7 @@ public sealed partial class Study : StoryScript
             }
             else
             {
-                if (Episode == 4 && Quest == 7)
+                if (At(7, 4))
                 {
                     if (Var(Vars.V64f3ac) == 2)
                     {
@@ -74,24 +47,24 @@ public sealed partial class Study : StoryScript
                         ObjAfter("LOC03OpenDoorObj", true, local_20);
                         ChangeLocation("loc04", local_20);
                         PointerOff();
-                        return;
+                        return true;
                     }
                 }
                 else
                 {
-                    if (Episode == 6 && Quest == 7)
+                    if (At(7, 6))
                     {
                         Walk(Hero, 228, 435);
                         State(Hero, StandDownLeft);
-                        return;
+                        return true;
                     }
-                    if (Episode == 1 && Quest == 8)
+                    if (At(8, 1))
                     {
                         Walk(Hero, 228, 435);
                         local_20 = State(Hero, StandDownLeft);
                         Say(Who.George, "ARBEIT0034", 3, last: true, after: local_20);
                         ChangeLocation("loc08", local_20);
-                        return;
+                        return true;
                     }
                 }
                 Walk(Hero, 228, 435);
@@ -113,7 +86,7 @@ public sealed partial class Study : StoryScript
         {
             Walk(Hero, 330, 346);
             local_20 = State(Hero, KneelLeft);
-            if (Episode == 3 && Quest == 7)
+            if (At(7, 3))
             {
                 Chain = local_20;
                 Say(Who.Quentin, "ARBEIT0029", 7, last: true, after: local_20);
@@ -123,7 +96,7 @@ public sealed partial class Study : StoryScript
         {
             Walk(Hero, 530, 346);
             local_20 = State(Hero, TakeLowRight);
-            if (Episode == 3 && Quest == 7)
+            if (At(7, 3))
             {
                 Chain = local_20;
                 PointerAfter(false, local_20, x: 300, y: 400);
@@ -131,7 +104,7 @@ public sealed partial class Study : StoryScript
             }
             else
             {
-                if (Episode == 4 && Quest == 7)
+                if (At(7, 4))
                 {
                     if (Var(Vars.StudyFire) < 2)
                     {
@@ -139,7 +112,7 @@ public sealed partial class Study : StoryScript
                         PointerAfter(false, local_20, x: 300, y: 400);
                         Say(Who.Quentin, "ARBEIT0032", 11, last: true, after: local_20);
                         SetAfter(Vars.V64f3ac, 1, local_20);
-                        return;
+                        return true;
                     }
                     if (Var(Vars.StudyFire) == 2)
                     {
@@ -163,12 +136,12 @@ public sealed partial class Study : StoryScript
         {
             Walk(Hero, 450, 450);
             local_20 = State(Hero, TakeMidRightLong);
-            if (Episode == 3 && Quest == 7)
+            if (At(7, 3))
             {
                 Chain = local_20;
                 Say(Who.Quentin, "ARBEIT0029", 7, last: true, after: local_20);
             }
-            else if (Episode == 4 && Quest == 7)
+            else if (At(7, 4))
             {
                 if (Var(Vars.V64f2cc) == 0)
                 {
@@ -187,12 +160,12 @@ public sealed partial class Study : StoryScript
         {
             Walk(Hero, 450, 440);
             local_20 = State(Hero, TakeMidRightLong);
-            if (Episode == 3 && Quest == 7)
+            if (At(7, 3))
             {
                 Chain = local_20;
                 Say(Who.Quentin, "ARBEIT0029", 7, last: true, after: local_20);
             }
-            else if (Episode == 4 && Quest == 7)
+            else if (At(7, 4))
             {
                 if (Var(Vars.V64f2cc) == 0)
                 {
@@ -211,7 +184,7 @@ public sealed partial class Study : StoryScript
         {
             Walk(Hero, 367, 360);
             local_20 = State(Hero, TakeMidLeftLong);
-            if (Episode == 3 && Quest == 7)
+            if (At(7, 3))
             {
                 PointerOff();
                 SetText("t63bdb4", "Schiff");
@@ -221,7 +194,7 @@ public sealed partial class Study : StoryScript
                 SetAfter(Vars.DickTalk, 0, local_20);
                 SetAfter(Vars.JulianTalk, 0, local_20);
             }
-            else if (Episode == 4 && Quest == 7)
+            else if (At(7, 4))
             {
                 SetVar(Vars.V64d464, 700);
                 Chain = local_20;
@@ -240,7 +213,7 @@ public sealed partial class Study : StoryScript
         {
             Walk(Hero, 470, 470);
             local_20 = State(Hero, TakeMidRightLong);
-            if (Episode == 3 && Quest == 7)
+            if (At(7, 3))
             {
                 Chain = local_20;
                 Say(Who.Quentin, "ARBEIT0029", 7, last: true, after: local_20);
@@ -250,12 +223,12 @@ public sealed partial class Study : StoryScript
         {
             Walk(Hero, 367, 360);
             local_20 = State(Hero, TakeLowLeftLong);
-            if (Episode == 3 && Quest == 7)
+            if (At(7, 3))
             {
                 Chain = local_20;
                 Say(Who.Quentin, "ARBEIT0029", 7, last: true, after: local_20);
             }
-            else if (Episode == 4 && Quest == 7)
+            else if (At(7, 4))
             {
                 if (Var(Vars.V64f2cc) == 0)
                 {
@@ -272,7 +245,7 @@ public sealed partial class Study : StoryScript
         }
         else if (Same(name, "LOC03QuentinSit"))
         {
-            if (Episode == 2 && Quest == 2)
+            if (At(2, 2))
             {
                 if (Var(Vars.V64f4fc) != 0)
                 {
@@ -302,7 +275,7 @@ public sealed partial class Study : StoryScript
                     }
                 }
             }
-            else if (Episode == 3 && Quest == 2)
+            else if (At(2, 3))
             {
                 switch (Var(Vars.V64f4fc))
                 {
@@ -392,7 +365,7 @@ public sealed partial class Study : StoryScript
             }
             else if (Episode < 5 || Quest != 5)
             {
-                if (Quest == 6 && Episode == 2)
+                if (At(6, 2))
                 {
                     Walk(Hero, 504, 481);
                     local_20 = State(Hero, StandUpRight);
@@ -409,14 +382,14 @@ public sealed partial class Study : StoryScript
                         Say(Who.Quentin, "ARBEIT0016-03", 3, last: true, after: local_20);
                     }
                 }
-                else if (Quest == 6 && Episode == 3)
+                else if (At(6, 3))
                 {
                     Walk(Hero, 504, 481);
                     Chain = State(Hero, StandUpRight);
                     local_20 = Chain;
                     Say(Who.Quentin, "ARBEIT0019-03", 1, last: true, after: local_20);
                 }
-                else if (Episode == 3 && Quest == 5)
+                else if (At(5, 3))
                 {
                     Walk(Hero, 382, 399);
                     local_20 = State(Hero, StandDownRight);
@@ -451,7 +424,7 @@ public sealed partial class Study : StoryScript
                 }
             }
         }
-        else if (Episode == 3 && Quest == 5)
+        else if (At(5, 3))
         {
             if (Same(name, "LOC03Anne"))
             {
@@ -502,10 +475,11 @@ public sealed partial class Study : StoryScript
                 }
             }
         }
+        return true;
     }
 
     // from FUN_00426f13
-    void OnSetup()
+    protected override void Setup()
     {
         PathEnable(0, true);
         SetVar(Vars.V63bdb1, 1);
@@ -537,7 +511,7 @@ public sealed partial class Study : StoryScript
         }
         else if (Quest > 2)
         {
-            if (Episode == 5 && Quest == 7)
+            if (At(7, 5))
             {
                 Chain = null;
                 Say(Who.George, "ARBEIT0034", 1);
@@ -554,7 +528,7 @@ public sealed partial class Study : StoryScript
                 SetVar(Vars.V64f454, 1);
                 F427934();
             }
-            else if (Episode == 6 && Quest == 7)
+            else if (At(7, 6))
             {
                 Place(Hero, 530, 346, StandDownLeft);
                 Show(Hero);
@@ -593,9 +567,9 @@ public sealed partial class Study : StoryScript
     }
 
     // from FUN_004272f8
-    void OnObjectChanged(string name, int param_2)
+    public override void ObjectChanged(GameWorld world, string name, bool on)
     {
-        if (param_2 == 0 && Same(name, "LOC03Holz1"))
+        if (!on && Same(name, "LOC03Holz1"))
         {
             MoveObj("LOC03Holz2", 235, 352);
             ObjAfter("LOC03Holz2", true, null);
@@ -706,7 +680,7 @@ public sealed partial class Study : StoryScript
                 }
                 else if (Episode < 5 || Quest != 7)
                 {
-                    if (Episode == 1 && Quest == 8)
+                    if (At(8, 1))
                     {
                         Depth(@"bmp\obj\quentin\qusl\qusl.brg", 2500);
                         AnimPos("QuentinSleep", 580, 240);
@@ -789,7 +763,7 @@ public sealed partial class Study : StoryScript
         StopAnim("DoOpenDoor");
         if (Var(Vars.V64f339) == 1)
         {
-            if (Episode == 1 && Quest == 4)
+            if (At(4, 1))
             {
                 Obj("LOC03OpenDoorObj", true);
             }
@@ -857,7 +831,7 @@ public sealed partial class Study : StoryScript
         TaskHandle? local_37c = null;
         TaskHandle? local_74 = null;
         TaskHandle? local_f4 = null;
-        if (Episode == 2 && Quest == 2)
+        if (At(2, 2))
         {
             local_20 = null;
             if (LocationId == FromId)
@@ -888,7 +862,7 @@ public sealed partial class Study : StoryScript
                 SetVar(Vars.V64f4fc, 1);
             }
         }
-        else if (Episode == 3 && Quest == 2)
+        else if (At(2, 3))
         {
             Place(Hero, 150, 446, StandDownLeft);
             Show(Hero);
@@ -910,7 +884,7 @@ public sealed partial class Study : StoryScript
                 SetVar(Vars.V64f4fc, 1);
             }
         }
-        else if (Episode == 1 && Quest == 4)
+        else if (At(4, 1))
         {
             Depth(@"bmp\obj\prof\prte\prte04.brg", 5000);
             Depth(@"bmp\obj\prof\prsp\prsp01.brg", 5000);
@@ -960,7 +934,7 @@ public sealed partial class Study : StoryScript
             SetVar(Vars.StudyWindowOpen, 2);
             SetVar(Vars.V64f48c, 1);
         }
-        else if (Episode == 3 && Quest == 5)
+        else if (At(5, 3))
         {
             SetVar(Vars.V64f4fc, 0);
             Obj("LOC03QuentinSit", true);
@@ -1013,7 +987,7 @@ public sealed partial class Study : StoryScript
                 SetVar(Vars.StudyWindowOpen, 2);
                 SetVar(Vars.V64f48c, 1);
             }
-            else if (Episode == 3 && Quest == 7)
+            else if (At(7, 3))
             {
                 Place(Hero, 208, 403, StandDownRight);
                 Show(Hero);
@@ -1032,7 +1006,7 @@ public sealed partial class Study : StoryScript
                 Say(Who.Quentin, "ARBEIT0029", 3);
                 Say(Who.George, "ARBEIT0029", 4, last: true);
             }
-            else if (Episode == 4 && Quest == 7)
+            else if (At(7, 4))
             {
                 Place(Hero, 208, 403, StandDownRight);
                 Show(Hero);
@@ -1120,46 +1094,47 @@ public sealed partial class Study : StoryScript
     }
 
     // from FUN_004294ed
-    void OnLineStarting(TaskHandle? param_1)
+    public override void LineStarting(GameWorld world, int speaker)
     {
+        TaskHandle? after = null;
         if ((Episode != 5 || Quest != 7) && ((Episode != 6 || Quest != 7)) && ((Episode != 1 || Quest != 8)))
         {
-            if (Episode == 1 && Quest == 4)
+            if (At(4, 1))
             {
                 if (CurrentSpeaker == Who.George)
                 {
-                    StateAfter(Hero, SpeakDownRight, param_1);
+                    StateAfter(Hero, SpeakDownRight, after);
                 }
                 else if (CurrentSpeaker == Who.Professor && Var(Vars.V63bdb0) != 0)
                 {
-                    StopAnimAfter("ProfStand", param_1);
-                    Anim("ProfSpeak", -1, param_1);
+                    StopAnimAfter("ProfStand", after);
+                    Anim("ProfSpeak", -1, after);
                 }
             }
-            else if (Episode == 3 && Quest == 5)
+            else if (At(5, 3))
             {
                 if (CurrentSpeaker == Who.Quentin)
                 {
-                    StopAnimAfter("QuentinWrite", param_1);
-                    StopAnimAfter("QuentinSitStill", param_1);
+                    StopAnimAfter("QuentinWrite", after);
+                    StopAnimAfter("QuentinSitStill", after);
                     AnimPos("QuentinSitTalk", 540, 240);
                     AnimScale("QuentinSitTalk", 0.95);
-                    param_1 = Anim("QuentinSitTalk", -1, param_1);
+                    after = Anim("QuentinSitTalk", -1, after);
                 }
                 else if (CurrentSpeaker == Who.George)
                 {
-                    StateAfter(Hero, SpeakDownRight, param_1);
+                    StateAfter(Hero, SpeakDownRight, after);
                 }
             }
             else if (Episode < 5 && Quest == 2)
             {
                 if (CurrentSpeaker == Who.Quentin)
                 {
-                    StopAnimAfter("QuentinWrite", param_1);
-                    StopAnimAfter("QuentinSitStill", param_1);
+                    StopAnimAfter("QuentinWrite", after);
+                    StopAnimAfter("QuentinSitStill", after);
                     AnimPos("QuentinSitTalk", 540, 240);
                     AnimScale("QuentinSitTalk", 0.95);
-                    param_1 = Anim("QuentinSitTalk", -1, param_1);
+                    after = Anim("QuentinSitTalk", -1, after);
                 }
             }
             else if (Episode < 5 || Quest != 5)
@@ -1168,80 +1143,81 @@ public sealed partial class Study : StoryScript
                 {
                     if (CurrentSpeaker == Who.Quentin)
                     {
-                        StopAnimAfter("QuentinWrite", param_1);
-                        StopAnimAfter("QuentinSitStill", param_1);
+                        StopAnimAfter("QuentinWrite", after);
+                        StopAnimAfter("QuentinSitStill", after);
                         AnimPos("QuentinSitTalk", 540, 240);
                         AnimScale("QuentinSitTalk", 0.95);
-                        param_1 = Anim("QuentinSitTalk", -1, param_1);
+                        after = Anim("QuentinSitTalk", -1, after);
                     }
                 }
                 else if (Episode > 2 && Quest == 7)
                 {
                     if (CurrentSpeaker == Who.George)
                     {
-                        StateAfter(Hero, SpeakDownLeft, param_1);
+                        StateAfter(Hero, SpeakDownLeft, after);
                     }
                     else if (CurrentSpeaker == Who.Quentin)
                     {
-                        StopAnimAfter("QuentinWithBook", param_1);
-                        Anim("QuentinWithBookSpeak", -1, param_1);
+                        StopAnimAfter("QuentinWithBook", after);
+                        Anim("QuentinWithBookSpeak", -1, after);
                     }
                 }
             }
             else
             {
-                StopAnimAfter("QuentinWrite", param_1);
-                StopAnimAfter("QuentinSitStill", param_1);
+                StopAnimAfter("QuentinWrite", after);
+                StopAnimAfter("QuentinSitStill", after);
                 AnimPos("QuentinSitTalk", 540, 240);
                 AnimScale("QuentinSitTalk", 0.95);
-                param_1 = Anim("QuentinSitTalk", -1, param_1);
+                after = Anim("QuentinSitTalk", -1, after);
             }
-            param_1 = param_1;
+            after = after;
         }
     }
 
     // from FUN_004298dd
-    void OnLineQueued(TaskHandle? param_1)
+    public override void LineQueued(GameWorld world, TaskHandle end)
     {
+        TaskHandle? after = end;
         if (Episode < 4 && Quest == 2)
         {
             if ((CurrentSpeaker != Who.Dick || Var(Vars.V64d460) == 0) && CurrentSpeaker == Who.Quentin)
             {
-                StopAnimAfter("QuentinSitTalk", param_1);
-                StopAnimAfter("QuentinWrite", param_1);
+                StopAnimAfter("QuentinSitTalk", after);
+                StopAnimAfter("QuentinWrite", after);
                 AnimPos("QuentinSitStill", 540, 240);
                 AnimScale("QuentinSitStill", 0.95);
-                param_1 = Anim("QuentinSitStill", -1, param_1);
+                after = Anim("QuentinSitStill", -1, after);
             }
         }
-        else if (Episode == 1 && Quest == 4)
+        else if (At(4, 1))
         {
             if (CurrentSpeaker == Who.George)
             {
-                StateAfter(Hero, StandDownRight, param_1);
+                StateAfter(Hero, StandDownRight, after);
             }
             else if (CurrentSpeaker == Who.Professor && Var(Vars.V63bdaf) != 0)
             {
-                StopAnimAfter("ProfSpeak", param_1);
-                Anim("ProfStand", -1, param_1);
+                StopAnimAfter("ProfSpeak", after);
+                Anim("ProfStand", -1, after);
                 SetVar(Vars.V63bdb0, 1);
             }
         }
-        else if (Episode == 3 && Quest == 5)
+        else if (At(5, 3))
         {
             if (CurrentSpeaker != Who.Dick || Var(Vars.V64d460) == 0)
             {
                 if (CurrentSpeaker == Who.Quentin)
                 {
-                    StopAnimAfter("QuentinSitTalk", param_1);
-                    StopAnimAfter("QuentinWrite", param_1);
+                    StopAnimAfter("QuentinSitTalk", after);
+                    StopAnimAfter("QuentinWrite", after);
                     AnimPos("QuentinSitStill", 540, 240);
                     AnimScale("QuentinSitStill", 0.95);
-                    param_1 = Anim("QuentinSitStill", -1, param_1);
+                    after = Anim("QuentinSitStill", -1, after);
                 }
                 else if (CurrentSpeaker == Who.George)
                 {
-                    StateAfter(Hero, StandDownRight, param_1);
+                    StateAfter(Hero, StandDownRight, after);
                 }
             }
         }
@@ -1249,68 +1225,69 @@ public sealed partial class Study : StoryScript
         {
             if (CurrentSpeaker == Who.George)
             {
-                StateAfter(Hero, StandDownLeft, param_1);
+                StateAfter(Hero, StandDownLeft, after);
             }
             else if (CurrentSpeaker == Who.Quentin)
             {
-                StopAnimAfter("QuentinWithBookSpeak", param_1);
-                Anim("QuentinWithBook", -1, param_1);
+                StopAnimAfter("QuentinWithBookSpeak", after);
+                Anim("QuentinWithBook", -1, after);
             }
         }
     }
 
     // from FUN_00429c4b
-    void OnConversationEnding(TaskHandle? param_1)
+    public override void ConversationEnding(GameWorld world, TaskHandle end)
     {
+        TaskHandle? after = end;
         TaskHandle? iVar1 = null;
         if (Episode < 4 && Quest == 2)
         {
-            StopAnimAfter("QuentinSitTalk", param_1);
-            StopAnimAfter("QuentinSitStill", param_1);
+            StopAnimAfter("QuentinSitTalk", after);
+            StopAnimAfter("QuentinSitStill", after);
             AnimPos("QuentinWrite", 540, 240);
             AnimScale("QuentinWrite", 0.95);
-            param_1 = Anim("QuentinWrite", -1, param_1);
+            after = Anim("QuentinWrite", -1, after);
         }
-        else if (Episode == 1 && Quest == 4)
+        else if (At(4, 1))
         {
             if (CurrentSpeaker == Who.Professor)
             {
                 if (Var(Vars.V63bdaf) == 0)
                 {
-                    StopAnimAfter("ProfTeleStill", param_1);
-                    iVar1 = Anim("ProfTele", after: param_1);
-                    ObjAfter("LOC03Telefon2", false, param_1, 1);
-                    ObjAfter("LOC03Telefon1", true, param_1, 1);
+                    StopAnimAfter("ProfTeleStill", after);
+                    iVar1 = Anim("ProfTele", after: after);
+                    ObjAfter("LOC03Telefon2", false, after, 1);
+                    ObjAfter("LOC03Telefon1", true, after, 1);
                     Anim("ProfSpeak", -1, iVar1);
-                    StateAfter(Timmy, BarkRight, param_1);
-                    Sound(@"wav\timmy\bellen1.wav", param_1);
-                    Sound(@"wav\timmy\bellen1.wav", param_1, 4);
-                    Sound(@"wav\timmy\bellen1.wav", param_1, 8);
+                    StateAfter(Timmy, BarkRight, after);
+                    Sound(@"wav\timmy\bellen1.wav", after);
+                    Sound(@"wav\timmy\bellen1.wav", after, 4);
+                    Sound(@"wav\timmy\bellen1.wav", after, 8);
                     SetVar(Vars.V64f4c4, 0);
                     SetVar(Vars.V63bdaf, 1);
                 }
             }
             else
             {
-                StateAfter(Hero, StandDownRight, param_1);
-                WalkAfter(Hero, 210, 390, param_1);
-                ChangeLocation("schiff", param_1, 10);
+                StateAfter(Hero, StandDownRight, after);
+                WalkAfter(Hero, 210, 390, after);
+                ChangeLocation("schiff", after, 10);
             }
         }
-        else if (Episode == 3 && Quest == 5)
+        else if (At(5, 3))
         {
             if (CurrentSpeaker == Who.Quentin)
             {
-                WalkAfter(Hero, 250, 394, param_1);
-                WalkAfter(Dick, 277, 394, param_1);
-                WalkAfter(Julian, 277, 394, param_1, 3);
-                WalkAfter(Anne, 277, 394, param_1, 1);
-                WalkAfter(Timmy, 277, 394, param_1, 6);
-                StopAnimAfter("QuentinSitTalk", param_1);
-                StopAnimAfter("QuentinSitStill", param_1);
+                WalkAfter(Hero, 250, 394, after);
+                WalkAfter(Dick, 277, 394, after);
+                WalkAfter(Julian, 277, 394, after, 3);
+                WalkAfter(Anne, 277, 394, after, 1);
+                WalkAfter(Timmy, 277, 394, after, 6);
+                StopAnimAfter("QuentinSitTalk", after);
+                StopAnimAfter("QuentinSitStill", after);
                 AnimPos("QuentinWrite", 540, 240);
                 AnimScale("QuentinWrite", 0.95);
-                Anim("QuentinWrite", -1, param_1);
+                Anim("QuentinWrite", -1, after);
                 Episode = 4;
                 SetVar(Vars.AnneTalk, 0);
                 SetVar(Vars.DickTalk, 0);
@@ -1320,9 +1297,9 @@ public sealed partial class Study : StoryScript
                 SetVar(Vars.V64ef54, 1);
                 SetVar(Vars.V64ef58, 2);
                 SetVar(Vars.V64ef5c, 3);
-                PointerAfter(false, param_1, x: 100, y: 200);
-                PointerAfter(true, param_1, 16, 100, 200);
-                ChangeLocation("loc05", param_1, 1);
+                PointerAfter(false, after, x: 100, y: 200);
+                PointerAfter(true, after, 16, 100, 200);
+                ChangeLocation("loc05", after, 1);
             }
             else if (Var(Vars.V63bdac) == 0)
             {
@@ -1332,23 +1309,23 @@ public sealed partial class Study : StoryScript
                     {
                         if (CurrentSpeaker == Who.Anne)
                         {
-                            StopAnimAfter("QuentinSitTalk", param_1);
-                            StopAnimAfter("QuentinSitStill", param_1);
+                            StopAnimAfter("QuentinSitTalk", after);
+                            StopAnimAfter("QuentinSitStill", after);
                             AnimPos("QuentinWrite", 540, 240);
                             AnimScale("QuentinWrite", 0.95);
-                            Anim("QuentinWrite", -1, param_1);
-                            ObjAfter("LOC03CloseDoorObj", false, param_1);
-                            iVar1 = Anim("DoOpenDoor", after: param_1);
+                            Anim("QuentinWrite", -1, after);
+                            ObjAfter("LOC03CloseDoorObj", false, after);
+                            iVar1 = Anim("DoOpenDoor", after: after);
                             ObjAfter("LOC03OpenDoorObj", true, iVar1);
                             Place(Anne, 10, 290, StandRight);
-                            PointerAfter(false, param_1, x: 200, y: 300);
-                            PointerAfter(true, param_1, 14, 200, 300);
-                            ObjAfter("LOC03Anne", true, param_1, 10);
-                            ObjAfter("LOC03Julian", true, param_1, 10);
-                            ObjAfter("LOC03Dick", true, param_1, 10);
-                            WalkAfter(Anne, 250, 410, param_1, 10);
+                            PointerAfter(false, after, x: 200, y: 300);
+                            PointerAfter(true, after, 14, 200, 300);
+                            ObjAfter("LOC03Anne", true, after, 10);
+                            ObjAfter("LOC03Julian", true, after, 10);
+                            ObjAfter("LOC03Dick", true, after, 10);
+                            WalkAfter(Anne, 250, 410, after, 10);
                             State(Anne, CryRight);
-                            Sound(@"wav\deutsch\anne\an130203.wav", param_1);
+                            Sound(@"wav\deutsch\anne\an130203.wav", after);
                             ShowParty();
                         }
                     }
@@ -1356,29 +1333,29 @@ public sealed partial class Study : StoryScript
                     {
                         SetVar(Vars.V64f5dc, 1);
                         SetVar(Vars.V63bdad, 0);
-                        StateAfter(Hero, StandDownRight, param_1);
+                        StateAfter(Hero, StandDownRight, after);
                     }
                 }
                 else
                 {
                     SetVar(Vars.V64f5a4, 1);
-                    StateAfter(Hero, StandDownRight, param_1);
+                    StateAfter(Hero, StandDownRight, after);
                     SetVar(Vars.V63bdae, 0);
                 }
             }
             else
             {
                 SetVar(Vars.V64f56c, 1);
-                StateAfter(Hero, StandDownRight, param_1);
+                StateAfter(Hero, StandDownRight, after);
                 SetVar(Vars.V63bdac, 0);
             }
         }
         else if (Episode < 3 && Quest == 5)
         {
-            StopAnimAfter("QuentinSitTalk", param_1);
+            StopAnimAfter("QuentinSitTalk", after);
             AnimPos("QuentinWrite", 540, 240);
             AnimScale("QuentinWrite", 0.95);
-            Anim("QuentinWrite", -1, param_1);
+            Anim("QuentinWrite", -1, after);
         }
         else if (Episode < 5 || Quest != 5)
         {
@@ -1386,86 +1363,86 @@ public sealed partial class Study : StoryScript
             {
                 if (CurrentSpeaker == Who.Quentin)
                 {
-                    StopAnimAfter("QuentinSitTalk", param_1);
+                    StopAnimAfter("QuentinSitTalk", after);
                     if (Var(Vars.V64f534) == 0)
                     {
                         SetVar(Vars.V64f534, 1);
                     }
                     AnimPos("QuentinWrite", 540, 240);
                     AnimScale("QuentinWrite", 0.95);
-                    Anim("QuentinWrite", -1, param_1);
+                    Anim("QuentinWrite", -1, after);
                 }
             }
-            else if (Episode == 3 && Quest == 7)
+            else if (At(7, 3))
             {
                 if (CurrentSpeaker == Who.George)
                 {
-                    StateAfter(Hero, StandDownLeft, param_1);
+                    StateAfter(Hero, StandDownLeft, after);
                 }
                 else if (Text("t63bdb4") != "Schiff")
                 {
                     if (CurrentSpeaker == Who.Quentin)
                     {
-                        StopAnimAfter("QuentinWithBookSpeak", param_1);
-                        Anim("QuentinWithBook", -1, param_1);
+                        StopAnimAfter("QuentinWithBookSpeak", after);
+                        Anim("QuentinWithBook", -1, after);
                     }
                 }
                 else
                 {
-                    PointerAfter(false, param_1, x: 300, y: 400);
-                    WalkAfter(Hero, 228, 435, param_1, 10);
+                    PointerAfter(false, after, x: 300, y: 400);
+                    WalkAfter(Hero, 228, 435, after, 10);
                     iVar1 = State(Hero, TakeMidUpLeft);
                     Sound(@"wav\fx\hotueauf.wav", iVar1, 20);
                     PointerAfter(false, iVar1, x: 100, y: 200);
                     iVar1 = Anim("DoOpenDoor", after: iVar1, delay: 20, endObject: "LOC03CloseDoorObj");
                     PointerAfter(true, iVar1, 4, 100, 200);
                     Episode = 4;
-                    StopAnimAfter("QuentinWithBookSpeak", param_1);
-                    Anim("QuentinWithBook", -1, param_1);
+                    StopAnimAfter("QuentinWithBookSpeak", after);
+                    Anim("QuentinWithBook", -1, after);
                     ChangeLocation("loc04", iVar1);
                 }
             }
-            else if (Episode == 4 && Quest == 7)
+            else if (At(7, 4))
             {
                 if (CurrentSpeaker == Who.George)
                 {
-                    StateAfter(Hero, StandDownLeft, param_1);
+                    StateAfter(Hero, StandDownLeft, after);
                     if (Text("t63bdb4") == "ToastOnly")
                     {
-                        PointerAfter(false, param_1, x: 300, y: 400);
-                        ChangeLocation("loc04", param_1, 4);
+                        PointerAfter(false, after, x: 300, y: 400);
+                        ChangeLocation("loc04", after, 4);
                         SetText("t63bdb4", "");
                     }
                 }
                 else if (CurrentSpeaker == Who.Quentin)
                 {
-                    StopAnimAfter("QuentinWithBookSpeak", param_1);
-                    Anim("QuentinWithBook", -1, param_1);
+                    StopAnimAfter("QuentinWithBookSpeak", after);
+                    Anim("QuentinWithBook", -1, after);
                 }
             }
         }
         else
         {
-            StopAnimAfter("QuentinSitTalk", param_1);
+            StopAnimAfter("QuentinSitTalk", after);
             if (Var(Vars.V64f534) == 0)
             {
                 SetVar(Vars.V64f534, 1);
             }
             AnimPos("QuentinWrite", 540, 240);
             AnimScale("QuentinWrite", 0.95);
-            Anim("QuentinWrite", -1, param_1);
+            Anim("QuentinWrite", -1, after);
         }
     }
 
     // from FUN_0042a719
-    void OnAfterChoice()
+    protected override void AfterChoice(string scene, int line, int option)
     {
     }
 
     // from FUN_0042a738
-    void OnEveryTick()
+    public override void EveryTick()
     {
-        if (Episode == 4 && Quest == 7)
+        if (At(7, 4))
         {
             if (Var(Vars.V64d464) == 0)
             {

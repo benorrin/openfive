@@ -11,34 +11,17 @@ public sealed partial class Dungeon28 : StoryScript
 
     public override bool Click(string name)
     {
-        if (World.Actors.FirstOrDefault(a => a.Name == name) is { } who)
-        {
-            OnActorClicked(who);
-            return true;
-        }
-        OnClick(name);
+        if (World.Actors.FirstOrDefault(a => a.Name == name) is { } actor)
+            ClickActor(actor);
+        else
+            ClickObject(name);
         return true;
-    }
-
-    protected override void Setup()
-    {
-        OnSetup();
     }
 
     protected override void Arrive() { }
 
-    public override void LineStarting(GameWorld world, int speaker)
-    {
-        CurrentSpeaker = speaker;
-        OnLineStarting(null);
-    }
-
-    public override void LineQueued(GameWorld world, TaskHandle end) => OnLineQueued(end);
-
-    public override void ConversationEnding(GameWorld world, TaskHandle end) => OnConversationEnding(end);
-
     // from FUN_00459e3e
-    void OnClick(string name)
+    void ClickObject(string name)
     {
         TaskHandle? local_20 = null;
         if (Same(name, "LOC28ExitToLoc25"))
@@ -47,7 +30,7 @@ public sealed partial class Dungeon28 : StoryScript
             Chain = State(Hero, TakeMidRight);
             local_20 = Chain;
             Sound(@"wav\fx\tuerruet.wav", Chain);
-            if (Episode == 2 && Quest == 10)
+            if (At(10, 2))
             {
                 if (Var(Vars.CellCrackUsed) == 0)
                 {
@@ -89,14 +72,14 @@ public sealed partial class Dungeon28 : StoryScript
     }
 
     // from FUN_0045a321
-    void OnActorClicked(Actor param_1)
+    void ClickActor(Actor actor)
     {
         TaskHandle? local_20 = null;
-        if (param_1 == George)
+        if (actor == George)
         {
             Chain = State(Hero, StandDownRight);
             local_20 = Chain;
-            if (Episode == 1 && Quest == 9)
+            if (At(9, 1))
             {
                 if (Var(Vars.GeorgeDungeonTalk) == 0)
                 {
@@ -114,7 +97,7 @@ public sealed partial class Dungeon28 : StoryScript
                     Say(Who.George, "LABYRINTH0044", 11, last: true, after: local_20);
                 }
             }
-            else if (Episode == 2 && Quest == 10)
+            else if (At(10, 2))
             {
                 if (Var(Vars.GeorgeDungeonTalk) == 0)
                 {
@@ -133,10 +116,10 @@ public sealed partial class Dungeon28 : StoryScript
                 }
             }
         }
-        else if (param_1 == Anne)
+        else if (actor == Anne)
         {
             Chain = State(Hero, StandDownRight);
-            if (Episode == 2 && Quest == 10)
+            if (At(10, 2))
             {
                 local_20 = Chain;
                 if (Var(Vars.V6512f4) == 0)
@@ -151,7 +134,7 @@ public sealed partial class Dungeon28 : StoryScript
                 }
             }
         }
-        else if (param_1 == Julian && Seq(() => Chain = State(Hero, StandDownLeft), () => Episode == 2) && Quest == 10)
+        else if (actor == Julian && Seq(() => Chain = State(Hero, StandDownLeft), () => Episode == 2) && Quest == 10)
         {
             local_20 = Chain;
             if (Var(Vars.V6512bc) == 0)
@@ -169,7 +152,7 @@ public sealed partial class Dungeon28 : StoryScript
     }
 
     // from FUN_0045aa2f
-    void OnSetup()
+    protected override void Setup()
     {
         Hero.Follower = null;
         PointerOn();
@@ -184,7 +167,7 @@ public sealed partial class Dungeon28 : StoryScript
         StopAnim("Tuere");
         Depth(@"bmp\obj\locs\loc28\tuer.brg", 8000);
         PathEnable(0, true);
-        if (Episode == 1 && Quest == 9)
+        if (At(9, 1))
         {
             Place(Hero, 722, 375, StandDownLeft);
             Place(George, 722, 375, StandUpLeft);
@@ -192,7 +175,7 @@ public sealed partial class Dungeon28 : StoryScript
         }
         else
         {
-            if (Episode == 2 && Quest == 10)
+            if (At(10, 2))
             {
                 Place(Hero, 391, 458, StandDownRight);
                 Place(Timmy, 520, 388, StandLeft);
@@ -214,106 +197,106 @@ public sealed partial class Dungeon28 : StoryScript
     }
 
     // from FUN_0045ac96
-    void OnLineStarting(TaskHandle? param_1)
+    public override void LineStarting(GameWorld world, int speaker)
     {
-        if (Episode == 2 && Quest == 10)
+        if (At(10, 2))
         {
             if (CurrentSpeaker == Who.Julian)
             {
-                StateAfter(Julian, SpeakDownRight, param_1);
+                StateAfter(Julian, SpeakDownRight, null);
             }
             else if (CurrentSpeaker == Who.Dick)
             {
-                StateAfter(Hero, SpeakDownRight, param_1);
+                StateAfter(Hero, SpeakDownRight, null);
             }
         }
         else if (CurrentSpeaker == Who.Anne)
         {
-            StateAfter(Anne, SpeakDownRight, param_1);
+            StateAfter(Anne, SpeakDownRight, null);
         }
         else if (CurrentSpeaker == Who.Julian)
         {
-            StateAfter(Julian, SpeakDownLeft, param_1);
+            StateAfter(Julian, SpeakDownLeft, null);
         }
         else if (CurrentSpeaker == Who.George)
         {
-            StateAfter(George, SpeakDownLeft, param_1);
+            StateAfter(George, SpeakDownLeft, null);
         }
         else if (CurrentSpeaker == Who.Dick)
         {
-            StateAfter(Hero, SpeakDownRight, param_1);
+            StateAfter(Hero, SpeakDownRight, null);
         }
     }
 
     // from FUN_0045adbf
-    void OnLineQueued(TaskHandle? param_1)
+    public override void LineQueued(GameWorld world, TaskHandle end)
     {
-        if (Episode == 2 && Quest == 10)
+        if (At(10, 2))
         {
             if (CurrentSpeaker == Who.Julian)
             {
-                StateAfter(Julian, StandDownRight, param_1);
+                StateAfter(Julian, StandDownRight, end);
             }
             else if (CurrentSpeaker == Who.Dick)
             {
-                StateAfter(Hero, StandDownRight, param_1);
+                StateAfter(Hero, StandDownRight, end);
             }
         }
         else if (CurrentSpeaker == Who.Anne)
         {
-            StateAfter(Anne, StandDownRight, param_1);
+            StateAfter(Anne, StandDownRight, end);
         }
         else if (CurrentSpeaker == Who.Julian)
         {
-            StateAfter(Julian, StandDownLeft, param_1);
+            StateAfter(Julian, StandDownLeft, end);
         }
         else if (CurrentSpeaker == Who.George)
         {
-            StateAfter(George, StandDownLeft, param_1);
+            StateAfter(George, StandDownLeft, end);
         }
         else if (CurrentSpeaker == Who.Dick)
         {
-            StateAfter(Hero, StandDownRight, param_1);
+            StateAfter(Hero, StandDownRight, end);
         }
     }
 
     // from FUN_0045aee8
-    void OnConversationEnding(TaskHandle? param_1)
+    public override void ConversationEnding(GameWorld world, TaskHandle end)
     {
-        if (Episode == 1 && Quest == 9)
+        if (At(9, 1))
         {
             if (CurrentSpeaker == Who.Anne)
             {
-                StateAfter(Anne, StandDownRight, param_1);
+                StateAfter(Anne, StandDownRight, end);
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StateAfter(Julian, StandDownLeft, param_1);
+                StateAfter(Julian, StandDownLeft, end);
             }
             else if (CurrentSpeaker == Who.George)
             {
-                StateAfter(George, StandDownLeft, param_1);
+                StateAfter(George, StandDownLeft, end);
             }
             else if (CurrentSpeaker == Who.Dick)
             {
-                StateAfter(Hero, StandDownRight, param_1);
+                StateAfter(Hero, StandDownRight, end);
             }
         }
-        else if (Episode == 2 && Quest == 10)
+        else if (At(10, 2))
         {
             if (CurrentSpeaker == Who.Julian)
             {
-                StateAfter(Julian, StandDownRight, param_1);
+                StateAfter(Julian, StandDownRight, end);
             }
             else if (CurrentSpeaker == Who.Dick)
             {
-                StateAfter(Hero, StandDownRight, param_1);
+                StateAfter(Hero, StandDownRight, end);
             }
             if (Text("t63bef0") == "Tuer")
             {
-                PointerAfter(false, param_1, x: 400, y: 400);
-                ChangeLocation("loc25", param_1, 4);
-                SetAfter(Vars.EpisodeNumber, 3, param_1);
+                PointerAfter(false, end, x: 400, y: 400);
+                ChangeLocation("loc25", end, 4);
+                SetAfter(Vars.EpisodeNumber, 3, end);
             }
             SetText("t63bef0", "");
         }

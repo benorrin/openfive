@@ -9,33 +9,10 @@ public sealed partial class IslandBeach : StoryScript
 {
     public override string Location => "loc14";
 
-    public override bool Click(string name)
-    {
-        OnClick(name);
-        return true;
-    }
-
-    protected override void Setup()
-    {
-        OnSetup();
-    }
-
     protected override void Arrive() { }
 
-    public override void LineStarting(GameWorld world, int speaker)
-    {
-        CurrentSpeaker = speaker;
-        OnLineStarting(null);
-    }
-
-    public override void LineQueued(GameWorld world, TaskHandle end) => OnLineQueued(end);
-
-    public override void ConversationEnding(GameWorld world, TaskHandle end) => OnConversationEnding(end);
-
-    public override void EveryTick() => OnEveryTick();
-
     // from FUN_004476f9
-    void OnClick(string name)
+    public override bool Click(string name)
     {
         TaskHandle? uVar4 = null;
         Chain = null;
@@ -50,7 +27,7 @@ public sealed partial class IslandBeach : StoryScript
                 Say(Who.George, "INSELSTRAND0022", 7, after: uVar4);
                 Say(Who.Julian, "INSELSTRAND0022", 8, last: true, after: uVar4);
             }
-            else if (Episode == 2 && Quest == 7)
+            else if (At(7, 2))
             {
                 SetText("t63be48", "");
                 SetAfter(Vars.AnneIslandTalk, 2, uVar4);
@@ -111,7 +88,7 @@ public sealed partial class IslandBeach : StoryScript
                     Say(Who.Anne, "INSELSTRAND0022", 9, last: true, after: uVar4);
                 }
             }
-            else if (Episode == 3 && Quest == 6)
+            else if (At(6, 3))
             {
                 if (Var(Vars.V650874) == 2)
                 {
@@ -143,7 +120,7 @@ public sealed partial class IslandBeach : StoryScript
                     }
                 }
             }
-            else if (Episode == 4 && Quest == 6)
+            else if (At(6, 4))
             {
                 if (Var(Vars.AnneIslandTalk) == 0)
                 {
@@ -158,7 +135,7 @@ public sealed partial class IslandBeach : StoryScript
                     Say(Who.Dick, "ALL0024", 7, last: true);
                 }
             }
-            else if (Episode == 2 && Quest == 7)
+            else if (At(7, 2))
             {
                 if (Var(Vars.AnneIslandTalk) == 0)
                 {
@@ -174,7 +151,7 @@ public sealed partial class IslandBeach : StoryScript
                     Say(Who.Anne, "INSELSTRAND0025", 13, last: true, after: uVar4);
                 }
             }
-            else if (Episode == 2 && Quest == 8)
+            else if (At(8, 2))
             {
                 if (Var(Vars.AnneIslandTalk) == 0)
                 {
@@ -187,7 +164,7 @@ public sealed partial class IslandBeach : StoryScript
                     Say(Who.Anne, "STRAND0037", 5, last: true, after: uVar4);
                 }
             }
-            else if (Episode == 1 && Quest == 11)
+            else if (At(11, 1))
             {
                 if (Var(Vars.AnneIslandTalk) == 0)
                 {
@@ -215,7 +192,7 @@ public sealed partial class IslandBeach : StoryScript
                     Say(Who.George, "INSELSTRAND0022", 10, last: true, after: uVar4);
                 }
             }
-            else if (Episode == 3 && Quest == 6)
+            else if (At(6, 3))
             {
                 if (Var(Vars.V650874) == 2)
                 {
@@ -248,7 +225,7 @@ public sealed partial class IslandBeach : StoryScript
                     }
                 }
             }
-            else if (Episode == 4 && Quest == 6)
+            else if (At(6, 4))
             {
                 if (Var(Vars.GeorgeIslandTalk) == 0)
                 {
@@ -292,7 +269,7 @@ public sealed partial class IslandBeach : StoryScript
                     Say(Who.George, "ALL0024", 20, last: true, after: uVar4);
                 }
             }
-            else if (Episode == 2 && Quest == 7)
+            else if (At(7, 2))
             {
                 if (Var(Vars.GeorgeIslandTalk) == 0)
                 {
@@ -309,7 +286,7 @@ public sealed partial class IslandBeach : StoryScript
                     Say(Who.George, "INSELSTRAND0025", 14, last: true, after: uVar4);
                 }
             }
-            else if (Episode == 2 && Quest == 8)
+            else if (At(8, 2))
             {
                 if (Var(Vars.V650804) == 0)
                 {
@@ -321,7 +298,7 @@ public sealed partial class IslandBeach : StoryScript
                     Say(Who.Dick, "STRAND0037", 6, last: true, after: uVar4);
                 }
             }
-            else if (Episode == 1 && Quest == 11 && Var(Vars.GeorgeIslandTalk) == 0)
+            else if (At(11, 1) && Var(Vars.GeorgeIslandTalk) == 0)
             {
                 IncAfter(Vars.GeorgeIslandTalk, Chain);
                 Say(Who.George, "STRAND0052", 9, last: true, after: uVar4);
@@ -342,7 +319,7 @@ public sealed partial class IslandBeach : StoryScript
                     Say(Who.Julian, "INSELSTRAND0022", 11, last: true, after: uVar4);
                 }
             }
-            else if (Episode == 3 && Quest == 6)
+            else if (At(6, 3))
             {
                 if (Var(Vars.V650874) == 2)
                 {
@@ -374,7 +351,7 @@ public sealed partial class IslandBeach : StoryScript
                     }
                 }
             }
-            else if (Episode == 4 && Quest == 6)
+            else if (At(6, 4))
             {
                 if (Var(Vars.JulianIslandTalk) == 0)
                 {
@@ -388,7 +365,7 @@ public sealed partial class IslandBeach : StoryScript
                     Say(Who.Julian, "ALL0024", 9, last: true, after: uVar4);
                 }
             }
-            else if (Episode == 2 && Quest == 7)
+            else if (At(7, 2))
             {
                 if (Var(Vars.JulianIslandTalk) == 0)
                 {
@@ -405,7 +382,7 @@ public sealed partial class IslandBeach : StoryScript
                     Say(Who.Julian, "INSELSTRAND0025", 15, last: true, after: uVar4);
                 }
             }
-            else if (Episode == 2 && Quest == 8)
+            else if (At(8, 2))
             {
                 if (Var(Vars.JulianIslandTalk) == 0)
                 {
@@ -422,15 +399,16 @@ public sealed partial class IslandBeach : StoryScript
                     Say(Who.Julian, "STRAND0037", 8, last: true, after: uVar4);
                 }
             }
-            else if (Episode == 1 && Quest == 11 && Var(Vars.JulianIslandTalk) == 0)
+            else if (At(11, 1) && Var(Vars.JulianIslandTalk) == 0)
             {
                 Say(Who.Julian, "STRAND0052", 10, last: true, after: uVar4);
             }
         }
+        return true;
     }
 
     // from FUN_004497ba
-    void OnSetup()
+    protected override void Setup()
     {
         SetVar(Vars.V683260, 1);
         Obj("LOC14Anne", false);
@@ -567,76 +545,76 @@ public sealed partial class IslandBeach : StoryScript
     }
 
     // from FUN_0044a03f
-    void OnEveryTick()
+    public override void EveryTick()
     {
     }
 
     // from FUN_0044a05e
-    void OnLineStarting(TaskHandle? param_1)
+    public override void LineStarting(GameWorld world, int speaker)
     {
         if (Hero == George)
         {
             if (CurrentSpeaker == Who.Anne)
             {
-                StateAfter(Anne, SpeakDownRight, param_1);
+                StateAfter(Anne, SpeakDownRight, null);
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StateAfter(Julian, SpeakDownRight, param_1);
+                StateAfter(Julian, SpeakDownRight, null);
             }
             else if (CurrentSpeaker == Who.George)
             {
-                StateAfter(Hero, SpeakDownLeft, param_1);
+                StateAfter(Hero, SpeakDownLeft, null);
             }
         }
         else if (CurrentSpeaker == Who.Anne)
         {
-            StateAfter(Anne, SpeakDownRight, param_1);
+            StateAfter(Anne, SpeakDownRight, null);
         }
         else if (CurrentSpeaker == Who.Julian)
         {
-            StateAfter(Julian, SpeakDownRight, param_1);
+            StateAfter(Julian, SpeakDownRight, null);
         }
         else if (CurrentSpeaker == Who.Dick)
         {
-            StateAfter(Hero, SpeakDownLeft, param_1);
+            StateAfter(Hero, SpeakDownLeft, null);
         }
     }
 
     // from FUN_0044a17b
-    void OnLineQueued(TaskHandle? param_1)
+    public override void LineQueued(GameWorld world, TaskHandle end)
     {
         if (Hero == George)
         {
             if (CurrentSpeaker == Who.Anne)
             {
-                StateAfter(Anne, StandDownRight, param_1);
+                StateAfter(Anne, StandDownRight, end);
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StateAfter(Julian, StandDownRight, param_1);
+                StateAfter(Julian, StandDownRight, end);
             }
             else if (CurrentSpeaker == Who.George)
             {
-                StateAfter(Hero, StandDownLeft, param_1);
+                StateAfter(Hero, StandDownLeft, end);
             }
         }
         else if (CurrentSpeaker == Who.Anne)
         {
-            StateAfter(Anne, StandDownRight, param_1);
+            StateAfter(Anne, StandDownRight, end);
         }
         else if (CurrentSpeaker == Who.Julian)
         {
-            StateAfter(Julian, StandDownRight, param_1);
+            StateAfter(Julian, StandDownRight, end);
         }
         else if (CurrentSpeaker == Who.Dick)
         {
-            StateAfter(Hero, StandDownLeft, param_1);
+            StateAfter(Hero, StandDownLeft, end);
         }
     }
 
     // from FUN_0044a298
-    void OnConversationEnding(TaskHandle? param_1)
+    public override void ConversationEnding(GameWorld world, TaskHandle end)
     {
         if (Text("t63be48") == "Exit")
         {
@@ -644,11 +622,11 @@ public sealed partial class IslandBeach : StoryScript
             SetVar(Vars.GeorgeIslandTalk, 2);
             SetVar(Vars.JulianIslandTalk, 2);
         }
-        if (Episode == 3 && Quest == 6)
+        if (At(6, 3))
         {
             if (CurrentSpeaker == Who.Anne)
             {
-                StateAfter(Anne, StandDownRight, param_1);
+                StateAfter(Anne, StandDownRight, end);
                 if (Var(Vars.AnneIslandTalk) == 0)
                 {
                     SetVar(Vars.AnneIslandTalk, 1);
@@ -656,7 +634,7 @@ public sealed partial class IslandBeach : StoryScript
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StateAfter(Julian, StandDownRight, param_1);
+                StateAfter(Julian, StandDownRight, end);
                 if (Var(Vars.JulianIslandTalk) == 0)
                 {
                     SetVar(Vars.JulianIslandTalk, 1);
@@ -671,7 +649,7 @@ public sealed partial class IslandBeach : StoryScript
             }
             else if (CurrentSpeaker == Who.Dick)
             {
-                StateAfter(Hero, StandDownLeft, param_1);
+                StateAfter(Hero, StandDownLeft, end);
             }
         }
         else if (Episode < 3 || Quest != 6)
@@ -680,13 +658,13 @@ public sealed partial class IslandBeach : StoryScript
             {
                 if (CurrentSpeaker == Who.Anne)
                 {
-                    StateAfter(Anne, StandDownRight, param_1);
+                    StateAfter(Anne, StandDownRight, end);
                 }
                 else if (CurrentSpeaker == Who.Julian)
                 {
-                    StateAfter(Julian, StandDownRight, param_1);
+                    StateAfter(Julian, StandDownRight, end);
                 }
-                else if (CurrentSpeaker == Who.Dick && Seq(() => StateAfter(Hero, StandDownLeft, param_1), () => Var(Vars.AnneIslandTalk) == 0))
+                else if (CurrentSpeaker == Who.Dick && Seq(() => StateAfter(Hero, StandDownLeft, end), () => Var(Vars.AnneIslandTalk) == 0))
                 {
                     SetVar(Vars.AnneIslandTalk, 1);
                 }
@@ -695,41 +673,41 @@ public sealed partial class IslandBeach : StoryScript
             {
                 if (CurrentSpeaker == Who.Anne)
                 {
-                    StateAfter(Anne, StandDownRight, param_1);
+                    StateAfter(Anne, StandDownRight, end);
                 }
                 else if (CurrentSpeaker == Who.Julian)
                 {
-                    StateAfter(Julian, StandDownRight, param_1);
+                    StateAfter(Julian, StandDownRight, end);
                 }
                 else if (CurrentSpeaker == Who.George)
                 {
-                    StateAfter(Hero, StandDownLeft, param_1);
+                    StateAfter(Hero, StandDownLeft, end);
                 }
             }
             else if (CurrentSpeaker == Who.Anne)
             {
-                StateAfter(Anne, StandDownRight, param_1);
+                StateAfter(Anne, StandDownRight, end);
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StateAfter(Julian, StandDownRight, param_1);
+                StateAfter(Julian, StandDownRight, end);
             }
             else if (CurrentSpeaker == Who.Dick)
             {
-                StateAfter(Hero, StandDownLeft, param_1);
+                StateAfter(Hero, StandDownLeft, end);
             }
         }
         else if (CurrentSpeaker == Who.Anne)
         {
-            StateAfter(Anne, StandDownRight, param_1);
+            StateAfter(Anne, StandDownRight, end);
         }
         else if (CurrentSpeaker == Who.Julian)
         {
-            StateAfter(Julian, StandDownRight, param_1);
+            StateAfter(Julian, StandDownRight, end);
         }
         else if (CurrentSpeaker == Who.Dick)
         {
-            StateAfter(Hero, StandDownLeft, param_1);
+            StateAfter(Hero, StandDownLeft, end);
         }
         SetText("t63be48", "");
     }

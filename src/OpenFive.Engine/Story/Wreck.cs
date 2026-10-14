@@ -9,33 +9,10 @@ public sealed partial class Wreck : StoryScript
 {
     public override string Location => "loc15";
 
-    public override bool Click(string name)
-    {
-        OnClick(name);
-        return true;
-    }
-
-    protected override void Setup()
-    {
-        OnSetup();
-    }
-
     protected override void Arrive() { }
 
-    protected override void AfterChoice(string scene, int line, int option) => OnAfterChoice();
-
-    public override void LineStarting(GameWorld world, int speaker)
-    {
-        CurrentSpeaker = speaker;
-        OnLineStarting(null);
-    }
-
-    public override void LineQueued(GameWorld world, TaskHandle end) => OnLineQueued(end);
-
-    public override void ConversationEnding(GameWorld world, TaskHandle end) => OnConversationEnding(end);
-
     // from FUN_0044a60b
-    void OnClick(string name)
+    public override bool Click(string name)
     {
         TaskHandle? local_20 = null;
         Chain = null;
@@ -50,7 +27,7 @@ public sealed partial class Wreck : StoryScript
         {
             if (Same(name, "LOC15Anne"))
             {
-                if (Episode == 4 && Quest == 6)
+                if (At(6, 4))
                 {
                     if (Var(Vars.AnneWreckTalk) == 0)
                     {
@@ -65,7 +42,7 @@ public sealed partial class Wreck : StoryScript
                         Say(Who.Dick, "ALL0024", 7, last: true);
                     }
                 }
-                else if (Episode == 3 && Quest == 6)
+                else if (At(6, 3))
                 {
                     if (Var(Vars.AnneWreckTalk) == 0)
                     {
@@ -78,7 +55,7 @@ public sealed partial class Wreck : StoryScript
                         Say(Who.Anne, "WRACK0023", 7, last: true, after: local_20);
                     }
                 }
-                else if (Episode == 1 && Quest == 7)
+                else if (At(7, 1))
                 {
                     if (Var(Vars.AnneWreckTalk) == 0)
                     {
@@ -103,7 +80,7 @@ public sealed partial class Wreck : StoryScript
             }
             else if (Same(name, "LOC15George"))
             {
-                if (Episode == 4 && Quest == 6)
+                if (At(6, 4))
                 {
                     if (Var(Vars.GeorgeWreckTalk) == 0)
                     {
@@ -147,7 +124,7 @@ public sealed partial class Wreck : StoryScript
                         Say(Who.George, "ALL0024", 20, last: true, after: local_20);
                     }
                 }
-                else if (Episode == 3 && Quest == 6)
+                else if (At(6, 3))
                 {
                     if (Var(Vars.GeorgeWreckTalk) == 0)
                     {
@@ -168,7 +145,7 @@ public sealed partial class Wreck : StoryScript
                         }
                     }
                 }
-                else if (Episode == 1 && Quest == 7)
+                else if (At(7, 1))
                 {
                     if (Var(Vars.GeorgeWreckTalk) == 0)
                     {
@@ -182,7 +159,7 @@ public sealed partial class Wreck : StoryScript
             }
             else if (Same(name, "LOC15Julian"))
             {
-                if (Episode == 4 && Quest == 6)
+                if (At(6, 4))
                 {
                     if (Var(Vars.JulianWreckTalk) == 0)
                     {
@@ -196,7 +173,7 @@ public sealed partial class Wreck : StoryScript
                         Say(Who.Julian, "ALL0024", 9, last: true, after: local_20);
                     }
                 }
-                else if (Episode == 3 && Quest == 6)
+                else if (At(6, 3))
                 {
                     if (Var(Vars.JulianWreckTalk) == 0)
                     {
@@ -215,7 +192,7 @@ public sealed partial class Wreck : StoryScript
                         Say(Who.Julian, "WRACK0023", 12, last: true, after: local_20);
                     }
                 }
-                else if (Episode == 1 && Quest == 7)
+                else if (At(7, 1))
                 {
                     if (Var(Vars.JulianWreckTalk) == 0)
                     {
@@ -233,10 +210,11 @@ public sealed partial class Wreck : StoryScript
                 }
             }
         }
+        return true;
     }
 
     // from FUN_0044b738
-    void OnSetup()
+    protected override void Setup()
     {
         PointerOn();
         SetVar(Vars.V683260, 0);
@@ -259,7 +237,7 @@ public sealed partial class Wreck : StoryScript
     void F44b852()
     {
         TaskHandle? local_20 = null;
-        if (Episode == 3 && Quest == 6)
+        if (At(6, 3))
         {
             SetVar(Vars.V65075c, 1);
             if (Var(Vars.V650874) == 0)
@@ -272,7 +250,7 @@ public sealed partial class Wreck : StoryScript
                 SetVar(Vars.V650874, 1);
             }
         }
-        else if (Episode == 4 && Quest == 6)
+        else if (At(6, 4))
         {
             if (Var(Vars.V650874) < 2)
             {
@@ -288,7 +266,7 @@ public sealed partial class Wreck : StoryScript
                 SetVar(Vars.V650874, 3);
             }
         }
-        else if (Episode == 1 && Quest == 7)
+        else if (At(7, 1))
         {
             if (Has(Item.ClosedTin))
             {
@@ -306,70 +284,70 @@ public sealed partial class Wreck : StoryScript
     }
 
     // from FUN_0044be30
-    void OnLineStarting(TaskHandle? param_1)
+    public override void LineStarting(GameWorld world, int speaker)
     {
-        if (Hero.State == 41)
+        if (Hero.State == SitSpeakDownLeft)
         {
-            Hero.State = 33;
+            Hero.State = SitDownLeft;
         }
         if (CurrentSpeaker == Who.Anne)
         {
-            StateAfter(Anne, SitSpeakDownRight, param_1);
+            StateAfter(Anne, SitSpeakDownRight, null);
         }
         else if (CurrentSpeaker == Who.Julian)
         {
-            StateAfter(Julian, SitSpeakDownRight, param_1);
+            StateAfter(Julian, SitSpeakDownRight, null);
         }
         else if (CurrentSpeaker == Who.Dick)
         {
-            StateAfter(Hero, SitSpeakDownLeft, param_1);
+            StateAfter(Hero, SitSpeakDownLeft, null);
         }
         else if (CurrentSpeaker == Who.Dick)
         {
-            StateAfter(Hero, SitSpeakDownLeft, param_1);
+            StateAfter(Hero, SitSpeakDownLeft, null);
         }
         else if (CurrentSpeaker == Who.George)
         {
-            StateAfter(George, SitSpeakDownLeft, param_1);
+            StateAfter(George, SitSpeakDownLeft, null);
         }
     }
 
     // from FUN_0044bf31
-    void OnLineQueued(TaskHandle? param_1)
+    public override void LineQueued(GameWorld world, TaskHandle end)
     {
         if (CurrentSpeaker == Who.Anne)
         {
-            StateAfter(Anne, SitDownRight, param_1);
+            StateAfter(Anne, SitDownRight, end);
         }
         else if (CurrentSpeaker == Who.Julian)
         {
-            StateAfter(Julian, SitDownRight, param_1);
+            StateAfter(Julian, SitDownRight, end);
         }
         else if (CurrentSpeaker == Who.Dick)
         {
-            StateAfter(Hero, SitDownLeft, param_1);
+            StateAfter(Hero, SitDownLeft, end);
         }
         else if (CurrentSpeaker == Who.Dick)
         {
-            StateAfter(Hero, SitDownLeft, param_1);
+            StateAfter(Hero, SitDownLeft, end);
         }
         else if (CurrentSpeaker == Who.George)
         {
-            StateAfter(George, SitDownLeft, param_1);
+            StateAfter(George, SitDownLeft, end);
         }
     }
 
     // from FUN_0044c01b
-    void OnConversationEnding(TaskHandle? param_1)
+    public override void ConversationEnding(GameWorld world, TaskHandle end)
     {
         if (CurrentSpeaker == Who.Anne)
         {
-            StateAfter(Anne, SitDownRight, param_1);
+            StateAfter(Anne, SitDownRight, end);
         }
         else if (CurrentSpeaker == Who.Julian)
         {
-            StateAfter(Julian, SitDownRight, param_1);
-            if (Episode == 1 && Quest == 7 && Var(Vars.V63be58) != 0 && Var(Vars.V64ef10) != 0)
+            StateAfter(Julian, SitDownRight, end);
+            if (At(7, 1) && Var(Vars.V63be58) != 0 && Var(Vars.V64ef10) != 0)
             {
                 Ask(20, "WRACK0025", 8);
                 SetVar(Vars.V63be58, 0);
@@ -378,20 +356,20 @@ public sealed partial class Wreck : StoryScript
         }
         else if (CurrentSpeaker == Who.Dick)
         {
-            StateAfter(Hero, SitDownLeft, param_1);
+            StateAfter(Hero, SitDownLeft, end);
         }
         else if (CurrentSpeaker == Who.Dick)
         {
-            StateAfter(Hero, SitDownLeft, param_1);
+            StateAfter(Hero, SitDownLeft, end);
         }
         else if (CurrentSpeaker == Who.George)
         {
-            StateAfter(George, SitDownLeft, param_1);
+            StateAfter(George, SitDownLeft, end);
         }
     }
 
     // from FUN_0044c186
-    void OnAfterChoice()
+    protected override void AfterChoice(string scene, int line, int option)
     {
         if (LocationId == 15 && Var(Vars.V64ef11) != 0)
         {

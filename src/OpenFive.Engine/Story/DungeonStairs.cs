@@ -11,34 +11,17 @@ public sealed partial class DungeonStairs : StoryScript
 
     public override bool Click(string name)
     {
-        if (World.Actors.FirstOrDefault(a => a.Name == name) is { } who)
-        {
-            OnActorClicked(who);
-            return true;
-        }
-        OnClick(name);
+        if (World.Actors.FirstOrDefault(a => a.Name == name) is { } actor)
+            ClickActor(actor);
+        else
+            ClickObject(name);
         return true;
-    }
-
-    protected override void Setup()
-    {
-        OnSetup();
     }
 
     protected override void Arrive() { }
 
-    public override void LineStarting(GameWorld world, int speaker)
-    {
-        CurrentSpeaker = speaker;
-        OnLineStarting(null);
-    }
-
-    public override void LineQueued(GameWorld world, TaskHandle end) => OnLineQueued(end);
-
-    public override void ConversationEnding(GameWorld world, TaskHandle end) => OnConversationEnding(end);
-
     // from FUN_004558ea
-    void OnClick(string name)
+    void ClickObject(string name)
     {
         TaskHandle? iVar1 = null;
         if (Same(name, "LOC21ExitToVerlies2"))
@@ -62,13 +45,13 @@ public sealed partial class DungeonStairs : StoryScript
     }
 
     // from FUN_00455a1b
-    void OnActorClicked(Actor param_1)
+    void ClickActor(Actor actor)
     {
-        if (param_1 == George)
+        if (actor == George)
         {
             Walk(Hero, 300, 500);
             Chain = State(Hero, StandDownRight);
-            if (Episode == 1 && Quest == 9)
+            if (At(9, 1))
             {
                 if (Var(Vars.V650f3c) == 0)
                 {
@@ -84,7 +67,7 @@ public sealed partial class DungeonStairs : StoryScript
     }
 
     // from FUN_00455b6b
-    void OnSetup()
+    protected override void Setup()
     {
         ClearQueue(George);
         Hero.Follower = null;
@@ -128,7 +111,7 @@ public sealed partial class DungeonStairs : StoryScript
         Place(Hero, 300, 500, StandDownRight);
         Show(Hero);
     LAB_00455d4f:
-        if (Episode == 1 && Quest == 9 && Seq(() => Place(George, 40, 579, StandDownRight), () => Var(Vars.V650f74) == 0))
+        if (At(9, 1) && Seq(() => Place(George, 40, 579, StandDownRight), () => Var(Vars.V650f74) == 0))
         {
             PointerOff();
             SetVar(Vars.V650f74, 1);
@@ -139,67 +122,67 @@ public sealed partial class DungeonStairs : StoryScript
     }
 
     // from FUN_00455e34
-    void OnLineStarting(TaskHandle? param_1)
+    public override void LineStarting(GameWorld world, int speaker)
     {
         if (CurrentSpeaker == Who.Anne)
         {
-            StateAfter(Anne, SpeakDownRight, param_1);
+            StateAfter(Anne, SpeakDownRight, null);
         }
         else if (CurrentSpeaker == Who.Julian)
         {
-            StateAfter(Julian, SpeakDownLeft, param_1);
+            StateAfter(Julian, SpeakDownLeft, null);
         }
         else if (CurrentSpeaker == Who.George)
         {
-            StateAfter(George, SpeakDownRight, param_1);
+            StateAfter(George, SpeakDownRight, null);
         }
         else if (CurrentSpeaker == Who.Dick)
         {
-            StateAfter(Hero, SpeakDownLeft, param_1);
+            StateAfter(Hero, SpeakDownLeft, null);
         }
     }
 
     // from FUN_00455ef6
-    void OnLineQueued(TaskHandle? param_1)
+    public override void LineQueued(GameWorld world, TaskHandle end)
     {
         if (CurrentSpeaker == Who.Anne)
         {
-            StateAfter(Anne, StandDownRight, param_1);
+            StateAfter(Anne, StandDownRight, end);
         }
         else if (CurrentSpeaker == Who.Julian)
         {
-            StateAfter(Julian, StandDownLeft, param_1);
+            StateAfter(Julian, StandDownLeft, end);
         }
         else if (CurrentSpeaker == Who.George)
         {
-            StateAfter(George, StandDownRight, param_1);
+            StateAfter(George, StandDownRight, end);
         }
         else if (CurrentSpeaker == Who.Dick)
         {
-            StateAfter(Hero, StandDownLeft, param_1);
+            StateAfter(Hero, StandDownLeft, end);
         }
     }
 
     // from FUN_00455fb8
-    void OnConversationEnding(TaskHandle? param_1)
+    public override void ConversationEnding(GameWorld world, TaskHandle end)
     {
-        if (Episode == 1 && Quest == 9)
+        if (At(9, 1))
         {
             if (CurrentSpeaker == Who.Anne)
             {
-                StateAfter(Anne, StandDownRight, param_1);
+                StateAfter(Anne, StandDownRight, end);
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StateAfter(Julian, StandDownLeft, param_1);
+                StateAfter(Julian, StandDownLeft, end);
             }
             else if (CurrentSpeaker == Who.George)
             {
-                StateAfter(George, StandDownRight, param_1);
+                StateAfter(George, StandDownRight, end);
             }
             else if (CurrentSpeaker == Who.Dick)
             {
-                StateAfter(Hero, StandDownLeft, param_1);
+                StateAfter(Hero, StandDownLeft, end);
             }
             SetText("t63beac", "");
         }

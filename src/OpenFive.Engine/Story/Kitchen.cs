@@ -9,37 +9,10 @@ public sealed partial class Kitchen : StoryScript
 {
     public override string Location => "loc05";
 
-    public override bool Click(string name)
-    {
-        OnClick(name);
-        return true;
-    }
-
-    protected override void Setup()
-    {
-        OnSetup();
-    }
-
     protected override void Arrive() { }
 
-    protected override void AfterChoice(string scene, int line, int option) => OnAfterChoice();
-
-    public override void LineStarting(GameWorld world, int speaker)
-    {
-        CurrentSpeaker = speaker;
-        OnLineStarting(null);
-    }
-
-    public override void LineQueued(GameWorld world, TaskHandle end) => OnLineQueued(end);
-
-    public override void ConversationEnding(GameWorld world, TaskHandle end) => OnConversationEnding(end);
-
-    public override void ObjectChanged(GameWorld world, string name, bool on) => OnObjectChanged(name, on ? 1 : 0);
-
-    public override void EveryTick() => OnEveryTick();
-
     // from FUN_0042f05a
-    void OnClick(string name)
+    public override bool Click(string name)
     {
         TaskHandle? local_20 = null;
         TaskHandle? local_cec = null;
@@ -76,7 +49,7 @@ public sealed partial class Kitchen : StoryScript
         else if (Same(name, "LOC05Julian"))
         {
             SetText("t63bdf0", "Julian");
-            if (Quest == 2 && Episode == 2)
+            if (At(2, 2))
             {
                 Walk(Hero, 100, 450);
                 Chain = State(Hero, StandDownRight);
@@ -92,7 +65,7 @@ public sealed partial class Kitchen : StoryScript
                     Say(Who.Julian, "KUECHE", 4, last: true, after: local_20);
                 }
             }
-            else if (Quest == 2 && Episode == 3)
+            else if (At(2, 3))
             {
                 Walk(Hero, 100, 450);
                 Chain = State(Hero, StandDownRight);
@@ -122,13 +95,13 @@ public sealed partial class Kitchen : StoryScript
                     Say(Who.Julian, "KUECHE0003-03-05", 21, last: true, after: local_20);
                 }
             }
-            else if (Quest == 5 && Episode == 0)
+            else if (At(5, 0))
             {
                 local_20 = null;
                 Chain = null;
                 Say(Who.Julian, "KUECHE0009-05", 1, last: true, after: local_20);
             }
-            else if (Quest == 3 && Episode == 3)
+            else if (At(3, 3))
             {
                 local_20 = null;
                 Chain = null;
@@ -149,7 +122,7 @@ public sealed partial class Kitchen : StoryScript
                     Say(Who.Julian, "KUECHE0005-05", 52, last: true);
                 }
             }
-            else if (Quest == 3 && Episode == 4)
+            else if (At(3, 4))
             {
                 Walk(Hero, 100, 450);
                 Chain = State(Hero, StandDownRight);
@@ -159,7 +132,7 @@ public sealed partial class Kitchen : StoryScript
                     Say(Who.Julian, "KUECHE0006-05", 15, last: true, after: local_20);
                 }
             }
-            else if (Quest == 5 && Episode == 4)
+            else if (At(5, 4))
             {
                 local_20 = null;
                 Chain = null;
@@ -197,7 +170,7 @@ public sealed partial class Kitchen : StoryScript
                     }
                 }
             }
-            else if (Quest == 7 && Episode == 4)
+            else if (At(7, 4))
             {
                 Walk(Hero, 100, 450);
                 Chain = State(Hero, StandDownRight);
@@ -253,7 +226,7 @@ public sealed partial class Kitchen : StoryScript
                     Say(Who.George, "KUECHE0032", 48, last: true, after: local_20);
                 }
             }
-            else if (Quest == 7 && Episode == 5)
+            else if (At(7, 5))
             {
                 Walk(Hero, 100, 450);
                 Chain = State(Hero, StandDownRight);
@@ -264,7 +237,7 @@ public sealed partial class Kitchen : StoryScript
         else if (Same(name, "LOC05Anne"))
         {
             SetText("t63bdf0", "Anne");
-            if (Quest == 2 && Episode == 2)
+            if (At(2, 2))
             {
                 Walk(Hero, 100, 450);
                 Chain = State(Hero, StandDownRight);
@@ -280,7 +253,7 @@ public sealed partial class Kitchen : StoryScript
                     Say(Who.Anne, "KUECHE", 6, last: true, after: local_20);
                 }
             }
-            else if (Quest == 2 && Episode == 3)
+            else if (At(2, 3))
             {
                 Walk(Hero, 100, 450);
                 Chain = State(Hero, StandDownRight);
@@ -310,7 +283,7 @@ public sealed partial class Kitchen : StoryScript
                     Say(Who.Dick, "KUECHE0003-03-05", 31, last: true);
                 }
             }
-            else if (Quest == 3 && Episode == 4)
+            else if (At(3, 4))
             {
                 Walk(Hero, 100, 450);
                 Chain = State(Hero, StandDownRight);
@@ -324,7 +297,7 @@ public sealed partial class Kitchen : StoryScript
                     Say(Who.Anne, "KUECHE0006-05", 21, last: true);
                 }
             }
-            else if (Quest == 3 && Episode == 3)
+            else if (At(3, 3))
             {
                 local_20 = null;
                 Chain = null;
@@ -345,13 +318,13 @@ public sealed partial class Kitchen : StoryScript
                     Say(Who.Anne, "KUECHE0005-05", 53, last: true);
                 }
             }
-            else if (Quest == 5 && Episode == 0)
+            else if (At(5, 0))
             {
                 local_20 = null;
                 Chain = null;
                 Say(Who.Anne, "KUECHE0009-05", 1, last: true, after: local_20);
             }
-            else if (Quest == 5 && Episode == 4)
+            else if (At(5, 4))
             {
                 local_20 = null;
                 Chain = null;
@@ -383,7 +356,7 @@ public sealed partial class Kitchen : StoryScript
                     }
                 }
             }
-            else if (Quest == 7 && Episode == 4)
+            else if (At(7, 4))
             {
                 Walk(Hero, 399, 391);
                 Chain = State(Hero, StandDownRight);
@@ -432,7 +405,7 @@ public sealed partial class Kitchen : StoryScript
                     Say(Who.Anne, "KUECHE0032", 31, last: true, after: local_20);
                 }
             }
-            else if (Quest == 7 && Episode == 5)
+            else if (At(7, 5))
             {
                 Walk(Hero, 399, 391);
                 Chain = State(Hero, StandDownRight);
@@ -446,7 +419,7 @@ public sealed partial class Kitchen : StoryScript
         }
         else if (Same(name, "LOC05Timmy"))
         {
-            if (Quest == 3 && Episode == 3)
+            if (At(3, 3))
             {
                 PointerOff();
                 if (Var(Vars.Distracted) != 0)
@@ -482,7 +455,7 @@ public sealed partial class Kitchen : StoryScript
                 Walk(Hero, 565, 600);
                 local_20 = State(Hero, StandDownLeft);
             }
-            if (Quest == 3 && Episode == 3)
+            if (At(3, 3))
             {
                 local_20 = null;
                 Chain = null;
@@ -541,7 +514,7 @@ public sealed partial class Kitchen : StoryScript
                 Walk(Hero, 300, 300);
                 local_20 = State(Hero, StandDownLeft);
             }
-            if (Quest == 3 && Episode == 3)
+            if (At(3, 3))
             {
                 local_20 = null;
                 Chain = null;
@@ -573,7 +546,7 @@ public sealed partial class Kitchen : StoryScript
             else
             {
                 Chain = local_20;
-                if (Quest == 3 && Episode == 4)
+                if (At(3, 4))
                 {
                     if (Var(Vars.V64f684) < 5)
                     {
@@ -615,11 +588,11 @@ public sealed partial class Kitchen : StoryScript
                         Say(Who.Dick, "KUECHE0006-05", 20, last: true);
                     }
                 }
-                else if (Quest == 5 && Episode == 0)
+                else if (At(5, 0))
                 {
                     Say(Who.Dick, "KUECHE0009-05", 1, last: true, after: local_20);
                 }
-                else if (Quest == 5 && Episode == 4)
+                else if (At(5, 4))
                 {
                     local_20 = null;
                     Chain = null;
@@ -658,7 +631,7 @@ public sealed partial class Kitchen : StoryScript
                         }
                     }
                 }
-                else if (Quest == 7 && Episode == 4)
+                else if (At(7, 4))
                 {
                     Walk(Hero, 100, 450);
                     Chain = State(Hero, StandDownRight);
@@ -719,7 +692,7 @@ public sealed partial class Kitchen : StoryScript
                         Say(Who.Dick, "KUECHE0032", 39, last: true, after: local_20);
                     }
                 }
-                else if (Quest == 7 && Episode == 5)
+                else if (At(7, 5))
                 {
                     Walk(Hero, 100, 450);
                     Chain = State(Hero, StandDownRight);
@@ -733,7 +706,7 @@ public sealed partial class Kitchen : StoryScript
         else if (Same(name, "LOC05FannyStand"))
         {
             SetText("t63bdf0", "Fanny");
-            if (Quest == 2 && Episode == 2)
+            if (At(2, 2))
             {
                 Walk(Hero, 300, 200);
                 Chain = State(Hero, StandDownLeft);
@@ -749,7 +722,7 @@ public sealed partial class Kitchen : StoryScript
                     Say(Who.Fanny, "KUECHE", 2, last: true, after: local_20);
                 }
             }
-            else if (Quest == 2 && Episode == 3)
+            else if (At(2, 3))
             {
                 Walk(Hero, 300, 200);
                 Chain = State(Hero, StandDownLeft);
@@ -778,7 +751,7 @@ public sealed partial class Kitchen : StoryScript
                     Say(Who.Fanny, "KUECHE0003-03-05", 2, last: true, after: local_20);
                 }
             }
-            else if (Quest == 3 && Episode == 4)
+            else if (At(3, 4))
             {
                 Walk(Hero, 300, 200);
                 Chain = State(Hero, StandDownLeft);
@@ -793,7 +766,7 @@ public sealed partial class Kitchen : StoryScript
                     Say(Who.George, "KUECHE0006-05", 23, last: true);
                 }
             }
-            else if (Quest == 3 && Episode == 3)
+            else if (At(3, 3))
             {
                 local_20 = null;
                 Chain = null;
@@ -1063,7 +1036,7 @@ public sealed partial class Kitchen : StoryScript
         }
         else if (Same(name, "LOC05ExitToLOC04"))
         {
-            if (Episode == 3 && Quest == 3)
+            if (At(3, 3))
             {
                 if (Var(Vars.Distracted) == 0)
                 {
@@ -1103,7 +1076,7 @@ public sealed partial class Kitchen : StoryScript
                     }
                 }
             }
-            else if (Episode == 0 && Quest == 5)
+            else if (At(5, 0))
             {
                 PointerOff();
                 local_20 = null;
@@ -1127,7 +1100,7 @@ public sealed partial class Kitchen : StoryScript
             {
                 Walk(Hero, 570, 435);
                 local_20 = State(Hero, TakeMidRight);
-                if (Episode == 3 && Quest == 7 && Hero != George)
+                if (At(7, 3) && Hero != George)
                 {
                     // TODO local_e04 = S(local_e00, "V",-1);
                     Say(Who.Julian, "KUECHE0027", 7, after: local_20);
@@ -1152,7 +1125,7 @@ public sealed partial class Kitchen : StoryScript
         }
         else if (Same(name, "LOC05Kanne") && Var(Vars.Distracted) == 0)
         {
-            if (Episode == 3 && Quest == 3)
+            if (At(3, 3))
             {
                 PointerOff();
                 SetText("t63bdf0", "Teekanne");
@@ -1189,10 +1162,11 @@ public sealed partial class Kitchen : StoryScript
                 }
             }
         }
+        return true;
     }
 
     // from FUN_00434e1c
-    void OnSetup()
+    protected override void Setup()
     {
         StopAnim("Regen");
         MoveObj("LOC05Zettel", 397, 411);
@@ -1225,7 +1199,7 @@ public sealed partial class Kitchen : StoryScript
         Obj("LOC05Tisch", false);
         F436144();
         SetVar(Vars.KitchenSandwich, 1);
-        if (Quest == 7 && Episode == 4 && !Has(Item.Plate))
+        if (At(7, 4) && !Has(Item.Plate))
         {
             SetVar(Vars.KitchenSandwich, 0);
         }
@@ -1253,7 +1227,7 @@ public sealed partial class Kitchen : StoryScript
         F435134();
         if (!IsShown(Hero))
         {
-            if (Episode == 3 && Quest == 3)
+            if (At(3, 3))
             {
                 Hero.X = 246;
                 Hero.Y = 547;
@@ -1506,7 +1480,7 @@ public sealed partial class Kitchen : StoryScript
         StopAnim("DoOpenDoor");
         if (Var(Vars.V64fbf9) == 1 && FromId != LocationId && ((Episode != 3 || Quest != 3)) && ((Episode != 1 || Quest != 6)) && ((Episode != 1 || Quest != 12)))
         {
-            if (Episode == 0 && Quest == 5)
+            if (At(5, 0))
             {
                 Obj("LOC05OpenDoorObj", true);
             }
@@ -1543,9 +1517,9 @@ public sealed partial class Kitchen : StoryScript
     }
 
     // from FUN_00435e9e
-    void OnObjectChanged(string name, int param_2)
+    public override void ObjectChanged(GameWorld world, string name, bool on)
     {
-        if (param_2 == 0)
+        if (!on)
         {
             if (Same(name, "LOC05Flasche") && Var(Vars.V63be00) == 0)
             {
@@ -1563,7 +1537,7 @@ public sealed partial class Kitchen : StoryScript
                     }
                     SetVar(Vars.KitchenSandwich, 2);
                     SetVar(Vars.V63bdec, 0);
-                    if (Episode == 4 && Quest == 7)
+                    if (At(7, 4))
                     {
                         Chain = null;
                         Say(Who.George, "KUECHE0031", 5, last: true);
@@ -1628,17 +1602,17 @@ public sealed partial class Kitchen : StoryScript
                 }
             }
         }
-        if (Episode == 3 && Quest == 3)
+        if (At(3, 3))
         {
             F43968d();
             return;
         }
-        if (Episode == 0 && Quest == 5)
+        if (At(5, 0))
         {
             F43968d();
             return;
         }
-        if (Episode == 1 && Quest == 12)
+        if (At(12, 1))
         {
             F43968d();
             return;
@@ -1652,192 +1626,193 @@ public sealed partial class Kitchen : StoryScript
     }
 
     // from FUN_004362d9
-    void OnLineStarting(TaskHandle? param_1)
+    public override void LineStarting(GameWorld world, int speaker)
     {
+        TaskHandle? after = null;
         if (Episode < 4 && Quest == 2)
         {
             if (CurrentSpeaker == Who.Fanny)
             {
-                StopAnimAfter("FannyStandRight", param_1);
+                StopAnimAfter("FannyStandRight", after);
                 AnimPos("FannyStandRightTalk", 190, 240);
                 AnimScale("FannyStandRightTalk", 0.89);
-                param_1 = Anim("FannyStandRightTalk", -1, param_1);
+                after = Anim("FannyStandRightTalk", -1, after);
             }
             else if (CurrentSpeaker == Who.Dick)
             {
                 if (Text("t63bdf0") != "Fanny")
                 {
-                    param_1 = StateAfter(Hero, SpeakDownRight, param_1);
+                    after = StateAfter(Hero, SpeakDownRight, after);
                 }
                 else
                 {
-                    param_1 = StateAfter(Hero, SpeakDownLeft, param_1);
+                    after = StateAfter(Hero, SpeakDownLeft, after);
                 }
             }
             else if (CurrentSpeaker == Who.Anne)
             {
-                StopAnimAfter("AnneSitDownLeft", param_1);
-                Anim("AnneSitSpeakDownLeft", -1, param_1);
+                StopAnimAfter("AnneSitDownLeft", after);
+                Anim("AnneSitSpeakDownLeft", -1, after);
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StopAnimAfter("JulianSitDownLeft", param_1);
-                Anim("JulianSitSpeakDownLeft", -1, param_1);
+                StopAnimAfter("JulianSitDownLeft", after);
+                Anim("JulianSitSpeakDownLeft", -1, after);
             }
         }
         else if (Episode < 5 && Quest == 3)
         {
             if (Episode == 4)
             {
-                if (Hero.State == 27)
+                if (Hero.State == SpeakDownLeft)
                 {
-                    Hero.State = 7;
+                    Hero.State = StandDownLeft;
                 }
-                else if (Hero.State == 28)
+                else if (Hero.State == SpeakDownRight)
                 {
-                    Hero.State = 12;
+                    Hero.State = StandDownRight;
                 }
             }
             if (CurrentSpeaker == Who.Fanny)
             {
-                StopAnimAfter("FannyStandRight", param_1);
+                StopAnimAfter("FannyStandRight", after);
                 AnimPos("FannyStandRightTalk", 190, 240);
                 AnimScale("FannyStandRightTalk", 0.89);
-                param_1 = Anim("FannyStandRightTalk", -1, param_1);
+                after = Anim("FannyStandRightTalk", -1, after);
             }
             else if (CurrentSpeaker == Who.Quentin)
             {
-                StopAnimAfter("QuentinDrink", param_1);
-                Anim("QuentinSpeak", -1, param_1);
-                ObjAfter("LOC05Tasse", true, param_1);
+                StopAnimAfter("QuentinDrink", after);
+                Anim("QuentinSpeak", -1, after);
+                ObjAfter("LOC05Tasse", true, after);
             }
             else if (CurrentSpeaker == Who.George)
             {
                 if (Episode == 3)
                 {
-                    StopAnimAfter("GeorgeSitDownRight", param_1);
-                    Anim("GeorgeSitSpeakDownRight", -1, param_1);
+                    StopAnimAfter("GeorgeSitDownRight", after);
+                    Anim("GeorgeSitSpeakDownRight", -1, after);
                 }
                 else
                 {
-                    param_1 = StateAfter(Hero, SpeakDownLeft, param_1);
+                    after = StateAfter(Hero, SpeakDownLeft, after);
                 }
             }
             else if (CurrentSpeaker == Who.Anne)
             {
-                StopAnimAfter("AnnesBread", param_1);
-                StopAnimAfter("AnneEat", param_1);
-                StopAnimAfter("AnneEatArm", param_1);
-                Anim("AnneSitSpeakDownLeft", -1, param_1);
-                Anim("AnnesBreadStill", -1, param_1);
+                StopAnimAfter("AnnesBread", after);
+                StopAnimAfter("AnneEat", after);
+                StopAnimAfter("AnneEatArm", after);
+                Anim("AnneSitSpeakDownLeft", -1, after);
+                Anim("AnnesBreadStill", -1, after);
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StopAnimAfter("JuliansBread", param_1);
-                StopAnimAfter("JulianEat", param_1);
-                StopAnimAfter("JulianEatArm", param_1);
-                Anim("JulianSitSpeakDownLeft", -1, param_1);
-                Anim("JuliansBreadStill", -1, param_1);
+                StopAnimAfter("JuliansBread", after);
+                StopAnimAfter("JulianEat", after);
+                StopAnimAfter("JulianEatArm", after);
+                Anim("JulianSitSpeakDownLeft", -1, after);
+                Anim("JuliansBreadStill", -1, after);
             }
             else if (CurrentSpeaker == Who.Dick)
             {
-                StopAnimAfter("DicksBread", param_1);
-                StopAnimAfter("DickEat", param_1);
-                StopAnimAfter("DickEatArm", param_1);
-                Anim("DickSitSpeakDownRight", -1, param_1);
-                Anim("DicksBreadStill", -1, param_1);
+                StopAnimAfter("DicksBread", after);
+                StopAnimAfter("DickEat", after);
+                StopAnimAfter("DickEatArm", after);
+                Anim("DickSitSpeakDownRight", -1, after);
+                Anim("DicksBreadStill", -1, after);
             }
         }
-        else if (Episode == 0 && Quest == 5)
+        else if (At(5, 0))
         {
             if (CurrentSpeaker == Who.Quentin)
             {
-                StateAfter(Quentin, SpeakDownLeft, param_1);
+                StateAfter(Quentin, SpeakDownLeft, after);
             }
             else if (CurrentSpeaker == Who.Anne)
             {
-                StopAnimAfter("AnnesBread", param_1);
-                StopAnimAfter("AnneEat", param_1);
-                StopAnimAfter("AnneEatArm", param_1);
-                Anim("AnneSitSpeakDownLeft", -1, param_1);
-                Anim("AnnesBreadStill", -1, param_1);
+                StopAnimAfter("AnnesBread", after);
+                StopAnimAfter("AnneEat", after);
+                StopAnimAfter("AnneEatArm", after);
+                Anim("AnneSitSpeakDownLeft", -1, after);
+                Anim("AnnesBreadStill", -1, after);
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StopAnimAfter("JuliansBread", param_1);
-                StopAnimAfter("JulianEat", param_1);
-                StopAnimAfter("JulianEatArm", param_1);
-                Anim("JulianSitSpeakDownLeft", -1, param_1);
-                Anim("JuliansBreadStill", -1, param_1);
+                StopAnimAfter("JuliansBread", after);
+                StopAnimAfter("JulianEat", after);
+                StopAnimAfter("JulianEatArm", after);
+                Anim("JulianSitSpeakDownLeft", -1, after);
+                Anim("JuliansBreadStill", -1, after);
             }
             else if (CurrentSpeaker == Who.Dick)
             {
-                StopAnimAfter("DicksBread", param_1);
-                StopAnimAfter("DickEat", param_1);
-                StopAnimAfter("DickEatArm", param_1);
-                Anim("DickSitSpeakDownRight", -1, param_1);
-                Anim("DicksBreadStill", -1, param_1);
+                StopAnimAfter("DicksBread", after);
+                StopAnimAfter("DickEat", after);
+                StopAnimAfter("DickEatArm", after);
+                Anim("DickSitSpeakDownRight", -1, after);
+                Anim("DicksBreadStill", -1, after);
             }
             else if (CurrentSpeaker == Who.George)
             {
                 if (Text("t63bdf0") != "George")
                 {
-                    StopAnimAfter("GeorgeSitDownRight", param_1);
-                    Anim("GeorgeSitSpeakDownRight", -1, param_1);
+                    StopAnimAfter("GeorgeSitDownRight", after);
+                    Anim("GeorgeSitSpeakDownRight", -1, after);
                 }
                 else
                 {
-                    StateAfter(Hero, SpeakDownLeft, param_1);
+                    StateAfter(Hero, SpeakDownLeft, after);
                 }
             }
         }
         else if (Episode < 8 && Quest == 5)
         {
-            if (Episode == 4 && Hero.State == 27)
+            if (Episode == 4 && Hero.State == SpeakDownLeft)
             {
-                Hero.State = 7;
+                Hero.State = StandDownLeft;
             }
             if (CurrentSpeaker == Who.Anne)
             {
-                StopAnimAfter("AnneSitDownLeft", param_1);
-                Anim("AnneSitSpeakDownLeft", -1, param_1);
+                StopAnimAfter("AnneSitDownLeft", after);
+                Anim("AnneSitSpeakDownLeft", -1, after);
             }
             else if (CurrentSpeaker == Who.Dick)
             {
-                StopAnimAfter("DickSitDownRight", param_1);
-                Anim("DickSitSpeakDownRight", -1, param_1);
+                StopAnimAfter("DickSitDownRight", after);
+                Anim("DickSitSpeakDownRight", -1, after);
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StopAnimAfter("JulianSitDownLeft", param_1);
-                Anim("JulianSitSpeakDownLeft", -1, param_1);
+                StopAnimAfter("JulianSitDownLeft", after);
+                Anim("JulianSitSpeakDownLeft", -1, after);
             }
             else if (CurrentSpeaker == Who.George)
             {
-                StateAfter(Hero, SpeakDownLeft, param_1);
+                StateAfter(Hero, SpeakDownLeft, after);
             }
         }
-        else if (Episode == 1 && Quest == 6)
+        else if (At(6, 1))
         {
             if (CurrentSpeaker == Who.Anne)
             {
-                StopAnimAfter("AnneSitDownLeft", param_1);
-                Anim("AnneSitSpeakDownLeft", -1, param_1);
+                StopAnimAfter("AnneSitDownLeft", after);
+                Anim("AnneSitSpeakDownLeft", -1, after);
             }
             else if (CurrentSpeaker == Who.Dick)
             {
-                StopAnimAfter("DickSitDownRight", param_1);
-                Anim("DickSitSpeakDownRight", -1, param_1);
+                StopAnimAfter("DickSitDownRight", after);
+                Anim("DickSitSpeakDownRight", -1, after);
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StopAnimAfter("JulianSitDownLeft", param_1);
-                Anim("JulianSitSpeakDownLeft", -1, param_1);
+                StopAnimAfter("JulianSitDownLeft", after);
+                Anim("JulianSitSpeakDownLeft", -1, after);
             }
             else if (CurrentSpeaker == Who.George)
             {
-                StopAnimAfter("GeorgeWithBook", param_1);
-                Anim("GeorgeSpeakWithBook", -1, param_1);
+                StopAnimAfter("GeorgeWithBook", after);
+                Anim("GeorgeSpeakWithBook", -1, after);
             }
         }
         else if (Episode < 4 && Quest == 7)
@@ -1847,114 +1822,114 @@ public sealed partial class Kitchen : StoryScript
                 SetText("t63bdf0", "");
                 goto LAB_004371cf;
             }
-            StateAfter(Hero, SpeakDownLeft, param_1);
+            StateAfter(Hero, SpeakDownLeft, after);
         }
-        else if (Episode == 4 && Quest == 7)
+        else if (At(7, 4))
         {
             if (CurrentSpeaker != Who.Anne)
             {
                 if (CurrentSpeaker == Who.Julian)
                 {
-                    StopAnimAfter("JuliansBread", param_1);
-                    StopAnimAfter("JulianEat", param_1);
-                    StopAnimAfter("JulianEatArm", param_1);
-                    Anim("JulianSitSpeakDownLeft", -1, param_1);
-                    Anim("JuliansBreadStill", -1, param_1);
+                    StopAnimAfter("JuliansBread", after);
+                    StopAnimAfter("JulianEat", after);
+                    StopAnimAfter("JulianEatArm", after);
+                    Anim("JulianSitSpeakDownLeft", -1, after);
+                    Anim("JuliansBreadStill", -1, after);
                 }
                 else if (CurrentSpeaker == Who.Dick)
                 {
-                    StopAnimAfter("DicksBread", param_1);
-                    StopAnimAfter("DickEat", param_1);
-                    StopAnimAfter("DickEatArm", param_1);
-                    Anim("DickSitSpeakDownRight", -1, param_1);
-                    Anim("DicksBreadStill", -1, param_1);
+                    StopAnimAfter("DicksBread", after);
+                    StopAnimAfter("DickEat", after);
+                    StopAnimAfter("DickEatArm", after);
+                    Anim("DickSitSpeakDownRight", -1, after);
+                    Anim("DicksBreadStill", -1, after);
                 }
                 else if (CurrentSpeaker == Who.George)
                 {
                     if (Text("t63bdf0") != "start")
                     {
-                        StateAfter(Hero, SpeakDownRight, param_1);
+                        StateAfter(Hero, SpeakDownRight, after);
                     }
                     else
                     {
-                        StateAfter(Hero, SpeakDownLeft, param_1);
+                        StateAfter(Hero, SpeakDownLeft, after);
                     }
                     SetText("t63bdf0", "");
                 }
             }
         }
-        else if (Episode == 5 && Quest == 7)
+        else if (At(7, 5))
         {
             if (CurrentSpeaker != Who.Anne)
             {
                 if (CurrentSpeaker == Who.Julian)
                 {
-                    StopAnimAfter("JuliansBread", param_1);
-                    StopAnimAfter("JulianEat", param_1);
-                    StopAnimAfter("JulianEatArm", param_1);
-                    Anim("JulianSitSpeakDownLeft", -1, param_1);
-                    Anim("JuliansBreadStill", -1, param_1);
+                    StopAnimAfter("JuliansBread", after);
+                    StopAnimAfter("JulianEat", after);
+                    StopAnimAfter("JulianEatArm", after);
+                    Anim("JulianSitSpeakDownLeft", -1, after);
+                    Anim("JuliansBreadStill", -1, after);
                 }
                 else if (CurrentSpeaker == Who.Dick)
                 {
-                    StopAnimAfter("DicksBread", param_1);
-                    StopAnimAfter("DickEat", param_1);
-                    StopAnimAfter("DickEatArm", param_1);
-                    Anim("DickSitSpeakDownRight", -1, param_1);
-                    Anim("DicksBreadStill", -1, param_1);
+                    StopAnimAfter("DicksBread", after);
+                    StopAnimAfter("DickEat", after);
+                    StopAnimAfter("DickEatArm", after);
+                    Anim("DickSitSpeakDownRight", -1, after);
+                    Anim("DicksBreadStill", -1, after);
                 }
                 else if (CurrentSpeaker == Who.George)
                 {
-                    StateAfter(Hero, SpeakDownRight, param_1);
+                    StateAfter(Hero, SpeakDownRight, after);
                 }
             }
         }
-        else if (Episode == 1 && Quest == 12)
+        else if (At(12, 1))
         {
             if (CurrentSpeaker == Who.Fanny)
             {
-                StopAnimAfter("FannyStandRight", param_1);
+                StopAnimAfter("FannyStandRight", after);
                 AnimPos("FannyStandRightTalk", 190, 240);
                 AnimScale("FannyStandRightTalk", 0.89);
-                param_1 = Anim("FannyStandRightTalk", -1, param_1);
+                after = Anim("FannyStandRightTalk", -1, after);
             }
             else if (CurrentSpeaker == Who.Quentin)
             {
-                StateAfter(Quentin, SpeakDownLeft, param_1);
+                StateAfter(Quentin, SpeakDownLeft, after);
             }
             else if (CurrentSpeaker == Who.Policeman)
             {
-                StopAnimAfter("PolizistStandRight", param_1);
-                Anim("PolizistSpeakRight", -1, param_1);
+                StopAnimAfter("PolizistStandRight", after);
+                Anim("PolizistSpeakRight", -1, after);
             }
             else if (CurrentSpeaker == Who.George)
             {
-                StopAnimAfter("GeorgeSitDownRight", param_1);
-                Anim("GeorgeSitSpeakDownRight", -1, param_1);
+                StopAnimAfter("GeorgeSitDownRight", after);
+                Anim("GeorgeSitSpeakDownRight", -1, after);
             }
             else if (CurrentSpeaker == Who.Anne)
             {
-                StopAnimAfter("AnnesBread", param_1);
-                StopAnimAfter("AnneEat", param_1);
-                StopAnimAfter("AnneEatArm", param_1);
-                Anim("AnneSitSpeakDownLeft", -1, param_1);
-                Anim("AnnesBreadStill", -1, param_1);
+                StopAnimAfter("AnnesBread", after);
+                StopAnimAfter("AnneEat", after);
+                StopAnimAfter("AnneEatArm", after);
+                Anim("AnneSitSpeakDownLeft", -1, after);
+                Anim("AnnesBreadStill", -1, after);
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StopAnimAfter("JuliansBread", param_1);
-                StopAnimAfter("JulianEat", param_1);
-                StopAnimAfter("JulianEatArm", param_1);
-                Anim("JulianSitSpeakDownLeft", -1, param_1);
-                Anim("JuliansBreadStill", -1, param_1);
+                StopAnimAfter("JuliansBread", after);
+                StopAnimAfter("JulianEat", after);
+                StopAnimAfter("JulianEatArm", after);
+                Anim("JulianSitSpeakDownLeft", -1, after);
+                Anim("JuliansBreadStill", -1, after);
             }
             else if (CurrentSpeaker == Who.Dick)
             {
-                StopAnimAfter("DicksBread", param_1);
-                StopAnimAfter("DickEat", param_1);
-                StopAnimAfter("DickEatArm", param_1);
-                Anim("DickSitSpeakDownRight", -1, param_1);
-                Anim("DicksBreadStill", -1, param_1);
+                StopAnimAfter("DicksBread", after);
+                StopAnimAfter("DickEat", after);
+                StopAnimAfter("DickEatArm", after);
+                Anim("DickSitSpeakDownRight", -1, after);
+                Anim("DicksBreadStill", -1, after);
             }
         }
     LAB_004371cf:
@@ -1962,37 +1937,38 @@ public sealed partial class Kitchen : StoryScript
     }
 
     // from FUN_004371db
-    void OnLineQueued(TaskHandle? param_1)
+    public override void LineQueued(GameWorld world, TaskHandle end)
     {
+        TaskHandle? after = end;
         if (Episode < 4 && Quest == 2)
         {
             if (CurrentSpeaker == Who.Fanny)
             {
-                StopAnimAfter("FannyStandRightTalk", param_1);
+                StopAnimAfter("FannyStandRightTalk", after);
                 AnimPos("FannyStandRight", 190, 237);
                 AnimScale("FannyStandRight", 0.45);
-                param_1 = Anim("FannyStandRight", -1, param_1);
+                after = Anim("FannyStandRight", -1, after);
             }
             else if (CurrentSpeaker == Who.Dick)
             {
                 if (Text("t63bdf0") != "Fanny")
                 {
-                    param_1 = StateAfter(Hero, StandDownRight, param_1);
+                    after = StateAfter(Hero, StandDownRight, after);
                 }
                 else
                 {
-                    param_1 = StateAfter(Hero, StandDownLeft, param_1);
+                    after = StateAfter(Hero, StandDownLeft, after);
                 }
             }
             else if (CurrentSpeaker == Who.Anne)
             {
-                StopAnimAfter("AnneSitSpeakDownLeft", param_1);
-                Anim("AnneSitDownLeft", -1, param_1);
+                StopAnimAfter("AnneSitSpeakDownLeft", after);
+                Anim("AnneSitDownLeft", -1, after);
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StopAnimAfter("JulianSitSpeakDownLeft", param_1);
-                Anim("JulianSitDownLeft", -1, param_1);
+                StopAnimAfter("JulianSitSpeakDownLeft", after);
+                Anim("JulianSitDownLeft", -1, after);
             }
         }
         if (Episode < 5 && Quest == 3)
@@ -2000,17 +1976,17 @@ public sealed partial class Kitchen : StoryScript
             if (CurrentSpeaker == Who.Dick)
             {
                 SetVar(Vars.DickTalk, 1);
-                StopAnimAfter("DicksBreadStill", param_1);
-                StopAnimAfter("DickSitSpeakDownRight", param_1);
-                Anim("DicksBread", -1, param_1);
-                Anim("DickEat", -1, param_1);
-                Anim("DickEatArm", -1, param_1);
+                StopAnimAfter("DicksBreadStill", after);
+                StopAnimAfter("DickSitSpeakDownRight", after);
+                Anim("DicksBread", -1, after);
+                Anim("DickEat", -1, after);
+                Anim("DickEatArm", -1, after);
             }
             else if (CurrentSpeaker == Who.Quentin)
             {
-                StopAnimAfter("QuentinSpeak", param_1);
-                ObjAfter("LOC05Tasse", false, param_1);
-                Anim("QuentinDrink", -1, param_1);
+                StopAnimAfter("QuentinSpeak", after);
+                ObjAfter("LOC05Tasse", false, after);
+                Anim("QuentinDrink", -1, after);
                 if (Var(Vars.V64f684) == 5)
                 {
                     SetVar(Vars.QuentinKitchenTalk, 1);
@@ -2018,78 +1994,78 @@ public sealed partial class Kitchen : StoryScript
             }
             else if (CurrentSpeaker == Who.Fanny)
             {
-                StopAnimAfter("FannyStandRightTalk", param_1);
-                Anim("FannyStandRight", -1, param_1);
+                StopAnimAfter("FannyStandRightTalk", after);
+                Anim("FannyStandRight", -1, after);
             }
             else if (CurrentSpeaker == Who.Anne)
             {
-                StopAnimAfter("AnnesBreadStill", param_1);
-                StopAnimAfter("AnneSitSpeakDownLeft", param_1);
-                Anim("AnnesBread", -1, param_1);
-                Anim("AnneEat", -1, param_1);
-                Anim("AnneEatArm", -1, param_1);
+                StopAnimAfter("AnnesBreadStill", after);
+                StopAnimAfter("AnneSitSpeakDownLeft", after);
+                Anim("AnnesBread", -1, after);
+                Anim("AnneEat", -1, after);
+                Anim("AnneEatArm", -1, after);
             }
             else if (CurrentSpeaker == Who.George)
             {
                 if (Episode == 3)
                 {
-                    StopAnimAfter("GeorgeSitSpeakDownRight", param_1);
-                    Anim("GeorgeSitDownRight", -1, param_1);
+                    StopAnimAfter("GeorgeSitSpeakDownRight", after);
+                    Anim("GeorgeSitDownRight", -1, after);
                 }
                 else
                 {
-                    StateAfter(Hero, StandDownLeft, param_1);
+                    StateAfter(Hero, StandDownLeft, after);
                 }
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StopAnimAfter("JuliansBreadStill", param_1);
-                StopAnimAfter("JulianSitSpeakDownLeft", param_1);
-                Anim("JuliansBread", -1, param_1);
-                Anim("JulianEat", -1, param_1);
-                Anim("JulianEatArm", -1, param_1);
+                StopAnimAfter("JuliansBreadStill", after);
+                StopAnimAfter("JulianSitSpeakDownLeft", after);
+                Anim("JuliansBread", -1, after);
+                Anim("JulianEat", -1, after);
+                Anim("JulianEatArm", -1, after);
             }
         }
-        else if (Episode == 0 && Quest == 5)
+        else if (At(5, 0))
         {
             if (CurrentSpeaker == Who.Quentin)
             {
-                StateAfter(Quentin, StandDownLeft, param_1);
+                StateAfter(Quentin, StandDownLeft, after);
             }
             else if (CurrentSpeaker == Who.Anne)
             {
-                StopAnimAfter("AnnesBreadStill", param_1);
-                StopAnimAfter("AnneSitSpeakDownLeft", param_1);
-                Anim("AnnesBread", -1, param_1);
-                Anim("AnneEat", -1, param_1);
-                Anim("AnneEatArm", -1, param_1);
+                StopAnimAfter("AnnesBreadStill", after);
+                StopAnimAfter("AnneSitSpeakDownLeft", after);
+                Anim("AnnesBread", -1, after);
+                Anim("AnneEat", -1, after);
+                Anim("AnneEatArm", -1, after);
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StopAnimAfter("JuliansBreadStill", param_1);
-                StopAnimAfter("JulianSitSpeakDownLeft", param_1);
-                Anim("JuliansBread", -1, param_1);
-                Anim("JulianEat", -1, param_1);
-                Anim("JulianEatArm", -1, param_1);
+                StopAnimAfter("JuliansBreadStill", after);
+                StopAnimAfter("JulianSitSpeakDownLeft", after);
+                Anim("JuliansBread", -1, after);
+                Anim("JulianEat", -1, after);
+                Anim("JulianEatArm", -1, after);
             }
             else if (CurrentSpeaker == Who.Dick)
             {
-                StopAnimAfter("DicksBreadStill", param_1);
-                StopAnimAfter("DickSitSpeakDownRight", param_1);
-                Anim("DicksBread", -1, param_1);
-                Anim("DickEat", -1, param_1);
-                Anim("DickEatArm", -1, param_1);
+                StopAnimAfter("DicksBreadStill", after);
+                StopAnimAfter("DickSitSpeakDownRight", after);
+                Anim("DicksBread", -1, after);
+                Anim("DickEat", -1, after);
+                Anim("DickEatArm", -1, after);
             }
             else if (CurrentSpeaker == Who.George)
             {
                 if (Text("t63bdf0") != "George")
                 {
-                    StopAnimAfter("GeorgeSitSpeakDownRight", param_1);
-                    Anim("GeorgeSitDownRight", -1, param_1);
+                    StopAnimAfter("GeorgeSitSpeakDownRight", after);
+                    Anim("GeorgeSitDownRight", -1, after);
                 }
                 else
                 {
-                    StateAfter(Hero, StandDownLeft, param_1);
+                    StateAfter(Hero, StandDownLeft, after);
                 }
             }
         }
@@ -2097,238 +2073,236 @@ public sealed partial class Kitchen : StoryScript
         {
             if (CurrentSpeaker == Who.Anne)
             {
-                StopAnimAfter("AnneSitSpeakDownLeft", param_1);
-                Anim("AnneSitDownLeft", -1, param_1);
+                StopAnimAfter("AnneSitSpeakDownLeft", after);
+                Anim("AnneSitDownLeft", -1, after);
             }
             else if (CurrentSpeaker == Who.Dick)
             {
-                StopAnimAfter("DickSitSpeakDownRight", param_1);
-                Anim("DickSitDownRight", -1, param_1);
+                StopAnimAfter("DickSitSpeakDownRight", after);
+                Anim("DickSitDownRight", -1, after);
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StopAnimAfter("JulianSitSpeakDownLeft", param_1);
-                Anim("JulianSitDownLeft", -1, param_1);
+                StopAnimAfter("JulianSitSpeakDownLeft", after);
+                Anim("JulianSitDownLeft", -1, after);
             }
             else if (CurrentSpeaker == Who.George)
             {
-                StateAfter(Hero, StandDownLeft, param_1);
+                StateAfter(Hero, StandDownLeft, after);
             }
         }
-        else if (Episode == 1 && Quest == 6)
+        else if (At(6, 1))
         {
             if (CurrentSpeaker == Who.Anne)
             {
-                StopAnimAfter("AnneSitSpeakDownLeft", param_1);
-                Anim("AnneSitDownLeft", -1, param_1);
+                StopAnimAfter("AnneSitSpeakDownLeft", after);
+                Anim("AnneSitDownLeft", -1, after);
             }
             else if (CurrentSpeaker == Who.Dick)
             {
-                StopAnimAfter("DickSitSpeakDownRight", param_1);
-                Anim("DickSitDownRight", -1, param_1);
+                StopAnimAfter("DickSitSpeakDownRight", after);
+                Anim("DickSitDownRight", -1, after);
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StopAnimAfter("JulianSitSpeakDownLeft", param_1);
-                Anim("JulianSitDownLeft", -1, param_1);
+                StopAnimAfter("JulianSitSpeakDownLeft", after);
+                Anim("JulianSitDownLeft", -1, after);
             }
             else if (CurrentSpeaker == Who.George)
             {
-                StopAnimAfter("GeorgeSpeakWithBook", param_1);
-                Anim("GeorgeWithBook", -1, param_1);
+                StopAnimAfter("GeorgeSpeakWithBook", after);
+                Anim("GeorgeWithBook", -1, after);
             }
         }
-        else if (Episode == 4 && Quest == 7)
+        else if (At(7, 4))
         {
             if (CurrentSpeaker != Who.Anne)
             {
                 if (CurrentSpeaker == Who.Dick)
                 {
-                    StopAnimAfter("DicksBreadStill", param_1);
-                    StopAnimAfter("DickSitSpeakDownRight", param_1);
-                    Anim("DicksBread", -1, param_1);
-                    Anim("DickEat", -1, param_1);
-                    Anim("DickEatArm", -1, param_1);
+                    StopAnimAfter("DicksBreadStill", after);
+                    StopAnimAfter("DickSitSpeakDownRight", after);
+                    Anim("DicksBread", -1, after);
+                    Anim("DickEat", -1, after);
+                    Anim("DickEatArm", -1, after);
                 }
                 else if (CurrentSpeaker == Who.Julian)
                 {
-                    StopAnimAfter("JuliansBreadStill", param_1);
-                    StopAnimAfter("JulianSitSpeakDownLeft", param_1);
-                    Anim("JuliansBread", -1, param_1);
-                    Anim("JulianEat", -1, param_1);
-                    Anim("JulianEatArm", -1, param_1);
+                    StopAnimAfter("JuliansBreadStill", after);
+                    StopAnimAfter("JulianSitSpeakDownLeft", after);
+                    Anim("JuliansBread", -1, after);
+                    Anim("JulianEat", -1, after);
+                    Anim("JulianEatArm", -1, after);
                 }
                 else if (CurrentSpeaker == Who.George)
                 {
-                    StateAfter(Hero, StandDownRight, param_1);
+                    StateAfter(Hero, StandDownRight, after);
                 }
             }
         }
-        else if (Episode == 5 && Quest == 7)
+        else if (At(7, 5))
         {
             if (CurrentSpeaker != Who.Anne)
             {
                 if (CurrentSpeaker == Who.Dick)
                 {
-                    StopAnimAfter("DicksBreadStill", param_1);
-                    StopAnimAfter("DickSitSpeakDownRight", param_1);
-                    Anim("DicksBread", -1, param_1);
-                    Anim("DickEat", -1, param_1);
-                    Anim("DickEatArm", -1, param_1);
+                    StopAnimAfter("DicksBreadStill", after);
+                    StopAnimAfter("DickSitSpeakDownRight", after);
+                    Anim("DicksBread", -1, after);
+                    Anim("DickEat", -1, after);
+                    Anim("DickEatArm", -1, after);
                 }
                 else if (CurrentSpeaker == Who.Julian)
                 {
-                    StopAnimAfter("JuliansBreadStill", param_1);
-                    StopAnimAfter("JulianSitSpeakDownLeft", param_1);
-                    Anim("JuliansBread", -1, param_1);
-                    Anim("JulianEat", -1, param_1);
-                    Anim("JulianEatArm", -1, param_1);
+                    StopAnimAfter("JuliansBreadStill", after);
+                    StopAnimAfter("JulianSitSpeakDownLeft", after);
+                    Anim("JuliansBread", -1, after);
+                    Anim("JulianEat", -1, after);
+                    Anim("JulianEatArm", -1, after);
                 }
                 else if (CurrentSpeaker == Who.George)
                 {
-                    StateAfter(Hero, StandDownRight, param_1);
+                    StateAfter(Hero, StandDownRight, after);
                 }
             }
             SetText("t63bdf0", "");
         }
-        else if (Episode == 1 && Quest == 12)
+        else if (At(12, 1))
         {
             if (CurrentSpeaker == Who.Dick)
             {
                 SetVar(Vars.DickTalk, 1);
-                StopAnimAfter("DicksBreadStill", param_1);
-                StopAnimAfter("DickSitSpeakDownRight", param_1);
-                Anim("DicksBread", -1, param_1);
-                Anim("DickEat", -1, param_1);
-                Anim("DickEatArm", -1, param_1);
+                StopAnimAfter("DicksBreadStill", after);
+                StopAnimAfter("DickSitSpeakDownRight", after);
+                Anim("DicksBread", -1, after);
+                Anim("DickEat", -1, after);
+                Anim("DickEatArm", -1, after);
             }
             else if (CurrentSpeaker == Who.Quentin)
             {
-                StateAfter(Quentin, StandDownLeft, param_1);
+                StateAfter(Quentin, StandDownLeft, after);
             }
             else if (CurrentSpeaker == Who.Policeman)
             {
-                StopAnimAfter("PolizistSpeakRight", param_1);
-                Anim("PolizistStandRight", -1, param_1);
+                StopAnimAfter("PolizistSpeakRight", after);
+                Anim("PolizistStandRight", -1, after);
             }
             else if (CurrentSpeaker == Who.Fanny)
             {
-                StopAnimAfter("FannyStandRightTalk", param_1);
-                Anim("FannyStandRight", -1, param_1);
+                StopAnimAfter("FannyStandRightTalk", after);
+                Anim("FannyStandRight", -1, after);
             }
             else if (CurrentSpeaker == Who.Anne)
             {
-                StopAnimAfter("AnnesBreadStill", param_1);
-                StopAnimAfter("AnneSitSpeakDownLeft", param_1);
-                Anim("AnnesBread", -1, param_1);
-                Anim("AnneEat", -1, param_1);
-                Anim("AnneEatArm", -1, param_1);
+                StopAnimAfter("AnnesBreadStill", after);
+                StopAnimAfter("AnneSitSpeakDownLeft", after);
+                Anim("AnnesBread", -1, after);
+                Anim("AnneEat", -1, after);
+                Anim("AnneEatArm", -1, after);
             }
             else if (CurrentSpeaker == Who.George)
             {
-                StopAnimAfter("GeorgeSitSpeakDownRight", param_1);
-                Anim("GeorgeSitDownRight", -1, param_1);
+                StopAnimAfter("GeorgeSitSpeakDownRight", after);
+                Anim("GeorgeSitDownRight", -1, after);
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StopAnimAfter("JuliansBreadStill", param_1);
-                StopAnimAfter("JulianSitSpeakDownLeft", param_1);
-                Anim("JuliansBread", -1, param_1);
-                Anim("JulianEat", -1, param_1);
-                Anim("JulianEatArm", -1, param_1);
+                StopAnimAfter("JuliansBreadStill", after);
+                StopAnimAfter("JulianSitSpeakDownLeft", after);
+                Anim("JuliansBread", -1, after);
+                Anim("JulianEat", -1, after);
+                Anim("JulianEatArm", -1, after);
             }
         }
     }
 
     // from FUN_0043800c
-    void OnConversationEnding(TaskHandle? param_1)
+    public override void ConversationEnding(GameWorld world, TaskHandle end)
     {
         TaskHandle? local_2c = null;
         TaskHandle? uVar3 = null;
-        if (Episode == 0 && Quest == 5)
+        if (At(5, 0))
         {
             if (Text("t63bdf0") == "Dick" || Text("t63bdf0") == "Julian" || Text("t63bdf0") == "Anne")
             {
                 if (CurrentSpeaker == Who.Anne)
                 {
-                    StopAnimAfter("AnnesBreadStill", param_1);
-                    StopAnimAfter("AnneSitSpeakDownLeft", param_1);
-                    Anim("AnnesBread", -1, param_1);
-                    Anim("AnneEat", -1, param_1);
-                    Anim("AnneEatArm", -1, param_1);
+                    StopAnimAfter("AnnesBreadStill", end);
+                    StopAnimAfter("AnneSitSpeakDownLeft", end);
+                    Anim("AnnesBread", -1, end);
+                    Anim("AnneEat", -1, end);
+                    Anim("AnneEatArm", -1, end);
                 }
                 else if (CurrentSpeaker == Who.Julian)
                 {
-                    StopAnimAfter("JuliansBreadStill", param_1);
-                    StopAnimAfter("JulianSitSpeakDownLeft", param_1);
-                    Anim("JuliansBread", -1, param_1);
-                    Anim("JulianEat", -1, param_1);
-                    Anim("JulianEatArm", -1, param_1);
+                    StopAnimAfter("JuliansBreadStill", end);
+                    StopAnimAfter("JulianSitSpeakDownLeft", end);
+                    Anim("JuliansBread", -1, end);
+                    Anim("JulianEat", -1, end);
+                    Anim("JulianEatArm", -1, end);
                 }
                 else if (CurrentSpeaker == Who.Dick)
                 {
-                    StopAnimAfter("DicksBreadStill", param_1);
-                    StopAnimAfter("DickSitSpeakDownRight", param_1);
-                    Anim("DicksBread", -1, param_1);
-                    Anim("DickEat", -1, param_1);
-                    Anim("DickEatArm", -1, param_1);
+                    StopAnimAfter("DicksBreadStill", end);
+                    StopAnimAfter("DickSitSpeakDownRight", end);
+                    Anim("DicksBread", -1, end);
+                    Anim("DickEat", -1, end);
+                    Anim("DickEatArm", -1, end);
                 }
                 else if (CurrentSpeaker == Who.George)
                 {
-                    StopAnimAfter("GeorgeSitSpeakDownRight", param_1);
-                    Anim("GeorgeSitDownRight", -1, param_1);
+                    StopAnimAfter("GeorgeSitSpeakDownRight", end);
+                    Anim("GeorgeSitDownRight", -1, end);
                 }
-                ChangeLocation("loc04", param_1, 4);
-                Episode = 1;
-                Quest = 5;
+                ChangeLocation("loc04", end, 4);
+                SetStep(5, 1);
                 SetText("t63bdf0", "");
                 goto LAB_00439681;
             }
             if (CurrentSpeaker == Who.Anne)
             {
-                StopAnimAfter("AnneSitSpeakDownLeft", param_1);
-                Anim("AnneEat", -1, param_1);
-                Anim("AnneEatArm", -1, param_1);
-                ChangeLocation("loc04", param_1, 4);
-                Episode = 1;
-                Quest = 5;
+                StopAnimAfter("AnneSitSpeakDownLeft", end);
+                Anim("AnneEat", -1, end);
+                Anim("AnneEatArm", -1, end);
+                ChangeLocation("loc04", end, 4);
+                SetStep(5, 1);
                 goto LAB_00439681;
             }
             SetVar(Vars.V683260, 1);
-            PointerAfter(false, param_1, x: 100, y: 200);
-            WalkAfter(Quentin, 647, 426, param_1);
-            StateAfter(Quentin, StandUpRight, param_1);
-            HideAfter(Quentin, param_1, 16);
-            ObjAfter("LOC05OpenDoorObj", false, param_1, 26);
-            Anim("DoCloseDoor", after: param_1, delay: 26);
-            Sound(@"wav\fx\hotuezu.wav", param_1, 29);
-            PointerAfter(true, param_1, 28, 100, 200);
+            PointerAfter(false, end, x: 100, y: 200);
+            WalkAfter(Quentin, 647, 426, end);
+            StateAfter(Quentin, StandUpRight, end);
+            HideAfter(Quentin, end, 16);
+            ObjAfter("LOC05OpenDoorObj", false, end, 26);
+            Anim("DoCloseDoor", after: end, delay: 26);
+            Sound(@"wav\fx\hotuezu.wav", end, 29);
+            PointerAfter(true, end, 28, 100, 200);
             Obj("LOC05ExitToLOC04", true);
         }
         else if (Episode < 4 && Quest == 2)
         {
             if (Text("t63bdf0") != "Fanny")
             {
-                StateAfter(Hero, StandDownRight, param_1);
+                StateAfter(Hero, StandDownRight, end);
             }
             else
             {
-                StateAfter(Hero, StandDownLeft, param_1);
+                StateAfter(Hero, StandDownLeft, end);
             }
-            StopAnimAfter("FannyStandRightTalk", param_1);
+            StopAnimAfter("FannyStandRightTalk", end);
             if (CurrentSpeaker == Who.Anne)
             {
-                StopAnimAfter("AnneSitSpeakDownLeft", param_1);
-                Anim("AnneSitDownLeft", -1, param_1);
+                StopAnimAfter("AnneSitSpeakDownLeft", end);
+                Anim("AnneSitDownLeft", -1, end);
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StopAnimAfter("JulianSitSpeakDownLeft", param_1);
-                Anim("JulianSitDownLeft", -1, param_1);
+                StopAnimAfter("JulianSitSpeakDownLeft", end);
+                Anim("JulianSitDownLeft", -1, end);
             }
             AnimPos("FannyStandRight", 190, 237);
             AnimScale("FannyStandRight", 0.45);
-            Anim("FannyStandRight", -1, param_1);
+            Anim("FannyStandRight", -1, end);
         }
         else if (Episode < 5 && Quest == 3)
         {
@@ -2361,17 +2335,17 @@ public sealed partial class Kitchen : StoryScript
                         SetVar(Vars.JulianTalk, 2);
                     }
                 }
-                StopAnimAfter("DicksBreadStill", param_1);
-                StopAnimAfter("DickSitSpeakDownRight", param_1);
-                Anim("DicksBread", -1, param_1);
-                Anim("DickEat", -1, param_1);
-                Anim("DickEatArm", -1, param_1);
+                StopAnimAfter("DicksBreadStill", end);
+                StopAnimAfter("DickSitSpeakDownRight", end);
+                Anim("DicksBread", -1, end);
+                Anim("DickEat", -1, end);
+                Anim("DickEatArm", -1, end);
             }
             else if (CurrentSpeaker == Who.Quentin)
             {
-                StopAnimAfter("QuentinSpeak", param_1);
-                ObjAfter("LOC05Tasse", false, param_1);
-                Anim("QuentinDrink", -1, param_1);
+                StopAnimAfter("QuentinSpeak", end);
+                ObjAfter("LOC05Tasse", false, end);
+                Anim("QuentinDrink", -1, end);
                 if (Episode == 4)
                 {
                     if (Var(Vars.V64f684) == 5)
@@ -2392,9 +2366,9 @@ public sealed partial class Kitchen : StoryScript
                             else
                             {
                                 SetText("t63bdf0", "");
-                                PointerAfter(false, param_1, x: 400, y: 300);
+                                PointerAfter(false, end, x: 400, y: 300);
                                 Episode = 4;
-                                F43c744(param_1, 4, "GeorgeSitDownRight", 570, 435);
+                                F43c744(end, 4, "GeorgeSitDownRight", 570, 435);
                                 local_2c = State(Hero, TakeMidRight);
                                 local_2c = Anim("DoOpenDoor", after: local_2c, delay: 5, endObject: "LOC05OpenDoorObj", endObjectOn: true);
                                 ChangeLocation("loc04", local_2c);
@@ -2405,9 +2379,9 @@ public sealed partial class Kitchen : StoryScript
                             // George gets up, takes the teapot from the stove, fills Quentin's cup,
                             // puts the pot back and sits down again; Quentin then drinks it all,
                             // which is the moment Timmy can be fed under the table.
-                            PointerAfter(false, param_1, x: 400, y: 300);
+                            PointerAfter(false, end, x: 400, y: 300);
                             SetVar(Vars.V64d464, 600);
-                            F43c744(param_1, 1, "GeorgeSitDownRight", 60, 456);
+                            F43c744(end, 1, "GeorgeSitDownRight", 60, 456);
                             uVar3 = State(Hero, TakeMidUpRight);
                             uVar3 = ObjAfter("LOC05Kanne", false, uVar3, 4);
                             WalkAfter(Hero, 608, 456, uVar3);
@@ -2415,10 +2389,10 @@ public sealed partial class Kitchen : StoryScript
                             AnimPos("Tee", 502, 243);
                             Depth(@"bmp\obj\george\gept\geptan.brg", 1900);
                             Anim("Tee", after: uVar3, delay: 7);
-                            WalkAfter(Hero, 50, 456, param_1, 12);
+                            WalkAfter(Hero, 50, 456, end, 12);
                             uVar3 = State(Hero, TakeMidUpRight);
                             uVar3 = ObjAfter("LOC05Kanne", true, uVar3, 4);
-                            WalkAfter(Hero, 200, 557, param_1, 6);
+                            WalkAfter(Hero, 200, 557, end, 6);
                             uVar3 = State(Hero, StandDownRight);
                             HideAfter(Hero, uVar3);
                             uVar3 = Anim("GeorgeSitDown", after: uVar3);
@@ -2461,8 +2435,8 @@ public sealed partial class Kitchen : StoryScript
             }
             else if (CurrentSpeaker == Who.Fanny)
             {
-                StopAnimAfter("FannyStandRightTalk", param_1);
-                Anim("FannyStandRight", -1, param_1);
+                StopAnimAfter("FannyStandRightTalk", end);
+                Anim("FannyStandRight", -1, end);
                 if (Episode == 3)
                 {
                     if (Var(Vars.FannyTalk) == 5)
@@ -2477,11 +2451,11 @@ public sealed partial class Kitchen : StoryScript
             }
             else if (CurrentSpeaker == Who.Anne)
             {
-                StopAnimAfter("AnnesBreadStill", param_1);
-                StopAnimAfter("AnneSitSpeakDownLeft", param_1);
-                Anim("AnnesBread", -1, param_1);
-                Anim("AnneEat", -1, param_1);
-                Anim("AnneEatArm", -1, param_1);
+                StopAnimAfter("AnnesBreadStill", end);
+                StopAnimAfter("AnneSitSpeakDownLeft", end);
+                Anim("AnnesBread", -1, end);
+                Anim("AnneEat", -1, end);
+                Anim("AnneEatArm", -1, end);
                 if (Episode == 3 && Var(Vars.AnneTalk) == 2)
                 {
                     SetVar(Vars.AnneTalk, 3);
@@ -2489,21 +2463,21 @@ public sealed partial class Kitchen : StoryScript
             }
             else if (CurrentSpeaker == Who.George)
             {
-                StateAfter(Hero, StandDownLeft, param_1);
+                StateAfter(Hero, StandDownLeft, end);
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StopAnimAfter("JuliansBreadStill", param_1);
-                StopAnimAfter("JulianSitSpeakDownLeft", param_1);
-                Anim("JuliansBread", -1, param_1);
-                Anim("JulianEat", -1, param_1);
-                Anim("JulianEatArm", -1, param_1);
+                StopAnimAfter("JuliansBreadStill", end);
+                StopAnimAfter("JulianSitSpeakDownLeft", end);
+                Anim("JuliansBread", -1, end);
+                Anim("JulianEat", -1, end);
+                Anim("JulianEatArm", -1, end);
                 if (Text("t63bdf0") == "DLG")
                 {
                     Chain = null;
                     SetVar(Vars.V64ee04, 0x64e1d4);
                     SetVar(Vars.V64e2f9, 1);
-                    Ask(Who.George, "KUECHE0006-05", 3, after: param_1);
+                    Ask(Who.George, "KUECHE0006-05", 3, after: end);
                     SetText("t63bdf0", "");
                 }
                 if (Episode == 3)
@@ -2523,12 +2497,12 @@ public sealed partial class Kitchen : StoryScript
         {
             if (CurrentSpeaker == Who.Anne)
             {
-                StopAnimAfter("AnneSitSpeakDownLeft", param_1);
-                Anim("AnneSitDownLeft", -1, param_1);
+                StopAnimAfter("AnneSitSpeakDownLeft", end);
+                Anim("AnneSitDownLeft", -1, end);
                 if (Episode < 5 && Var(Vars.AnneTalk) == 0)
                 {
-                    PointerAfter(false, param_1, x: 100, y: 200);
-                    Ask(Who.George, "KUECHE0014-05", 4, after: param_1);
+                    PointerAfter(false, end, x: 100, y: 200);
+                    Ask(Who.George, "KUECHE0014-05", 4, after: end);
                 }
                 if (Var(Vars.V64f294) > 0)
                 {
@@ -2537,12 +2511,12 @@ public sealed partial class Kitchen : StoryScript
             }
             else if (CurrentSpeaker == Who.Dick)
             {
-                StopAnimAfter("DickSitSpeakDownRight", param_1);
-                Anim("DickSitDownRight", -1, param_1);
+                StopAnimAfter("DickSitSpeakDownRight", end);
+                Anim("DickSitDownRight", -1, end);
                 if (Episode < 5 && Var(Vars.DickTalk) == 0)
                 {
-                    PointerAfter(false, param_1, x: 100, y: 200);
-                    Ask(Who.George, "KUECHE0014-05", 4, after: param_1);
+                    PointerAfter(false, end, x: 100, y: 200);
+                    Ask(Who.George, "KUECHE0014-05", 4, after: end);
                 }
                 if (Var(Vars.V64f294) > 0)
                 {
@@ -2555,12 +2529,12 @@ public sealed partial class Kitchen : StoryScript
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StopAnimAfter("JulianSitSpeakDownLeft", param_1);
-                Anim("JulianSitDownLeft", -1, param_1);
+                StopAnimAfter("JulianSitSpeakDownLeft", end);
+                Anim("JulianSitDownLeft", -1, end);
                 if (Episode < 5 && Var(Vars.JulianTalk) == 0)
                 {
-                    PointerAfter(false, param_1, x: 100, y: 200);
-                    Ask(Who.George, "KUECHE0014-05", 4, after: param_1);
+                    PointerAfter(false, end, x: 100, y: 200);
+                    Ask(Who.George, "KUECHE0014-05", 4, after: end);
                 }
                 if (Var(Vars.V64f294) > 0)
                 {
@@ -2576,107 +2550,107 @@ public sealed partial class Kitchen : StoryScript
             }
             else if (CurrentSpeaker == Who.George)
             {
-                StateAfter(Hero, StandDownLeft, param_1);
+                StateAfter(Hero, StandDownLeft, end);
             }
         }
-        else if (Episode == 1 && Quest == 6)
+        else if (At(6, 1))
         {
-            StopAnimAfter("DickSitSpeakDownRight", param_1);
-            Anim("DickSitDownRight", -1, param_1);
-            PointerAfter(false, param_1, x: 100, y: 200);
-            StopAnimAfter("DickSitDownRight", param_1, 1);
-            StopAnimAfter("AnneSitDownLeft", param_1, 1);
-            StopAnimAfter("JulianSitDownLeft", param_1, 1);
-            StopAnimAfter("GeorgeSpeakWithBook", param_1, 1);
+            StopAnimAfter("DickSitSpeakDownRight", end);
+            Anim("DickSitDownRight", -1, end);
+            PointerAfter(false, end, x: 100, y: 200);
+            StopAnimAfter("DickSitDownRight", end, 1);
+            StopAnimAfter("AnneSitDownLeft", end, 1);
+            StopAnimAfter("JulianSitDownLeft", end, 1);
+            StopAnimAfter("GeorgeSpeakWithBook", end, 1);
             Obj("LOC05Anne", false);
             Obj("LOC05Dick", false);
             Obj("LOC05Julian", false);
             Obj("LOC05George", false);
-            ChangeLocation("loc09", param_1);
+            ChangeLocation("loc09", end);
             Episode = 2;
             SetVar(Vars.V64f534, 0);
         }
         else if (Episode < 4 && Quest == 7)
         {
-            StateAfter(Hero, StandDownLeft, param_1);
+            StateAfter(Hero, StandDownLeft, end);
         }
-        else if (Episode == 4 && Quest == 7)
+        else if (At(7, 4))
         {
             if (CurrentSpeaker != Who.Anne)
             {
                 if (CurrentSpeaker == Who.Dick)
                 {
-                    StopAnimAfter("DicksBreadStill", param_1);
-                    StopAnimAfter("DickSitSpeakDownRight", param_1);
-                    Anim("DicksBread", -1, param_1);
-                    Anim("DickEat", -1, param_1);
-                    Anim("DickEatArm", -1, param_1);
+                    StopAnimAfter("DicksBreadStill", end);
+                    StopAnimAfter("DickSitSpeakDownRight", end);
+                    Anim("DicksBread", -1, end);
+                    Anim("DickEat", -1, end);
+                    Anim("DickEatArm", -1, end);
                     if (Text("t63bdf0") == "change")
                     {
-                        PointerAfter(false, param_1, x: Var(Vars.V4ace9c), y: Var(Vars.V4acea0));
-                        ChangeLocation("loc04", param_1, 4);
+                        PointerAfter(false, end, x: Var(Vars.V4ace9c), y: Var(Vars.V4acea0));
+                        ChangeLocation("loc04", end, 4);
                     }
                 }
                 else if (CurrentSpeaker == Who.Julian)
                 {
-                    StopAnimAfter("JuliansBreadStill", param_1);
-                    StopAnimAfter("JulianSitSpeakDownLeft", param_1);
-                    Anim("JuliansBread", -1, param_1);
-                    Anim("JulianEat", -1, param_1);
-                    Anim("JulianEatArm", -1, param_1);
+                    StopAnimAfter("JuliansBreadStill", end);
+                    StopAnimAfter("JulianSitSpeakDownLeft", end);
+                    Anim("JuliansBread", -1, end);
+                    Anim("JulianEat", -1, end);
+                    Anim("JulianEatArm", -1, end);
                 }
                 else if (CurrentSpeaker == Who.George)
                 {
-                    StateAfter(Hero, StandDownRight, param_1);
+                    StateAfter(Hero, StandDownRight, end);
                 }
             }
             SetText("t63bdf0", "");
         }
-        else if (Episode == 5 && Quest == 7)
+        else if (At(7, 5))
         {
             if (CurrentSpeaker != Who.Anne)
             {
                 if (CurrentSpeaker == Who.Dick)
                 {
-                    StopAnimAfter("DicksBreadStill", param_1);
-                    StopAnimAfter("DickSitSpeakDownRight", param_1);
-                    Anim("DicksBread", -1, param_1);
-                    Anim("DickEat", -1, param_1);
-                    Anim("DickEatArm", -1, param_1);
+                    StopAnimAfter("DicksBreadStill", end);
+                    StopAnimAfter("DickSitSpeakDownRight", end);
+                    Anim("DicksBread", -1, end);
+                    Anim("DickEat", -1, end);
+                    Anim("DickEatArm", -1, end);
                 }
                 else if (CurrentSpeaker == Who.Julian)
                 {
-                    StopAnimAfter("JuliansBreadStill", param_1);
-                    StopAnimAfter("JulianSitSpeakDownLeft", param_1);
-                    Anim("JuliansBread", -1, param_1);
-                    Anim("JulianEat", -1, param_1);
-                    Anim("JulianEatArm", -1, param_1);
+                    StopAnimAfter("JuliansBreadStill", end);
+                    StopAnimAfter("JulianSitSpeakDownLeft", end);
+                    Anim("JuliansBread", -1, end);
+                    Anim("JulianEat", -1, end);
+                    Anim("JulianEatArm", -1, end);
                 }
                 else if (CurrentSpeaker == Who.George)
                 {
-                    StateAfter(Hero, StandDownRight, param_1);
+                    StateAfter(Hero, StandDownRight, end);
                 }
             }
             SetText("t63bdf0", "");
         }
-        else if (Episode == 1 && Quest == 12)
+        else if (At(12, 1))
         {
             if (Text("t63bdf0") == "Hund")
             {
-                StopAnimAfter("GeorgeSitSpeakDownRight", param_1);
-                Anim("GeorgeSitDownRight", -1, param_1);
-                Sound(@"wav\timmy\timmy01.wav", param_1);
-                Sound(@"wav\timmy\timmy01.wav", param_1, 2);
+                StopAnimAfter("GeorgeSitSpeakDownRight", end);
+                Anim("GeorgeSitDownRight", -1, end);
+                Sound(@"wav\timmy\timmy01.wav", end);
+                Sound(@"wav\timmy\timmy01.wav", end, 2);
                 SetText("t63bdf0", "");
                 goto LAB_00439681;
             }
             if (CurrentSpeaker == Who.George)
             {
-                StopAnimAfter("GeorgeSitSpeakDownRight", param_1);
-                Anim("GeorgeSitDownRight", -1, param_1);
-                Sound(@"wav\timmy\timmy01.wav", param_1);
-                Sound(@"wav\timmy\timmy01.wav", param_1, 2);
-                ChangeLocation("locextro", param_1, 6);
+                StopAnimAfter("GeorgeSitSpeakDownRight", end);
+                Anim("GeorgeSitDownRight", -1, end);
+                Sound(@"wav\timmy\timmy01.wav", end);
+                Sound(@"wav\timmy\timmy01.wav", end, 2);
+                ChangeLocation("locextro", end, 6);
             }
         }
     LAB_00439681:
@@ -2697,7 +2671,7 @@ public sealed partial class Kitchen : StoryScript
         TaskHandle? local_598 = null;
         TaskHandle? local_5c4 = null;
         TaskHandle? local_84 = null;
-        if (Episode == 3 && Quest == 3)
+        if (At(3, 3))
         {
             World.Hero = George;
             SetVar(Vars.V64f684, 1);
@@ -2736,7 +2710,7 @@ public sealed partial class Kitchen : StoryScript
             Say(Who.Fanny, "KUECHE0005-05", 1, after: local_2c);
             Say(Who.Quentin, "KUECHE0005-05", 9, last: true);
         }
-        else if (Episode == 4 && Quest == 3)
+        else if (At(3, 4))
         {
             F43c1b9(0, 1);
             F43c86a();
@@ -2750,7 +2724,7 @@ public sealed partial class Kitchen : StoryScript
                 Say(Who.Julian, "KUECHE0006-05", 2, last: true);
             }
         }
-        else if (Episode == 1 && Quest == 4)
+        else if (At(4, 1))
         {
             F43c1b9(0, 1);
             F43c86a();
@@ -2761,7 +2735,7 @@ public sealed partial class Kitchen : StoryScript
             Walk(Hero, 300, 300);
             State(Hero, StandDownLeft);
         }
-        else if (Episode == 0 && Quest == 5)
+        else if (At(5, 0))
         {
             SetVar(Vars.V64f994, 5);
             SetVar(Vars.V64fa04, 5);
@@ -2787,7 +2761,7 @@ public sealed partial class Kitchen : StoryScript
             Say(Who.Quentin, "KUECHE0009-05", 15, last: true);
             ShowParty();
         }
-        else if (Episode == 1 && Quest == 5)
+        else if (At(5, 1))
         {
             if (!IsShown(Hero))
             {
@@ -2800,12 +2774,12 @@ public sealed partial class Kitchen : StoryScript
             SetVar(Vars.V64f64c, 1);
             SetVar(Vars.FannyTalk, 4);
         }
-        else if (Episode == 2 && Quest == 5)
+        else if (At(5, 2))
         {
             SetVar(Vars.V64f64c, 1);
             SetVar(Vars.FannyTalk, 4);
         }
-        else if (Episode == 4 && Quest == 5)
+        else if (At(5, 4))
         {
             SetVar(Vars.FannyTalk, 4);
             SetVar(Vars.KitchenTeapot, 1);
@@ -2815,7 +2789,7 @@ public sealed partial class Kitchen : StoryScript
             Obj("LOC05Timmy", false);
             Obj("LOC05George", false);
         }
-        else if (Quest == 5 && Episode == 5)
+        else if (At(5, 5))
         {
             SetVar(Vars.FannyTalk, 4);
             SetVar(Vars.KitchenTeapot, 1);
@@ -2878,7 +2852,7 @@ public sealed partial class Kitchen : StoryScript
                 Say(Who.George, "KUECHE0015-05", 12, last: true);
             }
         }
-        else if (Quest == 6 && Episode == 1)
+        else if (At(6, 1))
         {
             SetVar(Vars.FannyTalk, 4);
             SetVar(Vars.KitchenTeapot, 1);
@@ -2911,7 +2885,7 @@ public sealed partial class Kitchen : StoryScript
             Say(Who.Julian, "KUECHE0016-05", 11);
             Say(Who.Dick, "KUECHE0016-05", 12, last: true);
         }
-        else if (Quest == 7 && Episode == 4)
+        else if (At(7, 4))
         {
             SetVar(Vars.FannyTalk, 4);
             F43c1b9(0, 0);
@@ -3057,7 +3031,7 @@ public sealed partial class Kitchen : StoryScript
                 SetVar(Vars.KitchenSandwich, 0);
             }
         }
-        else if (Quest == 7 && Episode == 5)
+        else if (At(7, 5))
         {
             if (!Has(Item.Teapot))
             {
@@ -3085,7 +3059,7 @@ public sealed partial class Kitchen : StoryScript
                 Say(Who.George, "KUECHE0033", 2, last: true);
             }
         }
-        else if (Quest == 7 && Episode == 6)
+        else if (At(7, 6))
         {
             Obj("LOC05Anne", false);
             Obj("LOC05Dick", false);
@@ -3103,7 +3077,7 @@ public sealed partial class Kitchen : StoryScript
             Walk(Hero, 300, 300);
             State(Hero, StandDownLeft);
         }
-        else if (Quest == 12 && Episode == 1)
+        else if (At(12, 1))
         {
             PointerOff();
             SetVar(Vars.V64faac, 0);
@@ -3347,11 +3321,11 @@ public sealed partial class Kitchen : StoryScript
     }
 
     // from FUN_0043c9ee
-    void OnAfterChoice()
+    protected override void AfterChoice(string scene, int line, int option)
     {
         if (Var(Vars.V64ef11) != 0)
         {
-            if (Episode == 4 && Quest == 5)
+            if (At(5, 4))
             {
                 if (Var(Vars.V64ef60) == Var(Vars.V64ef54))
                 {
@@ -3440,12 +3414,12 @@ public sealed partial class Kitchen : StoryScript
     }
 
     // from FUN_0043d12b
-    void OnEveryTick()
+    public override void EveryTick()
     {
         if (Var(Vars.V64d464) == 0)
         {
             SetVar(Vars.V64d464, 300);
-            if (Episode == 3 && Quest == 3)
+            if (At(3, 3))
             {
                 StateAfter(Timmy, EatRight, Chain);
                 SetText("t63bdf0", "Timmy");

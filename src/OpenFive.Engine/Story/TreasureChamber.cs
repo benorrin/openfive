@@ -9,31 +9,10 @@ public sealed partial class TreasureChamber : StoryScript
 {
     public override string Location => "loc27";
 
-    public override bool Click(string name)
-    {
-        OnClick(name);
-        return true;
-    }
-
-    protected override void Setup()
-    {
-        OnSetup();
-    }
-
     protected override void Arrive() { }
 
-    public override void LineStarting(GameWorld world, int speaker)
-    {
-        CurrentSpeaker = speaker;
-        OnLineStarting(null);
-    }
-
-    public override void LineQueued(GameWorld world, TaskHandle end) => OnLineQueued(end);
-
-    public override void ConversationEnding(GameWorld world, TaskHandle end) => OnConversationEnding(end);
-
     // from FUN_0045915b
-    void OnClick(string name)
+    public override bool Click(string name)
     {
         TaskHandle? iVar1 = null;
         if (Same(name, "LOC27ExitToLoc24"))
@@ -42,10 +21,11 @@ public sealed partial class TreasureChamber : StoryScript
             iVar1 = State(Hero, StandUpLeft);
             ChangeLocation("loc24", iVar1);
         }
+        return true;
     }
 
     // from FUN_004591db
-    void OnSetup()
+    protected override void Setup()
     {
         Hero.Follower = null;
         PointerOn();
@@ -64,10 +44,9 @@ public sealed partial class TreasureChamber : StoryScript
         Obj("LOC27ExitToLoc24", true);
         Place(Hero, 296, 582, StandUpRight);
         Show(Hero);
-        if (Episode == 1 && Quest == 9)
+        if (At(9, 1))
         {
-            Episode = 1;
-            Quest = 10;
+            SetStep(10, 1);
             Obj("LOC27ExitToLoc24", false);
             Place(George, 443, 500, StandDownLeft);
             Place(Julian, 620, 493, StandDownLeft);
@@ -96,106 +75,106 @@ public sealed partial class TreasureChamber : StoryScript
     }
 
     // from FUN_0045958b
-    void OnLineStarting(TaskHandle? param_1)
+    public override void LineStarting(GameWorld world, int speaker)
     {
         if (CurrentSpeaker == Who.Julian)
         {
-            StateAfter(Julian, SpeakDownLeft, param_1);
+            StateAfter(Julian, SpeakDownLeft, null);
         }
         else if (CurrentSpeaker == Who.Anne)
         {
-            StateAfter(Anne, StandUpRight, param_1);
+            StateAfter(Anne, StandUpRight, null);
         }
         else if (CurrentSpeaker == Who.George)
         {
             if (Var(Vars.V63beec) == 0)
             {
-                StateAfter(George, SpeakDownLeft, param_1);
+                StateAfter(George, SpeakDownLeft, null);
             }
             else
             {
-                StateAfter(George, StandUpLeft, param_1);
+                StateAfter(George, StandUpLeft, null);
             }
         }
         else if (CurrentSpeaker == Who.Professor)
         {
-            StopAnimAfter("ProfStand", param_1);
-            Anim("ProfSpeak", -1, param_1);
+            StopAnimAfter("ProfStand", null);
+            Anim("ProfSpeak", -1);
         }
         else if (CurrentSpeaker == Who.Accomplice)
         {
-            StopAnimAfter("KomplizeStand", param_1);
-            Anim("KomplizeSpeak", -1, param_1);
+            StopAnimAfter("KomplizeStand", null);
+            Anim("KomplizeSpeak", -1);
         }
     }
 
     // from FUN_004596cb
-    void OnLineQueued(TaskHandle? param_1)
+    public override void LineQueued(GameWorld world, TaskHandle end)
     {
         if (CurrentSpeaker == Who.Julian)
         {
-            StateAfter(Julian, StandDownLeft, param_1);
+            StateAfter(Julian, StandDownLeft, end);
         }
         else if (CurrentSpeaker == Who.George)
         {
             if (Var(Vars.V63beec) == 0)
             {
-                StateAfter(George, StandDownLeft, param_1);
+                StateAfter(George, StandDownLeft, end);
             }
             else
             {
-                StateAfter(George, StandUpLeft, param_1);
+                StateAfter(George, StandUpLeft, end);
             }
         }
         else if (CurrentSpeaker == Who.Professor)
         {
-            StopAnimAfter("ProfSpeak", param_1);
-            Anim("ProfStand", -1, param_1);
+            StopAnimAfter("ProfSpeak", end);
+            Anim("ProfStand", -1, end);
         }
         else if (CurrentSpeaker == Who.Accomplice)
         {
-            StopAnimAfter("KomplizeSpeak", param_1);
-            Anim("KomplizeStand", -1, param_1);
+            StopAnimAfter("KomplizeSpeak", end);
+            Anim("KomplizeStand", -1, end);
         }
     }
 
     // from FUN_004597e3
-    void OnConversationEnding(TaskHandle? param_1)
+    public override void ConversationEnding(GameWorld world, TaskHandle end)
     {
-        if (Episode == 1 && Quest == 10)
+        if (At(10, 1))
         {
             if (CurrentSpeaker == Who.Julian)
             {
-                StateAfter(Julian, StandDownLeft, param_1);
+                StateAfter(Julian, StandDownLeft, end);
             }
             else if (CurrentSpeaker == Who.George)
             {
                 if (Var(Vars.V63beec) == 0)
                 {
-                    StateAfter(George, StandDownLeft, param_1);
+                    StateAfter(George, StandDownLeft, end);
                 }
                 else
                 {
-                    StateAfter(George, StandUpLeft, param_1);
+                    StateAfter(George, StandUpLeft, end);
                 }
             }
             else if (CurrentSpeaker == Who.Professor)
             {
-                StopAnimAfter("ProfSpeak", param_1);
-                Anim("ProfStand", -1, param_1);
+                StopAnimAfter("ProfSpeak", end);
+                Anim("ProfStand", -1, end);
             }
             else if (CurrentSpeaker == Who.Dick)
             {
                 if (Text("t63bedc") == "start")
                 {
-                    StateAfter(Anne, CryRight, param_1);
-                    StateAfter(George, StandUpLeft, param_1);
-                    Anim("ProfStand", -1, param_1);
-                    Anim("KomplizeStand", -1, param_1);
-                    PointerAfter(false, param_1, x: 400, y: 400);
-                    Chain = param_1;
+                    StateAfter(Anne, CryRight, end);
+                    StateAfter(George, StandUpLeft, end);
+                    Anim("ProfStand", -1, end);
+                    Anim("KomplizeStand", -1, end);
+                    PointerAfter(false, end, x: 400, y: 400);
+                    Chain = end;
                     SetVar(Vars.V63beec, 1);
-                    Say(Who.Accomplice, "SCHATZ0047", 5, after: param_1, delay: 2);
+                    Say(Who.Accomplice, "SCHATZ0047", 5, after: end, delay: 2);
                     Say(Who.Professor, "SCHATZ0047", 6);
                     Say(Who.George, "SCHATZ0047", 7);
                     Say(Who.Professor, "SCHATZ0047", 8);
@@ -213,10 +192,10 @@ public sealed partial class TreasureChamber : StoryScript
             }
             else if (CurrentSpeaker == Who.Anne && Text("t63bedc") == "Anne")
             {
-                SetAfter(Vars.QuestNumber, 10, param_1);
-                SetAfter(Vars.EpisodeNumber, 2, param_1);
-                PointerAfter(false, param_1, x: 400, y: 400);
-                ChangeLocation("loc28", param_1, 4);
+                SetAfter(Vars.QuestNumber, 10, end);
+                SetAfter(Vars.EpisodeNumber, 2, end);
+                PointerAfter(false, end, x: 400, y: 400);
+                ChangeLocation("loc28", end, 4);
                 SetVar(Vars.GeorgeDungeonTalk, 0);
                 SetText("t63bedc", "");
             }

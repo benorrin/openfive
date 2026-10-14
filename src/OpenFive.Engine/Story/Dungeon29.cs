@@ -9,21 +9,10 @@ public sealed partial class Dungeon29 : StoryScript
 {
     public override string Location => "loc29";
 
-    public override bool Click(string name)
-    {
-        OnClick(name);
-        return true;
-    }
-
-    protected override void Setup()
-    {
-        OnSetup();
-    }
-
     protected override void Arrive() { }
 
     // from FUN_0045b09a
-    void OnClick(string name)
+    public override bool Click(string name)
     {
         string local_120 = "";
         TaskHandle? local_1c = null;
@@ -40,10 +29,11 @@ public sealed partial class Dungeon29 : StoryScript
             }
             ChangeLocation(local_120, local_1c);
         }
+        return true;
     }
 
     // from FUN_0045b134
-    void OnSetup()
+    protected override void Setup()
     {
         Hero.Follower = null;
         PointerOn();

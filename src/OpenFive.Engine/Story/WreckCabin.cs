@@ -9,23 +9,10 @@ public sealed partial class WreckCabin : StoryScript
 {
     public override string Location => "loc16";
 
-    public override bool Click(string name)
-    {
-        OnClick(name);
-        return true;
-    }
-
-    protected override void Setup()
-    {
-        OnSetup();
-    }
-
     protected override void Arrive() { }
 
-    public override void ObjectChanged(GameWorld world, string name, bool on) => OnObjectChanged(name, on ? 1 : 0);
-
     // from FUN_0044c3b5
-    void OnClick(string name)
+    public override bool Click(string name)
     {
         TaskHandle? local_20 = null;
         TaskHandle? local_3c = null;
@@ -60,7 +47,7 @@ public sealed partial class WreckCabin : StoryScript
         {
             Walk(Hero, 547, 464);
             Chain = State(Hero, TakeLowRight);
-            if (Episode == 4 && Quest == 6)
+            if (At(6, 4))
             {
                 local_3c = Chain;
                 Say(Who.Dick, "KAJUETE0024", 1, last: true, after: local_3c);
@@ -72,7 +59,7 @@ public sealed partial class WreckCabin : StoryScript
             Chain = State(Hero, StandDownRight);
             local_58 = 0;
             local_54 = Chain;
-            if (Episode == 4 && Quest == 6)
+            if (At(6, 4))
             {
                 PointerAfter(false, Chain, x: 400, y: 400);
                 Say(Who.Dick, "KAJUETE0024", 9, last: true, after: local_54);
@@ -80,10 +67,11 @@ public sealed partial class WreckCabin : StoryScript
             }
             ChangeLocation("loc15", local_54, local_58);
         }
+        return true;
     }
 
     // from FUN_0044c6d6
-    void OnSetup()
+    protected override void Setup()
     {
         SetVar(Vars.V683260, 1);
         PointerOn();
@@ -91,9 +79,9 @@ public sealed partial class WreckCabin : StoryScript
     }
 
     // from FUN_0044c721
-    void OnObjectChanged(string name, int param_2)
+    public override void ObjectChanged(GameWorld world, string name, bool on)
     {
-        if (param_2 == 0 && Same(name, "LOC16Dose") && Var(Vars.TinTaken) == 1)
+        if (!on && Same(name, "LOC16Dose") && Var(Vars.TinTaken) == 1)
         {
             Give(Item.ClosedTin);
             SetVar(Vars.TinTaken, 2);
@@ -131,7 +119,7 @@ public sealed partial class WreckCabin : StoryScript
         {
             Obj("LOC16Dose", false);
         }
-        if (Episode == 3 && Quest == 6)
+        if (At(6, 3))
         {
             Episode = 4;
             SetVar(Vars.AnneBeachTalk, 0);

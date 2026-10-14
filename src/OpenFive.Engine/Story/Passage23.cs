@@ -9,21 +9,10 @@ public sealed partial class Passage23 : StoryScript
 {
     public override string Location => "loc23";
 
-    public override bool Click(string name)
-    {
-        OnClick(name);
-        return true;
-    }
-
-    protected override void Setup()
-    {
-        OnSetup();
-    }
-
     protected override void Arrive() { }
 
     // from FUN_00456d48
-    void OnClick(string name)
+    public override bool Click(string name)
     {
         if (Same(name, "LOC23ExitToLoc21"))
         {
@@ -35,10 +24,11 @@ public sealed partial class Passage23 : StoryScript
             Walk(Hero, Var(Vars.V4ace9c), 600);
             ChangeLocation("loc26");
         }
+        return true;
     }
 
     // from FUN_00456e00
-    void OnSetup()
+    protected override void Setup()
     {
         Hero.Follower = null;
         PointerOn();
@@ -70,7 +60,7 @@ public sealed partial class Passage23 : StoryScript
         Place(Hero, 227, 311, StandDownLeft);
         Show(Hero);
     LAB_00456f91:
-        if (Episode == 1 && Quest == 9)
+        if (At(9, 1))
         {
             Place(George, 372, 285, StandDownLeft);
             Hero.Follower = Hero;

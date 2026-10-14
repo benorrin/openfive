@@ -9,30 +9,7 @@ public sealed partial class Hall : StoryScript
 {
     public override string Location => "loc04";
 
-    public override bool Click(string name)
-    {
-        OnClick(name);
-        return true;
-    }
-
-    protected override void Setup()
-    {
-        OnSetup();
-    }
-
     protected override void Arrive() { }
-
-    public override void LineStarting(GameWorld world, int speaker)
-    {
-        CurrentSpeaker = speaker;
-        OnLineStarting(null);
-    }
-
-    public override void LineQueued(GameWorld world, TaskHandle end) => OnLineQueued(end);
-
-    public override void ConversationEnding(GameWorld world, TaskHandle end) => OnConversationEnding(end);
-
-    public override void ObjectChanged(GameWorld world, string name, bool on) => OnObjectChanged(name, on ? 1 : 0);
 
     /// <summary>The study door: open, ajar or locked depending on the story.</summary>
     void StudyDoor()
@@ -86,7 +63,7 @@ public sealed partial class Hall : StoryScript
     }
 
     // from FUN_0042a882
-    void OnClick(string name)
+    public override bool Click(string name)
     {
         TaskHandle? local_20 = null;
         if (!Same(name, "LOC04ExitToLOC03"))
@@ -97,15 +74,15 @@ public sealed partial class Hall : StoryScript
                 local_20 = State(Hero, TakeMidLeft);
                 if (Episode != 4)
                 {
-                    return;
+                    return true;
                 }
                 if (Quest != 7)
                 {
-                    return;
+                    return true;
                 }
                 Chain = local_20;
                 Say(Who.George, "EINGANG0030", 1, last: true, after: local_20, delay: 4);
-                return;
+                return true;
             }
             if (Same(name, "LOC04Koffer"))
             {
@@ -113,7 +90,7 @@ public sealed partial class Hall : StoryScript
                 {
                     Walk(Hero, 230, 570);
                     State(Hero, StandLeft);
-                    return;
+                    return true;
                 }
                 if (Var(Vars.V64f72c) == 0)
                 {
@@ -121,33 +98,33 @@ public sealed partial class Hall : StoryScript
                     Walk(Hero, 230, 570);
                     local_20 = State(Hero, StandLeft);
                     PointerAfter(true, local_20, x: 100, y: 200);
-                    return;
+                    return true;
                 }
                 if (Var(Vars.V64f72c) != 1)
                 {
-                    return;
+                    return true;
                 }
                 Walk(Hero, 230, 570);
                 State(Hero, StandLeft);
-                return;
+                return true;
             }
             if (Same(name, "LOC04ExitToLOC02"))
             {
                 Walk(Hero, 340, 271);
                 local_20 = State(Hero, TakeMidUpLeft);
-                if (Episode == 1 && Quest == 5)
+                if (At(5, 1))
                 {
                     Say(Who.George, "Diele0010-04", 1, last: true, after: local_20, delay: 6);
                     SetVar(Vars.V63bdca, 1);
-                    return;
+                    return true;
                 }
                 if (Quest < 5)
                 {
-                    return;
+                    return true;
                 }
                 local_20 = Anim("DoOpenDoor3", after: local_20, delay: 5, endObject: "LOC04Door3Obj", endObjectOn: true);
                 ChangeLocation("loc02", local_20, 6);
-                return;
+                return true;
             }
             if (Same(name, "LOC04Schluesselloch"))
             {
@@ -155,17 +132,17 @@ public sealed partial class Hall : StoryScript
                 Chain = State(Hero, KeyholeLeft);
                 if (Episode != 1)
                 {
-                    return;
+                    return true;
                 }
                 if (Quest != 5)
                 {
-                    return;
+                    return true;
                 }
                 local_20 = Chain;
                 Say(Who.George, "Diele0010-04", 2, after: local_20, delay: 16);
                 Say(Who.Julian, "Diele0010-04", 3, last: true);
                 SetVar(Vars.V63bdc9, 1);
-                return;
+                return true;
             }
             if (Same(name, "LOC04ExitToLOC05"))
             {
@@ -175,35 +152,35 @@ public sealed partial class Hall : StoryScript
                 Sound(@"wav\fx\hotueauf.wav", local_20, 3);
                 local_20 = Anim("DoOpenDoor2", after: local_20, delay: 5, endObject: "LOC04Door2Obj", endObjectOn: true);
                 ChangeLocation("loc05", local_20);
-                return;
+                return true;
             }
             if (Same(name, "LOC04ExitToLOC06"))
             {
                 Walk(Hero, 310, 595);
                 local_20 = State(Hero, StandDownRight);
                 ChangeLocation("loc06", local_20);
-                return;
+                return true;
             }
             if (Same(name, "LOC04Pflanze1"))
             {
                 Walk(Hero, 476, 271);
                 State(Hero, StandRight);
                 SetVar(Vars.V64f924, 1);
-                return;
+                return true;
             }
             if (Same(name, "LOC04Pflanze2"))
             {
                 Walk(Hero, 590, 599);
                 State(Hero, StandRight);
                 SetVar(Vars.V64f95c, 1);
-                return;
+                return true;
             }
             if (Same(name, "LOC04Milchkanne"))
             {
                 Walk(Hero, 360, 552);
                 State(Hero, StandRight);
                 SetVar(Vars.V64f8ec, 1);
-                return;
+                return true;
             }
             if (Same(name, "LOC04Schirm"))
             {
@@ -211,32 +188,32 @@ public sealed partial class Hall : StoryScript
                 local_20 = State(Hero, TakeUmbrella);
                 Sound(@"wav\fx\schirm.wav", local_20);
                 ObjAfter("LOC04Schirm", false, local_20, 5);
-                return;
+                return true;
             }
             if (Same(name, "LOC04Mantel"))
             {
                 Walk(Hero, 360, 495);
                 State(Hero, StandUpRight);
                 SetVar(Vars.V64f87c, 1);
-                return;
+                return true;
             }
             if (Same(name, "LOC04Bild"))
             {
                 Walk(Hero, 175, 590);
                 State(Hero, StandLeft);
                 SetVar(Vars.V64f844, 1);
-                return;
+                return true;
             }
             if (Same(name, "LOC04Schmetterlingssammlung"))
             {
                 Walk(Hero, 564, 463);
                 State(Hero, StandRight);
                 SetVar(Vars.V64f79c, 1);
-                return;
+                return true;
             }
             if (Same(name, "LOC04Anne"))
             {
-                if (Episode == 1 && Quest == 5)
+                if (At(5, 1))
                 {
                     if (Var(Vars.V64f80c) == 2)
                     {
@@ -245,26 +222,26 @@ public sealed partial class Hall : StoryScript
                         local_20 = Chain;
                         SetText("clicked", "Anne");
                         Say(Who.Anne, "DIELE0010-04", 14, last: true, after: local_20);
-                        return;
+                        return true;
                     }
                     if (Var(Vars.V64f7d4) != 1)
                     {
-                        return;
+                        return true;
                     }
                     Walk(Hero, 303, 272);
                     Chain = State(Hero, StandDownLeft);
                     local_20 = Chain;
                     SetText("clicked", "Anne");
                     Say(Who.Anne, "DIELE0010-04", 4, last: true, after: local_20);
-                    return;
+                    return true;
                 }
                 if (Episode != 2)
                 {
-                    return;
+                    return true;
                 }
                 if (Quest != 5)
                 {
-                    return;
+                    return true;
                 }
                 if (Has(Item.ShipPlan))
                 {
@@ -273,26 +250,26 @@ public sealed partial class Hall : StoryScript
                     SetText("clicked", "Anne");
                     SetVar(Vars.V63bdc6, 1);
                     ObjAfter("LOC04Anne", false, local_20);
-                    return;
+                    return true;
                 }
                 if (Var(Vars.V64f994) > 6)
                 {
-                    return;
+                    return true;
                 }
                 Walk(Hero, 303, 272);
                 local_20 = State(Hero, StandDownLeft);
                 SetText("clicked", "Anne");
                 SetVar(Vars.V63bdc6, 1);
                 ObjAfter("LOC04Anne", false, local_20);
-                return;
+                return true;
             }
             if (!Same(name, "LOC04Julian"))
             {
                 if (!Same(name, "LOC04Dick"))
                 {
-                    return;
+                    return true;
                 }
-                if (Episode == 1 && Quest == 5)
+                if (At(5, 1))
                 {
                     if (Var(Vars.V64f80c) == 2)
                     {
@@ -301,26 +278,26 @@ public sealed partial class Hall : StoryScript
                         local_20 = Chain;
                         SetText("clicked", "Dick");
                         Say(Who.Dick, "DIELE0010-04", 16, last: true, after: local_20);
-                        return;
+                        return true;
                     }
                     if (Var(Vars.V64f7d4) != 1)
                     {
-                        return;
+                        return true;
                     }
                     Walk(Hero, 303, 272);
                     Chain = State(Hero, StandDownLeft);
                     local_20 = Chain;
                     SetText("clicked", "Dick");
                     Say(Who.Dick, "DIELE0010-04", 5, last: true, after: local_20);
-                    return;
+                    return true;
                 }
                 if (Episode != 2)
                 {
-                    return;
+                    return true;
                 }
                 if (Quest != 5)
                 {
-                    return;
+                    return true;
                 }
                 if (Has(Item.ShipPlan))
                 {
@@ -329,20 +306,20 @@ public sealed partial class Hall : StoryScript
                     SetText("clicked", "Dick");
                     SetVar(Vars.V63bdc8, 1);
                     ObjAfter("LOC04Dick", false, local_20);
-                    return;
+                    return true;
                 }
                 if (Var(Vars.V64f994) > 6)
                 {
-                    return;
+                    return true;
                 }
                 Walk(Hero, 303, 272);
                 local_20 = State(Hero, StandDownLeft);
                 SetText("clicked", "Dick");
                 SetVar(Vars.V63bdc8, 1);
                 ObjAfter("LOC04Dick", false, local_20);
-                return;
+                return true;
             }
-            if (Episode == 1 && Quest == 5)
+            if (At(5, 1))
             {
                 if (Var(Vars.V64f80c) == 2)
                 {
@@ -351,7 +328,7 @@ public sealed partial class Hall : StoryScript
                     local_20 = Chain;
                     SetText("clicked", "Julian");
                     Say(Who.Julian, "Diele0010-04", 15, last: true, after: local_20);
-                    return;
+                    return true;
                 }
                 if (Var(Vars.V64f7d4) == 1 && Var(Vars.V64f9cc) == 5)
                 {
@@ -360,30 +337,30 @@ public sealed partial class Hall : StoryScript
                     local_20 = Chain;
                     SetText("clicked", "Julian");
                     Say(Who.Julian, "Diele0010-04", 6, last: true, after: local_20);
-                    return;
+                    return true;
                 }
                 if (Var(Vars.V64f7d4) != 1)
                 {
-                    return;
+                    return true;
                 }
                 if (Var(Vars.V64f9cc) != 6)
                 {
-                    return;
+                    return true;
                 }
                 Walk(Hero, 303, 272);
                 Chain = State(Hero, StandDownLeft);
                 local_20 = Chain;
                 SetText("clicked", "Julian");
                 Say(Who.Julian, "Diele0010-04", 7, last: true, after: local_20);
-                return;
+                return true;
             }
             if (Episode != 2)
             {
-                return;
+                return true;
             }
             if (Quest != 5)
             {
-                return;
+                return true;
             }
             if (Has(Item.ShipPlan))
             {
@@ -392,44 +369,44 @@ public sealed partial class Hall : StoryScript
                 SetText("clicked", "Julian");
                 SetVar(Vars.V63bdc7, 1);
                 ObjAfter("LOC04Julian", false, local_20);
-                return;
+                return true;
             }
             if (Var(Vars.V64f994) > 6)
             {
-                return;
+                return true;
             }
             Walk(Hero, 303, 272);
             local_20 = State(Hero, StandDownLeft);
             SetText("clicked", "Julian");
             SetVar(Vars.V63bdc7, 1);
             ObjAfter("LOC04Julian", false, local_20);
-            return;
+            return true;
         }
         Walk(Hero, 193, 517);
-        if (Episode == 2 && Quest == 5)
+        if (At(5, 2))
         {
             if (Has(Item.ShipPlan))
             {
                 Episode = 3;
             }
             StudyDoor();
-            return;
+            return true;
         }
-        if (Episode == 2 && Quest == 7)
+        if (At(7, 2))
         {
             Chain = State(Hero, TakeMidLeft);
             local_20 = Chain;
             Say(Who.Quentin, "KUECHE0027", 4, last: true, after: local_20, delay: 5);
-            return;
+            return true;
         }
-        if (Episode == 5 && Quest == 7)
+        if (At(7, 5))
         {
-            return;
+            return true;
         }
         if (Episode != 4 || Quest != 7)
         {
             StudyDoor();
-            return;
+            return true;
         }
         Chain = State(Hero, TakeMidLeft);
         local_20 = Chain;
@@ -471,11 +448,12 @@ public sealed partial class Hall : StoryScript
             Say(Who.Quentin, "EINGANG0030", 9, last: true);
         }
     LAB_0042ad9e:
-        return;
+        return true;
+        return true;
     }
 
     // from FUN_0042bee1
-    void OnSetup()
+    protected override void Setup()
     {
         Obj("LOC04Tuerspalte2", true);
         if (Quest == 5 && Episode < 4)
@@ -511,7 +489,7 @@ public sealed partial class Hall : StoryScript
         }
         else if (Quest > 5)
         {
-            if (Episode == 1 && Quest == 6)
+            if (At(6, 1))
             {
                 return;
             }
@@ -527,14 +505,14 @@ public sealed partial class Hall : StoryScript
     }
 
     // from FUN_0042c064
-    void OnObjectChanged(string name, int param_2)
+    public override void ObjectChanged(GameWorld world, string name, bool on)
     {
         TaskHandle? local_130 = null;
         TaskHandle? local_1e8 = null;
         TaskHandle? local_30 = null;
         TaskHandle? local_318 = null;
         TaskHandle? local_5c = null;
-        if (param_2 == 0)
+        if (!on)
         {
             if (Same(name, "LOC04Schirm"))
             {
@@ -618,8 +596,7 @@ public sealed partial class Hall : StoryScript
                     else if (Var(Vars.V64f684) == 6)
                     {
                         SetVar(Vars.V64f684, 0);
-                        Episode = 1;
-                        Quest = 4;
+                        SetStep(4, 1);
                         Say(Who.George, "Diele0006-01-04", 1, last: true);
                         SetVar(Vars.V63bdc5, 0);
                         ObjAfter("LOC04Tuerspalte2", true, local_5c, 30);
@@ -803,7 +780,7 @@ public sealed partial class Hall : StoryScript
             }
             if (FromId == 5)
             {
-                if (Episode == 1 && Quest == 5 && Var(Vars.V64f64c) == 0)
+                if (At(5, 1) && Var(Vars.V64f64c) == 0)
                 {
                     F42d7b5(282, 271, 7);
                     return;
@@ -893,7 +870,7 @@ public sealed partial class Hall : StoryScript
     void F42dae5()
     {
         TaskHandle? local_24 = null;
-        if (Episode == 4 && Quest == 3)
+        if (At(3, 4))
         {
             if (Var(Vars.V64f684) == 1)
             {
@@ -935,13 +912,13 @@ public sealed partial class Hall : StoryScript
                 Obj("LOC04ExitToLOC06", false);
             }
         }
-        else if (Episode == 4 && Quest == 5)
+        else if (At(5, 4))
         {
             Episode = 5;
             SetVar(Vars.V64f534, 0);
             Obj("LOC04ExitToLOC06", false);
         }
-        else if (Episode == 3 && Quest == 7)
+        else if (At(7, 3))
         {
             World.Hero = George;
             Place(Anne, 490, 599, StandUpLeft);
@@ -984,20 +961,20 @@ public sealed partial class Hall : StoryScript
     }
 
     // from FUN_0042e087
-    void OnLineStarting(TaskHandle? param_1)
+    public override void LineStarting(GameWorld world, int speaker)
     {
-        if (Episode == 4 && Quest == 3)
+        if (At(3, 4))
         {
             if (CurrentSpeaker == Who.George)
             {
-                StateAfter(Hero, SpeakDownLeft, param_1);
+                StateAfter(Hero, SpeakDownLeft, null);
             }
         }
-        else if (Episode == 1 && Quest == 4)
+        else if (At(4, 1))
         {
             if (CurrentSpeaker == Who.George)
             {
-                StateAfter(Hero, SpeakDownLeft, param_1);
+                StateAfter(Hero, SpeakDownLeft, null);
             }
         }
         else if (Episode < 3 && Quest == 5)
@@ -1006,66 +983,66 @@ public sealed partial class Hall : StoryScript
             {
                 if (CurrentSpeaker == Who.George && Var(Vars.V63bdcb) == 0)
                 {
-                    StateAfter(Hero, SpeakDownLeft, param_1);
+                    StateAfter(Hero, SpeakDownLeft, null);
                 }
                 else if (CurrentSpeaker == Who.Dick)
                 {
-                    StateAfter(Dick, SpeakDownRight, param_1);
+                    StateAfter(Dick, SpeakDownRight, null);
                 }
                 else if (CurrentSpeaker == Who.Julian)
                 {
-                    StateAfter(Julian, SpeakDownRight, param_1);
+                    StateAfter(Julian, SpeakDownRight, null);
                 }
             }
             else if (CurrentSpeaker == Who.George && Var(Vars.V63bdcb) == 0)
             {
-                StateAfter(Hero, SpeakDownRight, param_1);
+                StateAfter(Hero, SpeakDownRight, null);
             }
             else if (CurrentSpeaker == Who.Dick)
             {
-                StateAfter(Dick, SpeakDownLeft, param_1);
+                StateAfter(Dick, SpeakDownLeft, null);
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StateAfter(Julian, SpeakDownLeft, param_1);
+                StateAfter(Julian, SpeakDownLeft, null);
             }
         }
-        else if (Episode == 3 && Quest == 7)
+        else if (At(7, 3))
         {
             if (CurrentSpeaker == Who.George)
             {
-                StateAfter(Hero, SpeakDownRight, param_1);
+                StateAfter(Hero, SpeakDownRight, null);
             }
             else if (CurrentSpeaker == Who.Dick)
             {
-                StateAfter(Dick, SpeakDownLeft, param_1);
+                StateAfter(Dick, SpeakDownLeft, null);
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StateAfter(Julian, SpeakDownLeft, param_1);
+                StateAfter(Julian, SpeakDownLeft, null);
             }
         }
-        else if (Episode == 4 && Quest == 7 && Text("clicked") == "enter" && CurrentSpeaker == Who.George)
+        else if (At(7, 4) && Text("clicked") == "enter" && CurrentSpeaker == Who.George)
         {
-            StateAfter(Hero, SpeakDownLeft, param_1);
+            StateAfter(Hero, SpeakDownLeft, null);
         }
     }
 
     // from FUN_0042e34f
-    void OnLineQueued(TaskHandle? param_1)
+    public override void LineQueued(GameWorld world, TaskHandle end)
     {
-        if (Episode == 4 && Quest == 3)
+        if (At(3, 4))
         {
             if (CurrentSpeaker == Who.George)
             {
-                StateAfter(Hero, StandDownLeft, param_1);
+                StateAfter(Hero, StandDownLeft, end);
             }
         }
-        else if (Episode == 1 && Quest == 4)
+        else if (At(4, 1))
         {
             if (CurrentSpeaker == Who.George)
             {
-                StateAfter(Hero, StandDownLeft, param_1);
+                StateAfter(Hero, StandDownLeft, end);
             }
         }
         else if (Episode < 3 && Quest == 5)
@@ -1077,49 +1054,49 @@ public sealed partial class Hall : StoryScript
                     SetVar(Vars.V64f7d4, 1);
                     SetVar(Vars.V63bdc9, 0);
                 }
-                StateAfter(Hero, StandDownLeft, param_1);
+                StateAfter(Hero, StandDownLeft, end);
             }
             else if (CurrentSpeaker == Who.Dick)
             {
-                StateAfter(Dick, StandDownRight, param_1);
+                StateAfter(Dick, StandDownRight, end);
             }
             else if (CurrentSpeaker == Who.Anne)
             {
-                StateAfter(Anne, StandUpRight, param_1);
+                StateAfter(Anne, StandUpRight, end);
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StateAfter(Julian, StandDownRight, param_1);
+                StateAfter(Julian, StandDownRight, end);
             }
         }
-        else if (Episode == 3 && Quest == 7)
+        else if (At(7, 3))
         {
             if (CurrentSpeaker == Who.George)
             {
-                StateAfter(Hero, StandDownRight, param_1);
+                StateAfter(Hero, StandDownRight, end);
             }
             else if (CurrentSpeaker == Who.Dick)
             {
-                StateAfter(Dick, StandDownLeft, param_1);
+                StateAfter(Dick, StandDownLeft, end);
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StateAfter(Julian, StandDownLeft, param_1);
+                StateAfter(Julian, StandDownLeft, end);
             }
         }
-        else if (Episode == 4 && Quest == 7 && Text("clicked") == "enter" && CurrentSpeaker == Who.George)
+        else if (At(7, 4) && Text("clicked") == "enter" && CurrentSpeaker == Who.George)
         {
-            StateAfter(Hero, StandDownLeft, param_1);
+            StateAfter(Hero, StandDownLeft, end);
         }
     }
 
     // from FUN_0042e58f
-    void OnConversationEnding(TaskHandle? param_1)
+    public override void ConversationEnding(GameWorld world, TaskHandle end)
     {
         TaskHandle? iVar1 = null;
-        if (Episode == 4 && Quest == 3)
+        if (At(3, 4))
         {
-            StateAfter(Hero, StandDownLeft, param_1);
+            StateAfter(Hero, StandDownLeft, end);
             if (Var(Vars.V64f684) < 2)
             {
                 if (Var(Vars.V64f684) == 1)
@@ -1136,9 +1113,9 @@ public sealed partial class Hall : StoryScript
                 SetVar(Vars.V64f684, 4);
             }
         }
-        else if (Episode == 1 && Quest == 4)
+        else if (At(4, 1))
         {
-            StateAfter(Hero, StandDownLeft, param_1);
+            StateAfter(Hero, StandDownLeft, end);
         }
         else if (Episode < 3 && Quest == 5)
         {
@@ -1153,8 +1130,8 @@ public sealed partial class Hall : StoryScript
                             if (Text("t63bddc") == "Koffer")
                             {
                                 SetText("t63bddc", "");
-                                StateAfter(Hero, StandDownRight, param_1);
-                                iVar1 = StateAfter(Hero, KneelLeft, param_1, 4);
+                                StateAfter(Hero, StandDownRight, end);
+                                iVar1 = StateAfter(Hero, KneelLeft, end, 4);
                                 StopAnimAfter("KofferKarte", iVar1, 15);
                                 Anim("KofferZu", after: iVar1, delay: 15);
                                 Anim("KofferStehend", -1, iVar1, 18);
@@ -1166,10 +1143,10 @@ public sealed partial class Hall : StoryScript
                             }
                             if (Has(Item.SuitcaseKey) && Var(Vars.V64f994) > 6)
                             {
-                                StateAfter(Hero, StandDownRight, param_1);
-                                StateAfter(Dick, StandDownLeft, param_1);
-                                StateAfter(Anne, StandUpLeft, param_1);
-                                StateAfter(Julian, StandDownLeft, param_1);
+                                StateAfter(Hero, StandDownRight, end);
+                                StateAfter(Dick, StandDownLeft, end);
+                                StateAfter(Anne, StandUpLeft, end);
+                                StateAfter(Julian, StandDownLeft, end);
                                 goto LAB_0042efbd;
                             }
                             if (Var(Vars.V63bdcb) == 0)
@@ -1178,12 +1155,12 @@ public sealed partial class Hall : StoryScript
                                 {
                                     Obj("LOC04Schluesselloch", true);
                                 }
-                                StateAfter(Hero, StandDownLeft, param_1);
+                                StateAfter(Hero, StandDownLeft, end);
                             }
                             else
                             {
-                                StateAfter(Hero, TakeMidUpLeft, param_1);
-                                iVar1 = Anim("DoOpenDoor3", after: param_1, delay: 4, endObject: "LOC04Door3Obj", endObjectOn: true);
+                                StateAfter(Hero, TakeMidUpLeft, end);
+                                iVar1 = Anim("DoOpenDoor3", after: end, delay: 4, endObject: "LOC04Door3Obj", endObjectOn: true);
                                 ChangeLocation("loc02", iVar1, 6);
                                 Episode = 2;
                                 SetVar(Vars.V64f994, 0);
@@ -1195,15 +1172,15 @@ public sealed partial class Hall : StoryScript
                         {
                             if (Var(Vars.V64f994) > 6)
                             {
-                                StateAfter(Hero, StandDownRight, param_1);
-                                StateAfter(Dick, StandDownLeft, param_1);
-                                StateAfter(Anne, StandUpLeft, param_1);
-                                StateAfter(Julian, StandDownLeft, param_1);
+                                StateAfter(Hero, StandDownRight, end);
+                                StateAfter(Dick, StandDownLeft, end);
+                                StateAfter(Anne, StandUpLeft, end);
+                                StateAfter(Julian, StandDownLeft, end);
                                 goto LAB_0042efbd;
                             }
                             if (Var(Vars.V63bdcb) == 0)
                             {
-                                StateAfter(Dick, StandDownRight, param_1);
+                                StateAfter(Dick, StandDownRight, end);
                                 SetVar(Vars.V63bdcb, 0);
                             }
                         }
@@ -1211,30 +1188,30 @@ public sealed partial class Hall : StoryScript
                         {
                             if (Has(Item.SuitcaseKey))
                             {
-                                StateAfter(Hero, StandDownRight, param_1);
-                                StateAfter(Dick, StandDownLeft, param_1);
-                                StateAfter(Anne, StandUpLeft, param_1);
-                                StateAfter(Julian, StandDownLeft, param_1);
+                                StateAfter(Hero, StandDownRight, end);
+                                StateAfter(Dick, StandDownLeft, end);
+                                StateAfter(Anne, StandUpLeft, end);
+                                StateAfter(Julian, StandDownLeft, end);
                                 goto LAB_0042efbd;
                             }
-                            StateAfter(Julian, StandDownRight, param_1);
+                            StateAfter(Julian, StandDownRight, end);
                         }
                     }
                     else
                     {
                         if (Var(Vars.V64f994) < 7)
                         {
-                            StateAfter(Hero, StandDownLeft, param_1);
-                            StateAfter(Dick, StandDownRight, param_1);
-                            StateAfter(Anne, StandUpRight, param_1);
-                            StateAfter(Julian, StandDownRight, param_1);
+                            StateAfter(Hero, StandDownLeft, end);
+                            StateAfter(Dick, StandDownRight, end);
+                            StateAfter(Anne, StandUpRight, end);
+                            StateAfter(Julian, StandDownRight, end);
                         }
                         else
                         {
-                            StateAfter(Hero, StandDownRight, param_1);
-                            StateAfter(Dick, StandDownLeft, param_1);
-                            StateAfter(Anne, StandUpLeft, param_1);
-                            StateAfter(Julian, StandDownLeft, param_1);
+                            StateAfter(Hero, StandDownRight, end);
+                            StateAfter(Dick, StandDownLeft, end);
+                            StateAfter(Anne, StandUpLeft, end);
+                            StateAfter(Julian, StandDownLeft, end);
                         }
                         switch (Var(Vars.V64f9cc))
                         {
@@ -1245,8 +1222,8 @@ public sealed partial class Hall : StoryScript
                                 break;
                             case 2:
                                 SetVar(Vars.V64f9cc, 3);
-                                PointerAfter(false, param_1, x: 100, y: 200);
-                                iVar1 = StateAfter(Hero, TakeMidLeftLong, param_1);
+                                PointerAfter(false, end, x: 100, y: 200);
+                                iVar1 = StateAfter(Hero, TakeMidLeftLong, end);
                                 ChangeLocation("hand", iVar1, 6);
                                 break;
                             case 4:
@@ -1264,17 +1241,17 @@ public sealed partial class Hall : StoryScript
                 {
                     if (Var(Vars.V64f994) < 7)
                     {
-                        StateAfter(Hero, StandDownLeft, param_1);
-                        StateAfter(Dick, StandDownRight, param_1);
-                        StateAfter(Anne, StandUpRight, param_1);
-                        StateAfter(Julian, StandDownRight, param_1);
+                        StateAfter(Hero, StandDownLeft, end);
+                        StateAfter(Dick, StandDownRight, end);
+                        StateAfter(Anne, StandUpRight, end);
+                        StateAfter(Julian, StandDownRight, end);
                     }
                     else
                     {
-                        StateAfter(Hero, StandDownRight, param_1);
-                        StateAfter(Dick, StandDownLeft, param_1);
-                        StateAfter(Anne, StandUpLeft, param_1);
-                        StateAfter(Julian, StandDownLeft, param_1);
+                        StateAfter(Hero, StandDownRight, end);
+                        StateAfter(Dick, StandDownLeft, end);
+                        StateAfter(Anne, StandUpLeft, end);
+                        StateAfter(Julian, StandDownLeft, end);
                     }
                     if (Var(Vars.V64fa04) == 0)
                     {
@@ -1290,17 +1267,17 @@ public sealed partial class Hall : StoryScript
             {
                 if (Var(Vars.V64f994) < 7)
                 {
-                    StateAfter(Hero, StandDownLeft, param_1);
-                    StateAfter(Dick, StandDownRight, param_1);
-                    StateAfter(Anne, StandUpRight, param_1);
-                    StateAfter(Julian, StandDownRight, param_1);
+                    StateAfter(Hero, StandDownLeft, end);
+                    StateAfter(Dick, StandDownRight, end);
+                    StateAfter(Anne, StandUpRight, end);
+                    StateAfter(Julian, StandDownRight, end);
                 }
                 else
                 {
-                    StateAfter(Hero, StandDownRight, param_1);
-                    StateAfter(Dick, StandDownLeft, param_1);
-                    StateAfter(Anne, StandUpLeft, param_1);
-                    StateAfter(Julian, StandDownLeft, param_1);
+                    StateAfter(Hero, StandDownRight, end);
+                    StateAfter(Dick, StandDownLeft, end);
+                    StateAfter(Anne, StandUpLeft, end);
+                    StateAfter(Julian, StandDownLeft, end);
                 }
                 if (Var(Vars.V64f994) == 0)
                 {
@@ -1313,26 +1290,26 @@ public sealed partial class Hall : StoryScript
             }
             SetText("clicked", "");
         }
-        else if (Episode == 3 && Quest == 7)
+        else if (At(7, 3))
         {
             if (CurrentSpeaker == Who.George)
             {
-                StateAfter(Hero, StandDownRight, param_1);
+                StateAfter(Hero, StandDownRight, end);
             }
             else if (CurrentSpeaker == Who.Dick)
             {
-                StateAfter(Dick, StandDownLeft, param_1);
+                StateAfter(Dick, StandDownLeft, end);
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StateAfter(Julian, StandDownLeft, param_1);
+                StateAfter(Julian, StandDownLeft, end);
             }
         }
-        else if (Episode == 4 && Quest == 7 && Text("clicked") == "enter" && CurrentSpeaker == Who.George)
+        else if (At(7, 4) && Text("clicked") == "enter" && CurrentSpeaker == Who.George)
         {
-            StateAfter(Hero, StandDownLeft, param_1);
-            PointerAfter(false, param_1, x: Var(Vars.V4ace9c), y: Var(Vars.V4acea0));
-            iVar1 = StateAfter(Hero, TakeMidLeft, param_1);
+            StateAfter(Hero, StandDownLeft, end);
+            PointerAfter(false, end, x: Var(Vars.V4ace9c), y: Var(Vars.V4acea0));
+            iVar1 = StateAfter(Hero, TakeMidLeft, end);
             iVar1 = Anim("DoOpenDoor1", after: iVar1, delay: 5, endObject: "LOC04Door1Obj", endObjectOn: true);
             Sound(@"wav\fx\hotueauf.wav", iVar1, 3);
             ChangeLocation("loc03", iVar1);

@@ -9,25 +9,10 @@ public sealed partial class Bedroom : StoryScript
 {
     public override string Location => "loc02";
 
-    public override bool Click(string name)
-    {
-        OnClick(name);
-        return true;
-    }
-
-    protected override void Setup()
-    {
-        OnSetup();
-    }
-
     protected override void Arrive() { }
 
-    public override void ConversationEnding(GameWorld world, TaskHandle end) => OnConversationEnding(end);
-
-    public override void ObjectChanged(GameWorld world, string name, bool on) => OnObjectChanged(name, on ? 1 : 0);
-
     // from FUN_00423447
-    void OnClick(string name)
+    public override bool Click(string name)
     {
         TaskHandle? uVar3 = null;
         if (Same(name, "LOC02Sessel"))
@@ -110,7 +95,7 @@ public sealed partial class Bedroom : StoryScript
         }
         else if (Same(name, "LOC02Buch"))
         {
-            if (Episode == 2 && Quest == 5)
+            if (At(5, 2))
             {
                 Walk(Hero, 335, 540);
                 State(Hero, StandRight);
@@ -128,10 +113,11 @@ public sealed partial class Bedroom : StoryScript
             ObjAfter("LOC02Tasche", false, uVar3, 4);
             Sound(@"wav\fx\rmantel.wav", uVar3, 3);
         }
+        return true;
     }
 
     // from FUN_00423b9a
-    void OnSetup()
+    protected override void Setup()
     {
         Music("");
         PointerOn();
@@ -306,20 +292,19 @@ public sealed partial class Bedroom : StoryScript
     }
 
     // from FUN_00424282
-    void OnObjectChanged(string name, int param_2)
+    public override void ObjectChanged(GameWorld world, string name, bool on)
     {
         int iVar1 = 0;
         TaskHandle? local_3c = null;
         TaskHandle? local_54 = null;
-        if (param_2 == 0)
+        if (!on)
         {
             iVar1 = Same(name, "LOC02Buch") ? 0 : 1;
             if (Same(name, "LOC02Buch") && Var(Vars.V63bda4) == 0)
             {
                 Give(Item.Diary);
                 SetVar(Vars.V64f1ec, 1);
-                Episode = 1;
-                Quest = 6;
+                SetStep(6, 1);
             }
             else
             {
@@ -382,11 +367,11 @@ public sealed partial class Bedroom : StoryScript
     // from FUN_004246f2
     void F4246f2()
     {
-        if (Episode == 1 && Quest == 5)
+        if (At(5, 1))
         {
             Episode = 2;
         }
-        if (Episode == 2 && Quest == 5)
+        if (At(5, 2))
         {
             SetVar(Vars.V64f1ec, 1);
             Obj("LOC02UntermBett", false);
@@ -394,7 +379,7 @@ public sealed partial class Bedroom : StoryScript
             SetVar(Vars.V64f17c, 1);
             SetVar(Vars.V64f1ec, 2);
         }
-        else if (Episode == 5 && Quest == 5)
+        else if (At(5, 5))
         {
             SetVar(Vars.V64f1ec, 1);
             SetVar(Vars.V64f1b4, 0);
@@ -406,14 +391,14 @@ public sealed partial class Bedroom : StoryScript
             SetVar(Vars.JulianTalk, 3);
             Episode = 6;
         }
-        else if (Episode == 6 && Quest == 5)
+        else if (At(5, 6))
         {
             Episode = 7;
         }
     }
 
     // from FUN_0042480a
-    void OnConversationEnding(TaskHandle? param_1)
+    public override void ConversationEnding(GameWorld world, TaskHandle end)
     {
     }
 

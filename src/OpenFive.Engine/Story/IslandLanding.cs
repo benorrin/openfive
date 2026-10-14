@@ -8,28 +8,15 @@ public sealed partial class IslandLanding : StoryScript
 {
     public override string Location => "loc13";
 
-    public override bool Click(string name)
-    {
-        OnClick(name);
-        return true;
-    }
-
-    protected override void Setup()
-    {
-        OnSetup();
-    }
-
     protected override void Arrive() { }
 
-    public override void LineQueued(GameWorld world, TaskHandle end) => OnLineQueued(end);
-
     // from FUN_0044708e
-    void OnClick(string name)
+    public override bool Click(string name)
     {
         if (Same(name, "LOC13ExitToLoc14"))
         {
             Chain = null;
-            if (Episode == 3 && Quest == 6)
+            if (At(6, 3))
             {
                 SetText("t63be38", "LOC14");
                 Say(Who.Anne, "WRACK0022", 7);
@@ -53,7 +40,7 @@ public sealed partial class IslandLanding : StoryScript
         else if (Same(name, "LOC13ExitToLoc15"))
         {
             Chain = null;
-            if (Episode == 3 && Quest == 6)
+            if (At(6, 3))
             {
                 SetText("t63be38", "LOC15");
                 Say(Who.Julian, "WRACK0022", 6);
@@ -66,7 +53,7 @@ public sealed partial class IslandLanding : StoryScript
         else if (Same(name, "LOC13ExitToLoc09"))
         {
             Chain = null;
-            if (Episode == 3 && Quest == 6)
+            if (At(6, 3))
             {
                 SetText("t63be38", "LOC09");
                 Say(Who.Julian, "WRACK0022", 5);
@@ -87,10 +74,11 @@ public sealed partial class IslandLanding : StoryScript
                 ChangeLocation("loc09");
             }
         }
+        return true;
     }
 
     // from FUN_0044738e
-    void OnSetup()
+    protected override void Setup()
     {
         TaskHandle? local_20 = null;
         PointerOn();
@@ -101,7 +89,7 @@ public sealed partial class IslandLanding : StoryScript
         ClearQueue(Julian);
         ClearQueue(George);
         ClearQueue(Timmy);
-        if (Episode == 3 && Quest == 6)
+        if (At(6, 3))
         {
             if (Var(Vars.V64d468) != 0)
             {
@@ -126,7 +114,7 @@ public sealed partial class IslandLanding : StoryScript
     }
 
     // from FUN_004475cd
-    void OnLineQueued(TaskHandle? param_1)
+    public override void LineQueued(GameWorld world, TaskHandle end)
     {
         if (Text("t63be38") != "LOC09")
         {
@@ -135,19 +123,19 @@ public sealed partial class IslandLanding : StoryScript
                 if (Text("t63be38") == "LOC15")
                 {
                     SetText("t63be38", "");
-                    ChangeLocation("loc15", param_1);
+                    ChangeLocation("loc15", end);
                 }
             }
             else
             {
                 SetText("t63be38", "");
-                ChangeLocation("loc14", param_1);
+                ChangeLocation("loc14", end);
             }
         }
         else
         {
             SetText("t63be38", "");
-            ChangeLocation("loc09", param_1);
+            ChangeLocation("loc09", end);
         }
     }
 

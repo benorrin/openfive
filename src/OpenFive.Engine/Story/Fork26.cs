@@ -9,31 +9,10 @@ public sealed partial class Fork26 : StoryScript
 {
     public override string Location => "loc26";
 
-    public override bool Click(string name)
-    {
-        OnClick(name);
-        return true;
-    }
-
-    protected override void Setup()
-    {
-        OnSetup();
-    }
-
     protected override void Arrive() { }
 
-    public override void LineStarting(GameWorld world, int speaker)
-    {
-        CurrentSpeaker = speaker;
-        OnLineStarting(null);
-    }
-
-    public override void LineQueued(GameWorld world, TaskHandle end) => OnLineQueued(end);
-
-    public override void ConversationEnding(GameWorld world, TaskHandle end) => OnConversationEnding(end);
-
     // from FUN_00458ba7
-    void OnClick(string name)
+    public override bool Click(string name)
     {
         if (Same(name, "LOC26ExitToLoc23"))
         {
@@ -50,10 +29,11 @@ public sealed partial class Fork26 : StoryScript
             Walk(Hero, Var(Vars.V4ace9c), 600);
             ChangeLocation("loc25");
         }
+        return true;
     }
 
     // from FUN_00458ca9
-    void OnSetup()
+    protected override void Setup()
     {
         Hero.Follower = null;
         PointerOn();
@@ -93,7 +73,7 @@ public sealed partial class Fork26 : StoryScript
         Place(Hero, 452, 411, StandRight);
         Show(Hero);
     LAB_00458e65:
-        if (Episode == 1 && Quest == 9)
+        if (At(9, 1))
         {
             Place(George, 360, 417, StandLeft);
             Hero.Follower = Hero;
@@ -102,67 +82,67 @@ public sealed partial class Fork26 : StoryScript
     }
 
     // from FUN_00458ec6
-    void OnLineStarting(TaskHandle? param_1)
+    public override void LineStarting(GameWorld world, int speaker)
     {
         if (CurrentSpeaker == Who.Anne)
         {
-            StateAfter(Anne, SpeakDownRight, param_1);
+            StateAfter(Anne, SpeakDownRight, null);
         }
         else if (CurrentSpeaker == Who.Julian)
         {
-            StateAfter(Julian, SpeakDownLeft, param_1);
+            StateAfter(Julian, SpeakDownLeft, null);
         }
         else if (CurrentSpeaker == Who.George)
         {
-            StateAfter(George, SpeakDownRight, param_1);
+            StateAfter(George, SpeakDownRight, null);
         }
         else if (CurrentSpeaker == Who.Dick)
         {
-            StateAfter(Hero, SpeakDownLeft, param_1);
+            StateAfter(Hero, SpeakDownLeft, null);
         }
     }
 
     // from FUN_00458f88
-    void OnLineQueued(TaskHandle? param_1)
+    public override void LineQueued(GameWorld world, TaskHandle end)
     {
         if (CurrentSpeaker == Who.Anne)
         {
-            StateAfter(Anne, StandDownRight, param_1);
+            StateAfter(Anne, StandDownRight, end);
         }
         else if (CurrentSpeaker == Who.Julian)
         {
-            StateAfter(Julian, StandDownLeft, param_1);
+            StateAfter(Julian, StandDownLeft, end);
         }
         else if (CurrentSpeaker == Who.George)
         {
-            StateAfter(George, StandDownRight, param_1);
+            StateAfter(George, StandDownRight, end);
         }
         else if (CurrentSpeaker == Who.Dick)
         {
-            StateAfter(Hero, StandDownLeft, param_1);
+            StateAfter(Hero, StandDownLeft, end);
         }
     }
 
     // from FUN_0045904a
-    void OnConversationEnding(TaskHandle? param_1)
+    public override void ConversationEnding(GameWorld world, TaskHandle end)
     {
-        if (Episode == 1 && Quest == 9)
+        if (At(9, 1))
         {
             if (CurrentSpeaker == Who.Anne)
             {
-                StateAfter(Anne, StandDownRight, param_1);
+                StateAfter(Anne, StandDownRight, end);
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StateAfter(Julian, StandDownLeft, param_1);
+                StateAfter(Julian, StandDownLeft, end);
             }
             else if (CurrentSpeaker == Who.George)
             {
-                StateAfter(George, StandDownRight, param_1);
+                StateAfter(George, StandDownRight, end);
             }
             else if (CurrentSpeaker == Who.Dick)
             {
-                StateAfter(Hero, StandDownLeft, param_1);
+                StateAfter(Hero, StandDownLeft, end);
             }
         }
     }

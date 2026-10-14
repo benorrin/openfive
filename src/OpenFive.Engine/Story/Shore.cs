@@ -9,37 +9,10 @@ public sealed partial class Shore : StoryScript
 {
     public override string Location => "loc09";
 
-    public override bool Click(string name)
-    {
-        OnClick(name);
-        return true;
-    }
-
-    protected override void Setup()
-    {
-        OnSetup();
-    }
-
     protected override void Arrive() { }
 
-    protected override void AfterChoice(string scene, int line, int option) => OnAfterChoice();
-
-    public override void LineStarting(GameWorld world, int speaker)
-    {
-        CurrentSpeaker = speaker;
-        OnLineStarting(null);
-    }
-
-    public override void LineQueued(GameWorld world, TaskHandle end) => OnLineQueued(end);
-
-    public override void ConversationEnding(GameWorld world, TaskHandle end) => OnConversationEnding(end);
-
-    public override void ObjectChanged(GameWorld world, string name, bool on) => OnObjectChanged(name, on ? 1 : 0);
-
-    public override void EveryTick() => OnEveryTick();
-
     // from FUN_00441d3e
-    void OnClick(string name)
+    public override bool Click(string name)
     {
         TaskHandle? local_20 = null;
         if (Same(name, "LOC09ExitToLOC08"))
@@ -137,7 +110,7 @@ public sealed partial class Shore : StoryScript
                 Walk(Hero, 160, 412);
                 local_20 = State(Hero, StandLeft);
             }
-            if (Episode == 2 && Quest == 6)
+            if (At(6, 2))
             {
                 Walk(Hero, 160, 412);
                 local_20 = State(Hero, StandLeft);
@@ -158,7 +131,7 @@ public sealed partial class Shore : StoryScript
             }
             else if ((Episode < 3 || Quest != 7) && ((Episode > 1 || Quest != 8)))
             {
-                if (Episode == 2 && Quest == 8)
+                if (At(8, 2))
                 {
                     if (Has(Item.Rope))
                     {
@@ -255,7 +228,7 @@ public sealed partial class Shore : StoryScript
                     Say(Who.Alf, "STRAND0003-09", 3, last: true, after: local_20);
                 }
             }
-            else if (Episode == 2 && Quest == 8)
+            else if (At(8, 2))
             {
                 Walk(Hero, 376, 392);
                 Chain = State(Hero, StandUpRight);
@@ -279,7 +252,7 @@ public sealed partial class Shore : StoryScript
             Walk(Hero, 170, 470);
             Chain = State(Hero, StandUpRight);
             local_20 = Chain;
-            if (Episode == 2 && Quest == 6)
+            if (At(6, 2))
             {
                 if (Var(Vars.AnneBeachTalk) == 0)
                 {
@@ -303,7 +276,7 @@ public sealed partial class Shore : StoryScript
                     Say(Who.Anne, "STRAND0018-09", 42, last: true, after: local_20);
                 }
             }
-            else if (Episode == 3 && Quest == 6)
+            else if (At(6, 3))
             {
                 if (Var(Vars.V650874) == 2)
                 {
@@ -335,7 +308,7 @@ public sealed partial class Shore : StoryScript
                     }
                 }
             }
-            else if (Episode == 4 && Quest == 6)
+            else if (At(6, 4))
             {
                 if (Var(Vars.AnneBeachTalk) == 0)
                 {
@@ -350,11 +323,11 @@ public sealed partial class Shore : StoryScript
                     Say(Who.Dick, "ALL0024", 7, last: true);
                 }
             }
-            else if (Episode == 2 && Quest == 7)
+            else if (At(7, 2))
             {
                 Say(Who.Anne, "STRAND0026", 1, last: true, after: local_20);
             }
-            else if (Episode == 2 && Quest == 8)
+            else if (At(8, 2))
             {
                 if (Var(Vars.AnneBeachTalk) == 0)
                 {
@@ -374,7 +347,7 @@ public sealed partial class Shore : StoryScript
             Walk(Hero, 170, 470);
             Chain = State(Hero, StandUpRight);
             local_20 = Chain;
-            if (Episode == 2 && Quest == 6)
+            if (At(6, 2))
             {
                 if (Var(Vars.JulianBeachTalk) == 0)
                 {
@@ -395,7 +368,7 @@ public sealed partial class Shore : StoryScript
                     Say(Who.Julian, "STRAND0018-09", 44, last: true, after: local_20);
                 }
             }
-            else if (Episode == 3 && Quest == 6)
+            else if (At(6, 3))
             {
                 if (Var(Vars.V650874) == 2)
                 {
@@ -427,7 +400,7 @@ public sealed partial class Shore : StoryScript
                     }
                 }
             }
-            else if (Episode == 4 && Quest == 6)
+            else if (At(6, 4))
             {
                 if (Var(Vars.JulianBeachTalk) == 0)
                 {
@@ -441,7 +414,7 @@ public sealed partial class Shore : StoryScript
                     Say(Who.Julian, "ALL0024", 9, last: true, after: local_20);
                 }
             }
-            else if (Episode == 2 && Quest == 7)
+            else if (At(7, 2))
             {
                 if (Var(Vars.JulianBeachTalk) == 0)
                 {
@@ -454,7 +427,7 @@ public sealed partial class Shore : StoryScript
                     Say(Who.Julian, "STRAND0026", 5, last: true, after: local_20);
                 }
             }
-            else if (Episode == 2 && Quest == 8)
+            else if (At(8, 2))
             {
                 Say(Who.Julian, "STRAND0036", 15, last: true, after: local_20);
             }
@@ -464,7 +437,7 @@ public sealed partial class Shore : StoryScript
             Walk(Hero, 170, 470);
             Chain = State(Hero, StandUpRight);
             local_20 = Chain;
-            if (Episode == 2 && Quest == 6)
+            if (At(6, 2))
             {
                 if (Var(Vars.DickBeachTalk) == 0)
                 {
@@ -485,7 +458,7 @@ public sealed partial class Shore : StoryScript
                     Say(Who.Dick, "STRAND0018-09", 43, last: true, after: local_20);
                 }
             }
-            else if (Episode == 3 && Quest == 6)
+            else if (At(6, 3))
             {
                 if (Var(Vars.V650874) == 2)
                 {
@@ -518,7 +491,7 @@ public sealed partial class Shore : StoryScript
                     }
                 }
             }
-            else if (Episode == 4 && Quest == 6)
+            else if (At(6, 4))
             {
                 if (Var(Vars.V65044c) == 0)
                 {
@@ -562,11 +535,11 @@ public sealed partial class Shore : StoryScript
                     Say(Who.George, "ALL0024", 20, last: true, after: local_20);
                 }
             }
-            else if (Episode == 2 && Quest == 7)
+            else if (At(7, 2))
             {
                 Say(Who.George, "STRAND0026", 2, last: true, after: local_20);
             }
-            else if (Episode == 2 && Quest == 8)
+            else if (At(8, 2))
             {
                 if (Var(Vars.DickBeachTalk) == 0)
                 {
@@ -591,7 +564,7 @@ public sealed partial class Shore : StoryScript
             local_20 = Chain;
             PointerOff();
             SetText("t63be28", "Fischer");
-            if (Episode == 2 && Quest == 6)
+            if (At(6, 2))
             {
                 if (Var(Vars.FishermanTalk) == 1)
                 {
@@ -619,10 +592,11 @@ public sealed partial class Shore : StoryScript
                 PointerOn();
             }
         }
+        return true;
     }
 
     // from FUN_00444e95
-    void OnSetup()
+    protected override void Setup()
     {
         PointerOn();
         Obj("LOC09KisteRechtsClick", false);
@@ -854,10 +828,9 @@ public sealed partial class Shore : StoryScript
     void F4457e1()
     {
         TaskHandle? local_20 = null;
-        if (Episode == 2 && Quest == 2)
+        if (At(2, 2))
         {
-            Episode = 3;
-            Quest = 2;
+            SetStep(2, 3);
             Obj("LOC09KisteRechts", true);
             if (Var(Vars.V64f4fc) > 0)
             {
@@ -867,7 +840,7 @@ public sealed partial class Shore : StoryScript
             SetVar(Vars.JulianTalk, 0);
             SetVar(Vars.AnneTalk, 0);
         }
-        else if (Episode == 3 && Quest == 2)
+        else if (At(2, 3))
         {
             if (Var(Vars.V6504bc) == 0 && Seq(() => Obj("LOC09KisteRechts", true), () => Var(Vars.V6506ec) > 0))
             {
@@ -876,7 +849,7 @@ public sealed partial class Shore : StoryScript
         }
         else if (Episode != 2 || Quest != 4)
         {
-            if (Episode == 2 && Quest == 6)
+            if (At(6, 2))
             {
                 Place(Julian, 250, 300, StandDownRight);
                 Place(Anne, 150, 200, StandDownRight);
@@ -889,7 +862,7 @@ public sealed partial class Shore : StoryScript
             }
             else if (Episode < 3 || Quest != 6)
             {
-                if (Episode == 2 && Quest == 7)
+                if (At(7, 2))
                 {
                     Place(Julian, 250, 300, StandDownRight);
                     Place(Anne, 150, 200, StandDownRight);
@@ -960,228 +933,231 @@ public sealed partial class Shore : StoryScript
     }
 
     // from FUN_00445de1
-    void OnLineStarting(TaskHandle? param_1)
+    public override void LineStarting(GameWorld world, int speaker)
     {
+        TaskHandle? after = null;
         if (Quest < 3)
         {
             if (CurrentSpeaker == Who.Dick)
             {
-                param_1 = StateAfter(Hero, SpeakDownRight, param_1);
+                after = StateAfter(Hero, SpeakDownRight, after);
             }
             else if (CurrentSpeaker == Who.Alf)
             {
-                StopAnimAfter("AlfSchleifeArm", param_1);
-                StopAnimAfter("AlfSchleife", param_1);
-                Anim("AlfSchleifeArmSpeak", -1, param_1);
-                Anim("AlfSchleifeSpeak", -1, param_1);
+                StopAnimAfter("AlfSchleifeArm", after);
+                StopAnimAfter("AlfSchleife", after);
+                Anim("AlfSchleifeArmSpeak", -1, after);
+                Anim("AlfSchleifeSpeak", -1, after);
             }
         }
-        else if (Episode == 2 && Quest == 6)
+        else if (At(6, 2))
         {
-            if (Hero.State == 27)
+            if (Hero.State == SpeakDownLeft)
             {
-                Hero.State = 7;
+                Hero.State = StandDownLeft;
             }
             if (CurrentSpeaker == Who.Anne)
             {
-                StateAfter(Anne, SpeakDownRight, param_1);
+                StateAfter(Anne, SpeakDownRight, after);
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StateAfter(Julian, SpeakDownRight, param_1);
+                StateAfter(Julian, SpeakDownRight, after);
             }
             else if (CurrentSpeaker == Who.Dick)
             {
-                StateAfter(Dick, SpeakDownLeft, param_1);
+                StateAfter(Dick, SpeakDownLeft, after);
             }
             else if (CurrentSpeaker == Who.George)
             {
                 if (Text("t63be28") == "Fischer" || Text("t63be28") == "heroWechsel")
                 {
-                    StateAfter(Hero, SpeakDownLeft, param_1);
+                    StateAfter(Hero, SpeakDownLeft, after);
                 }
             }
             else if (CurrentSpeaker == Who.George)
             {
-                StateAfter(Hero, SpeakDownLeft, param_1);
+                StateAfter(Hero, SpeakDownLeft, after);
             }
             else if (CurrentSpeaker == Who.Fisherman)
             {
-                StopAnimAfter("FischerStand", param_1);
-                Anim("FischerStandSpeak", -1, param_1);
+                StopAnimAfter("FischerStand", after);
+                Anim("FischerStandSpeak", -1, after);
             }
         }
         else if (Episode < 3 || Quest != 6)
         {
-            if (Episode == 2 && Quest == 7)
+            if (At(7, 2))
             {
                 if (CurrentSpeaker == Who.Anne)
                 {
-                    StateAfter(Anne, SpeakDownRight, param_1);
+                    StateAfter(Anne, SpeakDownRight, after);
                 }
                 else if (CurrentSpeaker == Who.Julian)
                 {
-                    StateAfter(Julian, SpeakDownRight, param_1);
+                    StateAfter(Julian, SpeakDownRight, after);
                 }
                 else if (CurrentSpeaker == Who.George)
                 {
-                    StateAfter(George, SpeakDownLeft, param_1);
+                    StateAfter(George, SpeakDownLeft, after);
                 }
             }
-            else if (Episode == 2 && Quest == 8)
+            else if (At(8, 2))
             {
                 if (CurrentSpeaker == Who.Anne)
                 {
-                    StateAfter(Anne, SpeakDownRight, param_1);
+                    StateAfter(Anne, SpeakDownRight, after);
                 }
                 else if (CurrentSpeaker == Who.Julian)
                 {
-                    StateAfter(Julian, SpeakDownRight, param_1);
+                    StateAfter(Julian, SpeakDownRight, after);
                 }
                 else if (CurrentSpeaker == Who.Dick)
                 {
-                    StateAfter(Dick, SpeakDownLeft, param_1);
+                    StateAfter(Dick, SpeakDownLeft, after);
                 }
                 else if (CurrentSpeaker == Who.Alf)
                 {
-                    StopAnimAfter("AlfmitFunk", param_1);
-                    Anim("AlfmitFunkSpeak", -1, param_1);
+                    StopAnimAfter("AlfmitFunk", after);
+                    Anim("AlfmitFunkSpeak", -1, after);
                 }
             }
         }
         else if (CurrentSpeaker == Who.Anne)
         {
-            StateAfter(Anne, SpeakDownRight, param_1);
+            StateAfter(Anne, SpeakDownRight, after);
         }
         else if (CurrentSpeaker == Who.Julian)
         {
-            StateAfter(Julian, SpeakDownRight, param_1);
+            StateAfter(Julian, SpeakDownRight, after);
         }
         else if (CurrentSpeaker == Who.George)
         {
-            StateAfter(George, SpeakDownLeft, param_1);
+            StateAfter(George, SpeakDownLeft, after);
         }
     }
 
     // from FUN_004461e1
-    void OnLineQueued(TaskHandle? param_1)
+    public override void LineQueued(GameWorld world, TaskHandle end)
     {
+        TaskHandle? after = end;
         if (Quest < 3)
         {
             if (CurrentSpeaker == Who.Dick)
             {
-                param_1 = StateAfter(Hero, StandDownRight, param_1);
+                after = StateAfter(Hero, StandDownRight, after);
             }
             else if (CurrentSpeaker == Who.Alf)
             {
-                StopAnimAfter("AlfSchleifeArmSpeak", param_1);
-                StopAnimAfter("AlfSchleifeSpeak", param_1);
-                Anim("AlfSchleifeArm", -1, param_1);
-                Anim("AlfSchleife", -1, param_1);
+                StopAnimAfter("AlfSchleifeArmSpeak", after);
+                StopAnimAfter("AlfSchleifeSpeak", after);
+                Anim("AlfSchleifeArm", -1, after);
+                Anim("AlfSchleife", -1, after);
             }
         }
-        else if (Episode == 2 && Quest == 6)
+        else if (At(6, 2))
         {
             if (CurrentSpeaker == Who.Anne)
             {
-                StateAfter(Anne, StandDownRight, param_1);
+                StateAfter(Anne, StandDownRight, after);
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StateAfter(Julian, StandDownRight, param_1);
+                StateAfter(Julian, StandDownRight, after);
             }
             else if (CurrentSpeaker == Who.Dick)
             {
-                StateAfter(Dick, StandDownLeft, param_1);
+                StateAfter(Dick, StandDownLeft, after);
             }
             else if (CurrentSpeaker == Who.George)
             {
                 if (Text("t63be28") == "Fischer" || Text("t63be28") == "heroWechsel")
                 {
-                    StateAfter(Hero, StandDownLeft, param_1);
+                    StateAfter(Hero, StandDownLeft, after);
                 }
             }
             else if (CurrentSpeaker == Who.George)
             {
-                StateAfter(Hero, StandDownLeft, param_1);
+                StateAfter(Hero, StandDownLeft, after);
             }
             else if (CurrentSpeaker == Who.Fisherman)
             {
-                StopAnimAfter("FischerStandSpeak", param_1);
-                Anim("FischerStand", -1, param_1);
+                StopAnimAfter("FischerStandSpeak", after);
+                Anim("FischerStand", -1, after);
             }
         }
         else if (Episode < 3 || Quest != 6)
         {
-            if (Episode == 2 && Quest == 7)
+            if (At(7, 2))
             {
                 if (CurrentSpeaker == Who.Anne)
                 {
-                    StateAfter(Anne, StandDownRight, param_1);
+                    StateAfter(Anne, StandDownRight, after);
                 }
                 else if (CurrentSpeaker == Who.Julian)
                 {
-                    StateAfter(Julian, StandDownRight, param_1);
+                    StateAfter(Julian, StandDownRight, after);
                 }
                 else if (CurrentSpeaker == Who.George)
                 {
-                    StateAfter(George, StandDownLeft, param_1);
+                    StateAfter(George, StandDownLeft, after);
                 }
             }
-            else if (Episode == 2 && Quest == 8)
+            else if (At(8, 2))
             {
                 if (CurrentSpeaker == Who.Anne)
                 {
-                    StateAfter(Anne, StandDownRight, param_1);
+                    StateAfter(Anne, StandDownRight, after);
                 }
                 else if (CurrentSpeaker == Who.Julian)
                 {
-                    StateAfter(Julian, StandDownRight, param_1);
+                    StateAfter(Julian, StandDownRight, after);
                 }
                 else if (CurrentSpeaker == Who.Dick)
                 {
-                    StateAfter(Dick, StandDownLeft, param_1);
+                    StateAfter(Dick, StandDownLeft, after);
                 }
                 else if (CurrentSpeaker == Who.Alf)
                 {
-                    StopAnimAfter("AlfmitFunkSpeak", param_1);
-                    Anim("AlfmitFunk", -1, param_1);
+                    StopAnimAfter("AlfmitFunkSpeak", after);
+                    Anim("AlfmitFunk", -1, after);
                 }
             }
         }
         else if (CurrentSpeaker == Who.Anne)
         {
-            StateAfter(Anne, StandDownRight, param_1);
+            StateAfter(Anne, StandDownRight, after);
         }
         else if (CurrentSpeaker == Who.Julian)
         {
-            StateAfter(Julian, StandDownRight, param_1);
+            StateAfter(Julian, StandDownRight, after);
         }
         else if (CurrentSpeaker == Who.George)
         {
-            StateAfter(George, StandDownLeft, param_1);
+            StateAfter(George, StandDownLeft, after);
         }
     }
 
     // from FUN_004465ca
-    void OnConversationEnding(TaskHandle? param_1)
+    public override void ConversationEnding(GameWorld world, TaskHandle end)
     {
+        TaskHandle? after = end;
         if (Quest < 3)
         {
             if (CurrentSpeaker == Who.Alf)
             {
-                StopAnimAfter("AlfSchleifeArmSpeak", param_1);
-                StopAnimAfter("AlfSchleifeSpeak", param_1);
-                Anim("AlfSchleifeArm", -1, param_1);
-                Anim("AlfSchleife", -1, param_1);
+                StopAnimAfter("AlfSchleifeArmSpeak", after);
+                StopAnimAfter("AlfSchleifeSpeak", after);
+                Anim("AlfSchleifeArm", -1, after);
+                Anim("AlfSchleife", -1, after);
             }
-            param_1 = StateAfter(Hero, StandDownRight, param_1);
+            after = StateAfter(Hero, StandDownRight, after);
         }
         else if (CurrentSpeaker == Who.George)
         {
-            StateAfter(Hero, StandDownLeft, param_1);
+            StateAfter(Hero, StandDownLeft, after);
         }
-        else if (Episode == 2 && Quest == 6)
+        else if (At(6, 2))
         {
             if (Text("t63be28") == "Boot" && Var(Vars.BeachBoat) == 3)
             {
@@ -1189,7 +1165,7 @@ public sealed partial class Shore : StoryScript
             }
             if (CurrentSpeaker == Who.Anne)
             {
-                StateAfter(Anne, StandDownRight, param_1);
+                StateAfter(Anne, StandDownRight, after);
                 if (Var(Vars.AnneBeachTalk) == 0)
                 {
                     SetVar(Vars.AnneBeachTalk, 1);
@@ -1201,7 +1177,7 @@ public sealed partial class Shore : StoryScript
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StateAfter(Julian, StandDownRight, param_1);
+                StateAfter(Julian, StandDownRight, after);
                 if (Var(Vars.JulianBeachTalk) == 0)
                 {
                     SetVar(Vars.JulianBeachTalk, 1);
@@ -1209,7 +1185,7 @@ public sealed partial class Shore : StoryScript
             }
             else if (CurrentSpeaker == Who.Dick)
             {
-                StateAfter(Dick, StandDownLeft, param_1);
+                StateAfter(Dick, StandDownLeft, after);
                 if (Var(Vars.DickBeachTalk) == 0)
                 {
                     SetVar(Vars.DickBeachTalk, 1);
@@ -1219,13 +1195,13 @@ public sealed partial class Shore : StoryScript
             {
                 if (Text("t63be28") == "Fischer" || Text("t63be28") == "heroWechsel")
                 {
-                    StateAfter(Hero, StandDownLeft, param_1);
+                    StateAfter(Hero, StandDownLeft, after);
                 }
             }
             else if (CurrentSpeaker == Who.Fisherman)
             {
-                StopAnimAfter("FischerStandSpeak", param_1);
-                Anim("FischerStand", -1, param_1);
+                StopAnimAfter("FischerStandSpeak", after);
+                Anim("FischerStand", -1, after);
                 if (Text("t63be28") == "heroWechsel")
                 {
                     Episode = 3;
@@ -1233,17 +1209,17 @@ public sealed partial class Shore : StoryScript
                 }
                 if (Var(Vars.FishermanTalk) == 1)
                 {
-                    Ask(21, "STRAND0018-09", 36, after: param_1);
+                    Ask(21, "STRAND0018-09", 36, after: after);
                     SetVar(Vars.FishermanTalk, 2);
                 }
             }
             SetText("t63be28", "");
         }
-        else if (Episode == 3 && Quest == 6)
+        else if (At(6, 3))
         {
             if (CurrentSpeaker == Who.Anne)
             {
-                StateAfter(Anne, StandDownRight, param_1);
+                StateAfter(Anne, StandDownRight, after);
                 if (Var(Vars.AnneBeachTalk) == 0)
                 {
                     SetVar(Vars.AnneBeachTalk, 1);
@@ -1251,13 +1227,13 @@ public sealed partial class Shore : StoryScript
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StateAfter(Julian, StandDownRight, param_1);
+                StateAfter(Julian, StandDownRight, after);
                 if (Var(Vars.JulianBeachTalk) == 0)
                 {
                     SetVar(Vars.JulianBeachTalk, 1);
                 }
             }
-            else if (CurrentSpeaker == Who.George && Seq(() => StateAfter(George, StandDownLeft, param_1), () => Var(Vars.V65044c) == 0))
+            else if (CurrentSpeaker == Who.George && Seq(() => StateAfter(George, StandDownLeft, after), () => Var(Vars.V65044c) == 0))
             {
                 SetVar(Vars.V65044c, 1);
             }
@@ -1265,62 +1241,62 @@ public sealed partial class Shore : StoryScript
         }
         else if (Episode < 4 || Quest != 6)
         {
-            if (Episode == 2 && Quest == 7)
+            if (At(7, 2))
             {
                 if (CurrentSpeaker == Who.Anne)
                 {
-                    StateAfter(Anne, StandDownRight, param_1);
+                    StateAfter(Anne, StandDownRight, after);
                 }
                 else if (CurrentSpeaker == Who.Julian)
                 {
-                    StateAfter(Julian, StandDownRight, param_1);
+                    StateAfter(Julian, StandDownRight, after);
                 }
                 else if (CurrentSpeaker == Who.George)
                 {
-                    StateAfter(George, StandDownLeft, param_1);
+                    StateAfter(George, StandDownLeft, after);
                 }
             }
-            else if (Episode == 2 && Quest == 8)
+            else if (At(8, 2))
             {
                 if (CurrentSpeaker == Who.Anne)
                 {
-                    StateAfter(Anne, StandDownRight, param_1);
+                    StateAfter(Anne, StandDownRight, after);
                 }
                 else if (CurrentSpeaker == Who.Julian)
                 {
-                    StateAfter(Julian, StandDownRight, param_1);
+                    StateAfter(Julian, StandDownRight, after);
                 }
                 else if (CurrentSpeaker == Who.Dick)
                 {
-                    StateAfter(Dick, StandDownLeft, param_1);
+                    StateAfter(Dick, StandDownLeft, after);
                 }
                 else if (CurrentSpeaker == Who.Alf)
                 {
-                    StopAnimAfter("AlfmitFunkSpeak", param_1);
-                    Anim("AlfmitFunk", -1, param_1);
+                    StopAnimAfter("AlfmitFunkSpeak", after);
+                    Anim("AlfmitFunk", -1, after);
                 }
             }
         }
         else if (CurrentSpeaker == Who.Anne)
         {
-            StateAfter(Anne, StandDownRight, param_1);
+            StateAfter(Anne, StandDownRight, after);
         }
         else if (CurrentSpeaker == Who.Julian)
         {
-            StateAfter(Julian, StandDownRight, param_1);
+            StateAfter(Julian, StandDownRight, after);
         }
         else if (CurrentSpeaker == Who.George)
         {
-            StateAfter(George, StandDownLeft, param_1);
+            StateAfter(George, StandDownLeft, after);
         }
     }
 
     // from FUN_00446bea
-    void OnAfterChoice()
+    protected override void AfterChoice(string scene, int line, int option)
     {
         if (LocationId == 9 && Var(Vars.V64ef11) != 0)
         {
-            if (Episode == 2 && Quest == 6)
+            if (At(6, 2))
             {
                 if (Var(Vars.V64ef88) == Var(Vars.V64ef7c))
                 {
@@ -1358,9 +1334,9 @@ public sealed partial class Shore : StoryScript
     }
 
     // from FUN_00446ecb
-    void OnObjectChanged(string name, int param_2)
+    public override void ObjectChanged(GameWorld world, string name, bool on)
     {
-        if (param_2 == 0)
+        if (!on)
         {
             if (Same(name, "LOC09Fusspuren") && Var(Vars.V63be1c) != 0 && Quest < 3)
             {
@@ -1385,11 +1361,11 @@ public sealed partial class Shore : StoryScript
     }
 
     // from FUN_00446fa0
-    void OnEveryTick()
+    public override void EveryTick()
     {
-        if (Episode == 3 && Quest == 2)
+        if (At(2, 3))
         {
-            if (Hero.State == 96)
+            if (Hero.State == PushBoatRight)
             {
                 Hero.X = Hero.X + 10.0;
                 SetVar(Vars.V63be20, Var(Vars.V63be20) + 10);
@@ -1398,7 +1374,7 @@ public sealed partial class Shore : StoryScript
                 SetVar(Vars.V63be1d, 1);
             }
         }
-        else if (Hero.State == 97)
+        else if (Hero.State == PushBoatLeft)
         {
             Hero.X = Hero.X + -10.0;
             SetVar(Vars.V63be24, Var(Vars.V63be24) + -10);

@@ -11,35 +11,22 @@ public sealed partial class WellTop : StoryScript
     /// <summary>The rope animation being played (the rope is moved while it runs).</summary>
     TaskHandle? _rope;
 
-    public override bool Click(string name)
-    {
-        OnClick(name);
-        return true;
-    }
-
-    protected override void Setup()
-    {
-        OnSetup();
-    }
-
     protected override void Arrive() { }
 
-    public override void EveryTick() => OnEveryTick();
-
     // from FUN_00454435
-    void OnClick(string name)
+    public override bool Click(string name)
     {
         TaskHandle? local_20 = null;
         if (Same(name, "LOC18BigClick"))
         {
-            if (Quest == 8 && Episode == 3)
+            if (At(8, 3))
             {
                 ChangeLocation("loc17");
             }
         }
         else if (Same(name, "LOC18ExitToLoc17"))
         {
-            if (Quest == 8 && Episode == 4 && Var(Vars.V650e5c) == 0)
+            if (At(8, 4) && Var(Vars.V650e5c) == 0)
             {
                 Chain = local_20;
                 Say(Who.George, "BRUNNEN0041", 1, last: true, after: local_20);
@@ -69,10 +56,11 @@ public sealed partial class WellTop : StoryScript
             Chain = local_20;
             Say(Who.Dick, "BRUNNEN0039", 3, last: true);
         }
+        return true;
     }
 
     // from FUN_00454687
-    void OnSetup()
+    protected override void Setup()
     {
         PointerOn();
         F454705(0, 0, 0, 0);
@@ -87,7 +75,7 @@ public sealed partial class WellTop : StoryScript
         Obj("LOC18ExitToLoc19", false);
         StopAnim("4heads");
         StopAnim("RopeDown");
-        if (Episode == 3 && Quest == 8)
+        if (At(8, 3))
         {
             Episode = 4;
         }
@@ -114,7 +102,7 @@ public sealed partial class WellTop : StoryScript
                 Say(Who.Dick, "BRUNNEN0039", 2, last: true);
             }
         }
-        else if (Episode == 5 && Quest == 8)
+        else if (At(8, 5))
         {
             Obj("LOC18BigClick", true);
             Depth(@"bmp\obj\dick\dicl\dicl01.brg", 90);
@@ -129,7 +117,7 @@ public sealed partial class WellTop : StoryScript
             Anim("RopeDownStill", -1);
             Obj("LOC18ExitToLoc17", true);
         }
-        else if (Episode == 4 && Quest == 8)
+        else if (At(8, 4))
         {
             SetVar(Vars.WellRopeState, 0);
             Obj("LOC18BigClick", true);
@@ -166,7 +154,7 @@ public sealed partial class WellTop : StoryScript
     }
 
     // from FUN_00454bfb
-    void OnEveryTick()
+    public override void EveryTick()
     {
         if (Var(Vars.WellRopeState) == 1)
         {

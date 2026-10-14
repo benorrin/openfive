@@ -40,8 +40,7 @@ public sealed class NextMorning : CloseUp
     protected override void Setup()
     {
         PointerOff();
-        Episode = 0;
-        Quest = 5;
+        SetStep(5, 0);
         MoveOnAfter("loc05", 30);
     }
 }

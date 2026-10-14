@@ -89,7 +89,7 @@ public sealed partial class ItemUses : StoryScript
         {
             Chain = null;
             local_5c = null;
-            if (Episode == 3 && Quest == 8)
+            if (At(8, 3))
             {
                 PointerOff();
                 Say(Who.Dick, "RUINE0040", 24, last: true, after: local_5c);
@@ -139,7 +139,7 @@ public sealed partial class ItemUses : StoryScript
                     StopAnimAfter("FeuerMittel", local_cc, 5);
                     Anim("FeuerKlein", -1, local_cc, 5);
                     SetVar(Vars.StudyFire, 0);
-                    if (Episode == 4 && Quest == 7)
+                    if (At(7, 4))
                     {
                         SetVar(Vars.StudyFireOut, 1);
                     }
@@ -162,7 +162,7 @@ public sealed partial class ItemUses : StoryScript
             {
                 if (Same(target, "LOC19SeilKlick"))
                 {
-                    if (Episode == 4 && Quest == 8 && Var(Vars.V650ecc) == 0)
+                    if (At(8, 4) && Var(Vars.V650ecc) == 0)
                     {
                         PointerOff();
                         SetVar(Vars.V650ecc, 1);
@@ -198,8 +198,7 @@ public sealed partial class ItemUses : StoryScript
                     SetVar(Vars.TinOpened, 1);
                     Say(Who.Dick, "KUECHE0027", 3, last: true, after: local_11c);
                     PointerAfter(true, Chain, x: 100, y: 200);
-                    Episode = 3;
-                    Quest = 7;
+                    SetStep(7, 3);
                     Take(Item.ClosedTin);
                     Give(Item.OpenTin);
                     Give(Item.Key);
@@ -273,7 +272,7 @@ public sealed partial class ItemUses : StoryScript
             }
             else if (Same(name, "COMMON_INV07") || Same(name, "COMMON_INV26"))
             {
-                if (Same(name, "COMMON_INV26") && ((Quest == 6 && Episode == 4)))
+                if (Same(name, "COMMON_INV26") && ((At(6, 4))))
                 {
                     if (Same(target, "LOC16Scharnier"))
                     {
@@ -285,8 +284,7 @@ public sealed partial class ItemUses : StoryScript
                         ObjAfter("LOC16Scharnier", false, uVar7);
                         Anim("DoOpenSchrank", after: uVar7, endObject: "LOC16SchrankAuf", endObjectOn: true);
                         SetVar(Vars.CabinCupboardOpen, 1);
-                        Episode = 1;
-                        Quest = 7;
+                        SetStep(7, 1);
                         SetVar(Vars.AnneBeachTalk, 0);
                         SetVar(Vars.AnneIslandTalk, 0);
                         SetVar(Vars.AnneWreckTalk, 0);
@@ -310,7 +308,7 @@ public sealed partial class ItemUses : StoryScript
                         local_18 = 0;
                     }
                 }
-                else if (Same(target, "LOC04TueschlossLoc03") && ((Episode == 4 && Quest == 7)))
+                else if (Same(target, "LOC04TueschlossLoc03") && ((At(7, 4))))
                 {
                     PointerOff();
                     Walk(Hero, 193, 517);
@@ -332,7 +330,7 @@ public sealed partial class ItemUses : StoryScript
                 if (Same(target, "LOC17Stein"))
                 {
                     Walk(Hero, 490, 458);
-                    if (Episode == 3 && Quest == 8)
+                    if (At(8, 3))
                     {
                         Chain = State(Hero, TieRight);
                         local_284 = Chain;
@@ -372,7 +370,7 @@ public sealed partial class ItemUses : StoryScript
                 }
                 else if (Same(target, "LOC17Efeu"))
                 {
-                    if (Episode == 1 && Quest == 11)
+                    if (At(11, 1))
                     {
                         if (Var(Vars.RopeOnIvy) != 0)
                         {
@@ -391,7 +389,7 @@ public sealed partial class ItemUses : StoryScript
                 }
                 else
                 {
-                    if (Episode == 3 && Quest == 8)
+                    if (At(8, 3))
                     {
                         Chain = null;
                         local_2c4 = null;
@@ -405,7 +403,7 @@ public sealed partial class ItemUses : StoryScript
             {
                 if (Same(target, "LOC17Busch"))
                 {
-                    if (Episode == 3 && Quest == 8)
+                    if (At(8, 3))
                     {
                         Walk(Hero, 410, 442);
                         Chain = State(Hero, ThrowRight);
@@ -423,7 +421,7 @@ public sealed partial class ItemUses : StoryScript
                             Say(Who.George, "RUINE0040", 8, last: true, after: local_2dc, delay: 25);
                         }
                     }
-                    else if (Episode == 1 && Quest == 11)
+                    else if (At(11, 1))
                     {
                         if (Var(Vars.ProfessorDistracted) == 0)
                         {
@@ -508,7 +506,7 @@ public sealed partial class ItemUses : StoryScript
                     Chain = State(Hero, ThrowRight);
                     local_390 = Chain;
                     Sound(@"wav\fx\steinbru.wav", Chain, 8);
-                    if (Episode == 4 && Quest == 8)
+                    if (At(8, 4))
                     {
                         PointerOff();
                         Say(Who.Dick, "BRUNNEN0042", 2, last: true, after: local_390, delay: 25);
@@ -516,7 +514,7 @@ public sealed partial class ItemUses : StoryScript
                 }
                 else
                 {
-                    if (Episode == 1 && Quest == 11)
+                    if (At(11, 1))
                     {
                         if (Session.InventoryOpen || Var(Vars.StonesThrown) > 2)
                         {
@@ -601,14 +599,14 @@ public sealed partial class ItemUses : StoryScript
                 {
                     Walk(Hero, 395, 377);
                     local_3f0 = State(Hero, KneelLeft);
-                    if (Episode == 3 && Quest == 7)
+                    if (At(7, 3))
                     {
                         Chain = local_3f0;
                         PointerAfter(false, local_3f0, x: 300, y: 400);
                         Say(Who.Quentin, "ARBEIT0029", 6, last: true, after: local_3f0);
                         return false;
                     }
-                    if (Episode == 4 && Quest == 7)
+                    if (At(7, 4))
                     {
                         if (Var(Vars.StudyFireOut) == 0)
                         {
@@ -687,7 +685,7 @@ public sealed partial class ItemUses : StoryScript
                 }
                 else if (Same(target, "LOC24ExitToLoc27"))
                 {
-                    if (Episode == 1 && Quest == 9)
+                    if (At(9, 1))
                     {
                         local_46c = null;
                         if (Var(Vars.TreasureDoorDiscussed) == 0)
@@ -840,7 +838,7 @@ public sealed partial class ItemUses : StoryScript
                 }
                 else if (Same(target, "LOC04Tuerspalte4"))
                 {
-                    if (Episode == 4 && Quest == 7)
+                    if (At(7, 4))
                     {
                         PointerOff();
                         Walk(Hero, 193, 517);
@@ -908,7 +906,7 @@ public sealed partial class ItemUses : StoryScript
             {
                 if (Same(target, "LOC04Koffer"))
                 {
-                    if (Episode == 2 && Quest == 5)
+                    if (At(5, 2))
                     {
                         if (Var(Vars.V64f72c) == 0)
                         {
@@ -943,7 +941,7 @@ public sealed partial class ItemUses : StoryScript
                 {
                     Walk(Hero, 367, 360);
                     local_63c = State(Hero, TakeMidLeftLong);
-                    if (Episode == 3 && Quest == 7)
+                    if (At(7, 3))
                     {
                         PointerOff();
                         SetText("t63bdb4", "Schiff");
@@ -953,11 +951,10 @@ public sealed partial class ItemUses : StoryScript
                         SetAfter(Vars.DickTalk, 0, local_63c);
                         SetAfter(Vars.JulianTalk, 0, local_63c);
                     }
-                    if (Episode == 6 && Quest == 7)
+                    if (At(7, 6))
                     {
                         PointerOff();
-                        Episode = 1;
-                        Quest = 8;
+                        SetStep(8, 1);
                         Give(Item.TreasureMap);
                         Take(Item.Key);
                         ChangeLocation("schiffc1", local_63c);

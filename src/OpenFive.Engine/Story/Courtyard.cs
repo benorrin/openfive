@@ -9,37 +9,10 @@ public sealed partial class Courtyard : StoryScript
 {
     public override string Location => "loc17";
 
-    public override bool Click(string name)
-    {
-        OnClick(name);
-        return true;
-    }
-
-    protected override void Setup()
-    {
-        OnSetup();
-    }
-
     protected override void Arrive() { }
 
-    protected override void AfterChoice(string scene, int line, int option) => OnAfterChoice();
-
-    public override void LineStarting(GameWorld world, int speaker)
-    {
-        CurrentSpeaker = speaker;
-        OnLineStarting(null);
-    }
-
-    public override void LineQueued(GameWorld world, TaskHandle end) => OnLineQueued(end);
-
-    public override void ConversationEnding(GameWorld world, TaskHandle end) => OnConversationEnding(end);
-
-    public override void ObjectChanged(GameWorld world, string name, bool on) => OnObjectChanged(name, on ? 1 : 0);
-
-    public override void EveryTick() => OnEveryTick();
-
     // from FUN_0044c983
-    void OnClick(string name)
+    public override bool Click(string name)
     {
         TaskHandle? local_104 = null;
         TaskHandle? local_1c0 = null;
@@ -53,7 +26,7 @@ public sealed partial class Courtyard : StoryScript
         local_20 = null;
         if (Same(name, "LOC17ExitToLoc14"))
         {
-            if (Episode == 2 && Quest == 8)
+            if (At(8, 2))
             {
                 Walk(Hero, 586, 490);
                 Chain = State(Hero, StandUpRight);
@@ -74,7 +47,7 @@ public sealed partial class Courtyard : StoryScript
                     Say(Who.Anne, "RUINE0038", 14, last: true, after: local_20);
                 }
             }
-            else if (Episode == 3 && Quest == 8)
+            else if (At(8, 3))
             {
                 Walk(Hero, 586, 490);
                 Chain = State(Hero, StandUpRight);
@@ -82,12 +55,12 @@ public sealed partial class Courtyard : StoryScript
                 PointerAfter(false, Chain, x: 400, y: 400);
                 Say(Who.George, "RUINE0040", 9, last: true, after: local_20, delay: 10);
             }
-            else if (Episode == 4 && Quest == 8)
+            else if (At(8, 4))
             {
                 Walk(Hero, 586, 490);
                 Chain = State(Hero, StandUpRight);
             }
-            else if (Episode == 5 && Quest == 8)
+            else if (At(8, 5))
             {
                 Walk(Hero, 586, 490);
                 Chain = State(Hero, StandUpRight);
@@ -95,7 +68,7 @@ public sealed partial class Courtyard : StoryScript
                 PointerAfter(false, Chain, x: 400, y: 400);
                 Say(Who.George, "RUINE0043", 5, last: true, after: local_20, delay: 10);
             }
-            else if (Episode == 1 && Quest == 11)
+            else if (At(11, 1))
             {
                 Walk(Hero, 586, 490);
                 Chain = State(Hero, StandUpRight);
@@ -115,7 +88,7 @@ public sealed partial class Courtyard : StoryScript
         }
         else if (Same(name, "LOC17SeilClick"))
         {
-            if (Episode == 1 && Quest == 11)
+            if (At(11, 1))
             {
                 Walk(Hero, 565, 450);
                 local_20 = State(Hero, KneelLeft);
@@ -132,7 +105,7 @@ public sealed partial class Courtyard : StoryScript
         }
         else if (Same(name, "LOC17George"))
         {
-            if (Episode == 2 && Quest == 8)
+            if (At(8, 2))
             {
                 WalkAfter(Hero, 429, 450, null, 5);
                 Chain = State(Hero, StandDownRight);
@@ -157,7 +130,7 @@ public sealed partial class Courtyard : StoryScript
                     Sound(@"wav\timmy\timmy01.wav", local_ac, 8);
                 }
             }
-            else if (Episode == 3 && Quest == 8)
+            else if (At(8, 3))
             {
                 WalkAfter(Hero, 429, 450, null, 5);
                 Chain = State(Hero, StandDownRight);
@@ -189,7 +162,7 @@ public sealed partial class Courtyard : StoryScript
                     Say(Who.Julian, "RUINE0040", 14, last: true, after: local_104);
                 }
             }
-            else if (Episode == 5 && Quest == 8)
+            else if (At(8, 5))
             {
                 WalkAfter(Hero, 429, 450, null, 5);
                 Chain = State(Hero, StandDownRight);
@@ -209,7 +182,7 @@ public sealed partial class Courtyard : StoryScript
         }
         else if (Same(name, "LOC17Anne"))
         {
-            if (Episode == 2 && Quest == 8)
+            if (At(8, 2))
             {
                 WalkAfter(Hero, 429, 450, null, 5);
                 Chain = State(Hero, StandDownRight);
@@ -232,7 +205,7 @@ public sealed partial class Courtyard : StoryScript
                     Say(Who.Anne, "RUINE0038", 33, last: true, after: local_218);
                 }
             }
-            else if (Episode == 3 && Quest == 8)
+            else if (At(8, 3))
             {
                 WalkAfter(Hero, 429, 450, null, 5);
                 Chain = State(Hero, StandDownRight);
@@ -264,14 +237,14 @@ public sealed partial class Courtyard : StoryScript
                     Say(Who.Julian, "RUINE0040", 14, last: true, after: local_25c);
                 }
             }
-            else if (Episode == 5 && Quest == 8)
+            else if (At(8, 5))
             {
                 ChangeLocation("loc17b");
             }
         }
         else if (Same(name, "LOC17Julian"))
         {
-            if (Episode == 2 && Quest == 8)
+            if (At(8, 2))
             {
                 WalkAfter(Hero, 429, 450, null, 5);
                 Chain = State(Hero, StandDownRight);
@@ -295,7 +268,7 @@ public sealed partial class Courtyard : StoryScript
                     Say(Who.Julian, "RUINE0038", 34, last: true, after: local_318);
                 }
             }
-            else if (Episode == 3 && Quest == 8)
+            else if (At(8, 3))
             {
                 WalkAfter(Hero, 429, 450, null, 5);
                 Chain = State(Hero, StandDownRight);
@@ -324,7 +297,7 @@ public sealed partial class Courtyard : StoryScript
                     Say(Who.Julian, "RUINE0040", 14, last: true, after: local_35c);
                 }
             }
-            else if (Episode == 5 && Quest == 8)
+            else if (At(8, 5))
             {
                 WalkAfter(Hero, 429, 450, null, 5);
                 Chain = State(Hero, StandDownRight);
@@ -350,7 +323,7 @@ public sealed partial class Courtyard : StoryScript
         {
             Walk(Hero, 232, 497);
             Chain = State(Hero, StandUpLeft);
-            if (Episode == 2 && Quest == 8)
+            if (At(8, 2))
             {
                 local_20 = Chain;
                 if (Var(Vars.V650b14) == 0)
@@ -381,7 +354,7 @@ public sealed partial class Courtyard : StoryScript
                 local_20 = State(Hero, FrightenedDownRight);
             }
             Chain = local_20;
-            if (Episode == 2 && Quest == 8)
+            if (At(8, 2))
             {
                 if (Hero == George)
                 {
@@ -392,14 +365,14 @@ public sealed partial class Courtyard : StoryScript
                     Say(Who.Dick, "RUINE0038", 15, last: true, after: local_20, delay: 15);
                 }
             }
-            else if (Episode == 1 && Quest == 11)
+            else if (At(11, 1))
             {
                 Say(Who.Dick, "RUINE0053", 14, last: true, after: local_20);
             }
         }
         else if (Same(name, "LOC17Busch"))
         {
-            if (Episode == 2 && Quest == 8)
+            if (At(8, 2))
             {
                 if (Var(Vars.V650b4c) == 0)
                 {
@@ -441,7 +414,7 @@ public sealed partial class Courtyard : StoryScript
                     State(Hero, StandUpRight);
                 }
             }
-            else if (Episode == 4 && Quest == 8)
+            else if (At(8, 4))
             {
                 Walk(Hero, 431, 442);
                 Chain = State(Hero, StandUpRight);
@@ -461,7 +434,7 @@ public sealed partial class Courtyard : StoryScript
                     ChangeLocation("loc18", local_20, 2);
                 }
             }
-            else if (Episode == 5 && Quest == 8)
+            else if (At(8, 5))
             {
                 Walk(Hero, 431, 442);
                 Chain = State(Hero, StandUpRight);
@@ -469,7 +442,7 @@ public sealed partial class Courtyard : StoryScript
                 PointerAfter(false, Chain, x: 400, y: 400);
                 Say(Who.George, "RUINE0043", 5, last: true, after: local_20, delay: 10);
             }
-            else if (Episode == 1 && Quest == 11)
+            else if (At(11, 1))
             {
                 Walk(Hero, 431, 442);
                 Chain = State(Hero, StandUpRight);
@@ -498,7 +471,7 @@ public sealed partial class Courtyard : StoryScript
         {
             Walk(Hero, 368, 470);
             Chain = State(Hero, StandUpLeft);
-            if (Episode == 2 && Quest == 8)
+            if (At(8, 2))
             {
                 local_20 = Chain;
                 if (Var(Vars.V650adc) == 0)
@@ -525,7 +498,7 @@ public sealed partial class Courtyard : StoryScript
         }
         else if (Same(name, "LOC17Funkgeraet"))
         {
-            if (Episode == 1 && Quest == 11)
+            if (At(11, 1))
             {
                 Walk(Hero, 310, 430);
                 Chain = State(Hero, PhoneRight);
@@ -538,7 +511,7 @@ public sealed partial class Courtyard : StoryScript
         }
         else if (Same(name, "LOC17bigStone"))
         {
-            if (Episode == 1 && Quest == 11 && Var(Vars.RopeOnIvy) != 1)
+            if (At(11, 1) && Var(Vars.RopeOnIvy) != 1)
             {
                 Walk(Hero, 1, 455);
                 Chain = State(Hero, PushBoatRight);
@@ -549,7 +522,7 @@ public sealed partial class Courtyard : StoryScript
         }
         else if (Same(name, "LOC17ExitToLoc21"))
         {
-            if (Episode == 1 && Quest == 11)
+            if (At(11, 1))
             {
                 Walk(Hero, 100, 455);
                 Chain = State(Hero, StandDownLeft);
@@ -560,7 +533,7 @@ public sealed partial class Courtyard : StoryScript
         }
         else if (Same(name, "LOC17Steinhaufen"))
         {
-            if (Episode == 1 && Quest == 11 && Var(Vars.CourtyardFree) < 2)
+            if (At(11, 1) && Var(Vars.CourtyardFree) < 2)
             {
                 SetVar(Vars.CourtyardFree, 1);
             }
@@ -574,7 +547,7 @@ public sealed partial class Courtyard : StoryScript
                 local_20 = State(Hero, StandDownLeft);
             }
             Chain = local_20;
-            if (Episode == 3 && Quest == 8)
+            if (At(8, 3))
             {
                 switch (Var(Vars.StonesTaken))
                 {
@@ -603,7 +576,7 @@ public sealed partial class Courtyard : StoryScript
             {
                 if (Quest > 8)
                 {
-                    if (Episode == 1 && Quest == 11 && Var(Vars.CourtyardFree) < 2)
+                    if (At(11, 1) && Var(Vars.CourtyardFree) < 2)
                     {
                         SetAfter(Vars.CourtyardFree, 0, local_20);
                     }
@@ -628,10 +601,11 @@ public sealed partial class Courtyard : StoryScript
             SetVar(Vars.V63be6f, 1);
             ObjAfter("LOC17Eimer", false, local_20, 5);
         }
+        return true;
     }
 
     // from FUN_0044fb11
-    void OnSetup()
+    protected override void Setup()
     {
         SetVar(Vars.V63be6c, 0);
         SetVar(Vars.V63be6d, 0);
@@ -659,7 +633,7 @@ public sealed partial class Courtyard : StoryScript
             {
                 Place(Hero, 820, 450, StandDownRight);
                 Show(Hero);
-                if (Episode == 1 && Quest == 11)
+                if (At(11, 1))
                 {
                     if (Var(Vars.CourtyardFree) < 2)
                     {
@@ -675,7 +649,7 @@ public sealed partial class Courtyard : StoryScript
         }
         else if (FromId < 18)
         {
-            if (Episode == 2 && Quest == 8)
+            if (At(8, 2))
             {
                 Place(Hero, 460, 585, StandUpLeft);
                 Show(Hero);
@@ -699,7 +673,7 @@ public sealed partial class Courtyard : StoryScript
         }
         F44fdc9();
         ShowParty();
-        if (Episode == 2 && Quest == 8)
+        if (At(8, 2))
         {
             if (Var(Vars.V650b4c) > 0)
             {
@@ -715,7 +689,7 @@ public sealed partial class Courtyard : StoryScript
     // from FUN_0044fdc9
     void F44fdc9()
     {
-        if (Episode == 2 && Quest == 8)
+        if (At(8, 2))
         {
             if (Var(Vars.V651524) == 0)
             {
@@ -739,14 +713,14 @@ public sealed partial class Courtyard : StoryScript
             Obj("LOC17Steinhaufen", false);
             Obj("LOC17CloseUp", false);
         }
-        else if (Episode == 3 && Quest == 8)
+        else if (At(8, 3))
         {
             F451ff9();
             PointerOff();
             Chain = null;
             Say(Who.George, "RUINE0040", 1, last: true);
         }
-        else if (Episode == 4 && Quest == 8)
+        else if (At(8, 4))
         {
             F451ff9();
             if (Var(Vars.V650d0c) == 0)
@@ -771,7 +745,7 @@ public sealed partial class Courtyard : StoryScript
                 SetVar(Vars.V63be6e, 1);
             }
         }
-        else if (Episode == 5 && Quest == 8)
+        else if (At(8, 5))
         {
             F451ff9();
             Place(Timmy, 480, 589, StandLeft);
@@ -786,7 +760,7 @@ public sealed partial class Courtyard : StoryScript
                 Say(Who.George, "RUINE0043", 4, last: true);
             }
         }
-        else if (Episode == 1 && Quest == 11)
+        else if (At(11, 1))
         {
             PointerOff();
             Walk(Hero, 633, 440);
@@ -863,13 +837,13 @@ public sealed partial class Courtyard : StoryScript
     }
 
     // from FUN_00450800
-    void OnEveryTick()
+    public override void EveryTick()
     {
         TaskHandle? local_20 = null;
         TaskHandle? local_38 = null;
-        if (Episode == 2 && Quest == 8)
+        if (At(8, 2))
         {
-            if (Hero.State == 100)
+            if (Hero.State == AxeRight)
             {
                 SetVar(Vars.V63be6c, 1);
             }
@@ -888,9 +862,9 @@ public sealed partial class Courtyard : StoryScript
                 Say(Who.Dick, "RUINE0038", 24, last: true, after: local_20);
             }
         }
-        else if (Episode == 3 && Quest == 8)
+        else if (At(8, 3))
         {
-            if (Hero.State == 101)
+            if (Hero.State == TieRight)
             {
                 SetVar(Vars.V63be6d, 1);
             }
@@ -900,7 +874,7 @@ public sealed partial class Courtyard : StoryScript
                 Anim("Seil", -1);
             }
         }
-        else if (Episode == 4 && Quest == 8)
+        else if (At(8, 4))
         {
             if (IsBusy(Hero) && Var(Vars.V650a34) == 0 && Var(Vars.V63be6e) != 0)
             {
@@ -915,11 +889,11 @@ public sealed partial class Courtyard : StoryScript
                 Say(Who.George, "RUINE0042", 5, after: local_38);
                 if (George.X <= Hero.X)
                 {
-                    Hero.State = 7;
+                    Hero.State = StandDownLeft;
                 }
                 else
                 {
-                    Hero.State = 12;
+                    Hero.State = StandDownRight;
                 }
                 if (Has(Item.Bucket))
                 {
@@ -931,7 +905,7 @@ public sealed partial class Courtyard : StoryScript
                 }
             }
         }
-        else if (Episode == 1 && Quest == 11)
+        else if (At(11, 1))
         {
             if (!IsBusy(Hero) || Var(Vars.CourtyardFree) != 0)
             {
@@ -994,74 +968,74 @@ public sealed partial class Courtyard : StoryScript
     }
 
     // from FUN_00450fd2
-    void OnLineStarting(TaskHandle? param_1)
+    public override void LineStarting(GameWorld world, int speaker)
     {
-        if (Episode == 1 && Quest == 11)
+        if (At(11, 1))
         {
             if (CurrentSpeaker == Who.Professor)
             {
                 if (Var(Vars.CourtyardFree) < 2)
                 {
-                    StopAnimAfter("ProfStandLeft", param_1);
-                    Anim("ProfSpeakLeft", -1, param_1);
+                    StopAnimAfter("ProfStandLeft", null);
+                    Anim("ProfSpeakLeft", -1);
                 }
             }
             else if (CurrentSpeaker == Who.Dick)
             {
-                if (Hero.State == 113)
+                if (Hero.State == PhoneStillRight)
                 {
-                    StateAfter(Hero, PhoneTalkRight, param_1);
+                    StateAfter(Hero, PhoneTalkRight, null);
                     SetText("t63be5c", "Kueche");
                 }
                 else if (Var(Vars.CourtyardFree) > 1)
                 {
-                    StateAfter(Hero, SpeakDownLeft, param_1);
+                    StateAfter(Hero, SpeakDownLeft, null);
                 }
             }
         }
         else if (Hero == George)
         {
-            if (Dick.State == 28)
+            if (Dick.State == SpeakDownRight)
             {
-                Dick.State = 12;
+                Dick.State = StandDownRight;
             }
             if (CurrentSpeaker == Who.Anne)
             {
-                StateAfter(Anne, SpeakDownLeft, param_1);
+                StateAfter(Anne, SpeakDownLeft, null);
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StateAfter(Julian, SpeakDownRight, param_1);
+                StateAfter(Julian, SpeakDownRight, null);
             }
             else if (CurrentSpeaker == Who.Dick)
             {
-                StateAfter(Dick, SpeakDownRight, param_1);
+                StateAfter(Dick, SpeakDownRight, null);
             }
             else if (CurrentSpeaker == Who.Dick)
             {
-                StateAfter(Dick, SpeakDownRight, param_1);
+                StateAfter(Dick, SpeakDownRight, null);
             }
         }
         else if (CurrentSpeaker == Who.Anne)
         {
-            StateAfter(Anne, SpeakDownLeft, param_1);
+            StateAfter(Anne, SpeakDownLeft, null);
         }
         else if (CurrentSpeaker == Who.Julian)
         {
-            StateAfter(Julian, SpeakDownLeft, param_1);
+            StateAfter(Julian, SpeakDownLeft, null);
         }
         else if (CurrentSpeaker == Who.George)
         {
-            StateAfter(George, SpeakDownLeft, param_1);
+            StateAfter(George, SpeakDownLeft, null);
         }
         else if (CurrentSpeaker == Who.Dick)
         {
-            StateAfter(Hero, SpeakDownRight, param_1);
+            StateAfter(Hero, SpeakDownRight, null);
         }
     }
 
     // from FUN_0045121d
-    void OnLineQueued(TaskHandle? param_1)
+    public override void LineQueued(GameWorld world, TaskHandle end)
     {
         if (Episode != 1 || Quest != 11)
         {
@@ -1069,55 +1043,55 @@ public sealed partial class Courtyard : StoryScript
             {
                 if (CurrentSpeaker == Who.Anne)
                 {
-                    StateAfter(Anne, StandDownLeft, param_1);
+                    StateAfter(Anne, StandDownLeft, end);
                 }
                 else if (CurrentSpeaker == Who.Julian)
                 {
-                    StateAfter(Julian, StandDownRight, param_1);
+                    StateAfter(Julian, StandDownRight, end);
                 }
                 else if (CurrentSpeaker == Who.Dick)
                 {
-                    StateAfter(Dick, StandDownRight, param_1);
+                    StateAfter(Dick, StandDownRight, end);
                 }
                 else if (CurrentSpeaker == Who.Dick)
                 {
-                    StateAfter(Dick, StandDownRight, param_1);
+                    StateAfter(Dick, StandDownRight, end);
                 }
             }
             else if (CurrentSpeaker == Who.Anne)
             {
-                StateAfter(Anne, StandDownLeft, param_1);
+                StateAfter(Anne, StandDownLeft, end);
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StateAfter(Julian, StandDownLeft, param_1);
+                StateAfter(Julian, StandDownLeft, end);
             }
             else if (CurrentSpeaker == Who.George)
             {
-                StateAfter(George, StandDownLeft, param_1);
+                StateAfter(George, StandDownLeft, end);
             }
             else if (CurrentSpeaker == Who.Dick)
             {
-                StateAfter(Hero, StandDownRight, param_1);
+                StateAfter(Hero, StandDownRight, end);
             }
         }
     }
 
     // from FUN_004513a9
-    void OnConversationEnding(TaskHandle? param_1)
+    public override void ConversationEnding(GameWorld world, TaskHandle end)
     {
         TaskHandle? local_28 = null;
         TaskHandle? local_2c = null;
         TaskHandle? local_30 = null;
-        if (Episode == 1 && Quest == 11)
+        if (At(11, 1))
         {
             if (CurrentSpeaker == Who.Professor)
             {
                 if (Var(Vars.CourtyardFree) < 2)
                 {
-                    StopAnimAfter("ProfSpeakLeft", param_1);
-                    StopAnimAfter("Radio", param_1);
-                    local_28 = Anim("ProfPickUp", after: param_1);
+                    StopAnimAfter("ProfSpeakLeft", end);
+                    StopAnimAfter("Radio", end);
+                    local_28 = Anim("ProfPickUp", after: end);
                     Anim("ProfTelefon", -1, local_28);
                 }
             }
@@ -1127,26 +1101,26 @@ public sealed partial class Courtyard : StoryScript
                 {
                     if (Var(Vars.CourtyardFree) > 1)
                     {
-                        StateAfter(Hero, StandDownLeft, param_1);
+                        StateAfter(Hero, StandDownLeft, end);
                     }
                 }
                 else
                 {
-                    StateAfter(Hero, PhoneStillRight, param_1);
-                    PointerAfter(false, param_1, x: 400, y: 400);
-                    ChangeLocation("loc05", param_1);
-                    SetAfter(Vars.EpisodeNumber, 1, param_1);
-                    SetAfter(Vars.QuestNumber, 12, param_1);
+                    StateAfter(Hero, PhoneStillRight, end);
+                    PointerAfter(false, end, x: 400, y: 400);
+                    ChangeLocation("loc05", end);
+                    SetAfter(Vars.EpisodeNumber, 1, end);
+                    SetAfter(Vars.QuestNumber, 12, end);
                 }
                 if (Text("t63be5c") == "EfeuMitSeil")
                 {
-                    PointerAfter(false, param_1, x: 400, y: 400);
-                    ChangeLocation("loc17b", param_1, 6);
+                    PointerAfter(false, end, x: 400, y: 400);
+                    ChangeLocation("loc17b", end, 6);
                     SetText("t63be5c", "");
                 }
             }
         }
-        else if (Episode == 2 && Quest == 8)
+        else if (At(8, 2))
         {
             if (Text("t63be5c") != "start")
             {
@@ -1157,31 +1131,31 @@ public sealed partial class Courtyard : StoryScript
                         if (Text("t63be5c") == "Axt")
                         {
                             SetText("t63be5c", "");
-                            StateAfter(Hero, StandDownRight, param_1);
+                            StateAfter(Hero, StandDownRight, end);
                             goto LAB_00451cd7;
                         }
                     }
                     else
                     {
                         SetText("t63be5c", "");
-                        PointerAfter(false, param_1, x: 400, y: 400);
-                        Ask(20, "RUINE0038", 90, after: param_1);
+                        PointerAfter(false, end, x: 400, y: 400);
+                        Ask(20, "RUINE0038", 90, after: end);
                     }
                 }
                 else
                 {
-                    PointerAfter(false, param_1, x: 300, y: 400);
+                    PointerAfter(false, end, x: 300, y: 400);
                     if (Var(Vars.V650adc) != 0)
                     {
-                        PlaceAfter(Dick, 331, 363, StandDownRight, param_1);
+                        PlaceAfter(Dick, 331, 363, StandDownRight, end);
                     }
-                    WalkAfter(Dick, 431, 442, param_1, 10);
+                    WalkAfter(Dick, 431, 442, end, 10);
                     local_30 = State(Dick, StandDownRight);
                     Say(Who.Dick, "RUINE0038", 18, last: true, after: local_30, delay: 20);
                     SetText("t63be5c", "fr");
-                    WalkAfter(Julian, 520, 433, param_1);
+                    WalkAfter(Julian, 520, 433, end);
                     State(Julian, StandUpLeft);
-                    WalkAfter(Anne, 540, 433, param_1);
+                    WalkAfter(Anne, 540, 433, end);
                     State(Anne, StandUpLeft);
                     Obj("LOC17Anne", true);
                     Obj("LOC17George", true);
@@ -1190,45 +1164,45 @@ public sealed partial class Courtyard : StoryScript
             }
             else
             {
-                PointerAfter(false, param_1, x: 300, y: 400);
-                WalkAfter(Dick, 329, 362, param_1);
+                PointerAfter(false, end, x: 300, y: 400);
+                WalkAfter(Dick, 329, 362, end);
                 local_2c = State(Dick, StandDownRight);
                 PointerAfter(true, local_2c, x: 300, y: 400);
-                WalkAfter(Julian, 235, 370, param_1, 6);
+                WalkAfter(Julian, 235, 370, end, 6);
                 State(Julian, StandDownRight);
-                WalkAfter(Anne, 830, 456, param_1);
+                WalkAfter(Anne, 830, 456, end);
                 State(Anne, StandDownRight);
             }
             if (Hero == George)
             {
                 if (CurrentSpeaker == Who.Anne)
                 {
-                    StateAfter(Anne, StandDownLeft, param_1);
+                    StateAfter(Anne, StandDownLeft, end);
                 }
                 else if (CurrentSpeaker == Who.Julian)
                 {
-                    StateAfter(Julian, StandDownRight, param_1);
+                    StateAfter(Julian, StandDownRight, end);
                 }
                 else if (CurrentSpeaker == Who.Dick)
                 {
-                    StateAfter(Dick, StandDownRight, param_1);
+                    StateAfter(Dick, StandDownRight, end);
                 }
             }
             else if (CurrentSpeaker == Who.Anne)
             {
-                StateAfter(Anne, StandDownLeft, param_1);
+                StateAfter(Anne, StandDownLeft, end);
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StateAfter(Julian, StandDownLeft, param_1);
+                StateAfter(Julian, StandDownLeft, end);
             }
             else if (CurrentSpeaker == Who.George)
             {
-                StateAfter(George, StandDownLeft, param_1);
+                StateAfter(George, StandDownLeft, end);
             }
             else if (CurrentSpeaker == Who.Dick)
             {
-                StateAfter(Hero, StandDownRight, param_1);
+                StateAfter(Hero, StandDownRight, end);
             }
             if (Text("t63be5c") == "Busch")
             {
@@ -1239,75 +1213,75 @@ public sealed partial class Courtyard : StoryScript
                 SetText("t63be5c", "");
             }
         }
-        else if (Episode == 3 && Quest == 8)
+        else if (At(8, 3))
         {
             if (CurrentSpeaker == Who.Anne)
             {
-                StateAfter(Anne, StandDownLeft, param_1);
+                StateAfter(Anne, StandDownLeft, end);
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StateAfter(Julian, StandDownLeft, param_1);
+                StateAfter(Julian, StandDownLeft, end);
             }
             else if (CurrentSpeaker == Who.George)
             {
-                StateAfter(George, StandDownLeft, param_1);
+                StateAfter(George, StandDownLeft, end);
             }
             else if (CurrentSpeaker == Who.Dick)
             {
-                StateAfter(Hero, StandDownRight, param_1);
+                StateAfter(Hero, StandDownRight, end);
             }
             SetText("t63be5c", "");
         }
-        else if (Episode == 4 && Quest == 8)
+        else if (At(8, 4))
         {
             if (CurrentSpeaker == Who.Anne)
             {
-                StateAfter(Anne, StandDownLeft, param_1);
+                StateAfter(Anne, StandDownLeft, end);
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StateAfter(Julian, StandDownLeft, param_1);
+                StateAfter(Julian, StandDownLeft, end);
             }
             else if (CurrentSpeaker == Who.George)
             {
-                StateAfter(George, StandDownLeft, param_1);
+                StateAfter(George, StandDownLeft, end);
             }
             else if (CurrentSpeaker == Who.Dick)
             {
-                StateAfter(Hero, StandDownRight, param_1);
+                StateAfter(Hero, StandDownRight, end);
             }
             if (Text("t63be5c") != "wiederhinein")
             {
                 if (Text("t63be5c") == "start")
                 {
-                    ToggleAfter(Vars.V63be6e, param_1);
+                    ToggleAfter(Vars.V63be6e, end);
                 }
             }
             else
             {
-                PointerAfter(false, param_1, x: 400, y: 400);
-                ChangeLocation("loc18", param_1, 2);
+                PointerAfter(false, end, x: 400, y: 400);
+                ChangeLocation("loc18", end, 2);
             }
             SetText("t63be5c", "");
         }
-        else if (Episode == 5 && Quest == 8)
+        else if (At(8, 5))
         {
             if (CurrentSpeaker == Who.Anne)
             {
-                StateAfter(Anne, StandDownLeft, param_1);
+                StateAfter(Anne, StandDownLeft, end);
             }
             else if (CurrentSpeaker == Who.Julian)
             {
-                StateAfter(Julian, StandDownLeft, param_1);
+                StateAfter(Julian, StandDownLeft, end);
             }
             else if (CurrentSpeaker == Who.George)
             {
-                StateAfter(George, StandDownLeft, param_1);
+                StateAfter(George, StandDownLeft, end);
             }
             else if (CurrentSpeaker == Who.Dick)
             {
-                StateAfter(Hero, StandDownRight, param_1);
+                StateAfter(Hero, StandDownRight, end);
             }
             SetText("t63be5c", "");
         }
@@ -1335,7 +1309,7 @@ public sealed partial class Courtyard : StoryScript
     // from FUN_00451df7
     void F451df7()
     {
-        if (Episode == 2 && Quest == 8)
+        if (At(8, 2))
         {
             if (Hero == George)
             {
@@ -1399,7 +1373,7 @@ public sealed partial class Courtyard : StoryScript
     }
 
     // from FUN_004520a4
-    void OnAfterChoice()
+    protected override void AfterChoice(string scene, int line, int option)
     {
         if (LocationId == 17 && Var(Vars.V64ef11) != 0)
         {
@@ -1442,9 +1416,9 @@ public sealed partial class Courtyard : StoryScript
     }
 
     // from FUN_0045232e
-    void OnObjectChanged(string name, int param_2)
+    public override void ObjectChanged(GameWorld world, string name, bool on)
     {
-        if (param_2 == 0 && Same(name, "LOC17Eimer") && Var(Vars.V63be6f) != 0)
+        if (!on && Same(name, "LOC17Eimer") && Var(Vars.V63be6f) != 0)
         {
             SetVar(Vars.V63be6f, 0);
             Give(Item.Bucket);

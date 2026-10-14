@@ -103,7 +103,12 @@ public sealed class DialogueSystem
     public void ResetMenu(int speaker, string scene, int line) =>
         Asked(MenuKey(SpeakerFor(speaker) ?? Speakers[0], scene, line)).Clear();
 
-    internal void LineStarting(int speaker) => Hooks?.LineStarting(_world, speaker);
+    /// <summary>Makes <paramref name="speaker"/> the current speaker and tells the location a line is starting.</summary>
+    internal void LineStarting(int speaker)
+    {
+        CurrentSpeaker = speaker;
+        Hooks?.LineStarting(_world, speaker);
+    }
 
     /// <summary>
     /// The player picked <paramref name="option"/>: the asking character says it, then the

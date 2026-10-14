@@ -8,52 +8,42 @@ public sealed partial class Loc01 : StoryScript
 {
     public override string Location => "loc01";
 
-    public override bool Click(string name)
-    {
-        OnClick(name);
-        return true;
-    }
-
-    protected override void Setup()
-    {
-        OnSetup();
-    }
-
     protected override void Arrive() { }
 
     // from FUN_00422c5e
-    void OnClick(string name)
+    public override bool Click(string name)
     {
         if (Same(name, "LOC01l01o1e") || Same(name, "LOC01l01o1g"))
         {
             ChangeLocationNow("loc14");
-            return;
+            return true;
         }
         if (Same(name, "LOC01l01o2e") || Same(name, "LOC01l01o2g"))
         {
             ChangeLocationNow("loc06");
-            return;
+            return true;
         }
         if (Same(name, "LOC01l01o3e") || Same(name, "LOC01l01o3g"))
         {
             ChangeLocationNow("loc09");
-            return;
+            return true;
         }
         if (Same(name, "LOC01StartClick"))
         {
             // Clicking the picture itself goes back where the hero came from.
             ChangeLocationNow(From);
-            return;
+            return true;
         }
         if (!Same(name, "LOC01_ZUMMENUE") && !Same(name, "LOC01_EZUMMENUE"))
         {
-            return;
+            return true;
         }
         ChangeLocationNow("menue");
+        return true;
     }
 
     // from FUN_00422dea
-    void OnSetup()
+    protected override void Setup()
     {
         ClearQueue(Dick);
         ClearQueue(Anne);

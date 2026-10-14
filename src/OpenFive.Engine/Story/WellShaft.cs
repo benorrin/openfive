@@ -9,29 +9,10 @@ public sealed partial class WellShaft : StoryScript
 {
     public override string Location => "loc19";
 
-    public override bool Click(string name)
-    {
-        OnClick(name);
-        return true;
-    }
-
-    protected override void Setup()
-    {
-        OnSetup();
-    }
-
     protected override void Arrive() { }
 
-    public override void LineStarting(GameWorld world, int speaker)
-    {
-        CurrentSpeaker = speaker;
-        OnLineStarting(null);
-    }
-
-    public override void ConversationEnding(GameWorld world, TaskHandle end) => OnConversationEnding(end);
-
     // from FUN_00454dfa
-    void OnClick(string name)
+    public override bool Click(string name)
     {
         TaskHandle? local_20 = null;
         if (Same(name, "LOC19Timmy") && Quest == 8 && Episode == 4)
@@ -55,10 +36,11 @@ public sealed partial class WellShaft : StoryScript
                 Say(Who.Dick, "BRUNNEN0042", 5, last: true, after: local_20);
             }
         }
+        return true;
     }
 
     // from FUN_00454f6a
-    void OnSetup()
+    protected override void Setup()
     {
         PointerOn();
         F45500d(0, 0, 0, 0);
@@ -80,7 +62,7 @@ public sealed partial class WellShaft : StoryScript
         SetVar(Vars.V650e5c, 1);
         Obj("SeilKlick", false);
         Obj("LOC19Timmy", false);
-        if (Quest == 8 && Episode == 4)
+        if (At(8, 4))
         {
             if (Has(Item.Bucket))
             {
@@ -124,26 +106,25 @@ public sealed partial class WellShaft : StoryScript
     }
 
     // from FUN_004553c5
-    void OnLineStarting(TaskHandle? param_1)
+    public override void LineStarting(GameWorld world, int speaker)
     {
         if (CurrentSpeaker == Who.Dick)
         {
-            StateAfter(Hero, SpeakDownLeft, param_1);
+            StateAfter(Hero, SpeakDownLeft, null);
         }
     }
 
     // from FUN_00455415
-    void OnConversationEnding(TaskHandle? param_1)
+    public override void ConversationEnding(GameWorld world, TaskHandle end)
     {
         if (CurrentSpeaker == Who.Dick)
         {
-            StateAfter(Hero, StandDownLeft, param_1);
+            StateAfter(Hero, StandDownLeft, end);
         }
         if (Text("t63be9c") == "Tim")
         {
-            ChangeLocation("loc18", param_1);
-            Episode = 5;
-            Quest = 8;
+            ChangeLocation("loc18", end);
+            SetStep(8, 5);
             SetVar(Vars.V6511a4, 1);
             SetVar(Vars.AnneCastleTalk, 0);
             SetVar(Vars.GeorgeCastleTalk, 0);
