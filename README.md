@@ -133,6 +133,9 @@ distributions are planned; the same `dotnet publish` command works with `-r win-
   `use ITEM TARGET`, `choose OPTION`, `expect LOCATION`, `save SLOT`, `load SLOT`, ...; see
   `src/OpenFive/PlayRunner.cs`), skipping speech, and reports anything that did not work.
   `lines SCENE` lists every line of a dialogue scene with its quest and episode.
+  `explore SLOT` loads a save and tries every object, character and rucksack item there, each
+  from a fresh load; with `OPENFIVE_TRACE=1`, comparing its output before and after a change
+  shows whether the change altered the game.
 * `tests/play/run.sh /path/to/FAMOUS5.cue` plays the whole game, from a new game to the closing
   credits, in about a minute (nine `--play` scripts in `tests/play`, each continuing from the
   previous one's save). It exits with an error if any step did not work.
@@ -150,6 +153,8 @@ distributions are planned; the same `dotnet publish` command works with `-r win-
 | `src/OpenFive.Engine/Formats` | File formats: BRG images, Smacker video, WAV audio, `.res` location files, object and dialogue texts |
 | `src/OpenFive.Engine/Graphics` | 800x600 framebuffer, bitmap font, screenshots |
 | `src/OpenFive.Engine/World` | Scenes, objects, actors, walking, tasks, dialogue |
+| `src/OpenFive.Engine/Game` | Game session, saves, rucksack, menus, videos, and `StoryScript` (the commands the story scripts use) |
+| `src/OpenFive.Engine/Story` | One story script per location, the story variables and the new-game state |
 | `src/OpenFive` | The application: SDL3 window, audio and input |
 | `docs/ENGINE.md` | How the engine behaves |
 | `docs/PROGRESS.md` | Milestones and per-location status |

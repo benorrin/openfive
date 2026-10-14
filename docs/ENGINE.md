@@ -205,9 +205,12 @@ counter of 16, add c to the counter eight times, and take one off c each time th
 
 Each location's behaviour (what clicks do, how characters arrive, what happens after each line
 of conversation, menus, item uses) is reimplemented in `src/OpenFive.Engine/Story`, one class per
-location, on top of the commands in `StoryScript`. The first drafts were produced with a helper
-that rewrites the original routines into those commands; they are then reviewed and tested by
-playing. Story state lives in named variables (`Vars`), saved with the game.
+location, on top of the commands in `StoryScript`. Each clicked object, item use and story step
+has its own method, and each method that follows one of the original routines names it in its
+`<remarks>`. Story state lives in named variables (`Vars`, keyed by the original's slot so that
+the new-game table in `NewGameState` applies), saved with the game. Where the original has a
+quirk (an object moved under the wrong name, a scene behind a flag nothing sets), the script
+keeps it and says so in a comment.
 
 Choice menus: each location with menus keeps, for original options 1-3, the row each is shown in
 (or "none" once asked), the row the player picked, and the "none" value; scripts compare the
