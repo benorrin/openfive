@@ -356,9 +356,9 @@ public sealed class Bedroom : StoryScript
         var reached = State(Hero, TakeMidLeft);
         var open = Anim("DoOpenDoor", after: reached, delay: 5, endObject: "LOC02OpenDoorObj", endObjectOn: true);
         ChangeLocation("loc04", open);
-        SetVar(Vars.V64f994, 2);
-        SetVar(Vars.V64fa04, 2);
-        SetVar(Vars.V64f9cc, 2);
+        SetVar(Vars.AnneHallTalk, 2);
+        SetVar(Vars.DickHallTalk, 2);
+        SetVar(Vars.JulianHallTalk, 2);
     }
 
     /// <summary>George remarks on looking under the bed (a different remark each time); the bed can be looked under again.</summary>

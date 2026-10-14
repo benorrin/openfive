@@ -248,11 +248,11 @@ public sealed class ItemUses : StoryScript
             return false;
         State(Hero, StandDownLeft);
         Chain = null;
-        switch (Var(Vars.V64f80c))
+        switch (Var(Vars.GuestRoomKeyPlan))
         {
             case 0:
                 Say(Who.Julian, "Diele0010-04", 8, last: true);
-                SetVar(Vars.V64f80c, 1);
+                SetVar(Vars.GuestRoomKeyPlan, 1);
                 break;
             case 1:
                 Say(Who.Julian, "Diele0010-04", 9);
@@ -270,7 +270,7 @@ public sealed class ItemUses : StoryScript
                 Give(Item.Newspaper);
                 Chain = StateAfter(Hero, KneelRight, Chain);
                 Say(Who.George, "DIELE0010-04", 18, last: true);
-                SetVar(Vars.V63bdcb, 1);
+                SetVar(Vars.KeyPushedOut, 1);
                 break;
         }
         return true;
@@ -308,7 +308,7 @@ public sealed class ItemUses : StoryScript
             else
             {
                 Say(Who.George, "EINGANG0030", 4, last: true);
-                SetVar(Vars.V64f614, 1);
+                SetVar(Vars.StudyKeyPushedThrough, 1);
             }
         }
         return true;
@@ -352,7 +352,7 @@ public sealed class ItemUses : StoryScript
                 var tied = Chain = State(Hero, TieRight);
                 PointerOff();
                 Say(Who.Julian, "RUINE0040", 2, last: true);
-                IncAfter(Vars.V650c2c, tied);
+                IncAfter(Vars.RopeTiedOnce, tied);
                 SetVar(Vars.RopeOnStone, 1);
                 Take(Item.Rope);
             }
@@ -421,13 +421,13 @@ public sealed class ItemUses : StoryScript
                 Walk(Hero, 410, 442);
                 var thrown = Chain = State(Hero, ThrowRight);
                 Sound(@"wav\fx\steingeb.wav", thrown, 8);
-                if (Var(Vars.V650c64) == 0)
+                if (Var(Vars.StonesAtBush) == 0)
                 {
                     PointerOff();
-                    IncAfter(Vars.V650c64, thrown);
+                    IncAfter(Vars.StonesAtBush, thrown);
                     Say(Who.Julian, "RUINE0040", 7, last: true, delay: 25);
                 }
-                else if (Var(Vars.V650c64) == 1)
+                else if (Var(Vars.StonesAtBush) == 1)
                 {
                     PointerOff();
                     Say(Who.George, "RUINE0040", 8, last: true, delay: 25);
@@ -595,7 +595,7 @@ public sealed class ItemUses : StoryScript
     {
         if (Same(target, "LOC17Busch"))
         {
-            if (Var(Vars.V650b4c) == 1)
+            if (Var(Vars.BushState) == 1)
                 CutDownTheBush();
             return true;
         }
@@ -637,7 +637,7 @@ public sealed class ItemUses : StoryScript
     /// <summary>Three blows of the axe, and the bush in the courtyard is gone.</summary>
     void CutDownTheBush()
     {
-        SetVar(Vars.V650b4c, 2);
+        SetVar(Vars.BushState, 2);
         WalkAfter(Hero, 431, 438, null, 5);
         PointerAfter(false, null, x: 400, y: 400);
         var chopping = Chain = State(Hero, AxeRight);
@@ -650,7 +650,7 @@ public sealed class ItemUses : StoryScript
         Sound(@"wav\fx\axtgestr.wav", chopping, 18);
         Sound(@"wav\fx\axtgestr.wav", chopping, 28);
         SetText(StoryTexts.CourtyardScene, "Axt");
-        SetVar(Vars.V65155c, 1);
+        SetVar(Vars.BushCut, 1);
     }
 
     /// <summary>The torch on the bush: Dick looks into it.</summary>
@@ -658,7 +658,7 @@ public sealed class ItemUses : StoryScript
     {
         if (!Same(target, "LOC17Busch"))
             return false;
-        if (Var(Vars.V650b4c) == 1)
+        if (Var(Vars.BushState) == 1)
         {
             WalkAfter(Hero, 431, 442, null, 5);
             PointerAfter(false, null, x: 400, y: 400);
@@ -674,7 +674,7 @@ public sealed class ItemUses : StoryScript
     /// </summary>
     bool UseSandwich(string target)
     {
-        if (Same(target, "LOC17Busch") && Var(Vars.V650b4c) == 1)
+        if (Same(target, "LOC17Busch") && Var(Vars.BushState) == 1)
         {
             WalkAfter(Hero, 431, 442, null, 5);
             PointerAfter(false, null, x: 400, y: 400);
@@ -746,7 +746,7 @@ public sealed class ItemUses : StoryScript
             Walk(Hero, 360, 271);
             Chain = State(Hero, KneelLeft);
             Say(Who.Dick, "DIELE0010-04", 13, last: true);
-            SetVar(Vars.V64f80c, 2);
+            SetVar(Vars.GuestRoomKeyPlan, 2);
             Obj("LOC04Schluesselloch", true);
             Take(Item.Newspaper);
             return true;
@@ -776,11 +776,11 @@ public sealed class ItemUses : StoryScript
         Walk(Hero, 193, 517);
         var reached = State(Hero, TakeMidLeft);
         Sound(@"wav\fx\oelgluck.wav", reached, 3);
-        SetVar(Vars.V63bdc5, 1);
+        SetVar(Vars.TryingStudyDoor, 1);
         ObjAfter("LOC04Tuerspalte2", false, reached, 5);
         PointerOff();
         Take(Item.FullOilCan);
-        SetVar(Vars.V64f684, 6);
+        SetVar(Vars.StudyDoorState, 6);
         return true;
     }
 
@@ -796,10 +796,10 @@ public sealed class ItemUses : StoryScript
             return false;
         Walk(Hero, 193, 517);
         var reached = State(Hero, TakeMidLeft);
-        SetVar(Vars.V63bdc5, 1);
+        SetVar(Vars.TryingStudyDoor, 1);
         ObjAfter("LOC04Tuerspalte2", false, reached, 5);
         PointerOff();
-        SetVar(Vars.V64f684, 5);
+        SetVar(Vars.StudyDoorState, 5);
         SetVar(Vars.AnneTalk, 0);
         SetVar(Vars.DickTalk, 0);
         SetVar(Vars.JulianTalk, 0);
@@ -815,7 +815,7 @@ public sealed class ItemUses : StoryScript
             return false;
         if (!At(5, 2))
             return true;
-        if (Var(Vars.V64f72c) == 0)
+        if (Var(Vars.SuitcaseState) == 0)
         {
             Walk(Hero, 270, 570);
             PointerOff();
@@ -830,7 +830,7 @@ public sealed class ItemUses : StoryScript
             Say(Who.Julian, "FLUR0012-01", 62, last: true);
             Say(Who.Anne, "FLUR0012-01", 63, last: true);
         }
-        SetVar(Vars.V64f72c, 1);
+        SetVar(Vars.SuitcaseState, 1);
         return true;
     }
 

@@ -126,7 +126,7 @@ public sealed partial class Kitchen : StoryScript
             {
                 Walk(Hero, 100, 450);
                 Chain = State(Hero, StandDownRight);
-                if (Var(Vars.V64f684) == 5)
+                if (Var(Vars.StudyDoorState) == 5)
                 {
                     ready = Chain;
                     Say(Who.Julian, "KUECHE0006-05", 15, last: true, after: ready);
@@ -288,7 +288,7 @@ public sealed partial class Kitchen : StoryScript
                 Walk(Hero, 100, 450);
                 Chain = State(Hero, StandDownRight);
                 ready = Chain;
-                if (Var(Vars.V64f684) < 5)
+                if (Var(Vars.StudyDoorState) < 5)
                 {
                     Say(Who.Anne, "KUECHE0006-05", 11, last: true);
                 }
@@ -491,7 +491,7 @@ public sealed partial class Kitchen : StoryScript
             else
             {
                 Chain = ready;
-                if (Quest == 3 && ((Episode == 4 && Var(Vars.V64f684) == 5)))
+                if (Quest == 3 && ((Episode == 4 && Var(Vars.StudyDoorState) == 5)))
                 {
                     if (Var(Vars.QuentinKitchenTalk) == 0)
                     {
@@ -548,7 +548,7 @@ public sealed partial class Kitchen : StoryScript
                 Chain = ready;
                 if (At(3, 4))
                 {
-                    if (Var(Vars.V64f684) < 5)
+                    if (Var(Vars.StudyDoorState) < 5)
                     {
                         if (Var(Vars.DickTalk) == 0)
                         {
@@ -756,7 +756,7 @@ public sealed partial class Kitchen : StoryScript
                 Walk(Hero, 300, 200);
                 Chain = State(Hero, StandDownLeft);
                 ready = Chain;
-                if (Var(Vars.V64f684) < 5)
+                if (Var(Vars.StudyDoorState) < 5)
                 {
                     Say(Who.Fanny, "KUECHE0006-05", 12, last: true);
                 }
@@ -1987,7 +1987,7 @@ public sealed partial class Kitchen : StoryScript
                 StopAnimAfter("QuentinSpeak", after);
                 ObjAfter("LOC05Tasse", false, after);
                 Anim("QuentinDrink", -1, after);
-                if (Var(Vars.V64f684) == 5)
+                if (Var(Vars.StudyDoorState) == 5)
                 {
                     SetVar(Vars.QuentinKitchenTalk, 1);
                 }
@@ -2348,7 +2348,7 @@ public sealed partial class Kitchen : StoryScript
                 Anim("QuentinDrink", -1, end);
                 if (Episode == 4)
                 {
-                    if (Var(Vars.V64f684) == 5)
+                    if (Var(Vars.StudyDoorState) == 5)
                     {
                         SetVar(Vars.QuentinKitchenTalk, 1);
                     }
@@ -2674,7 +2674,7 @@ public sealed partial class Kitchen : StoryScript
         if (At(3, 3))
         {
             World.Hero = George;
-            SetVar(Vars.V64f684, 1);
+            SetVar(Vars.StudyDoorState, 1);
             F43c1b9(1, 1);
             F43c86a();
             SetVar(Vars.FannyTalk, 5);
@@ -2716,7 +2716,7 @@ public sealed partial class Kitchen : StoryScript
             F43c86a();
             SetVar(Vars.FannyTalk, 5);
             Chain = null;
-            if (Var(Vars.V64f684) < 5)
+            if (Var(Vars.StudyDoorState) < 5)
             {
                 PointerOff();
                 SetText(StoryTexts.KitchenTopic, "DLG");
@@ -2737,11 +2737,11 @@ public sealed partial class Kitchen : StoryScript
         }
         else if (At(5, 0))
         {
-            SetVar(Vars.V64f994, 5);
-            SetVar(Vars.V64fa04, 5);
-            SetVar(Vars.V64f9cc, 5);
-            SetVar(Vars.V64f80c, 0);
-            SetVar(Vars.V64f7d4, 0);
+            SetVar(Vars.AnneHallTalk, 5);
+            SetVar(Vars.DickHallTalk, 5);
+            SetVar(Vars.JulianHallTalk, 5);
+            SetVar(Vars.GuestRoomKeyPlan, 0);
+            SetVar(Vars.KeySeenInLock, 0);
             SetVar(Vars.FannyTalk, 4);
             SetVar(Vars.V683260, 0);
             Place(Quentin, 540, 440, StandDownLeft);
@@ -2771,12 +2771,12 @@ public sealed partial class Kitchen : StoryScript
             }
             Walk(Hero, 300, 300);
             State(Hero, StandDownLeft);
-            SetVar(Vars.V64f64c, 1);
+            SetVar(Vars.BreakfastOver, 1);
             SetVar(Vars.FannyTalk, 4);
         }
         else if (At(5, 2))
         {
-            SetVar(Vars.V64f64c, 1);
+            SetVar(Vars.BreakfastOver, 1);
             SetVar(Vars.FannyTalk, 4);
         }
         else if (At(5, 4))
@@ -2892,7 +2892,7 @@ public sealed partial class Kitchen : StoryScript
             F43c959();
             Place(Timmy, 799, 440, StandDownLeft);
             Show(Timmy);
-            if (Var(Vars.V6510fc) == 1)
+            if (Var(Vars.StudyTeaVisit) == 1)
             {
                 if (Var(Vars.V651134) == 2 || Var(Vars.StudyFireOut) != 0)
                 {

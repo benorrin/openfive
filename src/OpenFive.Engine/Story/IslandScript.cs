@@ -2,7 +2,10 @@ using OpenFive.Engine.Game;
 
 namespace OpenFive.Engine.Story;
 
-/// <summary>Base of the locations on Kirrin Island that share conversations (the wreck and the island beach).</summary>
+/// <summary>
+/// Base of the locations whose conversations are about the island and share lines: the wreck,
+/// the island beach and the mainland beach.
+/// </summary>
 public abstract class IslandScript : StoryScript
 {
     /// <summary>
@@ -27,5 +30,32 @@ public abstract class IslandScript : StoryScript
                 Say(Who.Dick, "ALL0024", 13, last: true);
             Say(Who.Dick, "ALL0024", Has(Item.Screwdriver) ? 15 : 14, last: true);
         }
+    }
+
+    /// <summary>
+    /// Quest 6, step 3, back from the wreck: a remark that depends on whether the rope has been
+    /// found — or, if <paramref name="otherWay"/> was chosen on the first landing, <paramref name="otherWayRemark"/>.
+    /// </summary>
+    /// <param name="otherWay">The first-landing choice that leads to <paramref name="otherWayRemark"/>.</param>
+    /// <param name="speaker">Who speaks.</param>
+    /// <param name="talk">The speaker's talk counter here (first remark at 0, second at 1).</param>
+    /// <param name="withRope">The lines of "ALL0023" with the rope found.</param>
+    /// <param name="withoutRope">The lines without it.</param>
+    /// <param name="otherWayRemark">What is said instead.</param>
+    protected void AfterTheWreck(string otherWay, int speaker, string talk, (int First, int Then) withRope,
+        (int First, int Then) withoutRope, Action otherWayRemark)
+    {
+        if (Var(Vars.WreckVisit) != 2)
+            return;
+        if (Var(otherWay) != 0)
+        {
+            otherWayRemark();
+            return;
+        }
+        var (first, then) = Has(Item.Rope) ? withRope : withoutRope;
+        if (Var(talk) == 0)
+            Say(speaker, "ALL0023", first, last: true);
+        else if (Var(talk) == 1)
+            Say(speaker, "ALL0023", then, last: true);
     }
 }

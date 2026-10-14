@@ -215,27 +215,6 @@ public sealed class IslandBeach : IslandScript
     /// <summary>Quest 6, step 3, before the wreck's cabin has been visited.</summary>
     bool BeforeTheCabin => At(6, 3) && Var(Vars.CabinVisited) == 0;
 
-    /// <summary>
-    /// Quest 6, step 3, back from the wreck: a remark that depends on whether the rope has been
-    /// found — or, if the children chose the mainland first, <paramref name="mainland"/>.
-    /// </summary>
-    void AfterTheWreck(int speaker, string talk, (int First, int Then) withRope, (int First, int Then) withoutRope,
-        Action mainland)
-    {
-        if (Var(Vars.WreckVisit) != 2)
-            return;
-        if (Var(Vars.ChoseMainland) != 0)
-        {
-            mainland();
-            return;
-        }
-        var (first, then) = Has(Item.Rope) ? withRope : withoutRope;
-        if (Var(talk) == 0)
-            Say(speaker, "ALL0023", first, last: true);
-        else if (Var(talk) == 1)
-            Say(speaker, "ALL0023", then, last: true);
-    }
-
     /// <summary>What Anne says at each story step.</summary>
     void TalkToAnne()
     {
@@ -250,7 +229,7 @@ public sealed class IslandBeach : IslandScript
                 Say(Who.Anne, "INSELSTRAND0022", 9, last: true);
         }
         else if (At(6, 3))
-            AfterTheWreck(Who.Anne, Vars.AnneIslandTalk, (1, 2), (7, 8), () => Say(Who.Anne, "ALL0023", 13, last: true));
+            AfterTheWreck(Vars.ChoseMainland, Who.Anne, Vars.AnneIslandTalk, (1, 2), (7, 8), () => Say(Who.Anne, "ALL0023", 13, last: true));
         else if (At(6, 4))
         {
             if (talk == 0)
@@ -314,7 +293,7 @@ public sealed class IslandBeach : IslandScript
         }
         else if (At(6, 3))
         {
-            AfterTheWreck(Who.George, Vars.GeorgeIslandTalk, (5, 6), (11, 12), () =>
+            AfterTheWreck(Vars.ChoseMainland, Who.George, Vars.GeorgeIslandTalk, (5, 6), (11, 12), () =>
             {
                 Say(Who.George, "ALL0023", 15);
                 Say(Who.Dick, "ALL0023", 16, last: true);
@@ -374,7 +353,7 @@ public sealed class IslandBeach : IslandScript
                 Say(Who.Julian, "INSELSTRAND0022", 11, last: true);
         }
         else if (At(6, 3))
-            AfterTheWreck(Who.Julian, Vars.JulianIslandTalk, (3, 4), (9, 10), () => Say(Who.Julian, "ALL0023", 14, last: true));
+            AfterTheWreck(Vars.ChoseMainland, Who.Julian, Vars.JulianIslandTalk, (3, 4), (9, 10), () => Say(Who.Julian, "ALL0023", 14, last: true));
         else if (At(6, 4))
         {
             if (talk == 0)

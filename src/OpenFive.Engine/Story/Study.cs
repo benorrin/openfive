@@ -1011,14 +1011,14 @@ public sealed partial class Study : StoryScript
                 Place(Hero, 208, 403, StandDownRight);
                 Show(Hero);
                 SetVar(Vars.V64f4fc, 0);
-                if (Var(Vars.V6510fc) == 0)
+                if (Var(Vars.StudyTeaVisit) == 0)
                 {
                     SetVar(Vars.StudyFire, 1);
                 }
                 SetVar(Vars.StudyWoodTaken, 0);
                 Obj("LOC03Bild", true);
                 SetVar(Vars.V64f48c, 1);
-                SetVar(Vars.V6510fc, 1);
+                SetVar(Vars.StudyTeaVisit, 1);
                 SetVar(Vars.V64d464, 800);
                 if (Has(Item.Teapot))
                 {

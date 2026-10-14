@@ -322,4 +322,169 @@ public static partial class Vars
 
     /// <summary>The newspaper has been pushed under the study door (quest 7, step 4).</summary>
     public const string NewspaperUnderStudyDoor = "v64f764";
+
+    /// <summary>The study door from the hall: 0 opens, 1 ajar (the professor inside), 2-4 locked (he answers), 5 tried with the empty oil can, 6 oiled.</summary>
+    public const string StudyDoorState = "v64f684";
+
+    /// <summary>Set while the hero tries the locked study door (its crack object is switched off).</summary>
+    public const string TryingStudyDoor = "v63bdc5";
+
+    /// <summary>The ajar study door has been shown; trying it now makes the professor speak.</summary>
+    public const string StudyDoorAjarReady = "v63bdc4";
+
+    /// <summary>Set while Anne is being talked to in the hall (her object is switched off).</summary>
+    public const string TalkingToAnneInHall = "v63bdc6";
+
+    /// <summary>Set while Julian is being talked to in the hall.</summary>
+    public const string TalkingToJulianInHall = "v63bdc7";
+
+    /// <summary>Set while Dick is being talked to in the hall.</summary>
+    public const string TalkingToDickInHall = "v63bdc8";
+
+    /// <summary>The hero has just looked through the guest-room keyhole (quest 5, step 1).</summary>
+    public const string KeyholeLookedThrough = "v63bdc9";
+
+    /// <summary>George has said the guest-room door is locked (quest 5, step 1): the keyhole can be looked at.</summary>
+    public const string GuestRoomDoorTried = "v63bdca";
+
+    /// <summary>The guest-room key has been pushed out onto the newspaper; the door can be opened.</summary>
+    public const string KeyPushedOut = "v63bdcb";
+
+    /// <summary>The key has been seen in the guest-room lock.</summary>
+    public const string KeySeenInLock = "v64f7d4";
+
+    /// <summary>How far the plan to get the guest-room key has got: 1 talked about, 2 the newspaper is under the door.</summary>
+    public const string GuestRoomKeyPlan = "v64f80c";
+
+    /// <summary>How far talking to Anne in the hall has got (quest 5; above 6 after the suitcase).</summary>
+    public const string AnneHallTalk = "v64f994";
+
+    /// <summary>How far talking to Julian in the hall has got (quest 5).</summary>
+    public const string JulianHallTalk = "v64f9cc";
+
+    /// <summary>How far talking to Dick in the hall has got (quest 5).</summary>
+    public const string DickHallTalk = "v64fa04";
+
+    /// <summary>Uncle Quentin's suitcase in the hall: 0 shut, 1 opened, 2 lying down.</summary>
+    public const string SuitcaseState = "v64f72c";
+
+    /// <summary>The study key has been pushed out of the lock onto the newspaper (quest 7, step 4).</summary>
+    public const string StudyKeyPushedThrough = "v64f614";
+
+    /// <summary>The study has been entered on quest 7, step 4 (the fire is not lit again).</summary>
+    public const string StudyTeaVisit = "v6510fc";
+
+    /// <summary>The children have had breakfast in the kitchen (quest 5).</summary>
+    public const string BreakfastOver = "v64f64c";
+
+    /// <summary>The umbrella has been taken from the hall.</summary>
+    public const string UmbrellaTaken = "v64f8b4";
+
+    /// <summary>The first plant in the hall has been looked at.</summary>
+    public const string HallPlant1Seen = "v64f924";
+
+    /// <summary>The second plant in the hall has been looked at.</summary>
+    public const string HallPlant2Seen = "v64f95c";
+
+    /// <summary>The milk churn in the hall has been looked at.</summary>
+    public const string MilkChurnSeen = "v64f8ec";
+
+    /// <summary>The coat in the hall has been looked at.</summary>
+    public const string HallCoatSeen = "v64f87c";
+
+    /// <summary>The picture in the hall has been looked at.</summary>
+    public const string HallPictureSeen = "v64f844";
+
+    /// <summary>The butterfly collection in the hall has been looked at.</summary>
+    public const string ButterfliesSeen = "v64f79c";
+
+    /// <summary>The crate hiding the way to the hideout has been pushed aside (quest 2).</summary>
+    public const string CratePushed = "v6504bc";
+
+    /// <summary>The footprints on the beach have been examined (quest 2).</summary>
+    public const string FootprintsFound = "v6506ec";
+
+    /// <summary>Set while the hero kneels to examine the footprints.</summary>
+    public const string ExaminingFootprints = "v63be1c";
+
+    /// <summary>The crate was pushed aside on this visit: the hero already stands by the hideout entrance.</summary>
+    public const string CrateJustPushed = "v63be1d";
+
+    /// <summary>Where the crate on the beach is drawn while it is pushed (x).</summary>
+    public const string CrateX = "v63be20";
+
+    /// <summary>How far the rowing boat has been pushed out (x offset).</summary>
+    public const string BoatX = "v63be24";
+
+    /// <summary>The fisherman's hut has been looked at.</summary>
+    public const string HutSeen = "v65052c";
+
+    /// <summary>The hut's window has been looked at.</summary>
+    public const string HutWindowSeen = "v650564";
+
+    /// <summary>The bench on the beach has been looked at.</summary>
+    public const string BenchSeen = "v65059c";
+
+    /// <summary>The fishing net has been looked at.</summary>
+    public const string NetSeen = "v6505d4";
+
+    /// <summary>The sea has been looked at.</summary>
+    public const string SeaSeen = "v650644";
+
+    /// <summary>Kirrin Island has been looked at from the beach.</summary>
+    public const string IslandSeen = "v65067c";
+
+    /// <summary>How often Anne has stopped the hero on the way down to the beach (quest 8, step 2).</summary>
+    public const string AnneAtTheGate = "v650aa4";
+
+    /// <summary>How often Julian has come over at the tower door (quest 8, step 2).</summary>
+    public const string JulianAtTheTower = "v650b14";
+
+    /// <summary>How often Dick has come out from between the tower and the house (quest 8, step 2).</summary>
+    public const string DickBehindTheHouse = "v650adc";
+
+    /// <summary>The bush in the courtyard: 0 not noticed, 1 Timmy has run into it, 2 cut down with the axe.</summary>
+    public const string BushState = "v650b4c";
+
+    /// <summary>The bush in the courtyard has been cut down (it is no longer shown).</summary>
+    public const string BushCut = "v65155c";
+
+    /// <summary>The rope has been tied to the stone by the well (quest 8, step 3).</summary>
+    public const string RopeTiedOnce = "v650c2c";
+
+    /// <summary>A stone has been thrown at the bush (quest 8, step 3).</summary>
+    public const string StonesAtBush = "v650c64";
+
+    /// <summary>The bucket in the courtyard has been taken.</summary>
+    public const string CourtyardBucketTaken = "v6509fc";
+
+    /// <summary>Set while the hero takes the bucket in the courtyard.</summary>
+    public const string TakingCourtyardBucket = "v63be6f";
+
+    /// <summary>Set while the hero chops at the bush (Dick remarks once the chopping stops).</summary>
+    public const string ChoppingBush = "v63be6c";
+
+    /// <summary>Set while the hero ties the rope to the stone (the rope is shown once done).</summary>
+    public const string TyingRope = "v63be6d";
+
+    /// <summary>Quest 8, step 4: the talk by the well can start once the hero moves.</summary>
+    public const string WellTalkReady = "v63be6e";
+
+    /// <summary>The talk by the well about getting Timmy out has been held (quest 8, step 4).</summary>
+    public const string WellTalkDone = "v650a34";
+
+    /// <summary>The children have talked on finding Timmy fallen in the well (quest 8, step 4).</summary>
+    public const string TimmyInWellSceneSeen = "v650d0c";
+
+    /// <summary>The children have talked about the big stone (quest 8, step 5).</summary>
+    public const string StoneSceneSeen = "v6509c4";
+
+    /// <summary>The children have talked on arriving at the castle (quest 8, step 2).</summary>
+    public const string CastleArrivalSeen = "v651524";
+
+    /// <summary>Where the professor is drawn as he walks off (quest 11).</summary>
+    public const string ProfessorX = "v63be74";
+
+    /// <summary>How often Dick has said he cannot go out while the professor is watching (quest 11).</summary>
+    public const string HidingFromProfessorTalk = "v651444";
 }

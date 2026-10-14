@@ -76,9 +76,9 @@ public sealed class HandCloseUp : CloseUp
     {
         if (_name == "hand")
         {
-            SetVar(Vars.V64f994, 7);
-            SetVar(Vars.V64fa04, 7);
-            SetVar(Vars.V64f9cc, 7);
+            SetVar(Vars.AnneHallTalk, 7);
+            SetVar(Vars.DickHallTalk, 7);
+            SetVar(Vars.JulianHallTalk, 7);
         }
         PointerOff();
         MoveOnAfter("loc04", 40);
