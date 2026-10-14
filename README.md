@@ -91,6 +91,13 @@ sudo zypper install dist/x86_64/openfive-*.rpm
 
 This installs `openfive`, a menu entry and the .NET 8 runtime and SDL3 it needs.
 
+### Other Linux distributions
+
+`packaging/linux/build-portable.sh` (or `build-portable.sh linux-arm64`) makes
+`dist/openfive-VERSION-linux-x64.tar.gz`: a single self-contained executable that needs no .NET
+installed, only SDL3 (`libSDL3.so.0`, packaged by most distributions). Unpack it anywhere and run
+`./openfive`.
+
 ## Building from source
 
 ### openSUSE Tumbleweed
