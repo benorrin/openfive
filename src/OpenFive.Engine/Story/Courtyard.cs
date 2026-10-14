@@ -1143,9 +1143,9 @@ public sealed class Courtyard : StoryScript
         if (option == 1)
         {
             // Every option off the menu (in the original's order: the third first).
-            SetVar(Vars.V64efac, Var(Vars.V64efb4));
-            SetVar(Vars.V64efa8, Var(Vars.V64efb4));
-            SetVar(Vars.V64efa4, Var(Vars.V64efb4));
+            SetVar(Vars.CourtyardMenuSlot3, Var(Vars.CourtyardMenuNone));
+            SetVar(Vars.CourtyardMenuSlot2, Var(Vars.CourtyardMenuNone));
+            SetVar(Vars.CourtyardMenuSlot1, Var(Vars.CourtyardMenuNone));
             Hero = Dick;
             PointerAfter(true, Chain, 1, 400, 400);
         }

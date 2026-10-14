@@ -122,14 +122,14 @@ public sealed class GameSession
     public GameSession(GameWorld world, Func<string, LocationScript>? scripts = null, Settings? settings = null)
     {
         World = world;
+        Settings = settings ?? new Settings();
+        _scriptFactory = scripts ?? (n => new PlainLocation(n));
+        Script = new PlainLocation("");
         World.LocationTick = () =>
         {
             if (!IsMenu(World.Scene?.Name ?? ""))
                 Script.EveryTick();
         };
-        Settings = settings ?? new Settings();
-        _scriptFactory = scripts ?? (n => new PlainLocation(n));
-        Script = new PlainLocation("");
     }
 
     /// <summary>Menu screens are locations too, but do not count as where the hero is.</summary>

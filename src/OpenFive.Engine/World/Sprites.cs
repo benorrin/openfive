@@ -113,6 +113,9 @@ public sealed class SpriteBank
     }
 
     /// <summary>Draws visible sprites (plus extra ones), furthest first; equal depths keep load order.</summary>
+    /// <param name="fb">The frame to draw into.</param>
+    /// <param name="extra">Sprites drawn along with the bank's own (characters), or null.</param>
+    /// <param name="occlusion">For a sprite, the test for pixels hidden behind the scenery, or null.</param>
     /// <param name="shadowed">Sprites that cast a shadow (drawn just before them), or null.</param>
     public void Draw(Framebuffer fb, IEnumerable<Sprite>? extra = null, Func<Sprite, Func<int, int, bool>?>? occlusion = null,
         Func<Sprite, bool>? shadowed = null)

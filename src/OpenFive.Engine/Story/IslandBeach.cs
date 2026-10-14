@@ -21,7 +21,7 @@ public sealed class IslandBeach : IslandScript
     /// <remarks>The original's FUN_004497ba.</remarks>
     protected override void Setup()
     {
-        SetVar(Vars.V683260, 1);
+        SetVar(Vars.OriginalPlaceFlag, 1);
         Obj("LOC14Anne", false);
         Obj("LOC14George", false);
         Obj("LOC14Julian", false);

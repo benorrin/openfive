@@ -1,9 +1,11 @@
 namespace OpenFive.Engine.Story;
 
 /// <summary>Names of the story variables shared between locations (saved with the game).</summary>
-public static partial class Vars
+public static class Vars
 {
+    /// <summary>The bucket in the garden has been taken.</summary>
     public const string GardenBucketTaken = "garden.bucketTaken";
+    /// <summary>The barrel in the garden has been moved.</summary>
     public const string BarrelMoved = "garden.barrelMoved";
     /// <summary>The living-room window seen from the garden: 0 closed, 1 open.</summary>
     public const string LivingRoomWindow = "house.livingRoomWindow";
@@ -682,4 +684,22 @@ public static partial class Vars
 
     /// <summary>The original's menu-entry flag (kept as the original sets it; OpenFive does not read it).</summary>
     public const string OriginalMenuEntryShown = "v64e2f9";
+
+    /// <summary>The courtyard menu's first row (see StoryScript's menu helpers).</summary>
+    public const string CourtyardMenuSlot1 = "v64efa4";
+
+    /// <summary>The courtyard menu's second row.</summary>
+    public const string CourtyardMenuSlot2 = "v64efa8";
+
+    /// <summary>The courtyard menu's third row.</summary>
+    public const string CourtyardMenuSlot3 = "v64efac";
+
+    /// <summary>The value of an empty row on the courtyard menu.</summary>
+    public const string CourtyardMenuNone = "v64efb4";
+
+    /// <summary>A flag the original sets and clears on arriving in some places (the island, the wreck, the dungeon, the kitchen); kept as the original sets it, OpenFive does not read it.</summary>
+    public const string OriginalPlaceFlag = "v683260";
+
+    /// <summary>1 from a new game until the children have talked about where to go on first landing on the island (quest 6, step 3).</summary>
+    public const string FirstLandingTalk = "v64d468";
 }

@@ -103,7 +103,7 @@ public sealed class TreasureDoor : StoryScript
                     return;
                 }
                 PointerAfter(false, reached, x: 400, y: 400);
-                SetVar(Vars.V683260, 1);
+                SetVar(Vars.OriginalPlaceFlag, 1);
             }
             StopAnimAfter("TuerClose", reached);
             Anim("Tuer", after: reached);
@@ -218,6 +218,6 @@ public sealed class TreasureDoor : StoryScript
         Say(Who.George, "LABYRINTH0046", 9);
         Say(Who.Anne, "LABYRINTH0046", 10);
         Say(Who.Julian, "LABYRINTH0046", 11, last: true);
-        ToggleAfter(Vars.V683260, arrived);
+        ToggleAfter(Vars.OriginalPlaceFlag, arrived);
     }
 }

@@ -34,19 +34,19 @@ public sealed class IslandLanding : StoryScript
     /// <remarks>The original's FUN_0044738e.</remarks>
     protected override void Setup()
     {
-        SetVar(Vars.V683260, 1);
+        SetVar(Vars.OriginalPlaceFlag, 1);
         foreach (var a in new[] { Hero, Dick, Anne, Julian, George, Timmy })
             ClearQueue(a);
         if (At(6, 3))
         {
-            if (Var(Vars.V64d468) != 0)
+            if (Var(Vars.FirstLandingTalk) != 0)
             {
                 Chain = null;
                 Say(Who.Anne, "WRACK0022", 1);
                 Say(Who.George, "WRACK0022", 2);
                 Say(Who.Anne, "WRACK0022", 3);
                 Say(Who.Julian, "WRACK0022", 4, last: true);
-                SetVar(Vars.V64d468, 0);
+                SetVar(Vars.FirstLandingTalk, 0);
             }
         }
         else if (At(7, 1) && Has(Item.ClosedTin))

@@ -67,7 +67,7 @@ public sealed class WellBottom : StoryScript
         {
             PointerAfter(false, end, x: 400, y: 400);
             ChangeLocation("loc14", end, 4);
-            SetVar(Vars.V683260, 0);
+            SetVar(Vars.OriginalPlaceFlag, 0);
             SetAfter(Vars.EpisodeNumber, 1, end);
             SetAfter(Vars.QuestNumber, 11, end);
         }

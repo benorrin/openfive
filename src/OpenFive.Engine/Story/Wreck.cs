@@ -17,7 +17,7 @@ public sealed class Wreck : IslandScript
     /// <remarks>The original's FUN_0044b738 and FUN_0044b852.</remarks>
     protected override void Setup()
     {
-        SetVar(Vars.V683260, 0);
+        SetVar(Vars.OriginalPlaceFlag, 0);
         SetVar(Vars.WreckTinTalkPending, 0);
         Place(George, 470, 455, SitDownLeft);
         Place(Julian, 200, 455, SitDownRight);
@@ -83,7 +83,7 @@ public sealed class Wreck : IslandScript
         {
             PointerOff();
             ChangeLocation("loc13", delay: 5);
-            SetVar(Vars.V683260, 1);
+            SetVar(Vars.OriginalPlaceFlag, 1);
         }
         else if (Same(name, "LOC15Anne"))
             TalkToAnne();

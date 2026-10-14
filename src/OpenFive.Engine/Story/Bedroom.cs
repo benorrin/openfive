@@ -230,10 +230,7 @@ public sealed class Bedroom : StoryScript
         else if (Same(name, "LOC02DoOpenSchrankClick"))
             OpenWardrobe();
         else if (Same(name, "LOC02Fenster"))
-        {
             WalkAndFace(350, 444, StandUpLeft);
-            SetVar(Vars.V64f25c, 0);
-        }
         else if (Same(name, "LOC02Carpet1Click"))
         {
             if (Episode > 5 && Quest == 5)

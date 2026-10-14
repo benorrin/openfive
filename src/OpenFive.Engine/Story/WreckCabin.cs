@@ -28,7 +28,7 @@ public sealed class WreckCabin : StoryScript
     /// <remarks>The original's FUN_0044c6d6 and FUN_0044c7a6.</remarks>
     protected override void Setup()
     {
-        SetVar(Vars.V683260, 1);
+        SetVar(Vars.OriginalPlaceFlag, 1);
         Depth(@"bmp\obj\locs\loc16\schrank.brg", 3000);
         Place(Hero, 206, 578, StandDownRight);
         Show(Hero);

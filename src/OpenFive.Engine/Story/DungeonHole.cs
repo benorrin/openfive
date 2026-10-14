@@ -51,7 +51,7 @@ public sealed class DungeonHole : StoryScript
             PointerOff();
             Place(Timmy, 561, 200, StandLeft);
             Place(George, 561, 318, StandLeft);
-            ToggleAfter(Vars.V683260, arrived);
+            ToggleAfter(Vars.OriginalPlaceFlag, arrived);
             Place(Anne, 464, 300, StandDownRight);
             Place(Julian, 610, 344, StandDownLeft);
             Say(Who.Dick, "BRUNNEN0049", 1, after: arrived, delay: 3);
@@ -98,7 +98,7 @@ public sealed class DungeonHole : StoryScript
             }
             else
             {
-                SetVar(Vars.V683260, 1);
+                SetVar(Vars.OriginalPlaceFlag, 1);
                 var watching = State(Hero, WatchLeft);
                 PointerAfter(false, watching, x: 400, y: 400);
                 ChangeLocation("loc20", watching);

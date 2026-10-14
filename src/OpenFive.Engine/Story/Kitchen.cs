@@ -1180,7 +1180,7 @@ public sealed class Kitchen : StoryScript
         else
         {
             Obj("LOC05George", false);
-            SetVar(Vars.V683260, 1);
+            SetVar(Vars.OriginalPlaceFlag, 1);
         }
         if (!At(5, 0) && !At(12, 1) && IsShown(Quentin))
         {
@@ -1439,7 +1439,7 @@ public sealed class Kitchen : StoryScript
             SetVar(Vars.GuestRoomKeyPlan, 0);
             SetVar(Vars.KeySeenInLock, 0);
             SetVar(Vars.FannyTalk, 4);
-            SetVar(Vars.V683260, 0);
+            SetVar(Vars.OriginalPlaceFlag, 0);
             Place(Quentin, 540, 440, StandDownLeft);
             Place(Timmy, 799, 440, StandDownLeft);
             Obj("LOC05ExitToLOC04", false);
@@ -2336,7 +2336,7 @@ public sealed class Kitchen : StoryScript
         }
         else
         {
-            SetVar(Vars.V683260, 1);
+            SetVar(Vars.OriginalPlaceFlag, 1);
             PointerAfter(false, end, x: 100, y: 200);
             WalkAfter(Quentin, 647, 426, end);
             StateAfter(Quentin, StandUpRight, end);
