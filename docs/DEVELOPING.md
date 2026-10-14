@@ -43,14 +43,15 @@ git tag v1.0.0 && git push origin v1.0.0
 Each download is a self-contained single executable (no .NET needed) with SDL3 next to it. The
 scripts the workflow runs also work locally:
 
-* **Linux:** `packaging/linux/build-release.sh [linux-x64|linux-arm64]` makes the `.tar.gz` and
-  the `.deb`. It builds SDL3 from source with `build-sdl3.sh` (set `SDL3_LIB` to use a
+* **Linux:** `packaging/linux/build-release.sh [linux-x64|linux-arm64]` makes the `.tar.gz`, the
+  `.deb` and the `.rpm` (one RPM for openSUSE and Fedora: everything it needs is inside). It builds SDL3 from source with `build-sdl3.sh` (set `SDL3_LIB` to use a
   `libSDL3.so.0` you already have).
 * **Windows:** `packaging/windows/build-release.ps1` makes the `.zip`, with the official `SDL3.dll`.
 * **macOS:** `packaging/macos/build-release.sh [osx-arm64|osx-x64]` makes the `.dmg` with
   `OpenFive.app`, signed ad hoc (not notarized).
-* **openSUSE RPM:** `packaging/opensuse/build-rpm.sh` (needs `rpm-build` and `dotnet-sdk-8.0`)
-  builds `dist/x86_64/openfive-*.rpm`, which uses the system's .NET 8 runtime and SDL3.
+* **openSUSE source RPM:** `packaging/opensuse/build-rpm.sh` (needs `rpm-build` and
+  `dotnet-sdk-8.0`) builds an RPM from source that uses the system's .NET 8 runtime and SDL3, for
+  distribution repositories such as the Open Build Service.
 
 ## Developer tools
 

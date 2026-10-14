@@ -44,9 +44,12 @@ Everything OpenFive needs is included: there is nothing else to install.
 | 🍎 **Mac** with Apple silicon (M1 or later) | `OpenFive-…-macos-arm64.dmg` | Open it and drag OpenFive into Applications. |
 | 🍎 **Mac** with an Intel processor | `OpenFive-…-macos-x64.dmg` | Open it and drag OpenFive into Applications. |
 | 🐧 **Debian, Ubuntu**, Mint, Pop!_OS | `openfive_…_amd64.deb` | Double-click to install, or `sudo apt install ./openfive_*.deb`. |
+| 🦎 **openSUSE** | `openfive-…x86_64.rpm` | `sudo zypper install --allow-unsigned-rpm ./openfive-*.rpm` |
+| 🎩 **Fedora** | `openfive-…x86_64.rpm` | Double-click to install, or `sudo dnf install ./openfive-*.rpm`. |
 | 🐧 **Any other Linux** | `openfive-…-linux-x64.tar.gz` | Unpack it anywhere and run `./openfive`. |
 
-On a Raspberry Pi or other ARM Linux machine, pick the `arm64` file instead of `amd64`/`x64`.
+On a Raspberry Pi or other ARM Linux machine, pick the `arm64`/`aarch64` file instead of
+`amd64`/`x64`/`x86_64`. The Linux packages add OpenFive to your applications menu.
 
 <details>
 <summary><b>Windows or macOS says the app is from an unknown developer</b></summary>

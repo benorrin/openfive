@@ -29,10 +29,10 @@ jobs:
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
-      - name: Install SDL3 build dependencies
+      - name: Install packaging tools and SDL3 build dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake ninja-build pkg-config libasound2-dev libpulse-dev \
+          sudo apt-get install -y rpm cmake ninja-build pkg-config libasound2-dev libpulse-dev \
             libpipewire-0.3-dev libx11-dev libxext-dev libxrandr-dev libxcursor-dev libxfixes-dev \
             libxi-dev libxss-dev libxtst-dev libxkbcommon-dev libwayland-dev wayland-protocols \
             libdecor-0-dev libdrm-dev libgbm-dev libgl1-mesa-dev libgles2-mesa-dev libegl1-mesa-dev \
@@ -101,6 +101,7 @@ jobs:
             | Mac with Apple silicon (M1 or later) | `OpenFive-…-macos-arm64.dmg` |
             | Mac with Intel processor | `OpenFive-…-macos-x64.dmg` |
             | Debian, Ubuntu, Mint, Pop!_OS | `openfive_…_amd64.deb` (or `arm64`) |
+            | openSUSE, Fedora | `openfive-…x86_64.rpm` (or `aarch64`) |
             | Any other Linux | `openfive-…-linux-x64.tar.gz` (or `arm64`): unpack and run `./openfive` |
 
             See the [README](https://github.com/benorrin/openfive#readme) for how to get started.
