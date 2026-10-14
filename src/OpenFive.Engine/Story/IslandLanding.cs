@@ -26,18 +26,15 @@ public sealed partial class IslandLanding : StoryScript
     // from FUN_0044708e
     void OnClick(string name)
     {
-        TaskHandle? local_20 = null;
-        TaskHandle? local_28 = null;
-        TaskHandle? local_40 = null;
-        TaskHandle? local_58 = null;
-        local_20 = null;
-        if (Same(name, "LOC13ExitToLoc14")) {
+        if (Same(name, "LOC13ExitToLoc14"))
+        {
             Chain = null;
-            local_28 = null;
-            if ((Episode == 3) && (Quest == 6)) {
+            if (Episode == 3 && Quest == 6)
+            {
                 SetText("t63be38", "LOC14");
-                Chain = Say(3, "WRACK0022", 7, false, Chain, 0);
-                if (Var(Vars.V650874) == 1) {
+                Say(Who.Anne, "WRACK0022", 7);
+                if (Var(Vars.V650874) == 1)
+                {
                     SetVar(Vars.V650874, 2);
                     SetVar(Vars.V64eff6, 1);
                     SetVar(Vars.DickBeachTalk, 0);
@@ -48,47 +45,48 @@ public sealed partial class IslandLanding : StoryScript
                     SetVar(Vars.AnneIslandTalk, 0);
                 }
             }
-            else {
-                ChangeLocation("loc14", null, 0);
+            else
+            {
+                ChangeLocation("loc14");
             }
         }
-        else {
-            if (Same(name, "LOC13ExitToLoc15")) {
-                Chain = null;
-                local_40 = null;
-                if ((Episode == 3) && (Quest == 6)) {
-                    SetText("t63be38", "LOC15");
-                    Chain = Say(2, "WRACK0022", 6, false, Chain, 0);
-                }
-                else {
-                    ChangeLocation("loc15", null, 0);
-                }
+        else if (Same(name, "LOC13ExitToLoc15"))
+        {
+            Chain = null;
+            if (Episode == 3 && Quest == 6)
+            {
+                SetText("t63be38", "LOC15");
+                Say(Who.Julian, "WRACK0022", 6);
             }
-            else {
-                if (Same(name, "LOC13ExitToLoc09")) {
-                    Chain = null;
-                    local_58 = null;
-                    if ((Episode == 3) && (Quest == 6)) {
-                        SetText("t63be38", "LOC09");
-                        Chain = Say(2, "WRACK0022", 5, false, Chain, 0);
-                        if (Var(Vars.V650874) == 1) {
-                            SetVar(Vars.V650874, 2);
-                            SetVar(Vars.V64eff7, 1);
-                            SetVar(Vars.DickBeachTalk, 0);
-                            SetVar(Vars.V65044c, 0);
-                            SetVar(Vars.AnneBeachTalk, 0);
-                            SetVar(Vars.V650804, 0);
-                            SetVar(Vars.GeorgeIslandTalk, 0);
-                            SetVar(Vars.AnneIslandTalk, 0);
-                        }
-                    }
-                    else {
-                        ChangeLocation("loc09", null, 0);
-                    }
-                }
+            else
+            {
+                ChangeLocation("loc15");
             }
         }
-        return;
+        else if (Same(name, "LOC13ExitToLoc09"))
+        {
+            Chain = null;
+            if (Episode == 3 && Quest == 6)
+            {
+                SetText("t63be38", "LOC09");
+                Say(Who.Julian, "WRACK0022", 5);
+                if (Var(Vars.V650874) == 1)
+                {
+                    SetVar(Vars.V650874, 2);
+                    SetVar(Vars.V64eff7, 1);
+                    SetVar(Vars.DickBeachTalk, 0);
+                    SetVar(Vars.V65044c, 0);
+                    SetVar(Vars.AnneBeachTalk, 0);
+                    SetVar(Vars.V650804, 0);
+                    SetVar(Vars.GeorgeIslandTalk, 0);
+                    SetVar(Vars.AnneIslandTalk, 0);
+                }
+            }
+            else
+            {
+                ChangeLocation("loc09");
+            }
+        }
     }
 
     // from FUN_0044738e
@@ -103,47 +101,54 @@ public sealed partial class IslandLanding : StoryScript
         ClearQueue(Julian);
         ClearQueue(George);
         ClearQueue(Timmy);
-        if ((Episode == 3) && (Quest == 6)) {
-            if (Var(Vars.V64d468) != 0) {
+        if (Episode == 3 && Quest == 6)
+        {
+            if (Var(Vars.V64d468) != 0)
+            {
                 Chain = null;
                 local_20 = null;
-                Chain = Say(3, "WRACK0022", 1, false, local_20, 0);
-                Chain = Say(1, "WRACK0022", 2, false, Chain, 0);
-                Chain = Say(3, "WRACK0022", 3, false, Chain, 0);
-                Chain = Say(2, "WRACK0022", 4, true, Chain, 0);
+                Say(Who.Anne, "WRACK0022", 1, after: local_20);
+                Say(Who.George, "WRACK0022", 2);
+                Say(Who.Anne, "WRACK0022", 3);
+                Say(Who.Julian, "WRACK0022", 4, last: true);
                 SetVar(Vars.V64d468, 0);
             }
         }
-        else if ((Episode == 1) && ((Quest == 7 && (Has(3))))) {
+        else if (Episode == 1 && ((Quest == 7 && Has(Item.ClosedTin))))
+        {
             Episode = 2;
         }
-        if (7 < Quest) {
+        if (Quest > 7)
+        {
             Obj("LOC13ExitToLoc15", false);
         }
         Anim("Moewen", -1);
-        return;
     }
 
     // from FUN_004475cd
     void OnLineQueued(TaskHandle? param_1)
     {
-        if (Text("t63be38") != "LOC09") {
-            if (Text("t63be38") != "LOC14") {
-                if (Text("t63be38") == "LOC15") {
+        if (Text("t63be38") != "LOC09")
+        {
+            if (Text("t63be38") != "LOC14")
+            {
+                if (Text("t63be38") == "LOC15")
+                {
                     SetText("t63be38", "");
-                    ChangeLocation("loc15", param_1, 0);
+                    ChangeLocation("loc15", param_1);
                 }
             }
-            else {
+            else
+            {
                 SetText("t63be38", "");
-                ChangeLocation("loc14", param_1, 0);
+                ChangeLocation("loc14", param_1);
             }
         }
-        else {
+        else
+        {
             SetText("t63be38", "");
-            ChangeLocation("loc09", param_1, 0);
+            ChangeLocation("loc09", param_1);
         }
-        return;
     }
 
 }

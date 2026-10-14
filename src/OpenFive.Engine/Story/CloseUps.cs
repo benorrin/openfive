@@ -86,12 +86,12 @@ public sealed class ShipOpening : CloseUp
         switch (_step)
         {
             case 1:
-                Sound(@"wav\fx\aufschlu.wav", null, 1);
-                Sound(@"wav\fx\schirm.wav", null, 3);
+                Sound(@"wav\fx\aufschlu.wav", delay: 1);
+                Sound(@"wav\fx\schirm.wav", delay: 3);
                 MoveOnAfter("schiffc2", 10);
                 break;
             case 2:
-                Sound(@"wav\fx\blatter.wav", null, 1);
+                Sound(@"wav\fx\blatter.wav", delay: 1);
                 MoveOnAfter("schiffc3", 10);
                 break;
             default:

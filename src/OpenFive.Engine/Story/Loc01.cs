@@ -24,38 +24,32 @@ public sealed partial class Loc01 : StoryScript
     // from FUN_00422c5e
     void OnClick(string name)
     {
-        int iVar1 = 0;
-        TaskHandle? local_138 = null;
-        TaskHandle? local_20 = null;
-        int local_34 = 0;
-        TaskHandle? local_38 = null;
-        local_20 = null;
-        iVar1 = Same(name, "LOC01l01o1e") ? 0 : 1;
-        if ((iVar1 == 0) || Same(name, "LOC01l01o1g")) {
+        if (Same(name, "LOC01l01o1e") || Same(name, "LOC01l01o1g"))
+        {
             ChangeLocationNow("loc14");
             return;
         }
-        iVar1 = Same(name, "LOC01l01o2e") ? 0 : 1;
-        if ((iVar1 == 0) || Same(name, "LOC01l01o2g")) {
+        if (Same(name, "LOC01l01o2e") || Same(name, "LOC01l01o2g"))
+        {
             ChangeLocationNow("loc06");
             return;
         }
-        iVar1 = Same(name, "LOC01l01o3e") ? 0 : 1;
-        if ((iVar1 == 0) || Same(name, "LOC01l01o3g")) {
+        if (Same(name, "LOC01l01o3e") || Same(name, "LOC01l01o3g"))
+        {
             ChangeLocationNow("loc09");
             return;
         }
-        if (Same(name, "LOC01StartClick")) {
+        if (Same(name, "LOC01StartClick"))
+        {
             // Clicking the picture itself goes back where the hero came from.
             ChangeLocationNow(From);
             return;
         }
-        iVar1 = Same(name, "LOC01_ZUMMENUE") ? 0 : 1;
-        if ((iVar1 != 0) && !Same(name, "LOC01_EZUMMENUE")) {
+        if (!Same(name, "LOC01_ZUMMENUE") && !Same(name, "LOC01_EZUMMENUE"))
+        {
             return;
         }
         ChangeLocationNow("menue");
-        return;
     }
 
     // from FUN_00422dea
@@ -68,7 +62,6 @@ public sealed partial class Loc01 : StoryScript
         ClearQueue(Julian);
         PointerOn();
         F422e90();
-        return;
     }
 
     // from FUN_00422e90
@@ -88,142 +81,169 @@ public sealed partial class Loc01 : StoryScript
         Obj("LOC01l01o3g", false);
         Obj("LOC01greet", false);
         Obj("LOC01gruss", false);
-        ObjAfter("LOC01_ZUMMENUE", false, null, 0);
-        ObjAfter("LOC01_ZUMMENUE1", false, null, 0);
-        ObjAfter("LOC01_EZUMMENUE", false, null, 0);
-        ObjAfter("LOC01_EZUMMENUE1", false, null, 0);
-        if (Var(Vars.LanguageNumber) != 0) {
-            if (Var(Vars.LanguageNumber) < 2) {
+        ObjAfter("LOC01_ZUMMENUE", false, null);
+        ObjAfter("LOC01_ZUMMENUE1", false, null);
+        ObjAfter("LOC01_EZUMMENUE", false, null);
+        ObjAfter("LOC01_EZUMMENUE1", false, null);
+        if (Var(Vars.LanguageNumber) != 0)
+        {
+            if (Var(Vars.LanguageNumber) < 2)
+            {
                 Obj("LOC01gruss", true);
                 MoveObj("LOC01_ZUMMENUE", 30, 550);
-                ObjAfter("LOC01_ZUMMENUE", true, null, 0);
+                ObjAfter("LOC01_ZUMMENUE", true, null);
                 MoveObj("LOC01_ZUMMENUE1", 30, 550);
-                ObjAfter("LOC01_ZUMMENUE1", false, null, 0);
+                ObjAfter("LOC01_ZUMMENUE1", false, null);
             }
-            else if (Var(Vars.LanguageNumber) == 2) {
+            else if (Var(Vars.LanguageNumber) == 2)
+            {
                 Obj("LOC01greet", true);
                 MoveObj("LOC01_EZUMMENUE", -50, 560);
-                ObjAfter("LOC01_EZUMMENUE", true, null, 0);
+                ObjAfter("LOC01_EZUMMENUE", true, null);
                 MoveObj("LOC01_EZUMMENUE1", -50, 560);
-                ObjAfter("LOC01_EZUMMENUE1", false, null, 0);
+                ObjAfter("LOC01_EZUMMENUE1", false, null);
             }
         }
         SetVar(Vars.V63bda0, 0);
         SetVar(Vars.V63bda1, 0);
         SetVar(Vars.V63bda2, 0);
-        if (Quest == 3) {
+        if (Quest == 3)
+        {
             SetVar(Vars.V63bda0, (Episode != 3) ? 1 : 0);
             SetVar(Vars.V63bda1, Var(Vars.V63bda0));
         }
-        else if (Quest == 5) {
+        else if (Quest == 5)
+        {
             SetVar(Vars.V63bda0, 0);
             SetVar(Vars.V63bda1, 0);
             SetVar(Vars.V63bda2, 0);
         }
-        else if (Quest < 5) {
+        else if (Quest < 5)
+        {
             SetVar(Vars.V63bda0, 1);
             SetVar(Vars.V63bda1, 1);
         }
-        else if (Quest == 6) {
+        else if (Quest == 6)
+        {
             SetVar(Vars.V63bda0, 1);
             SetVar(Vars.V63bda1, 1);
-            if (Episode < 3) {
-                if (Episode == 1) {
+            if (Episode < 3)
+            {
+                if (Episode == 1)
+                {
                     SetVar(Vars.V63bda0, 0);
                     SetVar(Vars.V63bda1, 0);
                     SetVar(Vars.V63bda2, 0);
                 }
             }
-            else {
+            else
+            {
                 SetVar(Vars.V63bda2, 1);
             }
         }
-        else if (Quest == 7) {
+        else if (Quest == 7)
+        {
             SetVar(Vars.V63bda0, 1);
             SetVar(Vars.V63bda1, 1);
             SetVar(Vars.V63bda2, 1);
-            if (Episode < 3) {
-                if (Episode == 1) {
+            if (Episode < 3)
+            {
+                if (Episode == 1)
+                {
                     SetVar(Vars.V63bda0, 0);
                     SetVar(Vars.V63bda1, 0);
                     SetVar(Vars.V63bda2, 0);
                 }
             }
-            else {
+            else
+            {
                 SetVar(Vars.V63bda2, 0);
             }
         }
-        else if (Quest == 8) {
+        else if (Quest == 8)
+        {
             SetVar(Vars.V63bda0, 1);
             SetVar(Vars.V63bda1, 1);
-            if ((Episode == 1) && (FromId == 3)) {
+            if (Episode == 1 && FromId == 3)
+            {
                 SetVar(Vars.V63bda0, 0);
                 SetVar(Vars.V63bda1, 0);
             }
-            if ((((1 < Episode) && (Episode == 2)) && (Has(12))) && ((Has(13) && (Has(19))))) {
+            if (Episode > 1 && Episode == 2 && Has(Item.Rope) && ((Has(Item.Axe) && Has(Item.Torch))))
+            {
                 SetVar(Vars.V63bda2, 1);
             }
         }
-        else if (Quest == 11) {
+        else if (Quest == 11)
+        {
             SetVar(Vars.V63bda2, 1);
         }
-        if (16 < FromId) {
+        if (FromId > 16)
+        {
             SetVar(Vars.V63bda0, 0);
             SetVar(Vars.V63bda1, 0);
             SetVar(Vars.V63bda2, 0);
         }
-        if (Var(Vars.V63bda2) != 0) {
+        if (Var(Vars.V63bda2) != 0)
+        {
             F423318();
         }
-        if (Var(Vars.V63bda0) != 0) {
+        if (Var(Vars.V63bda0) != 0)
+        {
             F42337d();
         }
-        if (Var(Vars.V63bda1) != 0) {
+        if (Var(Vars.V63bda1) != 0)
+        {
             F4233e2();
         }
-        return;
     }
 
     // from FUN_00423318
     void F423318()
     {
-        if (Var(Vars.LanguageNumber) != 0) {
-            if (Var(Vars.LanguageNumber) < 2) {
+        if (Var(Vars.LanguageNumber) != 0)
+        {
+            if (Var(Vars.LanguageNumber) < 2)
+            {
                 Obj("LOC01l01o1g", true);
             }
-            else if (Var(Vars.LanguageNumber) == 2) {
+            else if (Var(Vars.LanguageNumber) == 2)
+            {
                 Obj("LOC01l01o1e", true);
             }
         }
-        return;
     }
 
     // from FUN_0042337d
     void F42337d()
     {
-        if (Var(Vars.LanguageNumber) != 0) {
-            if (Var(Vars.LanguageNumber) < 2) {
+        if (Var(Vars.LanguageNumber) != 0)
+        {
+            if (Var(Vars.LanguageNumber) < 2)
+            {
                 Obj("LOC01l01o2g", true);
             }
-            else if (Var(Vars.LanguageNumber) == 2) {
+            else if (Var(Vars.LanguageNumber) == 2)
+            {
                 Obj("LOC01l01o2e", true);
             }
         }
-        return;
     }
 
     // from FUN_004233e2
     void F4233e2()
     {
-        if (Var(Vars.LanguageNumber) != 0) {
-            if (Var(Vars.LanguageNumber) < 2) {
+        if (Var(Vars.LanguageNumber) != 0)
+        {
+            if (Var(Vars.LanguageNumber) < 2)
+            {
                 Obj("LOC01l01o3g", true);
             }
-            else if (Var(Vars.LanguageNumber) == 2) {
+            else if (Var(Vars.LanguageNumber) == 2)
+            {
                 Obj("LOC01l01o3e", true);
             }
         }
-        return;
     }
 
 }

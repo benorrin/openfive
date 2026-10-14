@@ -51,8 +51,8 @@ public sealed class Garden : StoryScript
                 Walk(Hero, 487, 439);
                 State(Hero, StandDownRight);
                 ObjAfter("LOC06OpenDoor2", false, null, 1);
-                var closed = Anim("DoCloseDoor2", 1, null, 8);
-                Sound(@"wav\fx\htuerzu.wav", null, 8);
+                var closed = Anim("DoCloseDoor2", delay: 8);
+                Sound(@"wav\fx\htuerzu.wav", delay: 8);
                 ObjAfter("LOC06OpenDoor2", true, closed);
                 StartScenes();
                 HideOthers();
@@ -72,7 +72,7 @@ public sealed class Garden : StoryScript
             {
                 ObjAfter("LOC06ClosedDoor1Obj", false, null);
                 ObjAfter("LOC06OpenDoor1Obj", false, null);
-                var closed = Anim("DoCloseDoor1Schuppen", 1, null, 0, "LOC06ClosedDoor1Obj", true);
+                var closed = Anim("DoCloseDoor1Schuppen", endObject: "LOC06ClosedDoor1Obj", endObjectOn: true);
                 Sound(@"wav\fx\stuerzu.wav", closed);
                 Place(Hero, 140, 422, StandDownRight);
                 Walk(Hero, 159, 473);
@@ -198,7 +198,7 @@ public sealed class Garden : StoryScript
         {
             // Aunt Fanny takes Julian and Anne into the house.
             SetStep(2, 2);
-            PointerAfter(false, end, 0, 400, 300);
+            PointerAfter(false, end, x: 400, y: 300);
             StopAnimAfter("FannyStandLeftTalk", end);
             FannyStands(end);
             StopAnimAfter("FannyStandLeft", end, 1);
@@ -226,7 +226,7 @@ public sealed class Garden : StoryScript
         }
         else if (At(7, 5))
         {
-            PointerAfter(false, end, 0, 300, 400);
+            PointerAfter(false, end, x: 300, y: 400);
             ChangeLocation("loc03", end);
         }
     }
@@ -271,19 +271,37 @@ public sealed class Garden : StoryScript
                 var take = State(Hero, TakeLow);
                 Sound(@"wav\fx\stuerauf.wav", take, 3);
                 ObjAfter("LOC06ClosedDoor1Obj", false, take, 3);
-                var open = Anim("DoOpenDoorSchuppen", 1, take, 0, "LOC06OpenDoor1Obj", true);
+                var open = Anim("DoOpenDoorSchuppen", after: take, endObject: "LOC06OpenDoor1Obj", endObjectOn: true);
                 ChangeLocation("loc07", open, 4);
                 return true;
             }
-            case "LOC06Vorgarten": WalkAndFace(631, 457, StandUpRight); return true;
-            case "LOC06Angestelltenbau": WalkAndFace(781, 477, StandUpLeft); return true;
-            case "LOC06Fenster4": WalkAndFace(528, 438, StandUpRight); return true;
-            case "LOC06Fenster3": WalkAndFace(696, 473, StandUpLeft); return true;
-            case "LOC06Fenster2": WalkAndFace(423, 486, StandUpLeft); return true;
-            case "LOC06Fenster1": WalkAndFace(44, 395, LookUpRight); return true;
-            case "LOC06Blume": WalkAndFace(75, 509, StandDownLeft); return true;
-            case "LOC06Faß": WalkAndFace(110, 441, StandUpLeft); return true;
-            case "LOC06Haus": WalkAndFace(539, 475, StandUpLeft); return true;
+            case "LOC06Vorgarten":
+                WalkAndFace(631, 457, StandUpRight);
+                return true;
+            case "LOC06Angestelltenbau":
+                WalkAndFace(781, 477, StandUpLeft);
+                return true;
+            case "LOC06Fenster4":
+                WalkAndFace(528, 438, StandUpRight);
+                return true;
+            case "LOC06Fenster3":
+                WalkAndFace(696, 473, StandUpLeft);
+                return true;
+            case "LOC06Fenster2":
+                WalkAndFace(423, 486, StandUpLeft);
+                return true;
+            case "LOC06Fenster1":
+                WalkAndFace(44, 395, LookUpRight);
+                return true;
+            case "LOC06Blume":
+                WalkAndFace(75, 509, StandDownLeft);
+                return true;
+            case "LOC06Faß":
+                WalkAndFace(110, 441, StandUpLeft);
+                return true;
+            case "LOC06Haus":
+                WalkAndFace(539, 475, StandUpLeft);
+                return true;
             case "LOC06ExitToLOC09": // down to the beach
                 Walk(Hero, 86, 340);
                 ChangeLocation("loc09");
@@ -292,10 +310,10 @@ public sealed class Garden : StoryScript
             {
                 Walk(Hero, 467, 395);
                 var take = State(Hero, TakeLow);
-                PointerAfter(false, take, 0, 400, 300);
+                PointerAfter(false, take, x: 400, y: 300);
                 ObjAfter("LOC06OpenDoor2", false, take, 5);
                 Sound(@"wav\fx\htuerauf.wav", take, 3);
-                var open = Anim("DoOpenDoor2", 1, take, 5);
+                var open = Anim("DoOpenDoor2", after: take, delay: 5);
                 ChangeLocation("loc04", open, 6);
                 return true;
             }
