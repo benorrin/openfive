@@ -14,19 +14,19 @@ public sealed partial class Shore : StoryScript
     // from FUN_00441d3e
     public override bool Click(string name)
     {
-        TaskHandle? local_20 = null;
+        TaskHandle? ready = null;
         if (Same(name, "LOC09ExitToLOC08"))
         {
             if (Var(Vars.V63be1d) == 0)
             {
                 Walk(Hero, 784, 428);
-                local_20 = State(Hero, StandUpRight);
+                ready = State(Hero, StandUpRight);
             }
             else
             {
                 SetVar(Vars.V63be1d, 0);
             }
-            ChangeLocation("loc08", local_20);
+            ChangeLocation("loc08", ready);
         }
         else if (Same(name, "LOC09ExitToLOC06"))
         {
@@ -46,19 +46,19 @@ public sealed partial class Shore : StoryScript
         else if (Same(name, "LOC09KisteRechtsClick"))
         {
             Walk(Hero, 654, 428);
-            local_20 = State(Hero, PushBoatRight);
-            ObjAfter("LOC09KisteRechts", false, local_20, 20);
-            ObjAfter("LOC09KisteRechtsClick", false, local_20);
-            ObjAfter("LOC09ExitToLOC08", true, local_20);
-            Sound(@"wav\fx\kistesand.wav", local_20);
+            ready = State(Hero, PushBoatRight);
+            ObjAfter("LOC09KisteRechts", false, ready, 20);
+            ObjAfter("LOC09KisteRechtsClick", false, ready);
+            ObjAfter("LOC09ExitToLOC08", true, ready);
+            Sound(@"wav\fx\kistesand.wav", ready);
         }
         else if (Same(name, "LOC09Fusspuren"))
         {
             Walk(Hero, Var(Vars.V4ace9c) + -50, Var(Vars.V4acea0));
-            local_20 = State(Hero, KneelRight);
+            ready = State(Hero, KneelRight);
             SetVar(Vars.V63be1c, 1);
-            ObjAfter("LOC09Fusspuren", false, local_20, 6);
-            ObjAfter("LOC09KisteRechtsClick", true, local_20, 6);
+            ObjAfter("LOC09Fusspuren", false, ready, 6);
+            ObjAfter("LOC09KisteRechtsClick", true, ready, 6);
         }
         else if (Same(name, "LOC09Huette"))
         {
@@ -102,28 +102,28 @@ public sealed partial class Shore : StoryScript
             if (Var(Vars.BeachBoat) == 0)
             {
                 Walk(Hero, 160, 412);
-                local_20 = State(Hero, StandLeft);
+                ready = State(Hero, StandLeft);
                 SetVar(Vars.BeachBoat, 1);
             }
             else if (Var(Vars.BeachBoat) == 1)
             {
                 Walk(Hero, 160, 412);
-                local_20 = State(Hero, StandLeft);
+                ready = State(Hero, StandLeft);
             }
             if (At(6, 2))
             {
                 Walk(Hero, 160, 412);
-                local_20 = State(Hero, StandLeft);
+                ready = State(Hero, StandLeft);
                 if (Var(Vars.BeachBoat) == 3)
                 {
-                    Say(Who.Julian, "STRAND0018-09", 13, after: local_20);
+                    Say(Who.Julian, "STRAND0018-09", 13, after: ready);
                     Say(Who.George, "STRAND0018-09", 14);
                     Say(Who.Julian, "STRAND0018-09", 15);
                     Say(Who.George, "STRAND0018-09", 16, last: true);
                 }
                 else if (Var(Vars.BeachBoat) == 4)
                 {
-                    Say(Who.Dick, "STRAND0018-09", 17, after: local_20);
+                    Say(Who.Dick, "STRAND0018-09", 17, after: ready);
                     Say(Who.George, "STRAND0018-09", 18);
                     Say(Who.Julian, "STRAND0018-09", 19);
                     Say(Who.Anne, "STRAND0018-09", 20, last: true);
@@ -140,21 +140,21 @@ public sealed partial class Shore : StoryScript
                             if (Has(Item.Torch))
                             {
                                 Walk(Hero, 210, 412);
-                                local_20 = State(Hero, PushBoatLeft);
-                                PointerAfter(false, local_20, x: 100, y: 200);
-                                Sound(@"wav\fx\bootsand.wav", local_20);
-                                WalkAfter(Anne, 150, 400, local_20, 2);
-                                WalkAfter(Julian, 200, 412, local_20, 4);
+                                ready = State(Hero, PushBoatLeft);
+                                PointerAfter(false, ready, x: 100, y: 200);
+                                Sound(@"wav\fx\bootsand.wav", ready);
+                                WalkAfter(Anne, 150, 400, ready, 2);
+                                WalkAfter(Julian, 200, 412, ready, 4);
                                 if (Hero == Dick)
                                 {
-                                    WalkAfter(George, 250, 500, local_20, 6);
+                                    WalkAfter(George, 250, 500, ready, 6);
                                 }
                                 else
                                 {
-                                    WalkAfter(Dick, 250, 500, local_20, 6);
+                                    WalkAfter(Dick, 250, 500, ready, 6);
                                 }
-                                WalkAfter(Timmy, 250, 500, local_20, 6);
-                                ChangeLocation("loc13", local_20, 14);
+                                WalkAfter(Timmy, 250, 500, ready, 6);
+                                ChangeLocation("loc13", ready, 14);
                             }
                         }
                     }
@@ -162,21 +162,21 @@ public sealed partial class Shore : StoryScript
                 else if (Quest > 5)
                 {
                     Walk(Hero, 210, 412);
-                    local_20 = State(Hero, PushBoatLeft);
-                    PointerAfter(false, local_20, x: 100, y: 200);
-                    Sound(@"wav\fx\bootsand.wav", local_20);
-                    WalkAfter(Anne, 150, 400, local_20, 2);
-                    WalkAfter(Julian, 200, 412, local_20, 4);
+                    ready = State(Hero, PushBoatLeft);
+                    PointerAfter(false, ready, x: 100, y: 200);
+                    Sound(@"wav\fx\bootsand.wav", ready);
+                    WalkAfter(Anne, 150, 400, ready, 2);
+                    WalkAfter(Julian, 200, 412, ready, 4);
                     if (Hero == Dick)
                     {
-                        WalkAfter(George, 250, 500, local_20, 6);
+                        WalkAfter(George, 250, 500, ready, 6);
                     }
                     else
                     {
-                        WalkAfter(Dick, 250, 500, local_20, 6);
+                        WalkAfter(Dick, 250, 500, ready, 6);
                     }
-                    WalkAfter(Timmy, 250, 500, local_20, 6);
-                    ChangeLocation("loc13", local_20, 14);
+                    WalkAfter(Timmy, 250, 500, ready, 6);
+                    ChangeLocation("loc13", ready, 14);
                 }
             }
         }
@@ -196,46 +196,46 @@ public sealed partial class Shore : StoryScript
                 if (Var(Vars.AlfTalk) == 0)
                 {
                     Walk(Hero, 44, 430);
-                    local_20 = State(Hero, StandDownRight);
+                    ready = State(Hero, StandDownRight);
                     Depth(@"bmp\obj\quentin\quwr\quwr11.brg", 2500);
                     Depth(@"bmp\obj\quentin\qusp\qusp11.brg", 2500);
                     Chain = null;
-                    IncAfter(Vars.AlfTalk, local_20);
-                    Say(Who.Alf, "STRAND0003-09", 1, after: local_20);
-                    Say(Who.Dick, "STRAND0003-09", 1, after: local_20);
-                    Say(Who.Alf, "STRAND0003-09", 11, after: local_20);
-                    Say(Who.Dick, "STRAND0003-09", 11, last: true, after: local_20);
+                    IncAfter(Vars.AlfTalk, ready);
+                    Say(Who.Alf, "STRAND0003-09", 1, after: ready);
+                    Say(Who.Dick, "STRAND0003-09", 1, after: ready);
+                    Say(Who.Alf, "STRAND0003-09", 11, after: ready);
+                    Say(Who.Dick, "STRAND0003-09", 11, last: true, after: ready);
                 }
                 else if (Var(Vars.AlfTalk) < 2)
                 {
                     Walk(Hero, 44, 430);
-                    local_20 = State(Hero, StandDownRight);
+                    ready = State(Hero, StandDownRight);
                     Depth(@"bmp\obj\quentin\quwr\quwr11.brg", 2500);
                     Depth(@"bmp\obj\quentin\qusp\qusp11.brg", 2500);
                     Chain = null;
-                    IncAfter(Vars.AlfTalk, local_20);
-                    Say(Who.Alf, "STRAND0003-09", 2, after: local_20);
-                    Say(Who.Dick, "STRAND0003-09", 2, after: local_20);
-                    Say(Who.Alf, "STRAND0003-09", 21, last: true, after: local_20);
+                    IncAfter(Vars.AlfTalk, ready);
+                    Say(Who.Alf, "STRAND0003-09", 2, after: ready);
+                    Say(Who.Dick, "STRAND0003-09", 2, after: ready);
+                    Say(Who.Alf, "STRAND0003-09", 21, last: true, after: ready);
                 }
                 else if (Var(Vars.AlfTalk) == 2)
                 {
                     Walk(Hero, 44, 430);
-                    local_20 = State(Hero, StandDownRight);
+                    ready = State(Hero, StandDownRight);
                     Depth(@"bmp\obj\quentin\quwr\quwr11.brg", 2500);
                     Depth(@"bmp\obj\quentin\qusp\qusp11.brg", 2500);
                     Chain = null;
-                    Say(Who.Alf, "STRAND0003-09", 3, last: true, after: local_20);
+                    Say(Who.Alf, "STRAND0003-09", 3, last: true, after: ready);
                 }
             }
             else if (At(8, 2))
             {
                 Walk(Hero, 376, 392);
                 Chain = State(Hero, StandUpRight);
-                local_20 = Chain;
-                Say(Who.Alf, "STRAND0036", 5, after: local_20);
-                Say(Who.George, "STRAND0036", 6, after: local_20);
-                Say(Who.Alf, "STRAND0036", 7, last: true, after: local_20);
+                ready = Chain;
+                Say(Who.Alf, "STRAND0036", 5, after: ready);
+                Say(Who.George, "STRAND0036", 6, after: ready);
+                Say(Who.Alf, "STRAND0036", 7, last: true, after: ready);
             }
         }
         else if (Same(name, "LOC09Felseninsel"))
@@ -251,29 +251,29 @@ public sealed partial class Shore : StoryScript
         {
             Walk(Hero, 170, 470);
             Chain = State(Hero, StandUpRight);
-            local_20 = Chain;
+            ready = Chain;
             if (At(6, 2))
             {
                 if (Var(Vars.AnneBeachTalk) == 0)
                 {
-                    Say(Who.Anne, "STRAND0018-09", 1, last: true, after: local_20);
+                    Say(Who.Anne, "STRAND0018-09", 1, last: true, after: ready);
                     Say(Who.George, "STRAND0018-09", 2, last: true);
                 }
                 else if (Var(Vars.AnneBeachTalk) == 1)
                 {
-                    Say(Who.Anne, "STRAND0018-09", 3, last: true, after: local_20);
+                    Say(Who.Anne, "STRAND0018-09", 3, last: true, after: ready);
                 }
                 else if (Var(Vars.AnneBeachTalk) == 2)
                 {
-                    Say(Who.Anne, "STRAND0018-09", 4, last: true, after: local_20);
+                    Say(Who.Anne, "STRAND0018-09", 4, last: true, after: ready);
                 }
                 else if (Var(Vars.AnneBeachTalk) == 3)
                 {
-                    Say(Who.Anne, "STRAND0018-09", 38, last: true, after: local_20);
+                    Say(Who.Anne, "STRAND0018-09", 38, last: true, after: ready);
                 }
                 else if (Var(Vars.AnneBeachTalk) == 4)
                 {
-                    Say(Who.Anne, "STRAND0018-09", 42, last: true, after: local_20);
+                    Say(Who.Anne, "STRAND0018-09", 42, last: true, after: ready);
                 }
             }
             else if (At(6, 3))
@@ -286,25 +286,25 @@ public sealed partial class Shore : StoryScript
                         {
                             if (Var(Vars.AnneBeachTalk) == 0)
                             {
-                                Say(Who.Anne, "ALL0023", 1, last: true, after: local_20);
+                                Say(Who.Anne, "ALL0023", 1, last: true, after: ready);
                             }
                             else if (Var(Vars.AnneBeachTalk) == 1)
                             {
-                                Say(Who.Anne, "ALL0023", 2, last: true, after: local_20);
+                                Say(Who.Anne, "ALL0023", 2, last: true, after: ready);
                             }
                         }
                         else if (Var(Vars.AnneBeachTalk) == 0)
                         {
-                            Say(Who.Anne, "ALL0023", 7, last: true, after: local_20);
+                            Say(Who.Anne, "ALL0023", 7, last: true, after: ready);
                         }
                         else if (Var(Vars.AnneBeachTalk) == 1)
                         {
-                            Say(Who.Anne, "ALL0023", 8, last: true, after: local_20);
+                            Say(Who.Anne, "ALL0023", 8, last: true, after: ready);
                         }
                     }
                     else
                     {
-                        Say(Who.Anne, "ALL0023", 13, last: true, after: local_20);
+                        Say(Who.Anne, "ALL0023", 13, last: true, after: ready);
                     }
                 }
             }
@@ -313,31 +313,31 @@ public sealed partial class Shore : StoryScript
                 if (Var(Vars.AnneBeachTalk) == 0)
                 {
                     IncAfter(Vars.AnneWreckTalk, Chain);
-                    IncAfter(Vars.AnneBeachTalk, local_20);
-                    IncAfter(Vars.AnneIslandTalk, local_20);
-                    Say(Who.Anne, "ALL0024", 5, last: true, after: local_20);
+                    IncAfter(Vars.AnneBeachTalk, ready);
+                    IncAfter(Vars.AnneIslandTalk, ready);
+                    Say(Who.Anne, "ALL0024", 5, last: true, after: ready);
                 }
                 else if (Var(Vars.AnneBeachTalk) == 1)
                 {
-                    Say(Who.Anne, "ALL0024", 6, after: local_20);
+                    Say(Who.Anne, "ALL0024", 6, after: ready);
                     Say(Who.Dick, "ALL0024", 7, last: true);
                 }
             }
             else if (At(7, 2))
             {
-                Say(Who.Anne, "STRAND0026", 1, last: true, after: local_20);
+                Say(Who.Anne, "STRAND0026", 1, last: true, after: ready);
             }
             else if (At(8, 2))
             {
                 if (Var(Vars.AnneBeachTalk) == 0)
                 {
                     IncAfter(Vars.AnneBeachTalk, Chain);
-                    Say(Who.Anne, "STRAND0036", 16, after: local_20);
+                    Say(Who.Anne, "STRAND0036", 16, after: ready);
                     Say(Who.George, "STRAND0036", 17, last: true);
                 }
                 else if (Var(Vars.AnneBeachTalk) == 1)
                 {
-                    Say(Who.Anne, "STRAND0036", 18, after: local_20);
+                    Say(Who.Anne, "STRAND0036", 18, after: ready);
                     Say(Who.George, "STRAND0036", 19, last: true);
                 }
             }
@@ -346,26 +346,26 @@ public sealed partial class Shore : StoryScript
         {
             Walk(Hero, 170, 470);
             Chain = State(Hero, StandUpRight);
-            local_20 = Chain;
+            ready = Chain;
             if (At(6, 2))
             {
                 if (Var(Vars.JulianBeachTalk) == 0)
                 {
-                    Say(Who.Julian, "STRAND0018-09", 9, after: local_20);
+                    Say(Who.Julian, "STRAND0018-09", 9, after: ready);
                     Say(Who.George, "STRAND0018-09", 10);
                     Say(Who.Julian, "STRAND0018-09", 11, last: true);
                 }
                 else if (Var(Vars.JulianBeachTalk) == 1)
                 {
-                    Say(Who.Julian, "STRAND0018-09", 12, last: true, after: local_20);
+                    Say(Who.Julian, "STRAND0018-09", 12, last: true, after: ready);
                 }
                 else if (Var(Vars.JulianBeachTalk) == 2)
                 {
-                    Say(Who.Julian, "STRAND0018-09", 40, last: true, after: local_20);
+                    Say(Who.Julian, "STRAND0018-09", 40, last: true, after: ready);
                 }
                 else if (Var(Vars.JulianBeachTalk) == 3)
                 {
-                    Say(Who.Julian, "STRAND0018-09", 44, last: true, after: local_20);
+                    Say(Who.Julian, "STRAND0018-09", 44, last: true, after: ready);
                 }
             }
             else if (At(6, 3))
@@ -378,25 +378,25 @@ public sealed partial class Shore : StoryScript
                         {
                             if (Var(Vars.JulianBeachTalk) == 0)
                             {
-                                Say(Who.Julian, "ALL0023", 3, last: true, after: local_20);
+                                Say(Who.Julian, "ALL0023", 3, last: true, after: ready);
                             }
                             else if (Var(Vars.JulianBeachTalk) == 1)
                             {
-                                Say(Who.Julian, "ALL0023", 4, last: true, after: local_20);
+                                Say(Who.Julian, "ALL0023", 4, last: true, after: ready);
                             }
                         }
                         else if (Var(Vars.JulianBeachTalk) == 0)
                         {
-                            Say(Who.Julian, "ALL0023", 9, last: true, after: local_20);
+                            Say(Who.Julian, "ALL0023", 9, last: true, after: ready);
                         }
                         else if (Var(Vars.JulianBeachTalk) == 1)
                         {
-                            Say(Who.Julian, "ALL0023", 10, last: true, after: local_20);
+                            Say(Who.Julian, "ALL0023", 10, last: true, after: ready);
                         }
                     }
                     else
                     {
-                        Say(Who.Julian, "ALL0023", 14, last: true, after: local_20);
+                        Say(Who.Julian, "ALL0023", 14, last: true, after: ready);
                     }
                 }
             }
@@ -405,13 +405,13 @@ public sealed partial class Shore : StoryScript
                 if (Var(Vars.JulianBeachTalk) == 0)
                 {
                     IncAfter(Vars.JulianWreckTalk, Chain);
-                    IncAfter(Vars.JulianBeachTalk, local_20);
-                    IncAfter(Vars.JulianIslandTalk, local_20);
-                    Say(Who.Julian, "ALL0024", 8, last: true, after: local_20);
+                    IncAfter(Vars.JulianBeachTalk, ready);
+                    IncAfter(Vars.JulianIslandTalk, ready);
+                    Say(Who.Julian, "ALL0024", 8, last: true, after: ready);
                 }
                 else if (Var(Vars.JulianBeachTalk) == 1)
                 {
-                    Say(Who.Julian, "ALL0024", 9, last: true, after: local_20);
+                    Say(Who.Julian, "ALL0024", 9, last: true, after: ready);
                 }
             }
             else if (At(7, 2))
@@ -419,43 +419,43 @@ public sealed partial class Shore : StoryScript
                 if (Var(Vars.JulianBeachTalk) == 0)
                 {
                     IncAfter(Vars.JulianBeachTalk, Chain);
-                    Say(Who.Julian, "STRAND0026", 3, after: local_20);
-                    Say(Who.Dick, "STRAND0026", 4, last: true, after: local_20);
+                    Say(Who.Julian, "STRAND0026", 3, after: ready);
+                    Say(Who.Dick, "STRAND0026", 4, last: true, after: ready);
                 }
                 else if (Var(Vars.JulianBeachTalk) == 1)
                 {
-                    Say(Who.Julian, "STRAND0026", 5, last: true, after: local_20);
+                    Say(Who.Julian, "STRAND0026", 5, last: true, after: ready);
                 }
             }
             else if (At(8, 2))
             {
-                Say(Who.Julian, "STRAND0036", 15, last: true, after: local_20);
+                Say(Who.Julian, "STRAND0036", 15, last: true, after: ready);
             }
         }
         else if (Same(name, "LOC09Dick"))
         {
             Walk(Hero, 170, 470);
             Chain = State(Hero, StandUpRight);
-            local_20 = Chain;
+            ready = Chain;
             if (At(6, 2))
             {
                 if (Var(Vars.DickBeachTalk) == 0)
                 {
-                    Say(Who.Dick, "STRAND0018-09", 5, last: true, after: local_20);
+                    Say(Who.Dick, "STRAND0018-09", 5, last: true, after: ready);
                     Say(Who.George, "STRAND0018-09", 6, last: true);
                 }
                 else if (Var(Vars.DickBeachTalk) == 1)
                 {
-                    Say(Who.Dick, "STRAND0018-09", 7, last: true, after: local_20);
+                    Say(Who.Dick, "STRAND0018-09", 7, last: true, after: ready);
                     Say(Who.George, "STRAND0018-09", 8, last: true);
                 }
                 else if (Var(Vars.DickBeachTalk) == 2)
                 {
-                    Say(Who.Dick, "STRAND0018-09", 39, last: true, after: local_20);
+                    Say(Who.Dick, "STRAND0018-09", 39, last: true, after: ready);
                 }
                 else if (Var(Vars.DickBeachTalk) == 3)
                 {
-                    Say(Who.Dick, "STRAND0018-09", 43, last: true, after: local_20);
+                    Say(Who.Dick, "STRAND0018-09", 43, last: true, after: ready);
                 }
             }
             else if (At(6, 3))
@@ -468,26 +468,26 @@ public sealed partial class Shore : StoryScript
                         {
                             if (Var(Vars.V65044c) == 0)
                             {
-                                Say(Who.George, "ALL0023", 5, last: true, after: local_20);
+                                Say(Who.George, "ALL0023", 5, last: true, after: ready);
                             }
                             else if (Var(Vars.V65044c) == 1)
                             {
-                                Say(Who.George, "ALL0023", 6, last: true, after: local_20);
+                                Say(Who.George, "ALL0023", 6, last: true, after: ready);
                             }
                         }
                         else if (Var(Vars.V65044c) == 0)
                         {
-                            Say(Who.George, "ALL0023", 11, last: true, after: local_20);
+                            Say(Who.George, "ALL0023", 11, last: true, after: ready);
                         }
                         else if (Var(Vars.V65044c) == 1)
                         {
-                            Say(Who.George, "ALL0023", 12, last: true, after: local_20);
+                            Say(Who.George, "ALL0023", 12, last: true, after: ready);
                         }
                     }
                     else
                     {
-                        Say(Who.George, "ALL0023", 15, after: local_20);
-                        Say(Who.Dick, "ALL0023", 16, last: true, after: local_20);
+                        Say(Who.George, "ALL0023", 15, after: ready);
+                        Say(Who.Dick, "ALL0023", 16, last: true, after: ready);
                     }
                 }
             }
@@ -496,9 +496,9 @@ public sealed partial class Shore : StoryScript
                 if (Var(Vars.V65044c) == 0)
                 {
                     IncAfter(Vars.GeorgeWreckTalk, Chain);
-                    IncAfter(Vars.V65044c, local_20);
-                    IncAfter(Vars.GeorgeIslandTalk, local_20);
-                    Say(Who.George, "ALL0024", 10, last: true, after: local_20);
+                    IncAfter(Vars.V65044c, ready);
+                    IncAfter(Vars.GeorgeIslandTalk, ready);
+                    Say(Who.George, "ALL0024", 10, last: true, after: ready);
                     if (Var(Vars.V64eff8) == 0)
                     {
                         Say(Who.Dick, "ALL0024", 16);
@@ -532,28 +532,28 @@ public sealed partial class Shore : StoryScript
                 }
                 else if (Var(Vars.V65044c) == 1)
                 {
-                    Say(Who.George, "ALL0024", 20, last: true, after: local_20);
+                    Say(Who.George, "ALL0024", 20, last: true, after: ready);
                 }
             }
             else if (At(7, 2))
             {
-                Say(Who.George, "STRAND0026", 2, last: true, after: local_20);
+                Say(Who.George, "STRAND0026", 2, last: true, after: ready);
             }
             else if (At(8, 2))
             {
                 if (Var(Vars.DickBeachTalk) == 0)
                 {
                     IncAfter(Vars.DickBeachTalk, Chain);
-                    Say(Who.Dick, "STRAND0036", 8, after: local_20);
-                    Say(Who.Alf, "STRAND0036", 9, after: local_20);
-                    Say(Who.George, "STRAND0036", 10, after: local_20);
-                    Say(Who.Alf, "STRAND0036", 11, after: local_20);
-                    Say(Who.Dick, "STRAND0036", 12, after: local_20);
-                    Say(Who.Alf, "STRAND0036", 13, last: true, after: local_20);
+                    Say(Who.Dick, "STRAND0036", 8, after: ready);
+                    Say(Who.Alf, "STRAND0036", 9, after: ready);
+                    Say(Who.George, "STRAND0036", 10, after: ready);
+                    Say(Who.Alf, "STRAND0036", 11, after: ready);
+                    Say(Who.Dick, "STRAND0036", 12, after: ready);
+                    Say(Who.Alf, "STRAND0036", 13, last: true, after: ready);
                 }
                 else if (Var(Vars.DickBeachTalk) == 1)
                 {
-                    Say(Who.Dick, "STRAND0036", 14, last: true, after: local_20);
+                    Say(Who.Dick, "STRAND0036", 14, last: true, after: ready);
                 }
             }
         }
@@ -561,14 +561,14 @@ public sealed partial class Shore : StoryScript
         {
             Walk(Hero, 213, 500);
             Chain = State(Hero, StandDownLeft);
-            local_20 = Chain;
+            ready = Chain;
             PointerOff();
             SetText("t63be28", "Fischer");
             if (At(6, 2))
             {
                 if (Var(Vars.FishermanTalk) == 1)
                 {
-                    Say(Who.Fisherman, "STRAND0018-09", 33, after: local_20);
+                    Say(Who.Fisherman, "STRAND0018-09", 33, after: ready);
                     Say(Who.George, "STRAND0018-09", 34);
                     Say(Who.Fisherman, "STRAND0018-09", 35, last: true);
                 }
@@ -579,7 +579,7 @@ public sealed partial class Shore : StoryScript
                 else if (Var(Vars.FishermanTalk) == 3)
                 {
                     SetText("t63be28", "heroWechsel");
-                    Say(Who.George, "STRAND0018-09", 48, after: local_20);
+                    Say(Who.George, "STRAND0018-09", 48, after: ready);
                     Say(Who.Fisherman, "STRAND0018-09", 49);
                     Say(Who.Fisherman, "STRAND0018-09", 55);
                     Say(Who.Anne, "STRAND0018-09", 50);
@@ -827,7 +827,7 @@ public sealed partial class Shore : StoryScript
     // from FUN_004457e1
     void F4457e1()
     {
-        TaskHandle? local_20 = null;
+        TaskHandle? ready = null;
         if (At(2, 2))
         {
             SetStep(2, 3);
@@ -892,19 +892,19 @@ public sealed partial class Shore : StoryScript
                         Obj("LOC09Dick", true);
                         Obj("LOC09Julian", true);
                         Chain = State(Hero, StandUpLeft);
-                        local_20 = Chain;
+                        ready = Chain;
                         if (Var(Vars.V6503a4) == 1 && Var(Vars.V63be08) != 0)
                         {
                             if (Var(Vars.V63be08) < 2)
                             {
                                 PointerOff();
-                                Say(Who.Julian, "STRAND0036", 1, after: local_20);
+                                Say(Who.Julian, "STRAND0036", 1, after: ready);
                                 Say(Who.George, "STRAND0036", 2, last: true);
                             }
                             else if (Var(Vars.V63be08) == 2)
                             {
                                 PointerOff();
-                                Say(Who.Julian, "STRAND0036", 1, after: local_20);
+                                Say(Who.Julian, "STRAND0036", 1, after: ready);
                                 Say(Who.George, "STRAND0036", 3);
                                 Say(Who.Julian, "STRAND0036", 4, last: true);
                             }

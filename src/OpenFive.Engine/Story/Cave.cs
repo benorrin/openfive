@@ -156,9 +156,9 @@ public sealed partial class Cave : StoryScript
     // from FUN_0044068b
     void F44068b()
     {
-        TaskHandle? local_20 = null;
+        TaskHandle? ready = null;
         TaskHandle? local_24 = null;
-        local_20 = null;
+        ready = null;
         if (Var(Vars.V65124c) == 0)
         {
             Obj("LOC08Lampe", true);
@@ -182,7 +182,7 @@ public sealed partial class Cave : StoryScript
             Show(Hero);
             Walk(Hero, 680, 500);
             Chain = State(Hero, StandDownLeft);
-            local_20 = Chain;
+            ready = Chain;
             Place(George, 350, 560, SitDownRight);
             Place(Timmy, 450, 570, StandDownRight);
             WalkAfter(Timmy, 640, 500, null, 45);
@@ -190,11 +190,11 @@ public sealed partial class Cave : StoryScript
             Sound(@"wav\timmy\timmy01.wav", local_24);
             Sound(@"wav\timmy\timmy02.wav", local_24, 10);
             Sound(@"wav\timmy\timmy03.wav", local_24, 20);
-            StateAfter(Timmy, HindLegRight, local_20, 30);
-            StateAfter(Timmy, HindLegRight, local_20, 90);
+            StateAfter(Timmy, HindLegRight, ready, 30);
+            StateAfter(Timmy, HindLegRight, ready, 90);
             ShowParty();
             PointerOff();
-            Say(Who.Dick, "GEHEIM0004-08", 1, after: local_20);
+            Say(Who.Dick, "GEHEIM0004-08", 1, after: ready);
             Say(Who.George, "GEHEIM0004-08", 1);
             Say(Who.Dick, "GEHEIM0004-08", 2);
             Say(Who.George, "GEHEIM0004-08", 2);
@@ -206,7 +206,7 @@ public sealed partial class Cave : StoryScript
             Place(Hero, 788, 346, StandLeft);
             Show(Hero);
             Walk(Hero, 606, 580);
-            local_20 = State(Hero, StandUpLeft);
+            ready = State(Hero, StandUpLeft);
             Obj("LOC08Anne", true);
             Obj("LOC08Dick", true);
             Obj("LOC08Julian", true);
@@ -231,7 +231,7 @@ public sealed partial class Cave : StoryScript
                 SetVar(Vars.V64ef70, 3);
                 SetVar(Vars.V65108c, 1);
                 PointerOff();
-                Say(Who.Anne, "VERSTECK0035", 1, after: local_20, delay: 20);
+                Say(Who.Anne, "VERSTECK0035", 1, after: ready, delay: 20);
                 Say(Who.George, "VERSTECK0035", 2);
                 Say(Who.Dick, "VERSTECK0035", 3);
                 Say(Who.George, "VERSTECK0035", 4);
@@ -253,7 +253,7 @@ public sealed partial class Cave : StoryScript
             Show(Hero);
             Place(George, 350, 560, SitDownRight);
             Place(Timmy, 390, 570, StandDownRight);
-            local_20 = null;
+            ready = null;
             ShowParty();
         }
         else if (Quest > 2)
@@ -262,7 +262,7 @@ public sealed partial class Cave : StoryScript
             {
                 Place(Hero, 680, 500, StandLeft);
                 Show(Hero);
-                local_20 = null;
+                ready = null;
                 ShowParty();
             }
             else
@@ -270,7 +270,7 @@ public sealed partial class Cave : StoryScript
                 Place(Hero, 788, 346, StandLeft);
                 Show(Hero);
                 Walk(Hero, 680, 500);
-                local_20 = State(Hero, StandDownLeft);
+                ready = State(Hero, StandDownLeft);
                 ShowParty();
             }
         }
@@ -472,7 +472,7 @@ public sealed partial class Cave : StoryScript
                 if (Var(Vars.V64ef74) == Var(Vars.V64ef68))
                 {
                     Say(Who.George, "GEHEIM0004-02-08", 1);
-                    Say(20, "GEHEIM0004-02-08", 1, last: true);
+                    Say(Who.DickAlt, "GEHEIM0004-02-08", 1, last: true);
                     Say(Who.George, "GEHEIM0004-02-08", 11, last: true);
                 }
                 else if (Var(Vars.V64ef74) == Var(Vars.V64ef6c))

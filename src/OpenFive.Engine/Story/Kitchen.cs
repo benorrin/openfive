@@ -14,25 +14,25 @@ public sealed partial class Kitchen : StoryScript
     // from FUN_0042f05a
     public override bool Click(string name)
     {
-        TaskHandle? local_20 = null;
+        TaskHandle? ready = null;
         TaskHandle? local_cec = null;
-        local_20 = null;
+        ready = null;
         SetVar(Vars.V64d464, Var(Vars.V64d464) + 300);
         if (Same(name, "LOC05Herd"))
         {
             Walk(Hero, 83, 520);
-            local_20 = State(Hero, TakeMidUpRight);
+            ready = State(Hero, TakeMidUpRight);
             if (Var(Vars.V64fa3c) == 0)
             {
-                Sound(@"wav\fx\ofenauf.wav", local_20, 3);
-                Anim("DoOpenOfen", after: local_20, delay: 5, endObject: "LOC05OpenOfenObj", endObjectOn: true);
+                Sound(@"wav\fx\ofenauf.wav", ready, 3);
+                Anim("DoOpenOfen", after: ready, delay: 5, endObject: "LOC05OpenOfenObj", endObjectOn: true);
                 SetVar(Vars.V64fa3c, 1);
             }
             else if (Var(Vars.V64fa3c) == 1)
             {
-                ObjAfter("LOC05OpenOfenObj", false, local_20);
-                Sound(@"wav\fx\ofenzu.wav", local_20, 3);
-                Anim("DoCloseOfen", after: local_20);
+                ObjAfter("LOC05OpenOfenObj", false, ready);
+                Sound(@"wav\fx\ofenzu.wav", ready, 3);
+                Anim("DoCloseOfen", after: ready);
                 SetVar(Vars.V64fa3c, 0);
             }
         }
@@ -40,8 +40,8 @@ public sealed partial class Kitchen : StoryScript
         {
             Walk(Hero, 545, 435);
             Chain = State(Hero, StandDownLeft);
-            local_20 = Chain;
-            Say(Who.Dick, "KUECHE0027", 1, after: local_20);
+            ready = Chain;
+            Say(Who.Dick, "KUECHE0027", 1, after: ready);
             Say(Who.Dick, "KUECHE0027", 2);
             Say(Who.Dick, "KUECHE0027", 8);
             Say(Who.Dick, "KUECHE0027", 9, last: true);
@@ -53,57 +53,57 @@ public sealed partial class Kitchen : StoryScript
             {
                 Walk(Hero, 100, 450);
                 Chain = State(Hero, StandDownRight);
-                local_20 = Chain;
+                ready = Chain;
                 if (Var(Vars.JulianTalk) == 0)
                 {
-                    Say(Who.Julian, "KUECHE", 3, after: local_20);
+                    Say(Who.Julian, "KUECHE", 3, after: ready);
                     Say(Who.Dick, "KUECHE", 3, last: true);
                     SetVar(Vars.JulianTalk, 1);
                 }
                 else if (Var(Vars.JulianTalk) == 1)
                 {
-                    Say(Who.Julian, "KUECHE", 4, last: true, after: local_20);
+                    Say(Who.Julian, "KUECHE", 4, last: true, after: ready);
                 }
             }
             else if (At(2, 3))
             {
                 Walk(Hero, 100, 450);
                 Chain = State(Hero, StandDownRight);
-                local_20 = Chain;
+                ready = Chain;
                 if (Var(Vars.JulianTalk) == 0)
                 {
-                    Say(Who.Julian, "KUECHE0003-05", 2, after: local_20);
+                    Say(Who.Julian, "KUECHE0003-05", 2, after: ready);
                     Say(Who.Dick, "KUECHE0003-05", 2, last: true);
                     SetVar(Vars.JulianTalk, 1);
                 }
                 else if (Var(Vars.JulianTalk) == 1)
                 {
-                    Say(Who.Julian, "KUECHE0003-05", 21, after: local_20);
+                    Say(Who.Julian, "KUECHE0003-05", 21, after: ready);
                     Say(Who.Dick, "KUECHE0003-05", 21, last: true);
                 }
                 else if (Var(Vars.JulianTalk) == 2)
                 {
-                    Say(Who.Julian, "KUECHE0003-03-05", 1, after: local_20);
+                    Say(Who.Julian, "KUECHE0003-03-05", 1, after: ready);
                     Say(Who.Dick, "KUECHE0003-03-05", 2);
-                    Say(Who.Julian, "KUECHE0003-03-05", 11, last: true, after: local_20);
+                    Say(Who.Julian, "KUECHE0003-03-05", 11, last: true, after: ready);
                     SetVar(Vars.JulianTalk, 3);
                 }
                 else if (Var(Vars.JulianTalk) == 3)
                 {
-                    Say(Who.Julian, "KUECHE0003-03-05", 2, after: local_20);
+                    Say(Who.Julian, "KUECHE0003-03-05", 2, after: ready);
                     Say(Who.Dick, "KUECHE0003-03-05", 21);
-                    Say(Who.Julian, "KUECHE0003-03-05", 21, last: true, after: local_20);
+                    Say(Who.Julian, "KUECHE0003-03-05", 21, last: true, after: ready);
                 }
             }
             else if (At(5, 0))
             {
-                local_20 = null;
+                ready = null;
                 Chain = null;
-                Say(Who.Julian, "KUECHE0009-05", 1, last: true, after: local_20);
+                Say(Who.Julian, "KUECHE0009-05", 1, last: true, after: ready);
             }
             else if (At(3, 3))
             {
-                local_20 = null;
+                ready = null;
                 Chain = null;
                 if (Var(Vars.JulianTalk) < 2)
                 {
@@ -128,43 +128,43 @@ public sealed partial class Kitchen : StoryScript
                 Chain = State(Hero, StandDownRight);
                 if (Var(Vars.V64f684) == 5)
                 {
-                    local_20 = Chain;
-                    Say(Who.Julian, "KUECHE0006-05", 15, last: true, after: local_20);
+                    ready = Chain;
+                    Say(Who.Julian, "KUECHE0006-05", 15, last: true, after: ready);
                 }
             }
             else if (At(5, 4))
             {
-                local_20 = null;
+                ready = null;
                 Chain = null;
                 SetText("t63bdf0", "");
                 if (Var(Vars.JulianTalk) == 0)
                 {
                     SetText("t63bdf0", "Julian");
-                    Say(Who.Julian, "KUECHE0014-05", 3, last: true, after: local_20);
+                    Say(Who.Julian, "KUECHE0014-05", 3, last: true, after: ready);
                 }
                 else if (Var(Vars.V64ef24) == 1)
                 {
-                    Say(Who.Julian, "KUECHE0014-05", 7, last: true, after: local_20);
+                    Say(Who.Julian, "KUECHE0014-05", 7, last: true, after: ready);
                 }
             }
             else if (Quest == 5 && Episode > 5)
             {
-                local_20 = null;
+                ready = null;
                 Chain = null;
                 if (Var(Vars.V64f294) > 0)
                 {
                     SetText("t63bdf0", "");
                     if (Var(Vars.JulianTalk) == 3)
                     {
-                        Say(Who.Julian, "KUECHE0015-05", 16, last: true, after: local_20);
+                        Say(Who.Julian, "KUECHE0015-05", 16, last: true, after: ready);
                     }
                     else if (Var(Vars.JulianTalk) == 4)
                     {
-                        Say(Who.Julian, "KUECHE0015-05", 17, last: true, after: local_20);
+                        Say(Who.Julian, "KUECHE0015-05", 17, last: true, after: ready);
                     }
                     else
                     {
-                        Say(Who.Julian, "KUECHE0015-05", 18, after: local_20);
+                        Say(Who.Julian, "KUECHE0015-05", 18, after: ready);
                         Say(Who.George, "KUECHE0015-05", 19);
                         Say(Who.Julian, "KUECHE0015-05", 20, last: true);
                     }
@@ -174,64 +174,64 @@ public sealed partial class Kitchen : StoryScript
             {
                 Walk(Hero, 100, 450);
                 Chain = State(Hero, StandDownRight);
-                local_20 = Chain;
+                ready = Chain;
                 if (Var(Vars.JulianTalk) == 0)
                 {
                     IncAfter(Vars.JulianTalk, Chain);
-                    Say(Who.Julian, "KUECHE0031", 9, last: true, after: local_20);
+                    Say(Who.Julian, "KUECHE0031", 9, last: true, after: ready);
                 }
                 else if (Var(Vars.JulianTalk) == 1)
                 {
-                    Say(Who.Julian, "KUECHE0031", 10, last: true, after: local_20);
+                    Say(Who.Julian, "KUECHE0031", 10, last: true, after: ready);
                 }
                 else if (Var(Vars.JulianTalk) == 2)
                 {
                     IncAfter(Vars.JulianTalk, Chain);
-                    Say(Who.Julian, "KUECHE0031", 18, last: true, after: local_20);
+                    Say(Who.Julian, "KUECHE0031", 18, last: true, after: ready);
                 }
                 else if (Var(Vars.JulianTalk) == 3)
                 {
-                    Say(Who.Julian, "KUECHE0031", 19, last: true, after: local_20);
+                    Say(Who.Julian, "KUECHE0031", 19, last: true, after: ready);
                 }
                 else if (Var(Vars.JulianTalk) == 6)
                 {
                     IncAfter(Vars.JulianTalk, Chain);
-                    Say(Who.Julian, "KUECHE0032", 14, last: true, after: local_20);
+                    Say(Who.Julian, "KUECHE0032", 14, last: true, after: ready);
                 }
                 else if (Var(Vars.JulianTalk) == 7)
                 {
                     IncAfter(Vars.JulianTalk, Chain);
-                    Say(Who.Julian, "KUECHE0032", 15, last: true, after: local_20);
+                    Say(Who.Julian, "KUECHE0032", 15, last: true, after: ready);
                 }
                 else if (Var(Vars.JulianTalk) == 8)
                 {
-                    Say(Who.Julian, "KUECHE0032", 16, after: local_20);
-                    Say(Who.George, "KUECHE0032", 17, last: true, after: local_20);
+                    Say(Who.Julian, "KUECHE0032", 16, after: ready);
+                    Say(Who.George, "KUECHE0032", 17, last: true, after: ready);
                 }
                 else if (Var(Vars.JulianTalk) == 9)
                 {
                     IncAfter(Vars.JulianTalk, Chain);
-                    Say(Who.Julian, "KUECHE0032", 32, last: true, after: local_20);
+                    Say(Who.Julian, "KUECHE0032", 32, last: true, after: ready);
                 }
                 else if (Var(Vars.JulianTalk) == 10)
                 {
-                    Say(Who.Julian, "KUECHE0032", 33, after: local_20);
-                    Say(Who.George, "KUECHE0032", 34, after: local_20);
-                    Say(Who.Dick, "KUECHE0032", 35, after: local_20);
-                    Say(Who.George, "KUECHE0032", 36, last: true, after: local_20);
+                    Say(Who.Julian, "KUECHE0032", 33, after: ready);
+                    Say(Who.George, "KUECHE0032", 34, after: ready);
+                    Say(Who.Dick, "KUECHE0032", 35, after: ready);
+                    Say(Who.George, "KUECHE0032", 36, last: true, after: ready);
                 }
                 else if (Var(Vars.JulianTalk) == 11)
                 {
-                    Say(Who.Julian, "KUECHE0032", 47, after: local_20);
-                    Say(Who.George, "KUECHE0032", 48, last: true, after: local_20);
+                    Say(Who.Julian, "KUECHE0032", 47, after: ready);
+                    Say(Who.George, "KUECHE0032", 48, last: true, after: ready);
                 }
             }
             else if (At(7, 5))
             {
                 Walk(Hero, 100, 450);
                 Chain = State(Hero, StandDownRight);
-                local_20 = Chain;
-                Say(Who.Julian, "KUECHE0033", 4, last: true, after: local_20);
+                ready = Chain;
+                Say(Who.Julian, "KUECHE0033", 4, last: true, after: ready);
             }
         }
         else if (Same(name, "LOC05Anne"))
@@ -241,45 +241,45 @@ public sealed partial class Kitchen : StoryScript
             {
                 Walk(Hero, 100, 450);
                 Chain = State(Hero, StandDownRight);
-                local_20 = Chain;
+                ready = Chain;
                 if (Var(Vars.AnneTalk) == 0)
                 {
-                    Say(Who.Anne, "KUECHE", 5, after: local_20);
+                    Say(Who.Anne, "KUECHE", 5, after: ready);
                     Say(Who.Dick, "KUECHE", 5, last: true);
                     SetVar(Vars.AnneTalk, 1);
                 }
                 else if (Var(Vars.AnneTalk) == 1)
                 {
-                    Say(Who.Anne, "KUECHE", 6, last: true, after: local_20);
+                    Say(Who.Anne, "KUECHE", 6, last: true, after: ready);
                 }
             }
             else if (At(2, 3))
             {
                 Walk(Hero, 100, 450);
                 Chain = State(Hero, StandDownRight);
-                local_20 = Chain;
+                ready = Chain;
                 if (Var(Vars.AnneTalk) == 0)
                 {
-                    Say(Who.Anne, "KUECHE0003-05", 3, after: local_20);
-                    Say(Who.Dick, "KUECHE0003-05", 3, after: local_20);
-                    Say(Who.Anne, "KUECHE0003-05", 31, last: true, after: local_20);
+                    Say(Who.Anne, "KUECHE0003-05", 3, after: ready);
+                    Say(Who.Dick, "KUECHE0003-05", 3, after: ready);
+                    Say(Who.Anne, "KUECHE0003-05", 31, last: true, after: ready);
                     SetVar(Vars.AnneTalk, 1);
                 }
                 else if (Var(Vars.AnneTalk) == 1)
                 {
-                    Say(Who.Anne, "KUECHE0003-05", 32, after: local_20);
+                    Say(Who.Anne, "KUECHE0003-05", 32, after: ready);
                     Say(Who.Dick, "KUECHE0003-05", 32);
                     Say(Who.Anne, "KUECHE0003-05", 33, last: true);
                 }
                 else if (Var(Vars.AnneTalk) == 2)
                 {
-                    Say(Who.Anne, "KUECHE0003-03-05", 1, after: local_20);
+                    Say(Who.Anne, "KUECHE0003-03-05", 1, after: ready);
                     Say(Who.Dick, "KUECHE0003-03-05", 3, last: true);
                     SetVar(Vars.AnneTalk, 3);
                 }
                 else if (Var(Vars.AnneTalk) == 3)
                 {
-                    Say(Who.Anne, "KUECHE0003-03-05", 2, after: local_20);
+                    Say(Who.Anne, "KUECHE0003-03-05", 2, after: ready);
                     Say(Who.Dick, "KUECHE0003-03-05", 31, last: true);
                 }
             }
@@ -287,7 +287,7 @@ public sealed partial class Kitchen : StoryScript
             {
                 Walk(Hero, 100, 450);
                 Chain = State(Hero, StandDownRight);
-                local_20 = Chain;
+                ready = Chain;
                 if (Var(Vars.V64f684) < 5)
                 {
                     Say(Who.Anne, "KUECHE0006-05", 11, last: true);
@@ -299,7 +299,7 @@ public sealed partial class Kitchen : StoryScript
             }
             else if (At(3, 3))
             {
-                local_20 = null;
+                ready = null;
                 Chain = null;
                 if (Var(Vars.AnneTalk) == 0)
                 {
@@ -320,39 +320,39 @@ public sealed partial class Kitchen : StoryScript
             }
             else if (At(5, 0))
             {
-                local_20 = null;
+                ready = null;
                 Chain = null;
-                Say(Who.Anne, "KUECHE0009-05", 1, last: true, after: local_20);
+                Say(Who.Anne, "KUECHE0009-05", 1, last: true, after: ready);
             }
             else if (At(5, 4))
             {
-                local_20 = null;
+                ready = null;
                 Chain = null;
                 SetText("t63bdf0", "");
                 if (Var(Vars.AnneTalk) == 0)
                 {
                     SetText("t63bdf0", "Anne");
-                    Say(Who.Anne, "KUECHE0014-05", 1, last: true, after: local_20);
+                    Say(Who.Anne, "KUECHE0014-05", 1, last: true, after: ready);
                 }
                 else if (Var(Vars.V64ef24) == 1)
                 {
-                    Say(Who.Anne, "KUECHE0014-05", 8, last: true, after: local_20);
+                    Say(Who.Anne, "KUECHE0014-05", 8, last: true, after: ready);
                 }
             }
             else if (Quest == 5 && Episode > 5)
             {
-                local_20 = null;
+                ready = null;
                 Chain = null;
                 if (Var(Vars.V64f294) > 0)
                 {
                     if (Var(Vars.AnneTalk) == 3)
                     {
-                        Say(Who.Anne, "KUECHE0015-05", 21, last: true, after: local_20);
+                        Say(Who.Anne, "KUECHE0015-05", 21, last: true, after: ready);
                         Say(Who.George, "KUECHE0015-05", 22, last: true);
                     }
                     else
                     {
-                        Say(Who.Anne, "KUECHE0015-05", 23, last: true, after: local_20);
+                        Say(Who.Anne, "KUECHE0015-05", 23, last: true, after: ready);
                     }
                 }
             }
@@ -360,57 +360,57 @@ public sealed partial class Kitchen : StoryScript
             {
                 Walk(Hero, 399, 391);
                 Chain = State(Hero, StandDownRight);
-                local_20 = Chain;
+                ready = Chain;
                 if (Var(Vars.AnneTalk) == 0)
                 {
                     IncAfter(Vars.AnneTalk, Chain);
-                    Say(Who.Anne, "KUECHE0031", 7, last: true, after: local_20);
+                    Say(Who.Anne, "KUECHE0031", 7, last: true, after: ready);
                 }
                 else if (Var(Vars.AnneTalk) == 1)
                 {
-                    Say(Who.Anne, "KUECHE0031", 8, last: true, after: local_20);
+                    Say(Who.Anne, "KUECHE0031", 8, last: true, after: ready);
                 }
                 else if (Var(Vars.AnneTalk) == 2)
                 {
-                    Say(Who.Anne, "KUECHE0031", 13, after: local_20);
-                    Say(Who.George, "KUECHE0031", 14, after: local_20);
-                    Say(Who.Anne, "KUECHE0031", 15, last: true, after: local_20);
+                    Say(Who.Anne, "KUECHE0031", 13, after: ready);
+                    Say(Who.George, "KUECHE0031", 14, after: ready);
+                    Say(Who.Anne, "KUECHE0031", 15, last: true, after: ready);
                 }
                 else if (Var(Vars.AnneTalk) == 4)
                 {
                     IncAfter(Vars.AnneTalk, Chain);
-                    Say(Who.Anne, "KUECHE0032", 5, after: local_20);
-                    Say(Who.Julian, "KUECHE0032", 6, last: true, after: local_20);
+                    Say(Who.Anne, "KUECHE0032", 5, after: ready);
+                    Say(Who.Julian, "KUECHE0032", 6, last: true, after: ready);
                 }
                 else if (Var(Vars.AnneTalk) == 5)
                 {
-                    Say(Who.Anne, "KUECHE0032", 7, last: true, after: local_20);
+                    Say(Who.Anne, "KUECHE0032", 7, last: true, after: ready);
                 }
                 else if (Var(Vars.AnneTalk) == 6)
                 {
                     IncAfter(Vars.AnneTalk, Chain);
-                    Say(Who.Anne, "KUECHE0032", 18, last: true, after: local_20);
+                    Say(Who.Anne, "KUECHE0032", 18, last: true, after: ready);
                 }
                 else if (Var(Vars.AnneTalk) == 7)
                 {
-                    Say(Who.Anne, "KUECHE0032", 19, last: true, after: local_20);
+                    Say(Who.Anne, "KUECHE0032", 19, last: true, after: ready);
                 }
                 else if (Var(Vars.AnneTalk) == 9)
                 {
                     IncAfter(Vars.AnneTalk, Chain);
-                    Say(Who.Anne, "KUECHE0032", 30, last: true, after: local_20);
+                    Say(Who.Anne, "KUECHE0032", 30, last: true, after: ready);
                 }
                 else if (Var(Vars.AnneTalk) == 10)
                 {
-                    Say(Who.Anne, "KUECHE0032", 31, last: true, after: local_20);
+                    Say(Who.Anne, "KUECHE0032", 31, last: true, after: ready);
                 }
             }
             else if (At(7, 5))
             {
                 Walk(Hero, 399, 391);
                 Chain = State(Hero, StandDownRight);
-                local_20 = Chain;
-                Say(Who.Anne, "KUECHE0033", 3, last: true, after: local_20);
+                ready = Chain;
+                Say(Who.Anne, "KUECHE0033", 3, last: true, after: ready);
             }
         }
         else if (Same(name, "LOC05George"))
@@ -431,75 +431,75 @@ public sealed partial class Kitchen : StoryScript
                 SetText("t63bdf0", "Timmy");
                 if (Var(Vars.V650104) == 0)
                 {
-                    local_20 = null;
+                    ready = null;
                     Chain = null;
-                    Say(Who.Quentin, "KUECHE0005-05", 13, after: local_20, delay: 2);
+                    Say(Who.Quentin, "KUECHE0005-05", 13, after: ready, delay: 2);
                     Say(Who.George, "KUECHE0005-05", 14);
                     Say(Who.Quentin, "KUECHE0005-05", 15, last: true);
                     SetVar(Vars.V650104, 1);
                 }
                 else
                 {
-                    local_20 = null;
+                    ready = null;
                     Chain = null;
-                    Say(Who.Quentin, "KUECHE0005-05", 16, last: true, after: local_20, delay: 2);
+                    Say(Who.Quentin, "KUECHE0005-05", 16, last: true, after: ready, delay: 2);
                 }
             }
         }
         else if (Same(name, "LOC05Quentin"))
         {
-            local_20 = null;
+            ready = null;
             Chain = null;
             if (Hero.Depth != 0)
             {
                 Walk(Hero, 565, 600);
-                local_20 = State(Hero, StandDownLeft);
+                ready = State(Hero, StandDownLeft);
             }
             if (At(3, 3))
             {
-                local_20 = null;
+                ready = null;
                 Chain = null;
                 if (Var(Vars.Distracted) == 0)
                 {
                     if (Var(Vars.QuentinKitchenTalk) == 0)
                     {
                         SetText("t63bdf0", "Quentin");
-                        Say(Who.Quentin, "KUECHE0005-05", 30, after: local_20);
-                        Say(Who.George, "KUECHE0005-05", 31, after: local_20);
-                        Say(Who.Quentin, "KUECHE0005-05", 32, after: local_20);
-                        Say(Who.Dick, "KUECHE0005-05", 33, after: local_20);
-                        Say(Who.Dick, "KUECHE0005-05", 70, last: true, after: local_20);
+                        Say(Who.Quentin, "KUECHE0005-05", 30, after: ready);
+                        Say(Who.George, "KUECHE0005-05", 31, after: ready);
+                        Say(Who.Quentin, "KUECHE0005-05", 32, after: ready);
+                        Say(Who.Dick, "KUECHE0005-05", 33, after: ready);
+                        Say(Who.Dick, "KUECHE0005-05", 70, last: true, after: ready);
                     }
                     else if (Var(Vars.QuentinKitchenTalk) == 2)
                     {
-                        Say(Who.Quentin, "KUECHE0005-05", 41, last: true, after: local_20);
+                        Say(Who.Quentin, "KUECHE0005-05", 41, last: true, after: ready);
                     }
                     else if (Var(Vars.QuentinKitchenTalk) == 3)
                     {
-                        Say(Who.Quentin, "KUECHE0005-05", 42, last: true, after: local_20);
+                        Say(Who.Quentin, "KUECHE0005-05", 42, last: true, after: ready);
                     }
                     else if (Var(Vars.QuentinKitchenTalk) == 4)
                     {
-                        Say(Who.Quentin, "KUECHE0005-05", 54, last: true, after: local_20);
+                        Say(Who.Quentin, "KUECHE0005-05", 54, last: true, after: ready);
                     }
                     else if (Var(Vars.QuentinKitchenTalk) == 5)
                     {
-                        Say(Who.Quentin, "KUECHE0005-05", 55, last: true, after: local_20);
+                        Say(Who.Quentin, "KUECHE0005-05", 55, last: true, after: ready);
                     }
                 }
             }
             else
             {
-                Chain = local_20;
+                Chain = ready;
                 if (Quest == 3 && ((Episode == 4 && Var(Vars.V64f684) == 5)))
                 {
                     if (Var(Vars.QuentinKitchenTalk) == 0)
                     {
-                        Say(Who.Quentin, "KUECHE0006-05", 13, last: true, after: local_20);
+                        Say(Who.Quentin, "KUECHE0006-05", 13, last: true, after: ready);
                     }
                     else
                     {
-                        Say(Who.Quentin, "KUECHE0006-05", 14, last: true, after: local_20);
+                        Say(Who.Quentin, "KUECHE0006-05", 14, last: true, after: ready);
                     }
                 }
             }
@@ -507,16 +507,16 @@ public sealed partial class Kitchen : StoryScript
         else if (Same(name, "LOC05Dick"))
         {
             SetText("t63bdf0", "Dick");
-            local_20 = null;
+            ready = null;
             Chain = null;
             if (Hero.Depth != 0)
             {
                 Walk(Hero, 300, 300);
-                local_20 = State(Hero, StandDownLeft);
+                ready = State(Hero, StandDownLeft);
             }
             if (At(3, 3))
             {
-                local_20 = null;
+                ready = null;
                 Chain = null;
                 if (Var(Vars.DickTalk) == 0)
                 {
@@ -545,14 +545,14 @@ public sealed partial class Kitchen : StoryScript
             }
             else
             {
-                Chain = local_20;
+                Chain = ready;
                 if (At(3, 4))
                 {
                     if (Var(Vars.V64f684) < 5)
                     {
                         if (Var(Vars.DickTalk) == 0)
                         {
-                            Say(Who.Dick, "KUECHE0006-05", 6, after: local_20);
+                            Say(Who.Dick, "KUECHE0006-05", 6, after: ready);
                             Say(Who.George, "KUECHE0006-05", 7, last: true);
                             if (Var(Vars.V64ef24) == 1)
                             {
@@ -579,7 +579,7 @@ public sealed partial class Kitchen : StoryScript
                     {
                         Say(Who.Dick, "KUECHE0006-05", 16, last: true);
                         Say(Who.George, "KUECHE0006-05", 17, last: true);
-                        IncAfter(Vars.DickTalk, local_20);
+                        IncAfter(Vars.DickTalk, ready);
                     }
                     else if (Var(Vars.DickTalk) == 1)
                     {
@@ -590,44 +590,44 @@ public sealed partial class Kitchen : StoryScript
                 }
                 else if (At(5, 0))
                 {
-                    Say(Who.Dick, "KUECHE0009-05", 1, last: true, after: local_20);
+                    Say(Who.Dick, "KUECHE0009-05", 1, last: true, after: ready);
                 }
                 else if (At(5, 4))
                 {
-                    local_20 = null;
+                    ready = null;
                     Chain = null;
                     SetText("t63bdf0", "");
                     if (Var(Vars.DickTalk) == 0)
                     {
                         SetText("t63bdf0", "Dick");
-                        Say(Who.Dick, "KUECHE0014-05", 2, last: true, after: local_20);
+                        Say(Who.Dick, "KUECHE0014-05", 2, last: true, after: ready);
                     }
                     else if (Var(Vars.V64ef24) == 1)
                     {
                         if (Var(Vars.DickTalk) == 1)
                         {
-                            Say(Who.Dick, "KUECHE0014-05", 5, last: true, after: local_20);
+                            Say(Who.Dick, "KUECHE0014-05", 5, last: true, after: ready);
                         }
                         else if (Var(Vars.DickTalk) == 2)
                         {
-                            Say(Who.Dick, "KUECHE0014-05", 6, last: true, after: local_20);
+                            Say(Who.Dick, "KUECHE0014-05", 6, last: true, after: ready);
                         }
                     }
                 }
                 else if (Quest == 5 && Episode > 5)
                 {
-                    local_20 = null;
+                    ready = null;
                     Chain = null;
                     if (Var(Vars.V64f294) > 0)
                     {
                         if (Var(Vars.DickTalk) == 3)
                         {
-                            Say(Who.Dick, "KUECHE0015-05", 13, last: true, after: local_20);
-                            Say(Who.George, "KUECHE0015-05", 14, last: true, after: local_20);
+                            Say(Who.Dick, "KUECHE0015-05", 13, last: true, after: ready);
+                            Say(Who.George, "KUECHE0015-05", 14, last: true, after: ready);
                         }
                         else
                         {
-                            Say(Who.Dick, "KUECHE0015-05", 15, last: true, after: local_20);
+                            Say(Who.Dick, "KUECHE0015-05", 15, last: true, after: ready);
                         }
                     }
                 }
@@ -635,71 +635,71 @@ public sealed partial class Kitchen : StoryScript
                 {
                     Walk(Hero, 100, 450);
                     Chain = State(Hero, StandDownRight);
-                    local_20 = Chain;
+                    ready = Chain;
                     if (Var(Vars.DickTalk) == 0)
                     {
                         IncAfter(Vars.DickTalk, Chain);
-                        Say(Who.Dick, "KUECHE0031", 11, last: true, after: local_20);
+                        Say(Who.Dick, "KUECHE0031", 11, last: true, after: ready);
                     }
                     else if (Var(Vars.DickTalk) == 1)
                     {
-                        Say(Who.Dick, "KUECHE0031", 12, last: true, after: local_20);
+                        Say(Who.Dick, "KUECHE0031", 12, last: true, after: ready);
                     }
                     else if (Var(Vars.DickTalk) == 2)
                     {
                         IncAfter(Vars.DickTalk, Chain);
-                        Say(Who.Dick, "KUECHE0031", 16, last: true, after: local_20);
+                        Say(Who.Dick, "KUECHE0031", 16, last: true, after: ready);
                     }
                     else if (Var(Vars.DickTalk) == 3)
                     {
-                        Say(Who.Dick, "KUECHE0031", 17, last: true, after: local_20);
+                        Say(Who.Dick, "KUECHE0031", 17, last: true, after: ready);
                     }
                     else if (Var(Vars.DickTalk) == 4)
                     {
                         IncAfter(Vars.DickTalk, Chain);
-                        Say(Who.Dick, "KUECHE0032", 8, last: true, after: local_20);
+                        Say(Who.Dick, "KUECHE0032", 8, last: true, after: ready);
                     }
                     else if (Var(Vars.DickTalk) == 5)
                     {
-                        Say(Who.Dick, "KUECHE0032", 9, last: true, after: local_20);
+                        Say(Who.Dick, "KUECHE0032", 9, last: true, after: ready);
                     }
                     else if (Var(Vars.DickTalk) == 6)
                     {
                         IncAfter(Vars.DickTalk, Chain);
-                        Say(Who.Dick, "KUECHE0032", 20, last: true, after: local_20);
+                        Say(Who.Dick, "KUECHE0032", 20, last: true, after: ready);
                         if (Var(Vars.V6501e4) == 1)
                         {
-                            Say(Who.George, "KUECHE0032", 21, after: local_20);
-                            Say(Who.Dick, "KUECHE0032", 22, last: true, after: local_20);
+                            Say(Who.George, "KUECHE0032", 21, after: ready);
+                            Say(Who.Dick, "KUECHE0032", 22, last: true, after: ready);
                         }
                         else
                         {
-                            Say(Who.George, "KUECHE0032", 23, last: true, after: local_20);
+                            Say(Who.George, "KUECHE0032", 23, last: true, after: ready);
                         }
                     }
                     else if (Var(Vars.DickTalk) == 7)
                     {
-                        Say(Who.Dick, "KUECHE0032", 24, last: true, after: local_20);
+                        Say(Who.Dick, "KUECHE0032", 24, last: true, after: ready);
                     }
                     else if (Var(Vars.DickTalk) == 9)
                     {
                         IncAfter(Vars.DickTalk, Chain);
-                        Say(Who.Dick, "KUECHE0032", 37, after: local_20);
-                        Say(Who.George, "KUECHE0032", 38, last: true, after: local_20);
+                        Say(Who.Dick, "KUECHE0032", 37, after: ready);
+                        Say(Who.George, "KUECHE0032", 38, last: true, after: ready);
                     }
                     else if (Var(Vars.DickTalk) == 10)
                     {
-                        Say(Who.Dick, "KUECHE0032", 39, last: true, after: local_20);
+                        Say(Who.Dick, "KUECHE0032", 39, last: true, after: ready);
                     }
                 }
                 else if (At(7, 5))
                 {
                     Walk(Hero, 100, 450);
                     Chain = State(Hero, StandDownRight);
-                    local_20 = Chain;
-                    Say(Who.Dick, "AUSSEN0033", 5, after: local_20);
-                    Say(Who.George, "KUECHE0033", 6, after: local_20);
-                    Say(Who.George, "KUECHE0033", 7, last: true, after: local_20);
+                    ready = Chain;
+                    Say(Who.Dick, "AUSSEN0033", 5, after: ready);
+                    Say(Who.George, "KUECHE0033", 6, after: ready);
+                    Say(Who.George, "KUECHE0033", 7, last: true, after: ready);
                 }
             }
         }
@@ -710,52 +710,52 @@ public sealed partial class Kitchen : StoryScript
             {
                 Walk(Hero, 300, 200);
                 Chain = State(Hero, StandDownLeft);
-                local_20 = Chain;
+                ready = Chain;
                 if (Var(Vars.FannyTalk) == 0)
                 {
-                    Say(Who.Fanny, "KUECHE", 1, after: local_20);
+                    Say(Who.Fanny, "KUECHE", 1, after: ready);
                     Say(Who.Dick, "KUECHE", 1, last: true);
                     SetVar(Vars.FannyTalk, 1);
                 }
                 else if (Var(Vars.FannyTalk) == 1)
                 {
-                    Say(Who.Fanny, "KUECHE", 2, last: true, after: local_20);
+                    Say(Who.Fanny, "KUECHE", 2, last: true, after: ready);
                 }
             }
             else if (At(2, 3))
             {
                 Walk(Hero, 300, 200);
                 Chain = State(Hero, StandDownLeft);
-                local_20 = Chain;
+                ready = Chain;
                 if (Var(Vars.FannyTalk) == 0)
                 {
-                    Say(Who.Fanny, "KUECHE0003-05", 1, after: local_20);
+                    Say(Who.Fanny, "KUECHE0003-05", 1, after: ready);
                     Say(Who.Dick, "KUECHE0003-05", 1);
-                    Say(Who.Fanny, "KUECHE0003-05", 11, last: true, after: local_20);
+                    Say(Who.Fanny, "KUECHE0003-05", 11, last: true, after: ready);
                     SetVar(Vars.FannyTalk, 1);
                 }
                 else if (Var(Vars.FannyTalk) == 1)
                 {
-                    Say(Who.Fanny, "KUECHE0003-05", 2, last: true, after: local_20);
+                    Say(Who.Fanny, "KUECHE0003-05", 2, last: true, after: ready);
                 }
                 else if (Var(Vars.FannyTalk) == 2)
                 {
-                    Say(Who.Fanny, "KUECHE0003-03-05", 1, after: local_20);
+                    Say(Who.Fanny, "KUECHE0003-03-05", 1, after: ready);
                     Say(Who.Dick, "KUECHE0003-03-05", 1);
-                    Say(Who.Fanny, "KUECHE0003-03-05", 11, after: local_20);
+                    Say(Who.Fanny, "KUECHE0003-03-05", 11, after: ready);
                     Say(Who.Dick, "KUECHE0003-03-05", 11, last: true);
                     SetVar(Vars.FannyTalk, 3);
                 }
                 else if (Var(Vars.FannyTalk) == 3)
                 {
-                    Say(Who.Fanny, "KUECHE0003-03-05", 2, last: true, after: local_20);
+                    Say(Who.Fanny, "KUECHE0003-03-05", 2, last: true, after: ready);
                 }
             }
             else if (At(3, 4))
             {
                 Walk(Hero, 300, 200);
                 Chain = State(Hero, StandDownLeft);
-                local_20 = Chain;
+                ready = Chain;
                 if (Var(Vars.V64f684) < 5)
                 {
                     Say(Who.Fanny, "KUECHE0006-05", 12, last: true);
@@ -768,7 +768,7 @@ public sealed partial class Kitchen : StoryScript
             }
             else if (At(3, 3))
             {
-                local_20 = null;
+                ready = null;
                 Chain = null;
                 if (Var(Vars.FannyTalk) == 5)
                 {
@@ -791,18 +791,18 @@ public sealed partial class Kitchen : StoryScript
         else if (Same(name, "LOC05Brotkasten"))
         {
             Walk(Hero, 315, 400);
-            local_20 = State(Hero, TakeMidUpLeft);
+            ready = State(Hero, TakeMidUpLeft);
             MoveObj("LOC03Brotkasten1", 257, 280);
             if (Var(Vars.V64fd4c) == 0)
             {
-                ObjAfter("LOC05Brotkasten1", true, local_20, 3);
-                Sound(@"wav\fx\brotauf.wav", local_20);
+                ObjAfter("LOC05Brotkasten1", true, ready, 3);
+                Sound(@"wav\fx\brotauf.wav", ready);
                 SetVar(Vars.V64fd4c, 1);
             }
             else if (Var(Vars.V64fd4c) == 1)
             {
-                ObjAfter("LOC05Brotkasten1", false, local_20, 3);
-                Sound(@"wav\fx\brotzu.wav", local_20);
+                ObjAfter("LOC05Brotkasten1", false, ready, 3);
+                Sound(@"wav\fx\brotzu.wav", ready);
                 SetVar(Vars.V64fd4c, 0);
             }
         }
@@ -819,15 +819,15 @@ public sealed partial class Kitchen : StoryScript
         {
             SetVar(Vars.V63bdec, 1);
             Walk(Hero, 340, 400);
-            local_20 = State(Hero, TakeMidRight);
-            ObjAfter("LOC05Toast", false, local_20, 4);
+            ready = State(Hero, TakeMidRight);
+            ObjAfter("LOC05Toast", false, ready, 4);
         }
         else if (Same(name, "LOC05Flasche"))
         {
             SetVar(Vars.V63be00, 0);
             Walk(Hero, 330, 400);
-            local_20 = State(Hero, TakeLowUpLeft);
-            ObjAfter("LOC05Flasche", false, local_20, 4);
+            ready = State(Hero, TakeLowUpLeft);
+            ObjAfter("LOC05Flasche", false, ready, 4);
         }
         else if (Same(name, "LOC05Essigflaschen"))
         {
@@ -951,18 +951,18 @@ public sealed partial class Kitchen : StoryScript
             if (Var(Vars.V64fb1c) == 0)
             {
                 Walk(Hero, 140, 433);
-                local_20 = State(Hero, TakeLowUpLeft);
-                Sound(@"wav\fx\hsauf1.wav", local_20, 3);
-                Anim("DoOpenSchrank3", after: local_20, delay: 5, endObject: "LOC05OpenSchrank3Obj", endObjectOn: true);
+                ready = State(Hero, TakeLowUpLeft);
+                Sound(@"wav\fx\hsauf1.wav", ready, 3);
+                Anim("DoOpenSchrank3", after: ready, delay: 5, endObject: "LOC05OpenSchrank3Obj", endObjectOn: true);
                 SetVar(Vars.V64fb1c, 1);
             }
             else if (Var(Vars.V64fb1c) == 1)
             {
                 Walk(Hero, 188, 433);
-                local_20 = State(Hero, TakeLowUpLeft);
-                Sound(@"wav\fx\hszu1.wav", local_20, 3);
-                ObjAfter("LOC05OpenSchrank3Obj", false, local_20, 5);
-                Anim("DoCloseSchrank3", after: local_20, delay: 5);
+                ready = State(Hero, TakeLowUpLeft);
+                Sound(@"wav\fx\hszu1.wav", ready, 3);
+                ObjAfter("LOC05OpenSchrank3Obj", false, ready, 5);
+                Anim("DoCloseSchrank3", after: ready, delay: 5);
                 SetVar(Vars.V64fb1c, 0);
             }
         }
@@ -971,25 +971,25 @@ public sealed partial class Kitchen : StoryScript
             if (Var(Vars.V64fb54) == 0)
             {
                 Walk(Hero, 340, 400);
-                local_20 = State(Hero, TakeLowUpLeft);
-                Sound(@"wav\fx\hsauf2.wav", local_20, 3);
-                Anim("DoOpenSchrank4", after: local_20, delay: 5, endObject: "LOC05OpenSchrank4Obj", endObjectOn: true);
+                ready = State(Hero, TakeLowUpLeft);
+                Sound(@"wav\fx\hsauf2.wav", ready, 3);
+                Anim("DoOpenSchrank4", after: ready, delay: 5, endObject: "LOC05OpenSchrank4Obj", endObjectOn: true);
                 SetVar(Vars.V64fb54, 1);
                 if (Var(Vars.V64fdbc) == 0)
                 {
-                    ObjAfter("LOC05Flasche", true, local_20, 4);
+                    ObjAfter("LOC05Flasche", true, ready, 4);
                 }
             }
             else if (Var(Vars.V64fb54) == 1)
             {
                 Walk(Hero, 360, 380);
-                local_20 = State(Hero, TakeLowUpLeft);
-                Sound(@"wav\fx\hszu2.wav", local_20, 3);
-                ObjAfter("LOC05OpenSchrank4Obj", false, local_20, 5);
-                Anim("DoCloseSchrank4", after: local_20, delay: 5);
+                ready = State(Hero, TakeLowUpLeft);
+                Sound(@"wav\fx\hszu2.wav", ready, 3);
+                ObjAfter("LOC05OpenSchrank4Obj", false, ready, 5);
+                Anim("DoCloseSchrank4", after: ready, delay: 5);
                 if (Var(Vars.V64fdbc) == 0)
                 {
-                    ObjAfter("LOC05Flasche", false, local_20, 8);
+                    ObjAfter("LOC05Flasche", false, ready, 8);
                 }
                 SetVar(Vars.V64fb54, 0);
             }
@@ -1001,18 +1001,18 @@ public sealed partial class Kitchen : StoryScript
                 if (Var(Vars.V64fbc4) == 0)
                 {
                     Walk(Hero, 240, 400);
-                    local_20 = State(Hero, OpenDown);
-                    Sound(@"wav\fx\hsauf1.wav", local_20, 3);
-                    Anim("DoOpenSchrank6", after: local_20, delay: 1, endObject: "LOC05OpenSchrank6Obj", endObjectOn: true);
+                    ready = State(Hero, OpenDown);
+                    Sound(@"wav\fx\hsauf1.wav", ready, 3);
+                    Anim("DoOpenSchrank6", after: ready, delay: 1, endObject: "LOC05OpenSchrank6Obj", endObjectOn: true);
                     SetVar(Vars.V64fbc4, 1);
                 }
                 else if (Var(Vars.V64fbc4) == 1)
                 {
                     Walk(Hero, 265, 400);
-                    local_20 = State(Hero, OpenDown);
-                    Sound(@"wav\fx\hszu1.wav", local_20, 3);
-                    ObjAfter("LOC05OpenSchrank6Obj", false, local_20, 5);
-                    Anim("DoCloseSchrank6", after: local_20, delay: 5);
+                    ready = State(Hero, OpenDown);
+                    Sound(@"wav\fx\hszu1.wav", ready, 3);
+                    ObjAfter("LOC05OpenSchrank6Obj", false, ready, 5);
+                    Anim("DoCloseSchrank6", after: ready, delay: 5);
                     SetVar(Vars.V64fbc4, 0);
                 }
             }
@@ -1026,13 +1026,13 @@ public sealed partial class Kitchen : StoryScript
             StopAnim("GeorgeSitDownRight");
             Obj("LOC05GeorgesSandwich", false);
             StopAnimAfter("GeorgesBreadStill", null, 3);
-            local_20 = Anim("GeorgeTakeSandwichArm");
+            ready = Anim("GeorgeTakeSandwichArm");
             Anim("GeorgeTakeSandwich");
             Give(Item.Sandwich);
             if ((bool)Has(Item.Sandwich))
             {
             }
-            Anim("GeorgeSitDownRight", -1, local_20);
+            Anim("GeorgeSitDownRight", -1, ready);
         }
         else if (Same(name, "LOC05ExitToLOC04"))
         {
@@ -1079,12 +1079,12 @@ public sealed partial class Kitchen : StoryScript
             else if (At(5, 0))
             {
                 PointerOff();
-                local_20 = null;
+                ready = null;
                 Chain = null;
                 SetText("t63bdf0", "George");
-                local_20 = F43c744(local_20, 0, "GeorgeSitDownRight", 500, 600);
+                ready = F43c744(ready, 0, "GeorgeSitDownRight", 500, 600);
                 // TODO local_d8c = S(local_d88,"V",-1 );
-                Say(Who.Dick, "KUECHE0009-05", 8, after: local_20, delay: 60);
+                Say(Who.Dick, "KUECHE0009-05", 8, after: ready, delay: 60);
                 // TODO local_da0 = S(local_d9c,"V",-1 );
                 Say(Who.George, "KUECHE0009-05", 9);
                 // TODO local_db4 = S(local_db0,"V",-1 );
@@ -1099,27 +1099,27 @@ public sealed partial class Kitchen : StoryScript
             else
             {
                 Walk(Hero, 570, 435);
-                local_20 = State(Hero, TakeMidRight);
+                ready = State(Hero, TakeMidRight);
                 if (At(7, 3) && Hero != George)
                 {
                     // TODO local_e04 = S(local_e00, "V",-1);
-                    Say(Who.Julian, "KUECHE0027", 7, after: local_20);
-                    ObjAfter("LOC05Zettel", false, local_20);
-                    ObjAfter("LOC05ZettelObj", false, local_20);
-                    PointerAfter(false, local_20, x: 100, y: 200);
-                    Sound(@"wav\fx\hotueauf.wav", local_20, 3);
-                    local_20 = Anim("DoOpenDoor", after: local_20, delay: 5, endObject: "LOC05OpenDoorObj", endObjectOn: true);
-                    ChangeLocation("hand2", local_20, 20);
+                    Say(Who.Julian, "KUECHE0027", 7, after: ready);
+                    ObjAfter("LOC05Zettel", false, ready);
+                    ObjAfter("LOC05ZettelObj", false, ready);
+                    PointerAfter(false, ready, x: 100, y: 200);
+                    Sound(@"wav\fx\hotueauf.wav", ready, 3);
+                    ready = Anim("DoOpenDoor", after: ready, delay: 5, endObject: "LOC05OpenDoorObj", endObjectOn: true);
+                    ChangeLocation("hand2", ready, 20);
                 }
                 else
                 {
-                    ObjAfter("LOC05Zettel", false, local_20);
-                    ObjAfter("LOC05ZettelObj", false, local_20);
-                    PointerAfter(false, local_20, x: 100, y: 200);
-                    Sound(@"wav\fx\hotueauf.wav", local_20, 3);
-                    local_20 = Anim("DoOpenDoor", after: local_20, delay: 5, endObject: "LOC05OpenDoorObj", endObjectOn: true);
-                    PointerAfter(true, local_20, x: 100, y: 200);
-                    ChangeLocation("loc04", local_20);
+                    ObjAfter("LOC05Zettel", false, ready);
+                    ObjAfter("LOC05ZettelObj", false, ready);
+                    PointerAfter(false, ready, x: 100, y: 200);
+                    Sound(@"wav\fx\hotueauf.wav", ready, 3);
+                    ready = Anim("DoOpenDoor", after: ready, delay: 5, endObject: "LOC05OpenDoorObj", endObjectOn: true);
+                    PointerAfter(true, ready, x: 100, y: 200);
+                    ChangeLocation("loc04", ready);
                 }
             }
         }
@@ -1154,11 +1154,11 @@ public sealed partial class Kitchen : StoryScript
             else
             {
                 Walk(Hero, 60, 456);
-                local_20 = State(Hero, TakeMidUpRight);
+                ready = State(Hero, TakeMidUpRight);
                 if (Quest > 6)
                 {
                     SetVar(Vars.V63bded, 1);
-                    ObjAfter("LOC05Kanne", false, local_20, 5);
+                    ObjAfter("LOC05Kanne", false, ready, 5);
                 }
             }
         }

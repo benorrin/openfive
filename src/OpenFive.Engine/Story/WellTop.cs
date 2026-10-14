@@ -16,7 +16,7 @@ public sealed partial class WellTop : StoryScript
     // from FUN_00454435
     public override bool Click(string name)
     {
-        TaskHandle? local_20 = null;
+        TaskHandle? ready = null;
         if (Same(name, "LOC18BigClick"))
         {
             if (At(8, 3))
@@ -28,17 +28,17 @@ public sealed partial class WellTop : StoryScript
         {
             if (At(8, 4) && Var(Vars.V650e5c) == 0)
             {
-                Chain = local_20;
-                Say(Who.George, "BRUNNEN0041", 1, last: true, after: local_20);
+                Chain = ready;
+                Say(Who.George, "BRUNNEN0041", 1, last: true, after: ready);
             }
             else
             {
                 SetVar(Vars.WellRopeState, 3);
                 StopAnim("RopeDownStill");
                 StopAnim("RopeUpStill");
-                local_20 = Anim("RopeUp", 4);
-                Anim("RopeUpStill", -1, local_20);
-                _rope = local_20;
+                ready = Anim("RopeUp", 4);
+                Anim("RopeUpStill", -1, ready);
+                _rope = ready;
             }
         }
         else if (Same(name, "LOC18ExitToLoc19"))
@@ -46,14 +46,14 @@ public sealed partial class WellTop : StoryScript
             SetVar(Vars.WellRopeState, 5);
             StopAnim("RopeDownStill");
             StopAnim("RopeUpStill");
-            local_20 = Anim("RopeDown", 4);
-            Anim("RopeDownStill", -1, local_20);
-            _rope = local_20;
+            ready = Anim("RopeDown", 4);
+            Anim("RopeDownStill", -1, ready);
+            _rope = ready;
         }
         else if (Same(name, "LOC18Leiter") && Episode == 3 && Quest == 8)
         {
             PointerOff();
-            Chain = local_20;
+            Chain = ready;
             Say(Who.Dick, "BRUNNEN0039", 3, last: true);
         }
         return true;
@@ -69,7 +69,7 @@ public sealed partial class WellTop : StoryScript
     // from FUN_00454705
     void F454705(int param_1, int param_2, int param_3, int param_4)
     {
-        TaskHandle? local_20 = null;
+        TaskHandle? ready = null;
         Obj("LOC18BigClick", false);
         Obj("LOC18ExitToLoc17", false);
         Obj("LOC18ExitToLoc19", false);
@@ -93,12 +93,12 @@ public sealed partial class WellTop : StoryScript
                 Depth(@"bmp\obj\misc\fh\fh.brg", 500);
                 Anim("4heads", -1);
                 Obj("LOC18BigClick", true);
-                Chain = local_20;
+                Chain = ready;
                 PointerOff();
-                Sound(@"wav\timmy\schmerz.wav", local_20);
-                Sound(@"wav\timmy\schmerz.wav", local_20, 6);
-                Sound(@"wav\timmy\schmerz.wav", local_20, 12);
-                Say(Who.George, "BRUNNEN0039", 1, after: local_20, delay: 4);
+                Sound(@"wav\timmy\schmerz.wav", ready);
+                Sound(@"wav\timmy\schmerz.wav", ready, 6);
+                Sound(@"wav\timmy\schmerz.wav", ready, 12);
+                Say(Who.George, "BRUNNEN0039", 1, after: ready, delay: 4);
                 Say(Who.Dick, "BRUNNEN0039", 2, last: true);
             }
         }
@@ -147,9 +147,9 @@ public sealed partial class WellTop : StoryScript
             SetVar(Vars.WellRopeState, 1);
             AnimPos("RopeDown", 200, -300);
             AnimPos("RopeDownStill", 200, Var(Vars.WellRopeY));
-            local_20 = Anim("RopeDown", 2);
-            Anim("RopeDownStill", -1, local_20);
-            _rope = local_20;
+            ready = Anim("RopeDown", 2);
+            Anim("RopeDownStill", -1, ready);
+            _rope = ready;
         }
     }
 

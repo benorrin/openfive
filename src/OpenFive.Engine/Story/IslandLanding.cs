@@ -80,7 +80,7 @@ public sealed partial class IslandLanding : StoryScript
     // from FUN_0044738e
     protected override void Setup()
     {
-        TaskHandle? local_20 = null;
+        TaskHandle? ready = null;
         PointerOn();
         SetVar(Vars.V683260, 1);
         ClearQueue(Hero);
@@ -94,8 +94,8 @@ public sealed partial class IslandLanding : StoryScript
             if (Var(Vars.V64d468) != 0)
             {
                 Chain = null;
-                local_20 = null;
-                Say(Who.Anne, "WRACK0022", 1, after: local_20);
+                ready = null;
+                Say(Who.Anne, "WRACK0022", 1, after: ready);
                 Say(Who.George, "WRACK0022", 2);
                 Say(Who.Anne, "WRACK0022", 3);
                 Say(Who.Julian, "WRACK0022", 4, last: true);

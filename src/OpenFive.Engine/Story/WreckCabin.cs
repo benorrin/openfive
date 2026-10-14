@@ -14,11 +14,11 @@ public sealed partial class WreckCabin : StoryScript
     // from FUN_0044c3b5
     public override bool Click(string name)
     {
-        TaskHandle? local_20 = null;
+        TaskHandle? ready = null;
         TaskHandle? local_3c = null;
         TaskHandle? local_54 = null;
         int local_58 = 0;
-        local_20 = null;
+        ready = null;
         if (Same(name, "LOC16Tisch"))
         {
             Walk(Hero, 294, 515);
@@ -38,10 +38,10 @@ public sealed partial class WreckCabin : StoryScript
         {
             Walk(Hero, 605, 449);
             Chain = State(Hero, TakeLowRight);
-            local_20 = Chain;
-            Say(Who.Dick, "KAJUETE0024", 6, last: true, after: local_20);
-            ObjAfter("LOC16Dose", false, local_20, 5);
-            IncAfter(Vars.TinTaken, local_20);
+            ready = Chain;
+            Say(Who.Dick, "KAJUETE0024", 6, last: true, after: ready);
+            ObjAfter("LOC16Dose", false, ready, 5);
+            IncAfter(Vars.TinTaken, ready);
         }
         else if (Same(name, "LOC16Schrank"))
         {

@@ -32,12 +32,12 @@ public sealed partial class WellBottom : StoryScript
     // from FUN_004555ba
     void F4555ba()
     {
-        TaskHandle? local_20 = null;
+        TaskHandle? ready = null;
         if (At(9, 1))
         {
             Chain = null;
-            Say(Who.Dick, "BRUNNEN0046", 1, after: local_20);
-            Say(Who.George, "BRUNNEN0046", 2, last: true, after: local_20);
+            Say(Who.Dick, "BRUNNEN0046", 1, after: ready);
+            Say(Who.George, "BRUNNEN0046", 2, last: true, after: ready);
             Hero.Follower = Hero;
         }
         else if (At(10, 3))
@@ -46,8 +46,8 @@ public sealed partial class WellBottom : StoryScript
             Show(Hero);
             ShowParty();
             PointerOff();
-            Chain = local_20;
-            Say(Who.Dick, "BRUNNEN0050", 1, last: true, after: local_20, delay: 10);
+            Chain = ready;
+            Say(Who.Dick, "BRUNNEN0050", 1, last: true, after: ready, delay: 10);
             SetVar(Vars.AnneIslandTalk, 0);
             SetVar(Vars.V650804, 0);
             SetVar(Vars.JulianIslandTalk, 0);

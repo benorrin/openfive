@@ -36,7 +36,7 @@ public sealed partial class TreasureChamber : StoryScript
     // from FUN_0045926e
     void F45926e()
     {
-        TaskHandle? local_20 = null;
+        TaskHandle? ready = null;
         StopAnim("ProfSpeak");
         StopAnim("ProfStand");
         StopAnim("KomplizeStand");
@@ -51,7 +51,7 @@ public sealed partial class TreasureChamber : StoryScript
             Place(George, 443, 500, StandDownLeft);
             Place(Julian, 620, 493, StandDownLeft);
             Place(Anne, 171, 544, StandUpRight);
-            Chain = local_20;
+            Chain = ready;
             SetText("t63bedc", "start");
             PointerOff();
             Depth(@"bmp\obj\prof\prsp\prsp01.brg", 5000);
@@ -66,7 +66,7 @@ public sealed partial class TreasureChamber : StoryScript
             AnimScale("ProfStand", 0.9);
             AnimScale("KomplizeStand", 1.66);
             AnimScale("KomplizeSpeak", 1.66);
-            Say(Who.George, "SCHATZ0047", 1, after: local_20, delay: 4);
+            Say(Who.George, "SCHATZ0047", 1, after: ready, delay: 4);
             Say(Who.Anne, "SCHATZ0047", 2);
             Say(Who.Julian, "SCHATZ0047", 3);
             Say(Who.Dick, "SCHATZ0047", 4, last: true);

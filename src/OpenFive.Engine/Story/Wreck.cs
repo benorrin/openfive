@@ -14,9 +14,9 @@ public sealed partial class Wreck : StoryScript
     // from FUN_0044a60b
     public override bool Click(string name)
     {
-        TaskHandle? local_20 = null;
+        TaskHandle? ready = null;
         Chain = null;
-        local_20 = null;
+        ready = null;
         if (Same(name, "LOC15ExitToLoc13"))
         {
             PointerOff();
@@ -31,14 +31,14 @@ public sealed partial class Wreck : StoryScript
                 {
                     if (Var(Vars.AnneWreckTalk) == 0)
                     {
-                        IncAfter(Vars.AnneWreckTalk, local_20);
-                        IncAfter(Vars.AnneBeachTalk, local_20);
-                        IncAfter(Vars.AnneIslandTalk, local_20);
-                        Say(Who.Anne, "ALL0024", 5, last: true, after: local_20);
+                        IncAfter(Vars.AnneWreckTalk, ready);
+                        IncAfter(Vars.AnneBeachTalk, ready);
+                        IncAfter(Vars.AnneIslandTalk, ready);
+                        Say(Who.Anne, "ALL0024", 5, last: true, after: ready);
                     }
                     else if (Var(Vars.AnneWreckTalk) == 1)
                     {
-                        Say(Who.Anne, "ALL0024", 6, after: local_20);
+                        Say(Who.Anne, "ALL0024", 6, after: ready);
                         Say(Who.Dick, "ALL0024", 7, last: true);
                     }
                 }
@@ -47,34 +47,34 @@ public sealed partial class Wreck : StoryScript
                     if (Var(Vars.AnneWreckTalk) == 0)
                     {
                         SetVar(Vars.AnneWreckTalk, 1);
-                        Say(Who.Anne, "WRACK0023", 5, after: local_20);
+                        Say(Who.Anne, "WRACK0023", 5, after: ready);
                         Say(Who.Dick, "WRACK0023", 6, last: true);
                     }
                     else if (Var(Vars.AnneWreckTalk) == 1)
                     {
-                        Say(Who.Anne, "WRACK0023", 7, last: true, after: local_20);
+                        Say(Who.Anne, "WRACK0023", 7, last: true, after: ready);
                     }
                 }
                 else if (At(7, 1))
                 {
                     if (Var(Vars.AnneWreckTalk) == 0)
                     {
-                        IncAfter(Vars.AnneWreckTalk, local_20);
-                        Say(Who.Anne, "WRACK0025", 11, last: true, after: local_20);
+                        IncAfter(Vars.AnneWreckTalk, ready);
+                        Say(Who.Anne, "WRACK0025", 11, last: true, after: ready);
                     }
                     else if (Var(Vars.AnneWreckTalk) == 1)
                     {
-                        Say(Who.Anne, "WRACK0025", 12, last: true, after: local_20);
+                        Say(Who.Anne, "WRACK0025", 12, last: true, after: ready);
                     }
                     else if (Var(Vars.AnneWreckTalk) == 2)
                     {
-                        IncAfter(Vars.AnneWreckTalk, local_20);
-                        Say(Who.Anne, "WRACK0025", 19, after: local_20);
-                        Say(Who.Dick, "WRACK0025", 20, last: true, after: local_20);
+                        IncAfter(Vars.AnneWreckTalk, ready);
+                        Say(Who.Anne, "WRACK0025", 19, after: ready);
+                        Say(Who.Dick, "WRACK0025", 20, last: true, after: ready);
                     }
                     else if (Var(Vars.AnneWreckTalk) == 3)
                     {
-                        Say(Who.Anne, "WRACK0025", 21, last: true, after: local_20);
+                        Say(Who.Anne, "WRACK0025", 21, last: true, after: ready);
                     }
                 }
             }
@@ -84,10 +84,10 @@ public sealed partial class Wreck : StoryScript
                 {
                     if (Var(Vars.GeorgeWreckTalk) == 0)
                     {
-                        IncAfter(Vars.GeorgeWreckTalk, local_20);
-                        IncAfter(Vars.V65044c, local_20);
-                        IncAfter(Vars.GeorgeIslandTalk, local_20);
-                        Say(Who.George, "ALL0024", 10, last: true, after: local_20);
+                        IncAfter(Vars.GeorgeWreckTalk, ready);
+                        IncAfter(Vars.V65044c, ready);
+                        IncAfter(Vars.GeorgeIslandTalk, ready);
+                        Say(Who.George, "ALL0024", 10, last: true, after: ready);
                         if (Var(Vars.V64eff8) == 0)
                         {
                             Say(Who.Dick, "ALL0024", 16);
@@ -121,27 +121,27 @@ public sealed partial class Wreck : StoryScript
                     }
                     else if (Var(Vars.GeorgeWreckTalk) == 1)
                     {
-                        Say(Who.George, "ALL0024", 20, last: true, after: local_20);
+                        Say(Who.George, "ALL0024", 20, last: true, after: ready);
                     }
                 }
                 else if (At(6, 3))
                 {
                     if (Var(Vars.GeorgeWreckTalk) == 0)
                     {
-                        Say(Who.George, "WRACK0023", 13, last: true, after: local_20);
+                        Say(Who.George, "WRACK0023", 13, last: true, after: ready);
                         SetVar(Vars.GeorgeWreckTalk, 1);
                     }
                     else if (Var(Vars.GeorgeWreckTalk) == 1)
                     {
-                        Say(Who.George, "WRACK0023", 14, last: true, after: local_20);
+                        Say(Who.George, "WRACK0023", 14, last: true, after: ready);
                         SetVar(Vars.GeorgeWreckTalk, 2);
                     }
                     else if (Var(Vars.GeorgeWreckTalk) == 2)
                     {
-                        Say(Who.George, "WRACK0023", 15, last: true, after: local_20);
+                        Say(Who.George, "WRACK0023", 15, last: true, after: ready);
                         if (!Has(Item.Rope))
                         {
-                            Say(Who.Julian, "WRACK0023", 16, last: true, after: local_20);
+                            Say(Who.Julian, "WRACK0023", 16, last: true, after: ready);
                         }
                     }
                 }
@@ -149,11 +149,11 @@ public sealed partial class Wreck : StoryScript
                 {
                     if (Var(Vars.GeorgeWreckTalk) == 0)
                     {
-                        Say(Who.George, "WRACK0025", 14, last: true, after: local_20);
+                        Say(Who.George, "WRACK0025", 14, last: true, after: ready);
                     }
                     else if (Var(Vars.GeorgeWreckTalk) == 2)
                     {
-                        Say(Who.George, "WRACK0025", 18, last: true, after: local_20);
+                        Say(Who.George, "WRACK0025", 18, last: true, after: ready);
                     }
                 }
             }
@@ -163,49 +163,49 @@ public sealed partial class Wreck : StoryScript
                 {
                     if (Var(Vars.JulianWreckTalk) == 0)
                     {
-                        IncAfter(Vars.JulianWreckTalk, local_20);
-                        IncAfter(Vars.JulianBeachTalk, local_20);
-                        IncAfter(Vars.JulianIslandTalk, local_20);
-                        Say(Who.Julian, "ALL0024", 8, last: true, after: local_20);
+                        IncAfter(Vars.JulianWreckTalk, ready);
+                        IncAfter(Vars.JulianBeachTalk, ready);
+                        IncAfter(Vars.JulianIslandTalk, ready);
+                        Say(Who.Julian, "ALL0024", 8, last: true, after: ready);
                     }
                     else if (Var(Vars.JulianWreckTalk) == 1)
                     {
-                        Say(Who.Julian, "ALL0024", 9, last: true, after: local_20);
+                        Say(Who.Julian, "ALL0024", 9, last: true, after: ready);
                     }
                 }
                 else if (At(6, 3))
                 {
                     if (Var(Vars.JulianWreckTalk) == 0)
                     {
-                        Say(Who.Julian, "WRACK0023", 8, after: local_20);
+                        Say(Who.Julian, "WRACK0023", 8, after: ready);
                         Say(Who.George, "WRACK0023", 9, last: true);
                         SetVar(Vars.JulianWreckTalk, 1);
                     }
                     else if (Var(Vars.JulianWreckTalk) == 1)
                     {
-                        Say(Who.Julian, "WRACK0023", 10, after: local_20);
+                        Say(Who.Julian, "WRACK0023", 10, after: ready);
                         Say(Who.George, "WRACK0023", 11, last: true);
                         SetVar(Vars.JulianWreckTalk, 2);
                     }
                     else if (Var(Vars.JulianWreckTalk) == 2)
                     {
-                        Say(Who.Julian, "WRACK0023", 12, last: true, after: local_20);
+                        Say(Who.Julian, "WRACK0023", 12, last: true, after: ready);
                     }
                 }
                 else if (At(7, 1))
                 {
                     if (Var(Vars.JulianWreckTalk) == 0)
                     {
-                        Say(Who.Julian, "WRACK0025", 13, last: true, after: local_20);
+                        Say(Who.Julian, "WRACK0025", 13, last: true, after: ready);
                     }
                     else if (Var(Vars.JulianWreckTalk) == 2)
                     {
-                        IncAfter(Vars.JulianWreckTalk, local_20);
-                        Say(Who.Julian, "WRACK0025", 16, last: true, after: local_20);
+                        IncAfter(Vars.JulianWreckTalk, ready);
+                        Say(Who.Julian, "WRACK0025", 16, last: true, after: ready);
                     }
                     else if (Var(Vars.JulianWreckTalk) == 3)
                     {
-                        Say(Who.Julian, "WRACK0025", 17, last: true, after: local_20);
+                        Say(Who.Julian, "WRACK0025", 17, last: true, after: ready);
                     }
                 }
             }
@@ -236,14 +236,14 @@ public sealed partial class Wreck : StoryScript
     // from FUN_0044b852
     void F44b852()
     {
-        TaskHandle? local_20 = null;
+        TaskHandle? ready = null;
         if (At(6, 3))
         {
             SetVar(Vars.V65075c, 1);
             if (Var(Vars.V650874) == 0)
             {
                 Chain = null;
-                Say(Who.Dick, "WRACK0023", 1, after: local_20);
+                Say(Who.Dick, "WRACK0023", 1, after: ready);
                 Say(Who.Anne, "WRACK0023", 2);
                 Say(Who.Julian, "WRACK0023", 3);
                 Say(Who.George, "WRACK0023", 4, last: true);
@@ -259,7 +259,7 @@ public sealed partial class Wreck : StoryScript
             if (Var(Vars.V650874) == 2)
             {
                 Chain = null;
-                Say(Who.Julian, "ALL0024", 1, after: local_20);
+                Say(Who.Julian, "ALL0024", 1, after: ready);
                 Say(Who.Dick, "ALL0024", 2);
                 Say(Who.Julian, "ALL0024", 3);
                 Say(Who.Dick, "ALL0024", 4, last: true);
@@ -272,11 +272,11 @@ public sealed partial class Wreck : StoryScript
             {
                 SetVar(Vars.V63be58, 1);
                 Chain = null;
-                Say(Who.Anne, "WRACK0025", 1, after: local_20);
+                Say(Who.Anne, "WRACK0025", 1, after: ready);
                 Say(Who.Dick, "WRACK0025", 2);
                 Say(Who.Julian, "WRACK0025", 3);
                 Say(Who.Dick, "WRACK0025", 4);
-                Say(Who.George, "WRACK0025", 5, after: local_20);
+                Say(Who.George, "WRACK0025", 5, after: ready);
                 Say(Who.Dick, "WRACK0025", 6);
                 Say(Who.Julian, "WRACK0025", 7, last: true);
             }

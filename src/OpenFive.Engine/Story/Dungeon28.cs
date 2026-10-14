@@ -23,46 +23,46 @@ public sealed partial class Dungeon28 : StoryScript
     // from FUN_00459e3e
     void ClickObject(string name)
     {
-        TaskHandle? local_20 = null;
+        TaskHandle? ready = null;
         if (Same(name, "LOC28ExitToLoc25"))
         {
             Walk(Hero, 717, 381);
             Chain = State(Hero, TakeMidRight);
-            local_20 = Chain;
+            ready = Chain;
             Sound(@"wav\fx\tuerruet.wav", Chain);
             if (At(10, 2))
             {
                 if (Var(Vars.CellCrackUsed) == 0)
                 {
-                    Say(Who.Dick, "VERLIES0048", 2, last: true, after: local_20);
+                    Say(Who.Dick, "VERLIES0048", 2, last: true, after: ready);
                     return;
                 }
-                Say(Who.Anne, "VERLIES0048", 20, after: local_20);
+                Say(Who.Anne, "VERLIES0048", 20, after: ready);
                 Say(Who.Dick, "VERLIES0048", 21, last: true);
                 SetText("t63bef0", "Tuer");
             }
             if (IsAnimShown("CloseDoor"))
             {
-                StopAnimAfter("CloseDoor", local_20);
-                local_20 = Anim("Tuere", after: local_20, delay: 4);
-                Anim("OpenDoor", -1, local_20);
+                StopAnimAfter("CloseDoor", ready);
+                ready = Anim("Tuere", after: ready, delay: 4);
+                Anim("OpenDoor", -1, ready);
             }
             if (Text("t63bef0") != "Tuer")
             {
-                ChangeLocation("loc25", local_20);
+                ChangeLocation("loc25", ready);
             }
         }
         else if (Same(name, "LOC28Spalte") && Episode == 2 && Quest == 10 && Var(Vars.CellCrackUsed) == 0)
         {
             Walk(Timmy, 552, 399);
             Chain = State(Timmy, SniffRight);
-            local_20 = Chain;
+            ready = Chain;
             PointerAfter(false, Chain, x: 400, y: 400);
-            IncAfter(Vars.CellCrackUsed, local_20);
-            SetAfter(Vars.GeorgeDungeonTalk, 3, local_20);
-            SetAfter(Vars.V6512bc, 3, local_20);
-            SetAfter(Vars.V6512f4, 3, local_20);
-            Say(Who.Dick, "VERLIES0048", 14, after: local_20, delay: 6);
+            IncAfter(Vars.CellCrackUsed, ready);
+            SetAfter(Vars.GeorgeDungeonTalk, 3, ready);
+            SetAfter(Vars.V6512bc, 3, ready);
+            SetAfter(Vars.V6512f4, 3, ready);
+            Say(Who.Dick, "VERLIES0048", 14, after: ready, delay: 6);
             Say(Who.Anne, "VERLIES0048", 15);
             Say(Who.Julian, "VERLIES0048", 16);
             Say(Who.George, "VERLIES0048", 17);
@@ -74,27 +74,27 @@ public sealed partial class Dungeon28 : StoryScript
     // from FUN_0045a321
     void ClickActor(Actor actor)
     {
-        TaskHandle? local_20 = null;
+        TaskHandle? ready = null;
         if (actor == George)
         {
             Chain = State(Hero, StandDownRight);
-            local_20 = Chain;
+            ready = Chain;
             if (At(9, 1))
             {
                 if (Var(Vars.GeorgeDungeonTalk) == 0)
                 {
                     IncAfter(Vars.GeorgeDungeonTalk, Chain);
-                    Say(Who.George, "LABYRINTH0044", 8, after: local_20);
+                    Say(Who.George, "LABYRINTH0044", 8, after: ready);
                     Say(Who.Dick, "LABYRINTH0044", 9, last: true);
                 }
                 else if (Var(Vars.GeorgeDungeonTalk) < 2)
                 {
                     IncAfter(Vars.GeorgeDungeonTalk, Chain);
-                    Say(Who.George, "LABYRINTH0044", 10, last: true, after: local_20);
+                    Say(Who.George, "LABYRINTH0044", 10, last: true, after: ready);
                 }
                 else if (Var(Vars.GeorgeDungeonTalk) == 2)
                 {
-                    Say(Who.George, "LABYRINTH0044", 11, last: true, after: local_20);
+                    Say(Who.George, "LABYRINTH0044", 11, last: true, after: ready);
                 }
             }
             else if (At(10, 2))
@@ -102,17 +102,17 @@ public sealed partial class Dungeon28 : StoryScript
                 if (Var(Vars.GeorgeDungeonTalk) == 0)
                 {
                     IncAfter(Vars.GeorgeDungeonTalk, Chain);
-                    Say(Who.George, "VERLIES0048", 10, after: local_20);
-                    Say(Who.Dick, "VERLIES0048", 11, last: true, after: local_20);
+                    Say(Who.George, "VERLIES0048", 10, after: ready);
+                    Say(Who.Dick, "VERLIES0048", 11, last: true, after: ready);
                 }
                 else if (Var(Vars.GeorgeDungeonTalk) < 2)
                 {
                     IncAfter(Vars.GeorgeDungeonTalk, Chain);
-                    Say(Who.George, "VERLIES0048", 12, last: true, after: local_20);
+                    Say(Who.George, "VERLIES0048", 12, last: true, after: ready);
                 }
                 else if (Var(Vars.GeorgeDungeonTalk) == 2)
                 {
-                    Say(Who.George, "VERLIES0048", 13, last: true, after: local_20);
+                    Say(Who.George, "VERLIES0048", 13, last: true, after: ready);
                 }
             }
         }
@@ -121,32 +121,32 @@ public sealed partial class Dungeon28 : StoryScript
             Chain = State(Hero, StandDownRight);
             if (At(10, 2))
             {
-                local_20 = Chain;
+                ready = Chain;
                 if (Var(Vars.V6512f4) == 0)
                 {
                     IncAfter(Vars.V6512f4, Chain);
-                    Say(Who.Anne, "VERLIES0048", 3, after: local_20);
+                    Say(Who.Anne, "VERLIES0048", 3, after: ready);
                     Say(Who.Dick, "VERLIES0048", 4, last: true);
                 }
                 else if (Var(Vars.V6512f4) == 1)
                 {
-                    Say(Who.Anne, "VERLIES0048", 5, last: true, after: local_20);
+                    Say(Who.Anne, "VERLIES0048", 5, last: true, after: ready);
                 }
             }
         }
         else if (actor == Julian && Seq(() => Chain = State(Hero, StandDownLeft), () => Episode == 2) && Quest == 10)
         {
-            local_20 = Chain;
+            ready = Chain;
             if (Var(Vars.V6512bc) == 0)
             {
                 IncAfter(Vars.V6512bc, Chain);
-                Say(Who.Julian, "VERLIES0048", 6, after: local_20);
+                Say(Who.Julian, "VERLIES0048", 6, after: ready);
                 Say(Who.Dick, "VERLIES0048", 7);
-                Say(Who.Julian, "VERLIES0048", 8, last: true, after: local_20);
+                Say(Who.Julian, "VERLIES0048", 8, last: true, after: ready);
             }
             else if (Var(Vars.V6512bc) == 1)
             {
-                Say(Who.Julian, "VERLIES0048", 9, last: true, after: local_20);
+                Say(Who.Julian, "VERLIES0048", 9, last: true, after: ready);
             }
         }
     }

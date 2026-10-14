@@ -23,15 +23,15 @@ public sealed partial class TreasureDoor : StoryScript
     // from FUN_0045702a
     void ClickObject(string name)
     {
-        TaskHandle? local_20 = null;
+        TaskHandle? ready = null;
         if (Same(name, "LOC24ExitToLoc25"))
         {
             Walk(Hero, 363, 253);
             Chain = State(Hero, StandRight);
-            local_20 = Chain;
+            ready = Chain;
             if (At(9, 1) && Var(Vars.TreasureDoorDiscussed) == 1)
             {
-                Say(Who.Dick, "LABYRINTH0046", 12, last: true, after: local_20);
+                Say(Who.Dick, "LABYRINTH0046", 12, last: true, after: ready);
             }
             else
             {
@@ -42,13 +42,13 @@ public sealed partial class TreasureDoor : StoryScript
         {
             Walk(Hero, 399, 417);
             Chain = State(Hero, TakeMidRight);
-            local_20 = Chain;
+            ready = Chain;
             if (At(9, 1))
             {
                 if (Var(Vars.TreasureDoorDiscussed) == 0)
                 {
                     Sound(@"wav\fx\tuerruet.wav", Chain, 3);
-                    Say(Who.Dick, "LABYRINTH0046", 1, last: true, after: local_20);
+                    Say(Who.Dick, "LABYRINTH0046", 1, last: true, after: ready);
                     return;
                 }
                 if (Var(Vars.TreasureDoorBroken) < 1)
@@ -59,8 +59,8 @@ public sealed partial class TreasureDoor : StoryScript
                 PointerAfter(false, Chain, x: 400, y: 400);
                 SetVar(Vars.V683260, 1);
             }
-            StopAnimAfter("TuerClose", local_20);
-            local_20 = Anim("Tuer", after: local_20);
+            StopAnimAfter("TuerClose", ready);
+            ready = Anim("Tuer", after: ready);
             ChangeLocation("loc27");
         }
     }
@@ -68,22 +68,22 @@ public sealed partial class TreasureDoor : StoryScript
     // from FUN_004572a5
     void ClickActor(Actor actor)
     {
-        TaskHandle? local_20 = null;
+        TaskHandle? ready = null;
         if (actor == George && Episode == 1 && Quest == 9 && Var(Vars.TreasureDoorDiscussed) < 1)
         {
             if (George.X <= Hero.X)
             {
-                local_20 = State(Hero, StandDownLeft);
+                ready = State(Hero, StandDownLeft);
             }
             else
             {
-                local_20 = State(Hero, StandDownRight);
+                ready = State(Hero, StandDownRight);
             }
-            Chain = local_20;
-            Say(Who.George, "LABYRINTH0046", 2, after: local_20);
-            Say(Who.Dick, "LABYRINTH0046", 3, after: local_20);
-            Say(Who.George, "LABYRINTH0046", 4, after: local_20);
-            Say(Who.Dick, "LABYRINTH0046", 5, last: true, after: local_20);
+            Chain = ready;
+            Say(Who.George, "LABYRINTH0046", 2, after: ready);
+            Say(Who.Dick, "LABYRINTH0046", 3, after: ready);
+            Say(Who.George, "LABYRINTH0046", 4, after: ready);
+            Say(Who.Dick, "LABYRINTH0046", 5, last: true, after: ready);
             SetText("t63becc", "geh");
         }
     }

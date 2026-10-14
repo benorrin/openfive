@@ -23,18 +23,18 @@ public sealed partial class CourtyardNight : StoryScript
     // from FUN_004523f4
     void ClickObject(string name)
     {
-        TaskHandle? local_20 = null;
+        TaskHandle? ready = null;
         int local_3c = 0;
-        local_20 = null;
+        ready = null;
         if (Same(name, "LOC17bExitToLOC17"))
         {
             Walk(Hero, 780, 500);
             Chain = State(Hero, StandLeft);
-            local_20 = Chain;
+            ready = Chain;
             if (At(8, 5))
             {
                 PointerAfter(false, Chain, x: 400, y: 400);
-                Say(Who.George, "RUINE0043", 5, last: true, after: local_20);
+                Say(Who.George, "RUINE0043", 5, last: true, after: ready);
                 return;
             }
             if (At(9, 1))
@@ -48,14 +48,14 @@ public sealed partial class CourtyardNight : StoryScript
             Walk(Hero, 339, 530);
             Chain = State(Hero, StandLeft);
             local_3c = 0;
-            local_20 = Chain;
+            ready = Chain;
             if (At(8, 5))
             {
                 local_3c = 30;
                 PointerAfter(false, Chain, x: 400, y: 400);
-                Say(Who.Dick, "RUINE0043", 35, last: true, after: local_20);
-                SetAfter(Vars.EpisodeNumber, 1, local_20);
-                SetAfter(Vars.QuestNumber, 9, local_20);
+                Say(Who.Dick, "RUINE0043", 35, last: true, after: ready);
+                SetAfter(Vars.EpisodeNumber, 1, ready);
+                SetAfter(Vars.QuestNumber, 9, ready);
             }
             ChangeLocation("loc21", delay: local_3c);
         }
@@ -67,13 +67,13 @@ public sealed partial class CourtyardNight : StoryScript
                 {
                     Walk(Hero, 339, 570);
                     Chain = State(Hero, PushBoatLeft);
-                    local_20 = Chain;
+                    ready = Chain;
                     PointerAfter(false, Chain, x: 400, y: 400);
-                    IncAfter(Vars.V650d44, local_20);
-                    IncAfter(Vars.V650e24, local_20);
-                    IncAfter(Vars.V650dec, local_20);
-                    IncAfter(Vars.V650db4, local_20);
-                    Say(Who.Dick, "RUINE0043", 27, last: true, after: local_20, delay: 10);
+                    IncAfter(Vars.V650d44, ready);
+                    IncAfter(Vars.V650e24, ready);
+                    IncAfter(Vars.V650dec, ready);
+                    IncAfter(Vars.V650db4, ready);
+                    Say(Who.Dick, "RUINE0043", 27, last: true, after: ready, delay: 10);
                 }
             }
             else
@@ -242,10 +242,10 @@ public sealed partial class CourtyardNight : StoryScript
     // from FUN_00453366
     void F453366()
     {
-        TaskHandle? local_20 = null;
+        TaskHandle? ready = null;
         TaskHandle? local_60 = null;
         TaskHandle? local_78 = null;
-        local_20 = null;
+        ready = null;
         AreaEnable(0, false);
         if (At(8, 5))
         {
@@ -255,20 +255,20 @@ public sealed partial class CourtyardNight : StoryScript
                 ShowParty();
                 Walk(Anne, 165, 566);
                 Chain = State(Anne, StandDownRight);
-                local_20 = Chain;
+                ready = Chain;
                 PointerOff();
                 SetVar(Vars.V650d7c, 1);
                 SetText("t63be78", "start");
-                Say(Who.Anne, "RUINE0043", 20, after: local_20);
+                Say(Who.Anne, "RUINE0043", 20, after: ready);
                 Say(Who.Julian, "RUINE0043", 21);
                 Say(Who.Anne, "RUINE0043", 22, last: true);
             }
             else if (Var(Vars.BigStonePushed) == 0)
             {
                 Place(Anne, 165, 566, StandDownLeft);
-                PlaceAfter(Hero, 492, 442, StandDownLeft, local_20);
-                PlaceAfter(George, 750, 510, StandDownLeft, local_20, 8);
-                PlaceAfter(Julian, 720, 570, StandDownLeft, local_20, 8);
+                PlaceAfter(Hero, 492, 442, StandDownLeft, ready);
+                PlaceAfter(George, 750, 510, StandDownLeft, ready, 8);
+                PlaceAfter(Julian, 720, 570, StandDownLeft, ready, 8);
                 Show(Hero);
                 ShowParty();
             }
@@ -320,9 +320,9 @@ public sealed partial class CourtyardNight : StoryScript
             ShowParty();
             if (At(9, 1))
             {
-                local_20 = null;
+                ready = null;
                 Chain = null;
-                Say(Who.Julian, "LABYRINTH0044", 11, after: local_20);
+                Say(Who.Julian, "LABYRINTH0044", 11, after: ready);
                 Say(Who.Dick, "LABYRINTH0044", 13);
                 Say(Who.Anne, "LABYRINTH0044", 14);
                 Say(Who.George, "LABYRINTH0044", 15, last: true);

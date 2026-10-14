@@ -14,15 +14,15 @@ public sealed partial class Study : StoryScript
     // from FUN_0042486f
     public override bool Click(string name)
     {
-        TaskHandle? local_20 = null;
+        TaskHandle? ready = null;
         if (Same(name, "LOC03ExitToLOC04"))
         {
             if (At(5, 3))
             {
-                local_20 = null;
+                ready = null;
                 Walk(Hero, 380, 399);
                 State(Hero, StandDownRight);
-                Say(Who.Quentin, "ARBEITS0013-03", 8, after: local_20);
+                Say(Who.Quentin, "ARBEITS0013-03", 8, after: ready);
                 Say(Who.George, "ARBEITS0013-03", 9);
                 Say(Who.Quentin, "ARBEITS0013-03", 10);
                 Say(Who.Quentin, "ARBEITS0013-03", 40);
@@ -41,11 +41,11 @@ public sealed partial class Study : StoryScript
                         SetVar(Vars.JulianTalk, 0);
                         SetVar(Vars.V651134, 0);
                         Walk(Hero, 228, 435);
-                        local_20 = State(Hero, TakeMidUpLeft);
-                        Sound(@"wav\fx\hotueauf.wav", local_20, 3);
-                        local_20 = Anim("DoOpenDoor", after: local_20, delay: 5, endObject: "LOC03CloseDoorObj");
-                        ObjAfter("LOC03OpenDoorObj", true, local_20);
-                        ChangeLocation("loc04", local_20);
+                        ready = State(Hero, TakeMidUpLeft);
+                        Sound(@"wav\fx\hotueauf.wav", ready, 3);
+                        ready = Anim("DoOpenDoor", after: ready, delay: 5, endObject: "LOC03CloseDoorObj");
+                        ObjAfter("LOC03OpenDoorObj", true, ready);
+                        ChangeLocation("loc04", ready);
                         PointerOff();
                         return true;
                     }
@@ -61,46 +61,46 @@ public sealed partial class Study : StoryScript
                     if (At(8, 1))
                     {
                         Walk(Hero, 228, 435);
-                        local_20 = State(Hero, StandDownLeft);
-                        Say(Who.George, "ARBEIT0034", 3, last: true, after: local_20);
-                        ChangeLocation("loc08", local_20);
+                        ready = State(Hero, StandDownLeft);
+                        Say(Who.George, "ARBEIT0034", 3, last: true, after: ready);
+                        ChangeLocation("loc08", ready);
                         return true;
                     }
                 }
                 Walk(Hero, 228, 435);
-                local_20 = State(Hero, TakeMidUpLeft);
-                Sound(@"wav\fx\hotueauf.wav", local_20, 3);
-                local_20 = Anim("DoOpenDoor", after: local_20, delay: 5, endObject: "LOC03CloseDoorObj");
-                PointerAfter(false, local_20, x: 100, y: 200);
-                ObjAfter("LOC03OpenDoorObj", true, local_20);
-                ChangeLocation("loc04", local_20, 5);
+                ready = State(Hero, TakeMidUpLeft);
+                Sound(@"wav\fx\hotueauf.wav", ready, 3);
+                ready = Anim("DoOpenDoor", after: ready, delay: 5, endObject: "LOC03CloseDoorObj");
+                PointerAfter(false, ready, x: 100, y: 200);
+                ObjAfter("LOC03OpenDoorObj", true, ready);
+                ChangeLocation("loc04", ready, 5);
             }
         }
         else if (Same(name, "LOC03Holz1"))
         {
             Walk(Hero, 330, 346);
-            local_20 = State(Hero, KneelLeft);
-            ObjAfter("LOC03Holz1", false, local_20, 5);
+            ready = State(Hero, KneelLeft);
+            ObjAfter("LOC03Holz1", false, ready, 5);
         }
         else if (Same(name, "LOC03Holz2"))
         {
             Walk(Hero, 330, 346);
-            local_20 = State(Hero, KneelLeft);
+            ready = State(Hero, KneelLeft);
             if (At(7, 3))
             {
-                Chain = local_20;
-                Say(Who.Quentin, "ARBEIT0029", 7, last: true, after: local_20);
+                Chain = ready;
+                Say(Who.Quentin, "ARBEIT0029", 7, last: true, after: ready);
             }
         }
         else if (Same(name, "LOC03WindowClickObj") && Var(Vars.StudyWindowOpen) == 0)
         {
             Walk(Hero, 530, 346);
-            local_20 = State(Hero, TakeLowRight);
+            ready = State(Hero, TakeLowRight);
             if (At(7, 3))
             {
-                Chain = local_20;
-                PointerAfter(false, local_20, x: 300, y: 400);
-                Say(Who.Quentin, "ARBEIT0029", 5, last: true, after: local_20);
+                Chain = ready;
+                PointerAfter(false, ready, x: 300, y: 400);
+                Say(Who.Quentin, "ARBEIT0029", 5, last: true, after: ready);
             }
             else
             {
@@ -108,18 +108,18 @@ public sealed partial class Study : StoryScript
                 {
                     if (Var(Vars.StudyFire) < 2)
                     {
-                        Chain = local_20;
-                        PointerAfter(false, local_20, x: 300, y: 400);
-                        Say(Who.Quentin, "ARBEIT0032", 11, last: true, after: local_20);
-                        SetAfter(Vars.V64f3ac, 1, local_20);
+                        Chain = ready;
+                        PointerAfter(false, ready, x: 300, y: 400);
+                        Say(Who.Quentin, "ARBEIT0032", 11, last: true, after: ready);
+                        SetAfter(Vars.V64f3ac, 1, ready);
                         return true;
                     }
                     if (Var(Vars.StudyFire) == 2)
                     {
-                        Chain = local_20;
-                        PointerAfter(false, local_20, x: 300, y: 400);
-                        Say(Who.Quentin, "ARBEIT0032", 15, last: true, after: local_20);
-                        SetAfter(Vars.V64f3ac, 2, local_20);
+                        Chain = ready;
+                        PointerAfter(false, ready, x: 300, y: 400);
+                        Say(Who.Quentin, "ARBEIT0032", 15, last: true, after: ready);
+                        SetAfter(Vars.V64f3ac, 2, ready);
                     }
                 }
                 SetVar(Vars.StudyWindowOpen, 1);
@@ -127,119 +127,119 @@ public sealed partial class Study : StoryScript
                 Depth(@"bmp\obj\locs\loc03\l03w0_04.brg", 6000);
                 AnimPos("DoOpenWindow", 515, 174);
                 MoveObj("LOC03OpenWindowObj", 515, 174);
-                local_20 = Anim("DoOpenWindow", after: local_20, delay: 6, endObject: "LOC03OpenWindowObj", endObjectOn: true);
-                Sound(@"wav\fx\Fensauf.wav", local_20);
+                ready = Anim("DoOpenWindow", after: ready, delay: 6, endObject: "LOC03OpenWindowObj", endObjectOn: true);
+                Sound(@"wav\fx\Fensauf.wav", ready);
                 SetVar(Vars.StudyWindowOpen, 1);
             }
         }
         else if (Same(name, "LOC03Telefon1"))
         {
             Walk(Hero, 450, 450);
-            local_20 = State(Hero, TakeMidRightLong);
+            ready = State(Hero, TakeMidRightLong);
             if (At(7, 3))
             {
-                Chain = local_20;
-                Say(Who.Quentin, "ARBEIT0029", 7, last: true, after: local_20);
+                Chain = ready;
+                Say(Who.Quentin, "ARBEIT0029", 7, last: true, after: ready);
             }
             else if (At(7, 4))
             {
                 if (Var(Vars.V64f2cc) == 0)
                 {
-                    Chain = local_20;
-                    IncAfter(Vars.V64f2cc, local_20);
-                    Say(Who.Quentin, "ARBEIT0032", 16, last: true, after: local_20);
+                    Chain = ready;
+                    IncAfter(Vars.V64f2cc, ready);
+                    Say(Who.Quentin, "ARBEIT0032", 16, last: true, after: ready);
                 }
                 else
                 {
-                    Chain = local_20;
-                    Say(Who.Quentin, "ARBEIT0032", 13, last: true, after: local_20);
+                    Chain = ready;
+                    Say(Who.Quentin, "ARBEIT0032", 13, last: true, after: ready);
                 }
             }
         }
         else if (Same(name, "LOC03Telefon2"))
         {
             Walk(Hero, 450, 440);
-            local_20 = State(Hero, TakeMidRightLong);
+            ready = State(Hero, TakeMidRightLong);
             if (At(7, 3))
             {
-                Chain = local_20;
-                Say(Who.Quentin, "ARBEIT0029", 7, last: true, after: local_20);
+                Chain = ready;
+                Say(Who.Quentin, "ARBEIT0029", 7, last: true, after: ready);
             }
             else if (At(7, 4))
             {
                 if (Var(Vars.V64f2cc) == 0)
                 {
-                    Chain = local_20;
-                    IncAfter(Vars.V64f2cc, local_20);
-                    Say(Who.Quentin, "ARBEIT0032", 16, last: true, after: local_20);
+                    Chain = ready;
+                    IncAfter(Vars.V64f2cc, ready);
+                    Say(Who.Quentin, "ARBEIT0032", 16, last: true, after: ready);
                 }
                 else
                 {
-                    Chain = local_20;
-                    Say(Who.Quentin, "ARBEIT0032", 13, last: true, after: local_20);
+                    Chain = ready;
+                    Say(Who.Quentin, "ARBEIT0032", 13, last: true, after: ready);
                 }
             }
         }
         else if (Same(name, "LOC03Schiff"))
         {
             Walk(Hero, 367, 360);
-            local_20 = State(Hero, TakeMidLeftLong);
+            ready = State(Hero, TakeMidLeftLong);
             if (At(7, 3))
             {
                 PointerOff();
                 SetText("t63bdb4", "Schiff");
-                Chain = local_20;
-                Say(Who.Quentin, "ARBEIT0029", 8, last: true, after: local_20);
-                SetAfter(Vars.AnneTalk, 0, local_20);
-                SetAfter(Vars.DickTalk, 0, local_20);
-                SetAfter(Vars.JulianTalk, 0, local_20);
+                Chain = ready;
+                Say(Who.Quentin, "ARBEIT0029", 8, last: true, after: ready);
+                SetAfter(Vars.AnneTalk, 0, ready);
+                SetAfter(Vars.DickTalk, 0, ready);
+                SetAfter(Vars.JulianTalk, 0, ready);
             }
             else if (At(7, 4))
             {
                 SetVar(Vars.V64d464, 700);
-                Chain = local_20;
+                Chain = ready;
                 if (Var(Vars.V64f2cc) == 0)
                 {
-                    Say(Who.Quentin, "ARBEIT0032", 16, last: true, after: local_20);
-                    IncAfter(Vars.V64f2cc, local_20);
+                    Say(Who.Quentin, "ARBEIT0032", 16, last: true, after: ready);
+                    IncAfter(Vars.V64f2cc, ready);
                 }
                 else
                 {
-                    Say(Who.Quentin, "ARBEIT0032", 13, last: true, after: local_20);
+                    Say(Who.Quentin, "ARBEIT0032", 13, last: true, after: ready);
                 }
             }
         }
         else if (Same(name, "LOC03Tasse"))
         {
             Walk(Hero, 470, 470);
-            local_20 = State(Hero, TakeMidRightLong);
+            ready = State(Hero, TakeMidRightLong);
             if (At(7, 3))
             {
-                Chain = local_20;
-                Say(Who.Quentin, "ARBEIT0029", 7, last: true, after: local_20);
+                Chain = ready;
+                Say(Who.Quentin, "ARBEIT0029", 7, last: true, after: ready);
             }
         }
         else if (Same(name, "LOC03Bild"))
         {
             Walk(Hero, 367, 360);
-            local_20 = State(Hero, TakeLowLeftLong);
+            ready = State(Hero, TakeLowLeftLong);
             if (At(7, 3))
             {
-                Chain = local_20;
-                Say(Who.Quentin, "ARBEIT0029", 7, last: true, after: local_20);
+                Chain = ready;
+                Say(Who.Quentin, "ARBEIT0029", 7, last: true, after: ready);
             }
             else if (At(7, 4))
             {
                 if (Var(Vars.V64f2cc) == 0)
                 {
-                    Chain = local_20;
-                    IncAfter(Vars.V64f2cc, local_20);
-                    Say(Who.Quentin, "ARBEIT0032", 16, last: true, after: local_20);
+                    Chain = ready;
+                    IncAfter(Vars.V64f2cc, ready);
+                    Say(Who.Quentin, "ARBEIT0032", 16, last: true, after: ready);
                 }
                 else
                 {
-                    Chain = local_20;
-                    Say(Who.Quentin, "ARBEIT0032", 13, last: true, after: local_20);
+                    Chain = ready;
+                    Say(Who.Quentin, "ARBEIT0032", 13, last: true, after: ready);
                 }
             }
         }
@@ -254,11 +254,11 @@ public sealed partial class Study : StoryScript
                         if (Var(Vars.V64f534) == 0)
                         {
                             Walk(Hero, 504, 481);
-                            local_20 = State(Hero, StandUpRight);
+                            ready = State(Hero, StandUpRight);
                             Depth(@"bmp\obj\quentin\quwr\quwr11.brg", 2500);
                             Depth(@"bmp\obj\quentin\qusp\qusp11.brg", 2500);
                             Chain = null;
-                            Say(Who.Quentin, "Dick", 2, after: local_20);
+                            Say(Who.Quentin, "Dick", 2, after: ready);
                             Say(Who.Dick, "Quentin", 2, last: true);
                             SetVar(Vars.V64f4fc, 2);
                         }
@@ -266,11 +266,11 @@ public sealed partial class Study : StoryScript
                     else if (Var(Vars.V64f4fc) == 2 && Var(Vars.V64f534) == 0)
                     {
                         Walk(Hero, 504, 481);
-                        local_20 = State(Hero, StandUpRight);
+                        ready = State(Hero, StandUpRight);
                         Depth(@"bmp\obj\quentin\quwr\quwr11.brg", 2500);
                         Depth(@"bmp\obj\quentin\qusp\qusp11.brg", 2500);
                         Chain = null;
-                        Say(Who.Quentin, "Dick", 3, after: local_20);
+                        Say(Who.Quentin, "Dick", 3, after: ready);
                         Say(Who.Dick, "Quentin", 3, last: true);
                     }
                 }
@@ -283,11 +283,11 @@ public sealed partial class Study : StoryScript
                         if (Var(Vars.V64f534) == 0)
                         {
                             Walk(Hero, 504, 481);
-                            local_20 = State(Hero, StandUpRight);
+                            ready = State(Hero, StandUpRight);
                             Depth(@"bmp\obj\quentin\quwr\quwr11.brg", 2500);
                             Depth(@"bmp\obj\quentin\qusp\qusp11.brg", 2500);
                             Chain = null;
-                            Say(Who.Quentin, "Dick", 5, after: local_20);
+                            Say(Who.Quentin, "Dick", 5, after: ready);
                             Say(Who.Dick, "Quentin", 1);
                             Say(Who.Quentin, "Dick", 2);
                             Say(Who.Dick, "Quentin", 12);
@@ -300,11 +300,11 @@ public sealed partial class Study : StoryScript
                         if (Var(Vars.V64f534) == 0)
                         {
                             Walk(Hero, 504, 481);
-                            local_20 = State(Hero, StandUpRight);
+                            ready = State(Hero, StandUpRight);
                             Depth(@"bmp\obj\quentin\quwr\quwr11.brg", 2500);
                             Depth(@"bmp\obj\quentin\qusp\qusp11.brg", 2500);
                             Chain = null;
-                            Say(Who.Quentin, "Dick", 6, after: local_20);
+                            Say(Who.Quentin, "Dick", 6, after: ready);
                             Say(Who.Dick, "Quentin", 2, last: true);
                             SetVar(Vars.V64f4fc, 2);
                         }
@@ -313,11 +313,11 @@ public sealed partial class Study : StoryScript
                         if (Var(Vars.V64f534) == 0)
                         {
                             Walk(Hero, 504, 481);
-                            local_20 = State(Hero, StandUpRight);
+                            ready = State(Hero, StandUpRight);
                             Depth(@"bmp\obj\quentin\quwr\quwr11.brg", 2500);
                             Depth(@"bmp\obj\quentin\qusp\qusp11.brg", 2500);
                             Chain = null;
-                            Say(Who.Quentin, "Dick", 7, after: local_20);
+                            Say(Who.Quentin, "Dick", 7, after: ready);
                             Say(Who.Dick, "Quentin", 3, last: true);
                             SetVar(Vars.V64f4fc, 3);
                         }
@@ -326,11 +326,11 @@ public sealed partial class Study : StoryScript
                         if (Var(Vars.V64f534) == 0)
                         {
                             Walk(Hero, 504, 481);
-                            local_20 = State(Hero, StandUpRight);
+                            ready = State(Hero, StandUpRight);
                             Depth(@"bmp\obj\quentin\quwr\quwr11.brg", 2500);
                             Depth(@"bmp\obj\quentin\qusp\qusp11.brg", 2500);
                             Chain = null;
-                            Say(Who.Quentin, "Dick", 8, after: local_20);
+                            Say(Who.Quentin, "Dick", 8, after: ready);
                             Say(Who.Dick, "Quentin", 8);
                             Say(Who.Quentin, "Dick", 81, last: true);
                             SetVar(Vars.V64f4fc, 4);
@@ -340,13 +340,13 @@ public sealed partial class Study : StoryScript
                         if (Var(Vars.V64f534) == 0)
                         {
                             Walk(Hero, 504, 481);
-                            local_20 = State(Hero, StandUpRight);
+                            ready = State(Hero, StandUpRight);
                             Depth(@"bmp\obj\quentin\quwr\quwr11.brg", 2500);
                             Depth(@"bmp\obj\quentin\qusp\qusp11.brg", 2500);
                             Chain = null;
-                            Say(Who.Quentin, "Dick", 9, after: local_20);
+                            Say(Who.Quentin, "Dick", 9, after: ready);
                             Say(Who.Dick, "Quentin", 9);
-                            Say(Who.Quentin, "Dick", 91, last: true, after: local_20);
+                            Say(Who.Quentin, "Dick", 91, last: true, after: ready);
                             SetVar(Vars.V64f4fc, 5);
                         }
                         break;
@@ -354,11 +354,11 @@ public sealed partial class Study : StoryScript
                         if (Var(Vars.V64f534) == 0)
                         {
                             Walk(Hero, 504, 481);
-                            local_20 = State(Hero, StandUpRight);
+                            ready = State(Hero, StandUpRight);
                             Depth(@"bmp\obj\quentin\quwr\quwr11.brg", 2500);
                             Depth(@"bmp\obj\quentin\qusp\qusp11.brg", 2500);
                             Chain = null;
-                            Say(Who.Quentin, "Dick", 10, last: true, after: local_20);
+                            Say(Who.Quentin, "Dick", 10, last: true, after: ready);
                         }
                         break;
                 }
@@ -368,31 +368,31 @@ public sealed partial class Study : StoryScript
                 if (At(6, 2))
                 {
                     Walk(Hero, 504, 481);
-                    local_20 = State(Hero, StandUpRight);
+                    ready = State(Hero, StandUpRight);
                     if (Var(Vars.V64f534) == 0)
                     {
-                        Say(Who.Quentin, "ARBEIT0016-03", 1, last: true, after: local_20);
-                        Say(Who.George, "ARBEIT0016-03", 2, last: true, after: local_20);
-                        Say(Who.Quentin, "ARBEIT0016-03", 3, last: true, after: local_20);
+                        Say(Who.Quentin, "ARBEIT0016-03", 1, last: true, after: ready);
+                        Say(Who.George, "ARBEIT0016-03", 2, last: true, after: ready);
+                        Say(Who.Quentin, "ARBEIT0016-03", 3, last: true, after: ready);
                     }
                     else
                     {
-                        Say(Who.Quentin, "ARBEIT0016-03", 1, last: true, after: local_20);
-                        Say(Who.George, "ARBEIT0016-03", 2, last: true, after: local_20);
-                        Say(Who.Quentin, "ARBEIT0016-03", 3, last: true, after: local_20);
+                        Say(Who.Quentin, "ARBEIT0016-03", 1, last: true, after: ready);
+                        Say(Who.George, "ARBEIT0016-03", 2, last: true, after: ready);
+                        Say(Who.Quentin, "ARBEIT0016-03", 3, last: true, after: ready);
                     }
                 }
                 else if (At(6, 3))
                 {
                     Walk(Hero, 504, 481);
                     Chain = State(Hero, StandUpRight);
-                    local_20 = Chain;
-                    Say(Who.Quentin, "ARBEIT0019-03", 1, last: true, after: local_20);
+                    ready = Chain;
+                    Say(Who.Quentin, "ARBEIT0019-03", 1, last: true, after: ready);
                 }
                 else if (At(5, 3))
                 {
                     Walk(Hero, 382, 399);
-                    local_20 = State(Hero, StandDownRight);
+                    ready = State(Hero, StandDownRight);
                     Say(Who.Quentin, "ARBEITS0013-03", 23);
                     Say(Who.George, "ARBEITS0013-03", 24);
                     Say(Who.Quentin, "ARBEITS0013-03", 10);
@@ -403,24 +403,24 @@ public sealed partial class Study : StoryScript
                 else if (Episode < 3 && Quest == 5)
                 {
                     Walk(Hero, 504, 481);
-                    local_20 = State(Hero, StandUpRight);
+                    ready = State(Hero, StandUpRight);
                     Depth(@"bmp\obj\quentin\quwr\quwr11.brg", 2500);
                     Depth(@"bmp\obj\quentin\qusp\qusp11.brg", 2500);
                     Chain = null;
-                    Say(Who.Quentin, "George", 1, last: true, after: local_20);
+                    Say(Who.Quentin, "George", 1, last: true, after: ready);
                 }
             }
             else
             {
                 Walk(Hero, 504, 481);
-                local_20 = State(Hero, StandUpRight);
+                ready = State(Hero, StandUpRight);
                 if (Var(Vars.V64f534) == 0)
                 {
-                    Say(Who.Quentin, "ARBEIT0015-03", 1, last: true, after: local_20);
+                    Say(Who.Quentin, "ARBEIT0015-03", 1, last: true, after: ready);
                 }
                 else
                 {
-                    Say(Who.Quentin, "ARBEIT0015-03", 2, last: true, after: local_20);
+                    Say(Who.Quentin, "ARBEIT0015-03", 2, last: true, after: ready);
                 }
             }
         }
@@ -429,15 +429,15 @@ public sealed partial class Study : StoryScript
             if (Same(name, "LOC03Anne"))
             {
                 Walk(Hero, 382, 399);
-                local_20 = State(Hero, StandDownLeft);
+                ready = State(Hero, StandDownLeft);
                 if (Var(Vars.V64f56c) == 0)
                 {
-                    Say(Who.Anne, "ARBEITS0013-03", 14, last: true, after: local_20);
+                    Say(Who.Anne, "ARBEITS0013-03", 14, last: true, after: ready);
                     SetVar(Vars.V63bdac, 1);
                 }
                 else if (Var(Vars.V64f56c) == 1)
                 {
-                    Say(Who.Anne, "ARBEITS0013-03", 15, after: local_20);
+                    Say(Who.Anne, "ARBEITS0013-03", 15, after: ready);
                     Say(Who.George, "ARBEITS0013-03", 16, last: true);
                     SetVar(Vars.V63bdac, 1);
                 }
@@ -445,32 +445,32 @@ public sealed partial class Study : StoryScript
             else if (Same(name, "LOC03Julian"))
             {
                 Walk(Hero, 382, 399);
-                local_20 = State(Hero, StandDownRight);
+                ready = State(Hero, StandDownRight);
                 if (Var(Vars.V64f5a4) == 0)
                 {
-                    Say(Who.Julian, "ARBEITS0013-03", 20, after: local_20);
+                    Say(Who.Julian, "ARBEITS0013-03", 20, after: ready);
                     Say(Who.George, "ARBEITS0013-03", 21, last: true);
                     SetVar(Vars.V63bdae, 1);
                 }
                 else if (Var(Vars.V64f5a4) == 1)
                 {
-                    Say(Who.Julian, "ARBEITS0013-03", 22, last: true, after: local_20);
+                    Say(Who.Julian, "ARBEITS0013-03", 22, last: true, after: ready);
                     SetVar(Vars.V63bdae, 1);
                 }
             }
             else if (Same(name, "LOC03Dick"))
             {
                 Walk(Hero, 382, 399);
-                local_20 = State(Hero, StandDownRight);
+                ready = State(Hero, StandDownRight);
                 if (Var(Vars.V64f5dc) == 0)
                 {
-                    Say(Who.Dick, "ARBEITS0013-03", 17, after: local_20);
+                    Say(Who.Dick, "ARBEITS0013-03", 17, after: ready);
                     Say(Who.George, "ARBEITS0013-03", 18, last: true);
                     SetVar(Vars.V63bdad, 1);
                 }
                 else if (Var(Vars.V64f5dc) == 1)
                 {
-                    Say(Who.Dick, "ARBEITS0013-03", 19, last: true, after: local_20);
+                    Say(Who.Dick, "ARBEITS0013-03", 19, last: true, after: ready);
                     SetVar(Vars.V63bdad, 1);
                 }
             }
@@ -824,7 +824,7 @@ public sealed partial class Study : StoryScript
     void F427cb6()
     {
         TaskHandle? local_1c0 = null;
-        TaskHandle? local_20 = null;
+        TaskHandle? ready = null;
         TaskHandle? local_278 = null;
         TaskHandle? local_2e4 = null;
         TaskHandle? local_330 = null;
@@ -833,13 +833,13 @@ public sealed partial class Study : StoryScript
         TaskHandle? local_f4 = null;
         if (At(2, 2))
         {
-            local_20 = null;
+            ready = null;
             if (LocationId == FromId)
             {
                 Place(Hero, 504, 481, StandUpRight);
                 Show(Hero);
                 ShowParty();
-                local_20 = null;
+                ready = null;
             }
             else
             {
@@ -847,7 +847,7 @@ public sealed partial class Study : StoryScript
                 Show(Hero);
                 ShowParty();
                 Walk(Hero, 504, 481);
-                local_20 = State(Hero, StandUpRight);
+                ready = State(Hero, StandUpRight);
             }
             if (Var(Vars.V64f4fc) == 0 && Var(Vars.V64f534) == 0)
             {
@@ -855,7 +855,7 @@ public sealed partial class Study : StoryScript
                 Depth(@"bmp\obj\quentin\quwr\quwr11.brg", 2500);
                 Depth(@"bmp\obj\quentin\qusp\qusp11.brg", 2500);
                 Chain = null;
-                Say(Who.Quentin, "Dick", 1, after: local_20);
+                Say(Who.Quentin, "Dick", 1, after: ready);
                 Say(Who.Dick, "Quentin", 1);
                 Say(Who.Quentin, "Dick", 12);
                 Say(Who.Dick, "Quentin", 12, last: true);

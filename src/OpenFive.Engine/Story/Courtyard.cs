@@ -16,44 +16,44 @@ public sealed partial class Courtyard : StoryScript
     {
         TaskHandle? local_104 = null;
         TaskHandle? local_1c0 = null;
-        TaskHandle? local_20 = null;
+        TaskHandle? ready = null;
         TaskHandle? local_218 = null;
         TaskHandle? local_25c = null;
         TaskHandle? local_318 = null;
         TaskHandle? local_35c = null;
         TaskHandle? local_42c = null;
         TaskHandle? local_ac = null;
-        local_20 = null;
+        ready = null;
         if (Same(name, "LOC17ExitToLoc14"))
         {
             if (At(8, 2))
             {
                 Walk(Hero, 586, 490);
                 Chain = State(Hero, StandUpRight);
-                local_20 = Chain;
+                ready = Chain;
                 if (Var(Vars.V650aa4) == 0)
                 {
                     PointerAfter(false, Chain, x: 300, y: 400);
-                    IncAfter(Vars.V650aa4, local_20);
-                    PlaceAfter(Anne, 830, 456, StandDownRight, local_20);
-                    WalkAfter(Anne, 678, 458, local_20);
+                    IncAfter(Vars.V650aa4, ready);
+                    PlaceAfter(Anne, 830, 456, StandDownRight, ready);
+                    WalkAfter(Anne, 678, 458, ready);
                     Chain = State(Anne, StandDownLeft);
-                    local_20 = Chain;
-                    Say(Who.Anne, "RUINE0038", 13, last: true, after: local_20, delay: 50);
+                    ready = Chain;
+                    Say(Who.Anne, "RUINE0038", 13, last: true, after: ready, delay: 50);
                 }
                 else if (Var(Vars.V650aa4) == 1)
                 {
                     PointerAfter(false, Chain, x: 300, y: 400);
-                    Say(Who.Anne, "RUINE0038", 14, last: true, after: local_20);
+                    Say(Who.Anne, "RUINE0038", 14, last: true, after: ready);
                 }
             }
             else if (At(8, 3))
             {
                 Walk(Hero, 586, 490);
                 Chain = State(Hero, StandUpRight);
-                local_20 = Chain;
+                ready = Chain;
                 PointerAfter(false, Chain, x: 400, y: 400);
-                Say(Who.George, "RUINE0040", 9, last: true, after: local_20, delay: 10);
+                Say(Who.George, "RUINE0040", 9, last: true, after: ready, delay: 10);
             }
             else if (At(8, 4))
             {
@@ -64,9 +64,9 @@ public sealed partial class Courtyard : StoryScript
             {
                 Walk(Hero, 586, 490);
                 Chain = State(Hero, StandUpRight);
-                local_20 = Chain;
+                ready = Chain;
                 PointerAfter(false, Chain, x: 400, y: 400);
-                Say(Who.George, "RUINE0043", 5, last: true, after: local_20, delay: 10);
+                Say(Who.George, "RUINE0043", 5, last: true, after: ready, delay: 10);
             }
             else if (At(11, 1))
             {
@@ -74,9 +74,9 @@ public sealed partial class Courtyard : StoryScript
                 Chain = State(Hero, StandUpRight);
                 if (Var(Vars.CourtyardFree) > 1)
                 {
-                    local_20 = Chain;
+                    ready = Chain;
                     PointerAfter(false, Chain, x: 400, y: 400);
-                    Say(Who.Dick, "RUINE0053", 12, after: local_20, delay: 10);
+                    Say(Who.Dick, "RUINE0053", 12, after: ready, delay: 10);
                     Say(Who.Dick, "RUINE0053", 88, last: true);
                 }
             }
@@ -91,11 +91,11 @@ public sealed partial class Courtyard : StoryScript
             if (At(11, 1))
             {
                 Walk(Hero, 565, 450);
-                local_20 = State(Hero, KneelLeft);
+                ready = State(Hero, KneelLeft);
                 PointerOff();
-                PointerAfter(true, local_20, 8, 400, 400);
+                PointerAfter(true, ready, 8, 400, 400);
                 SetVar(Vars.RopeOnStone, 0);
-                StopAnimAfter("Seil", local_20, 6);
+                StopAnimAfter("Seil", ready, 6);
                 Give(Item.Rope);
                 if ((bool)Has(Item.Rope))
                 {
@@ -325,49 +325,49 @@ public sealed partial class Courtyard : StoryScript
             Chain = State(Hero, StandUpLeft);
             if (At(8, 2))
             {
-                local_20 = Chain;
+                ready = Chain;
                 if (Var(Vars.V650b14) == 0)
                 {
                     IncAfter(Vars.V650b14, Chain);
-                    PointerAfter(false, local_20, x: 300, y: 400);
-                    PlaceAfter(Julian, 235, 370, StandDownRight, local_20);
-                    WalkAfter(Julian, 173, 397, local_20);
+                    PointerAfter(false, ready, x: 300, y: 400);
+                    PlaceAfter(Julian, 235, 370, StandDownRight, ready);
+                    WalkAfter(Julian, 173, 397, ready);
                     Chain = State(Julian, StandDownRight);
-                    local_20 = Chain;
-                    Say(Who.Julian, "RUINE0038", 9, last: true, after: local_20);
+                    ready = Chain;
+                    Say(Who.Julian, "RUINE0038", 9, last: true, after: ready);
                 }
                 else if (Var(Vars.V650b14) == 1)
                 {
                     PointerAfter(false, Chain, x: 300, y: 400);
-                    Say(Who.Julian, "RUINE0038", 10, last: true, after: local_20);
+                    Say(Who.Julian, "RUINE0038", 10, last: true, after: ready);
                 }
             }
         }
         else if (Same(name, "LOC17Efeu"))
         {
             Walk(Hero, 64, 419);
-            local_20 = State(Hero, TakeMidLeft);
-            Sound(@"wav\fx\raschel.wav", local_20, 3);
-            Sound(@"wav\fx\mauerrie.wav", local_20, 8);
+            ready = State(Hero, TakeMidLeft);
+            Sound(@"wav\fx\raschel.wav", ready, 3);
+            Sound(@"wav\fx\mauerrie.wav", ready, 8);
             if (Hero == George)
             {
-                local_20 = State(Hero, FrightenedDownRight);
+                ready = State(Hero, FrightenedDownRight);
             }
-            Chain = local_20;
+            Chain = ready;
             if (At(8, 2))
             {
                 if (Hero == George)
                 {
-                    Say(Who.George, "RUINE0038", 15, last: true, after: local_20, delay: 15);
+                    Say(Who.George, "RUINE0038", 15, last: true, after: ready, delay: 15);
                 }
                 else
                 {
-                    Say(Who.Dick, "RUINE0038", 15, last: true, after: local_20, delay: 15);
+                    Say(Who.Dick, "RUINE0038", 15, last: true, after: ready, delay: 15);
                 }
             }
             else if (At(11, 1))
             {
-                Say(Who.Dick, "RUINE0053", 14, last: true, after: local_20);
+                Say(Who.Dick, "RUINE0053", 14, last: true, after: ready);
             }
         }
         else if (Same(name, "LOC17Busch"))
@@ -380,18 +380,18 @@ public sealed partial class Courtyard : StoryScript
                     SetText("t63be5c", "Busch");
                     Walk(Timmy, 456, 433);
                     WalkAfter(George, 476, 450, null, 5);
-                    local_20 = State(Timmy, StandLeft);
-                    Sound(@"wav\fx\raschel.wav", local_20);
-                    Sound(@"wav\timmy\schmerz.wav", local_20, 10);
-                    HideAfter(Timmy, local_20);
-                    PointerAfter(false, local_20, x: 300, y: 400);
+                    ready = State(Timmy, StandLeft);
+                    Sound(@"wav\fx\raschel.wav", ready);
+                    Sound(@"wav\timmy\schmerz.wav", ready, 10);
+                    HideAfter(Timmy, ready);
+                    PointerAfter(false, ready, x: 300, y: 400);
                     Chain = State(Hero, StandUpRight);
-                    local_20 = Chain;
+                    ready = Chain;
                     IncAfter(Vars.V650b4c, Chain);
-                    SetAfter(Vars.V650adc, 2, local_20);
-                    SetAfter(Vars.V650aa4, 2, local_20);
-                    SetAfter(Vars.V650b14, 2, local_20);
-                    Say(Who.George, "RUINE0038", 16, after: local_20, delay: 10);
+                    SetAfter(Vars.V650adc, 2, ready);
+                    SetAfter(Vars.V650aa4, 2, ready);
+                    SetAfter(Vars.V650b14, 2, ready);
+                    Say(Who.George, "RUINE0038", 16, after: ready, delay: 10);
                     Say(Who.George, "RUINE0038", 17, last: true);
                 }
                 else if (Var(Vars.V650b4c) == 1)
@@ -401,12 +401,12 @@ public sealed partial class Courtyard : StoryScript
                 }
                 else if (Var(Vars.V650b4c) == 2)
                 {
-                    StateAfter(Anne, StandUpLeft, local_20);
-                    StateAfter(Julian, StandUpLeft, local_20);
-                    StateAfter(George, StandUpLeft, local_20);
-                    StateAfter(Hero, StandUpRight, local_20);
-                    PointerAfter(false, local_20, x: 400, y: 400);
-                    ChangeLocation("loc18", local_20, 2);
+                    StateAfter(Anne, StandUpLeft, ready);
+                    StateAfter(Julian, StandUpLeft, ready);
+                    StateAfter(George, StandUpLeft, ready);
+                    StateAfter(Hero, StandUpRight, ready);
+                    PointerAfter(false, ready, x: 400, y: 400);
+                    ChangeLocation("loc18", ready, 2);
                 }
                 else
                 {
@@ -418,29 +418,29 @@ public sealed partial class Courtyard : StoryScript
             {
                 Walk(Hero, 431, 442);
                 Chain = State(Hero, StandUpRight);
-                local_20 = Chain;
+                ready = Chain;
                 if (Has(Item.Bucket))
                 {
                     SetText("t63be5c", "wiederhinein");
-                    Say(Who.Dick, "RUINE0042", 8, after: local_20);
-                    Say(Who.George, "RUINE0042", 9, last: true, after: local_20);
+                    Say(Who.Dick, "RUINE0042", 8, after: ready);
+                    Say(Who.George, "RUINE0042", 9, last: true, after: ready);
                 }
                 else
                 {
                     StateAfter(Anne, StandUpLeft, Chain);
-                    StateAfter(Julian, StandUpLeft, local_20);
-                    StateAfter(George, StandUpLeft, local_20);
-                    PointerAfter(false, local_20, x: 400, y: 400);
-                    ChangeLocation("loc18", local_20, 2);
+                    StateAfter(Julian, StandUpLeft, ready);
+                    StateAfter(George, StandUpLeft, ready);
+                    PointerAfter(false, ready, x: 400, y: 400);
+                    ChangeLocation("loc18", ready, 2);
                 }
             }
             else if (At(8, 5))
             {
                 Walk(Hero, 431, 442);
                 Chain = State(Hero, StandUpRight);
-                local_20 = Chain;
+                ready = Chain;
                 PointerAfter(false, Chain, x: 400, y: 400);
-                Say(Who.George, "RUINE0043", 5, last: true, after: local_20, delay: 10);
+                Say(Who.George, "RUINE0043", 5, last: true, after: ready, delay: 10);
             }
             else if (At(11, 1))
             {
@@ -448,22 +448,22 @@ public sealed partial class Courtyard : StoryScript
                 Chain = State(Hero, StandUpRight);
                 if (Var(Vars.CourtyardFree) > 1)
                 {
-                    local_20 = Chain;
+                    ready = Chain;
                     PointerAfter(false, Chain, x: 400, y: 400);
-                    Say(Who.Dick, "RUINE0053", 11, last: true, after: local_20, delay: 10);
+                    Say(Who.Dick, "RUINE0053", 11, last: true, after: ready, delay: 10);
                 }
             }
             else
             {
                 Walk(Hero, 431, 442);
-                local_20 = State(Hero, StandUpRight);
+                ready = State(Hero, StandUpRight);
                 if (Var(Vars.V650c2c) > 0)
                 {
-                    StateAfter(Anne, StandUpLeft, local_20);
-                    StateAfter(Julian, StandUpLeft, local_20);
-                    StateAfter(George, StandUpLeft, local_20);
-                    PointerAfter(false, local_20, x: 400, y: 400);
-                    ChangeLocation("loc18", local_20, 2);
+                    StateAfter(Anne, StandUpLeft, ready);
+                    StateAfter(Julian, StandUpLeft, ready);
+                    StateAfter(George, StandUpLeft, ready);
+                    PointerAfter(false, ready, x: 400, y: 400);
+                    ChangeLocation("loc18", ready, 2);
                 }
             }
         }
@@ -473,21 +473,21 @@ public sealed partial class Courtyard : StoryScript
             Chain = State(Hero, StandUpLeft);
             if (At(8, 2))
             {
-                local_20 = Chain;
+                ready = Chain;
                 if (Var(Vars.V650adc) == 0)
                 {
                     IncAfter(Vars.V650adc, Chain);
-                    PointerAfter(false, local_20, x: 300, y: 400);
-                    PlaceAfter(Dick, 331, 363, StandDownRight, local_20);
-                    WalkAfter(Dick, 368, 412, local_20);
+                    PointerAfter(false, ready, x: 300, y: 400);
+                    PlaceAfter(Dick, 331, 363, StandDownRight, ready);
+                    WalkAfter(Dick, 368, 412, ready);
                     Chain = State(Dick, StandDownRight);
-                    local_20 = Chain;
-                    Say(Who.Dick, "RUINE0038", 11, last: true, after: local_20, delay: 20);
+                    ready = Chain;
+                    Say(Who.Dick, "RUINE0038", 11, last: true, after: ready, delay: 20);
                 }
                 else if (Var(Vars.V650adc) == 1)
                 {
                     PointerAfter(false, Chain, x: 300, y: 400);
-                    Say(Who.Dick, "RUINE0038", 12, last: true, after: local_20);
+                    Say(Who.Dick, "RUINE0038", 12, last: true, after: ready);
                 }
             }
         }
@@ -502,10 +502,10 @@ public sealed partial class Courtyard : StoryScript
             {
                 Walk(Hero, 310, 430);
                 Chain = State(Hero, PhoneRight);
-                local_20 = Chain;
+                ready = Chain;
                 StopAnimAfter("Radio", Chain, 1);
-                PointerAfter(false, local_20, x: 400, y: 400);
-                Say(Who.Dick, "RUINE0053", 17, after: local_20, delay: 14);
+                PointerAfter(false, ready, x: 400, y: 400);
+                Say(Who.Dick, "RUINE0053", 17, after: ready, delay: 14);
                 Say(Who.Dick, "RUINE0053", 20, last: true);
             }
         }
@@ -515,9 +515,9 @@ public sealed partial class Courtyard : StoryScript
             {
                 Walk(Hero, 1, 455);
                 Chain = State(Hero, PushBoatRight);
-                local_20 = Chain;
+                ready = Chain;
                 PointerAfter(false, Chain, x: 400, y: 400);
-                Say(Who.Dick, "RUINE0053", 13, last: true, after: local_20, delay: 10);
+                Say(Who.Dick, "RUINE0053", 13, last: true, after: ready, delay: 10);
             }
         }
         else if (Same(name, "LOC17ExitToLoc21"))
@@ -526,9 +526,9 @@ public sealed partial class Courtyard : StoryScript
             {
                 Walk(Hero, 100, 455);
                 Chain = State(Hero, StandDownLeft);
-                local_20 = Chain;
+                ready = Chain;
                 PointerAfter(false, Chain, x: 400, y: 400);
-                Say(Who.Dick, "RUINE0053", 18, last: true, after: local_20, delay: 10);
+                Say(Who.Dick, "RUINE0053", 18, last: true, after: ready, delay: 10);
             }
         }
         else if (Same(name, "LOC17Steinhaufen"))
@@ -540,35 +540,35 @@ public sealed partial class Courtyard : StoryScript
             Walk(Hero, 633, 436);
             if (Var(Vars.StonesTaken) < 3)
             {
-                local_20 = State(Hero, KneelLeft);
+                ready = State(Hero, KneelLeft);
             }
             else
             {
-                local_20 = State(Hero, StandDownLeft);
+                ready = State(Hero, StandDownLeft);
             }
-            Chain = local_20;
+            Chain = ready;
             if (At(8, 3))
             {
                 switch (Var(Vars.StonesTaken))
                 {
                     case 0:
-                        PointerAfter(false, local_20, x: 300, y: 400);
-                        Say(Who.Dick, "RUINE0040", 3, last: true, after: local_20, delay: 14);
-                        IncAfter(Vars.StonesTaken, local_20);
+                        PointerAfter(false, ready, x: 300, y: 400);
+                        Say(Who.Dick, "RUINE0040", 3, last: true, after: ready, delay: 14);
+                        IncAfter(Vars.StonesTaken, ready);
                         break;
                     case 1:
-                        PointerAfter(false, local_20, x: 300, y: 400);
-                        Say(Who.Dick, "RUINE0040", 4, last: true, after: local_20, delay: 14);
-                        IncAfter(Vars.StonesTaken, local_20);
+                        PointerAfter(false, ready, x: 300, y: 400);
+                        Say(Who.Dick, "RUINE0040", 4, last: true, after: ready, delay: 14);
+                        IncAfter(Vars.StonesTaken, ready);
                         break;
                     case 2:
-                        IncAfter(Vars.StonesTaken, local_20);
-                        PointerAfter(false, local_20, x: 300, y: 400);
-                        Say(Who.Dick, "RUINE0040", 5, last: true, after: local_20, delay: 14);
+                        IncAfter(Vars.StonesTaken, ready);
+                        PointerAfter(false, ready, x: 300, y: 400);
+                        Say(Who.Dick, "RUINE0040", 5, last: true, after: ready, delay: 14);
                         break;
                     case 3:
-                        PointerAfter(false, local_20, x: 300, y: 400);
-                        Say(Who.Dick, "RUINE0040", 6, last: true, after: local_20, delay: 14);
+                        PointerAfter(false, ready, x: 300, y: 400);
+                        Say(Who.Dick, "RUINE0040", 6, last: true, after: ready, delay: 14);
                         break;
                 }
             }
@@ -578,14 +578,14 @@ public sealed partial class Courtyard : StoryScript
                 {
                     if (At(11, 1) && Var(Vars.CourtyardFree) < 2)
                     {
-                        SetAfter(Vars.CourtyardFree, 0, local_20);
+                        SetAfter(Vars.CourtyardFree, 0, ready);
                     }
-                    IncAfter(Vars.StonesTaken, local_20);
+                    IncAfter(Vars.StonesTaken, ready);
                 }
             }
             else
             {
-                IncAfter(Vars.StonesTaken, local_20);
+                IncAfter(Vars.StonesTaken, ready);
             }
         }
         else if (Same(name, "LOC17CloseUp"))
@@ -596,10 +596,10 @@ public sealed partial class Courtyard : StoryScript
         else if (Same(name, "LOC17Eimer"))
         {
             Walk(Hero, 148, 420);
-            local_20 = State(Hero, KneelLeft);
-            IncAfter(Vars.V6509fc, local_20);
+            ready = State(Hero, KneelLeft);
+            IncAfter(Vars.V6509fc, ready);
             SetVar(Vars.V63be6f, 1);
-            ObjAfter("LOC17Eimer", false, local_20, 5);
+            ObjAfter("LOC17Eimer", false, ready, 5);
         }
         return true;
     }
@@ -839,7 +839,7 @@ public sealed partial class Courtyard : StoryScript
     // from FUN_00450800
     public override void EveryTick()
     {
-        TaskHandle? local_20 = null;
+        TaskHandle? ready = null;
         TaskHandle? local_38 = null;
         if (At(8, 2))
         {
@@ -858,8 +858,8 @@ public sealed partial class Courtyard : StoryScript
             {
                 SetVar(Vars.V63be6c, 0);
                 Chain = null;
-                local_20 = null;
-                Say(Who.Dick, "RUINE0038", 24, last: true, after: local_20);
+                ready = null;
+                Say(Who.Dick, "RUINE0038", 24, last: true, after: ready);
             }
         }
         else if (At(8, 3))

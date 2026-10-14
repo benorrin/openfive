@@ -14,7 +14,7 @@ public sealed partial class WellShaft : StoryScript
     // from FUN_00454dfa
     public override bool Click(string name)
     {
-        TaskHandle? local_20 = null;
+        TaskHandle? ready = null;
         if (Same(name, "LOC19Timmy") && Quest == 8 && Episode == 4)
         {
             if (Var(Vars.V650ecc) < 1)
@@ -23,17 +23,17 @@ public sealed partial class WellShaft : StoryScript
                 {
                     Walk(Hero, 269, 440);
                     Chain = State(Hero, StandDownLeft);
-                    local_20 = Chain;
+                    ready = Chain;
                     IncAfter(Vars.V650e94, Chain);
-                    Say(Who.Dick, "BRUNNEN0042", 1, last: true, after: local_20);
+                    Say(Who.Dick, "BRUNNEN0042", 1, last: true, after: ready);
                 }
             }
             else
             {
                 Walk(Hero, 269, 440);
                 Chain = State(Hero, StandDownLeft);
-                local_20 = Chain;
-                Say(Who.Dick, "BRUNNEN0042", 5, last: true, after: local_20);
+                ready = Chain;
+                Say(Who.Dick, "BRUNNEN0042", 5, last: true, after: ready);
             }
         }
         return true;
@@ -50,7 +50,7 @@ public sealed partial class WellShaft : StoryScript
     // from FUN_0045500d
     void F45500d(int param_1, int param_2, int param_3, int param_4)
     {
-        TaskHandle? local_20 = null;
+        TaskHandle? ready = null;
         Depth(@"bmp\obj\timmy\tihl\tihl1902.brg", 1000);
         Depth(@"bmp\obj\dick\dicl\dicl03.brg", 500);
         StopAnim("RopeExit");
@@ -78,15 +78,15 @@ public sealed partial class WellShaft : StoryScript
                 AnimScale("Wedel", 1.3);
                 AnimPos("Wedel", 100, 300);
                 Anim("Wedel", -1);
-                local_20 = Anim("RopeExit");
-                Anim("Seil", -1, local_20);
-                StopAnimAfter("Wedel", local_20, 20);
-                Anim("WedelStop", after: local_20, delay: 18);
+                ready = Anim("RopeExit");
+                Anim("Seil", -1, ready);
+                StopAnimAfter("Wedel", ready, 20);
+                Anim("WedelStop", after: ready, delay: 18);
                 World.Hero = Dick;
                 PlaceAfter(Dick, 257, 522, StandDownLeft, null, 12);
                 PlaceAfter(Timmy, 257, 200, StandLeft, null, 35);
                 PointerAfter(true, null, 40, 400, 400);
-                ObjAfter("SeilKlick", true, local_20, 12);
+                ObjAfter("SeilKlick", true, ready, 12);
                 Obj("LOC19Timmy", true);
             }
             else
@@ -97,9 +97,9 @@ public sealed partial class WellShaft : StoryScript
                 AnimScale("Wedel", 1.3);
                 AnimPos("Wedel", 100, 300);
                 Anim("Wedel", -1);
-                Chain = local_20;
+                Chain = ready;
                 PointerOff();
-                Say(Who.Dick, "BRUNNEN0042", 4, after: local_20, delay: 3);
+                Say(Who.Dick, "BRUNNEN0042", 4, after: ready, delay: 3);
                 ChangeLocation("loc18", delay: 50);
             }
         }

@@ -14,21 +14,21 @@ public sealed partial class Passage25 : StoryScript
     // from FUN_00457fc0
     public override bool Click(string name)
     {
-        TaskHandle? local_20 = null;
+        TaskHandle? ready = null;
         if (Same(name, "LOC25ExitToLoc26"))
         {
             if (At(10, 3))
             {
                 Chain = null;
-                local_20 = null;
+                ready = null;
                 if (Var(Vars.V651364) == 0)
                 {
                     IncAfter(Vars.V651364, null);
-                    Say(Who.Dick, "LABYRINTH0049", 4, last: true, after: local_20);
+                    Say(Who.Dick, "LABYRINTH0049", 4, last: true, after: ready);
                 }
                 else
                 {
-                    Say(Who.Dick, "LABYRINTH0049", 5, last: true, after: local_20);
+                    Say(Who.Dick, "LABYRINTH0049", 5, last: true, after: ready);
                 }
             }
             else
@@ -42,15 +42,15 @@ public sealed partial class Passage25 : StoryScript
             if (At(10, 3))
             {
                 Chain = null;
-                local_20 = null;
+                ready = null;
                 if (Var(Vars.V651364) == 0)
                 {
                     IncAfter(Vars.V651364, null);
-                    Say(Who.Dick, "LABYRINTH0049", 4, last: true, after: local_20);
+                    Say(Who.Dick, "LABYRINTH0049", 4, last: true, after: ready);
                 }
                 else
                 {
-                    Say(Who.Dick, "LABYRINTH0049", 5, last: true, after: local_20);
+                    Say(Who.Dick, "LABYRINTH0049", 5, last: true, after: ready);
                 }
             }
             else
@@ -64,15 +64,15 @@ public sealed partial class Passage25 : StoryScript
             if (At(10, 3))
             {
                 Chain = null;
-                local_20 = null;
+                ready = null;
                 if (Var(Vars.V651364) == 0)
                 {
                     IncAfter(Vars.V651364, null);
-                    Say(Who.Dick, "LABYRINTH0049", 4, last: true, after: local_20);
+                    Say(Who.Dick, "LABYRINTH0049", 4, last: true, after: ready);
                 }
                 else
                 {
-                    Say(Who.Dick, "LABYRINTH0049", 5, last: true, after: local_20);
+                    Say(Who.Dick, "LABYRINTH0049", 5, last: true, after: ready);
                 }
             }
             else

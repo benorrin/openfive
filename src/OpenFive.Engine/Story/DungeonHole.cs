@@ -23,29 +23,29 @@ public sealed partial class DungeonHole : StoryScript
     // from FUN_004560d8
     void ClickObject(string name)
     {
-        TaskHandle? local_20 = null;
+        TaskHandle? ready = null;
         if (Same(name, "LOC22Loch"))
         {
             if (At(9, 1))
             {
                 Walk(Hero, 460, 548);
                 Chain = State(Hero, WatchLeft);
-                local_20 = Chain;
+                ready = Chain;
                 PointerAfter(false, Chain, x: 400, y: 400);
-                Say(Who.George, "LABYRINTH0045", 2, after: local_20);
-                Say(Who.Dick, "LABYRINTH0045", 3, after: local_20);
-                Say(Who.George, "LABYRINTH0045", 4, after: local_20);
-                Say(Who.Dick, "LABYRINTH0045", 5, after: local_20);
-                Say(Who.George, "LABYRINTH0045", 6, last: true, after: local_20);
+                Say(Who.George, "LABYRINTH0045", 2, after: ready);
+                Say(Who.Dick, "LABYRINTH0045", 3, after: ready);
+                Say(Who.George, "LABYRINTH0045", 4, after: ready);
+                Say(Who.Dick, "LABYRINTH0045", 5, after: ready);
+                Say(Who.George, "LABYRINTH0045", 6, last: true, after: ready);
                 SetText("t63bebc", "Loch");
             }
             else
             {
                 SetVar(Vars.V683260, 1);
                 Walk(Hero, 460, 548);
-                local_20 = State(Hero, WatchLeft);
-                PointerAfter(false, local_20, x: 400, y: 400);
-                ChangeLocation("loc20", local_20);
+                ready = State(Hero, WatchLeft);
+                PointerAfter(false, ready, x: 400, y: 400);
+                ChangeLocation("loc20", ready);
             }
         }
         else if (Same(name, "LOC22ExitToLOC25"))
@@ -53,8 +53,8 @@ public sealed partial class DungeonHole : StoryScript
             if (At(10, 3))
             {
                 State(Hero, StandUpRight);
-                Chain = local_20;
-                Say(Who.Julian, "BRUNNEN0049", 4, after: local_20);
+                Chain = ready;
+                Say(Who.Julian, "BRUNNEN0049", 4, after: ready);
                 Say(Who.Dick, "BRUNNEN0049", 5, last: true);
             }
             else
@@ -68,19 +68,19 @@ public sealed partial class DungeonHole : StoryScript
     // from FUN_0045646b
     void ClickActor(Actor actor)
     {
-        TaskHandle? local_20 = null;
+        TaskHandle? ready = null;
         if (actor == George && Episode == 1 && Quest == 9)
         {
             if (George.X <= Hero.X)
             {
-                local_20 = State(Hero, StandDownLeft);
+                ready = State(Hero, StandDownLeft);
             }
             else
             {
-                local_20 = State(Hero, StandDownRight);
+                ready = State(Hero, StandDownRight);
             }
-            Chain = local_20;
-            Say(Who.George, "LABYRINTH0045", 1, last: true, after: local_20);
+            Chain = ready;
+            Say(Who.George, "LABYRINTH0045", 1, last: true, after: ready);
         }
     }
 
