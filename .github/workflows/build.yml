@@ -1,15 +1,106 @@
 name: Build
 
+# Builds the downloads for every platform on each push. Pushing a tag like v1.0.0 also publishes
+# them as a GitHub release (the tag must match <Version> in Directory.Build.props).
+
 on:
   push:
+    branches: [main]
+    tags: ['v*']
   pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  linux:
+    strategy:
+      matrix:
+        include:
+          - rid: linux-x64
+            runner: ubuntu-22.04
+          - rid: linux-arm64
+            runner: ubuntu-22.04-arm
+    # The oldest supported Ubuntu, so the downloads also run on older distributions.
+    runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
-      - run: dotnet build -c Release
+      - name: Install SDL3 build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake ninja-build pkg-config libasound2-dev libpulse-dev \
+            libpipewire-0.3-dev libx11-dev libxext-dev libxrandr-dev libxcursor-dev libxfixes-dev \
+            libxi-dev libxss-dev libxtst-dev libxkbcommon-dev libwayland-dev wayland-protocols \
+            libdecor-0-dev libdrm-dev libgbm-dev libgl1-mesa-dev libgles2-mesa-dev libegl1-mesa-dev \
+            libdbus-1-dev libibus-1.0-dev libudev-dev
+      - run: packaging/linux/build-release.sh ${{ matrix.rid }} dist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.rid }}
+          path: dist/*
+
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - run: packaging/windows/build-release.ps1 -Rid win-x64 -Out dist
+        shell: pwsh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: win-x64
+          path: dist/*
+
+  macos:
+    strategy:
+      matrix:
+        rid: [osx-arm64, osx-x64]
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - run: packaging/macos/build-release.sh ${{ matrix.rid }} dist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.rid }}
+          path: dist/*
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [linux, windows, macos]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check the tag matches the version
+        run: |
+          version=$(sed -n 's/.*<Version>\(.*\)<\/Version>.*/\1/p' Directory.Build.props)
+          test "v$version" = "$GITHUB_REF_NAME"
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          body: |
+            You need your own copy of the original *Famous Five: Treasure Island* CD (English or German), or a disc image of it.
+
+            | You use | Download |
+            |---------|----------|
+            | Windows | `OpenFive-…-windows-x64.zip`: unzip and run `OpenFive.exe` |
+            | Mac with Apple silicon (M1 or later) | `OpenFive-…-macos-arm64.dmg` |
+            | Mac with Intel processor | `OpenFive-…-macos-x64.dmg` |
+            | Debian, Ubuntu, Mint, Pop!_OS | `openfive_…_amd64.deb` (or `arm64`) |
+            | Any other Linux | `openfive-…-linux-x64.tar.gz` (or `arm64`): unpack and run `./openfive` |
+
+            See the [README](https://github.com/benorrin/openfive#readme) for how to get started.

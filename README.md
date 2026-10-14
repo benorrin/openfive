@@ -10,7 +10,9 @@
 [![Latest release](https://img.shields.io/github/v/release/benorrin/openfive?include_prereleases&label=download)](https://github.com/benorrin/openfive/releases/latest)
 [![Downloads](https://img.shields.io/github/downloads/benorrin/openfive/total)](https://github.com/benorrin/openfive/releases)
 [![License: GPL v2](https://img.shields.io/badge/license-GPL--2.0-blue)](LICENSE)
-[![Platform: Linux](https://img.shields.io/badge/platform-Linux-informational?logo=linux&logoColor=white)](#download)
+[![Windows](https://img.shields.io/badge/Windows-0078D4?logo=windows&logoColor=white)](#download)
+[![macOS](https://img.shields.io/badge/macOS-000000?logo=apple&logoColor=white)](#download)
+[![Linux](https://img.shields.io/badge/Linux-FCC624?logo=linux&logoColor=black)](#download)
 
 <img src="docs/screenshots/beach.png" alt="The Famous Five on the beach outside the fisherman's hut" width="800">
 
@@ -22,7 +24,7 @@ image of it) and play the original adventure again, in a window or fullscreen, a
 no emulator or old copy of Windows needed.
 
 * 🗺️ **The whole adventure**, from the intro to the closing credits
-* 🇬🇧🇩🇪 **English and German**: both languages are on every CD, pick either
+* 🇬🇧🇩🇪 **English and German**: both languages are on every CD; switch with the flag in the options menu
 * 🖥️ **Any window size or fullscreen**, with smooth or sharp pixel scaling
 * 💾 **Save and load** at any time
 
@@ -34,43 +36,47 @@ no emulator or old copy of Windows needed.
 ## Download
 
 Get the latest version from the **[Releases page](https://github.com/benorrin/openfive/releases/latest)**.
+Everything OpenFive needs is included: there is nothing else to install.
 
-| You use | Download | |
-|---------|----------|---|
-| openSUSE | `openfive-…x86_64.rpm` | Install with `sudo zypper install ./openfive-*.rpm`. Adds a menu entry. |
-| Any other Linux (64-bit PC) | `openfive-…-linux-x64.tar.gz` | Unpack anywhere and run `./openfive`. |
-| Linux on ARM (e.g. Raspberry Pi 5) | `openfive-…-linux-arm64.tar.gz` | Unpack anywhere and run `./openfive`. |
-| Windows, macOS | — | Planned, not available yet. |
+| You use | Download | Then |
+|---------|----------|------|
+| 🪟 **Windows** 10 or 11 | `OpenFive-…-windows-x64.zip` | Unzip it anywhere and double-click `OpenFive.exe`. |
+| 🍎 **Mac** with Apple silicon (M1 or later) | `OpenFive-…-macos-arm64.dmg` | Open it and drag OpenFive into Applications. |
+| 🍎 **Mac** with an Intel processor | `OpenFive-…-macos-x64.dmg` | Open it and drag OpenFive into Applications. |
+| 🐧 **Debian, Ubuntu**, Mint, Pop!_OS | `openfive_…_amd64.deb` | Double-click to install, or `sudo apt install ./openfive_*.deb`. |
+| 🐧 **Any other Linux** | `openfive-…-linux-x64.tar.gz` | Unpack it anywhere and run `./openfive`. |
 
-The `.tar.gz` downloads need **SDL3**, which most distributions package:
+On a Raspberry Pi or other ARM Linux machine, pick the `arm64` file instead of `amd64`/`x64`.
 
-| Distribution | Command |
-|--------------|---------|
-| Ubuntu 25.04+, Debian 13+ | `sudo apt install libsdl3-0` |
-| Fedora | `sudo dnf install SDL3` |
-| Arch Linux | `sudo pacman -S sdl3` |
-| openSUSE | `sudo zypper install libSDL3-0` |
+<details>
+<summary><b>Windows or macOS says the app is from an unknown developer</b></summary>
+
+OpenFive is a free hobby project and isn't signed with a paid Microsoft or Apple certificate, so
+the first time you open it your system will warn you:
+
+* **Windows** ("Windows protected your PC"): click **More info**, then **Run anyway**.
+* **macOS** ("OpenFive cannot be opened"): click **Done**, open **System Settings → Privacy &
+  Security**, scroll down and click **Open Anyway** next to OpenFive.
+
+You only need to do this once.
+</details>
 
 ## Getting started
 
-**1. Have your game disc ready.** Either insert the CD, or (better) make a disc image of it once
-so you don't need the CD again:
+1. **Start OpenFive.**
+2. **Show it your game.** If the CD is in the drive, OpenFive finds it by itself. Otherwise it asks
+   you to choose a disc image of the CD (a `.cue`, `.ccd`, `.iso`, `.img` or `.bin` file).
+3. **Play!** OpenFive remembers where the game is, so next time it starts straight away.
 
-```sh
-dd if=/dev/sr0 of=famous5.iso bs=2048 status=progress
-```
-
-Images you already have also work: `.cue`/`.bin`, CloneCD `.ccd`/`.img`, or `.iso`.
-
-**2. Start OpenFive** and tell it where the game is:
-
-```sh
-openfive --disc ~/Games/famous5.iso
-```
-
-That's it. OpenFive remembers the disc, so next time just run `openfive` (or use the menu entry).
-You can also open a disc image with OpenFive straight from your file manager. If the CD is
-inserted, OpenFive usually finds it by itself.
+> [!TIP]
+> A disc image saves you from needing the CD in the drive, and loads faster. Any CD imaging tool
+> works. On Linux:
+>
+> ```sh
+> dd if=/dev/sr0 of=famous5.iso bs=2048 status=progress
+> ```
+>
+> On Linux you can also give the image on the command line: `openfive --disc ~/Games/famous5.iso`.
 
 ## How to play
 
@@ -99,7 +105,9 @@ anything you can interact with. Stuck? Talk to the others again; they often have
 
 To save, press **F1**, choose *Save game*, click a slot, type a name and press **Enter**.
 
-## Options
+## Command-line options
+
+You won't need these to play, but they're there if you start OpenFive from a terminal:
 
 | Option | What it does |
 |--------|--------------|
@@ -109,8 +117,13 @@ To save, press **F1**, choose *Save game*, click a slot, type a name and press *
 | `--sharp` | Sharp pixel scaling instead of smooth |
 | `--skip-intro` | Start at the main menu |
 
-Settings and saved games are kept in `~/.local/share/openfive/`. Set `OPENFIVE_HOME` to use a
-different folder.
+Settings and saved games are kept in:
+
+* **Windows:** `%APPDATA%\OpenFive`
+* **macOS:** `~/Library/Application Support/OpenFive`
+* **Linux:** `~/.local/share/openfive`
+
+Set `OPENFIVE_HOME` to use a different folder.
 
 ## Help and feedback
 

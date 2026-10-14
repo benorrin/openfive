@@ -22,7 +22,10 @@ internal static unsafe class Sdl
             : new[] { "libSDL3.so.0", "libSDL3.so" };
         foreach (string c in candidates)
         {
-            if (NativeLibrary.TryLoad(c, asm, path, out IntPtr h))
+            // A copy shipped next to the executable (release builds) comes first.
+            if (NativeLibrary.TryLoad(Path.Combine(AppContext.BaseDirectory, c), out IntPtr h))
+                return h;
+            if (NativeLibrary.TryLoad(c, asm, path, out h))
                 return h;
             if (NativeLibrary.TryLoad(c, out h))
                 return h;
@@ -78,6 +81,7 @@ internal static unsafe class Sdl
     [return: MarshalAs(UnmanagedType.U1)]
     public static extern bool Init(uint flags);
     [DllImport(Lib, EntryPoint = "SDL_Quit")] public static extern void Quit();
+    [DllImport(Lib, EntryPoint = "SDL_QuitSubSystem")] public static extern void QuitSubSystem(uint flags);
     [DllImport(Lib, EntryPoint = "SDL_GetError")] static extern IntPtr GetErrorPtr();
     public static string GetError() => Marshal.PtrToStringUTF8(GetErrorPtr()) ?? "";
     [DllImport(Lib, EntryPoint = "SDL_SetHint")]
@@ -92,6 +96,19 @@ internal static unsafe class Sdl
     [return: MarshalAs(UnmanagedType.U1)]
     public static extern bool ShowSimpleMessageBox(uint flags, [MarshalAs(UnmanagedType.LPUTF8Str)] string title,
         [MarshalAs(UnmanagedType.LPUTF8Str)] string message, IntPtr window);
+
+    /// <summary>One entry in a file dialog's type list: a name and extensions separated by ';'.</summary>
+    [StructLayout(LayoutKind.Sequential)]
+    public struct DialogFileFilter
+    {
+        public IntPtr Name, Pattern;
+    }
+
+    [DllImport(Lib, EntryPoint = "SDL_ShowOpenFileDialog")]
+    public static extern void ShowOpenFileDialog(delegate* unmanaged[Cdecl]<IntPtr, IntPtr, int, void> callback,
+        IntPtr userdata, IntPtr window, DialogFileFilter* filters, int nfilters, IntPtr defaultLocation,
+        [MarshalAs(UnmanagedType.U1)] bool allowMany);
+    [DllImport(Lib, EntryPoint = "SDL_PumpEvents")] public static extern void PumpEvents();
 
     [DllImport(Lib, EntryPoint = "SDL_CreateWindow")]
     public static extern IntPtr CreateWindow([MarshalAs(UnmanagedType.LPUTF8Str)] string title, int w, int h, ulong flags);

@@ -21,6 +21,9 @@ static class Program
         if (opt.Disc == null && settings.Disc != null && (File.Exists(settings.Disc) || Directory.Exists(settings.Disc)))
             opt.Disc = settings.Disc;
         opt.Disc ??= FindMountedDisc();
+        // Started from the desktop, without a disc: ask for the image.
+        if (opt.Disc == null && opt.Play == null && opt.Script == null && opt.Screenshot == null)
+            opt.Disc = DiscPicker.Ask();
         opt.Language ??= settings.Language.StartsWith("de", StringComparison.OrdinalIgnoreCase) ? Language.German : Language.English;
         if (opt.Disc == null)
         {
@@ -53,11 +56,14 @@ static class Program
         }
     }
 
-    /// <summary>A mounted Famous Five CD (the usual places desktops mount removable media).</summary>
+    /// <summary>A Famous Five CD in a drive (or where desktops mount removable media).</summary>
     static string? FindMountedDisc()
     {
-        if (!OperatingSystem.IsLinux())
-            return null;
+        if (OperatingSystem.IsWindows())
+            return DriveInfo.GetDrives().Where(d => d.DriveType == DriveType.CDRom && d.IsReady)
+                .Select(d => d.RootDirectory.FullName).FirstOrDefault(IsGameDisc);
+        if (OperatingSystem.IsMacOS())
+            return SubDirectories("/Volumes").FirstOrDefault(IsGameDisc);
         string user = Environment.UserName;
         string[] roots = { $"/run/media/{user}", $"/media/{user}", "/media", "/mnt" };
         return roots.SelectMany(SubDirectories).FirstOrDefault(IsGameDisc);
@@ -94,8 +100,8 @@ static class Program
     static void Fail(string message, string? details = null)
     {
         Console.Error.WriteLine(message + (details != null ? "\n\n" + details : ""));
-        // Started from a terminal, the message there is enough.
-        if (!Console.IsInputRedirected && !Console.IsErrorRedirected)
+        // Started from a terminal, the message there is enough. (Windows builds have no terminal.)
+        if (!OperatingSystem.IsWindows() && !Console.IsInputRedirected && !Console.IsErrorRedirected)
             return;
         try
         {

@@ -7,8 +7,9 @@ namespace OpenFive.Engine.Game;
 public static class UserPaths
 {
     /// <summary>
-    /// The data folder: $OPENFIVE_HOME if set; otherwise the application-data folder on Windows
-    /// and macOS, and $XDG_DATA_HOME/openfive (~/.local/share/openfive) elsewhere.
+    /// The data folder: $OPENFIVE_HOME if set; otherwise %APPDATA%\OpenFive on Windows,
+    /// ~/Library/Application Support/OpenFive on macOS, and $XDG_DATA_HOME/openfive
+    /// (~/.local/share/openfive) elsewhere.
     /// </summary>
     public static string DataDir
     {
@@ -17,8 +18,10 @@ public static class UserPaths
             string? env = Environment.GetEnvironmentVariable("OPENFIVE_HOME");
             if (!string.IsNullOrEmpty(env))
                 return env;
-            if (OperatingSystem.IsWindows() || OperatingSystem.IsMacOS())
+            if (OperatingSystem.IsWindows())
                 return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "OpenFive");
+            if (OperatingSystem.IsMacOS())
+                return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "OpenFive");
             string? xdg = Environment.GetEnvironmentVariable("XDG_DATA_HOME");
             string baseDir = !string.IsNullOrEmpty(xdg) ? xdg
                 : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".local", "share");

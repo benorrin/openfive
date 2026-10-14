@@ -9,6 +9,9 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <!-- Windows builds open no console window. -->
+    <OutputType Condition="$(RuntimeIdentifier.StartsWith('win'))">WinExe</OutputType>
+    <ApplicationIcon>..\..\packaging\windows\openfive.ico</ApplicationIcon>
   </PropertyGroup>
 
 </Project>

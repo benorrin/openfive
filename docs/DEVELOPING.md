@@ -32,12 +32,25 @@ The code is platform-neutral (.NET 8 + SDL3). The same `dotnet publish` command 
 
 ## Packaging
 
+The release downloads are built by GitHub Actions (`.github/workflows/build.yml`) on every push.
+To publish a release, set `<Version>` in `Directory.Build.props` (and in
+`packaging/opensuse/openfive.spec` and the `metainfo.xml`), then push a matching tag:
+
+```sh
+git tag v1.0.0 && git push origin v1.0.0
+```
+
+Each download is a self-contained single executable (no .NET needed) with SDL3 next to it. The
+scripts the workflow runs also work locally:
+
+* **Linux:** `packaging/linux/build-release.sh [linux-x64|linux-arm64]` makes the `.tar.gz` and
+  the `.deb`. It builds SDL3 from source with `build-sdl3.sh` (set `SDL3_LIB` to use a
+  `libSDL3.so.0` you already have).
+* **Windows:** `packaging/windows/build-release.ps1` makes the `.zip`, with the official `SDL3.dll`.
+* **macOS:** `packaging/macos/build-release.sh [osx-arm64|osx-x64]` makes the `.dmg` with
+  `OpenFive.app`, signed ad hoc (not notarized).
 * **openSUSE RPM:** `packaging/opensuse/build-rpm.sh` (needs `rpm-build` and `dotnet-sdk-8.0`)
-  builds `dist/x86_64/openfive-*.rpm`, which installs `openfive`, a menu entry, and pulls in the
-  .NET 8 runtime and SDL3.
-* **Portable Linux archive:** `packaging/linux/build-portable.sh` (or
-  `build-portable.sh linux-arm64`) makes `dist/openfive-VERSION-linux-x64.tar.gz`: a single
-  self-contained executable that needs no .NET installed, only SDL3.
+  builds `dist/x86_64/openfive-*.rpm`, which uses the system's .NET 8 runtime and SDL3.
 
 ## Developer tools
 

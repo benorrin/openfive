@@ -16,7 +16,7 @@
 %global debug_package %{nil}
 
 Name:           openfive
-Version:        0.1.0
+Version:        1.0.0
 Release:        0
 Summary:        Engine for The Famous Five: Treasure Island (needs the original CD)
 License:        GPL-2.0-only
