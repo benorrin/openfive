@@ -32,6 +32,9 @@ public static class Who
     /// hooks see a speaker other than <see cref="Dick"/>.
     /// </summary>
     public const int DickAlt = 0x14;
+
+    /// <summary>A second code for George (the original's 0x15), like <see cref="DickAlt"/>.</summary>
+    public const int GeorgeAlt = 0x15;
 }
 
 /// <summary>Rucksack item numbers (the original's item ids; see <see cref="Inventory"/>).</summary>
@@ -248,6 +251,18 @@ public abstract class StoryScript : LocationScript
             return;
         foreach (string slot in menu.Slots)
             SetVar(slot, Var(menu.None));
+    }
+
+    /// <summary>Puts every option back on this location's menu, in order.</summary>
+    protected void ReopenMenu()
+    {
+        if (!Menus.TryGetValue(Location, out var menu))
+            return;
+        SetVar(menu.None, -1);
+        SetVar(menu.Chosen, -1);
+        SetVar(menu.Slot1, 1);
+        SetVar(menu.Slot2, 2);
+        SetVar(menu.Slot3, 3);
     }
 
     /// <summary>True when no option is left on this location's menu.</summary>
@@ -483,6 +498,66 @@ public abstract class StoryScript : LocationScript
 
     /// <summary>Changes the background music.</summary>
     protected void Music(string path) => World.Audio.SetBackgroundTrack(path);
+
+    // ---- talking poses ----------------------------------------------------------------------
+
+    /// <summary>The character a speaker is in this place, with its pose while talking and afterwards.</summary>
+    /// <param name="Actor">The character.</param>
+    /// <param name="Talking">Its state while the line is spoken.</param>
+    /// <param name="Standing">Its state once the line has been spoken.</param>
+    protected readonly record struct TalkPoses(Actor Actor, int Talking, int Standing);
+
+    /// <summary>The poses of a speaker in this place (null: the speaker takes no pose here).</summary>
+    protected virtual TalkPoses? PosesOf(int speaker) => null;
+
+    /// <summary>
+    /// The poses used in the dungeon passages: Anne and George talk facing down-right, Julian and
+    /// the hero (as Dick) down-left.
+    /// </summary>
+    protected TalkPoses? DungeonPoses(int speaker) => speaker switch
+    {
+        Who.Anne => new TalkPoses(Anne, ActorStates.SpeakDownRight, ActorStates.StandDownRight),
+        Who.Julian => new TalkPoses(Julian, ActorStates.SpeakDownLeft, ActorStates.StandDownLeft),
+        Who.George => new TalkPoses(George, ActorStates.SpeakDownRight, ActorStates.StandDownRight),
+        Who.Dick => new TalkPoses(Hero, ActorStates.SpeakDownLeft, ActorStates.StandDownLeft),
+        _ => null,
+    };
+
+    /// <summary>
+    /// Poses for the hero (as Dick) and George talking to each other: each faces the other,
+    /// depending on who stands further left. Null for other speakers.
+    /// </summary>
+    protected TalkPoses? HeroAndGeorgePoses(int speaker)
+    {
+        bool georgeOnTheLeft = George.X <= Hero.X;
+        return speaker switch
+        {
+            Who.George => georgeOnTheLeft
+                ? new TalkPoses(George, ActorStates.SpeakDownRight, ActorStates.StandDownRight)
+                : new TalkPoses(George, ActorStates.SpeakDownLeft, ActorStates.StandDownLeft),
+            Who.Dick => georgeOnTheLeft
+                ? new TalkPoses(Hero, ActorStates.SpeakDownLeft, ActorStates.StandDownLeft)
+                : new TalkPoses(Hero, ActorStates.SpeakDownRight, ActorStates.StandDownRight),
+            _ => null,
+        };
+    }
+
+    /// <summary>The state that turns the hero towards George.</summary>
+    protected int FacingGeorge => George.X <= Hero.X ? ActorStates.StandDownLeft : ActorStates.StandDownRight;
+
+    /// <summary>The current speaker takes their talking pose (see <see cref="PosesOf"/>).</summary>
+    protected void StartTalking()
+    {
+        if (PosesOf(CurrentSpeaker) is { } p)
+            StateAfter(p.Actor, p.Talking, null);
+    }
+
+    /// <summary>The current speaker stands again once <paramref name="end"/> is released (see <see cref="PosesOf"/>).</summary>
+    protected void StopTalking(TaskHandle end)
+    {
+        if (PosesOf(CurrentSpeaker) is { } p)
+            StateAfter(p.Actor, p.Standing, end);
+    }
 
     // ---- pointer, conversations, location changes ----------------------------------------
 

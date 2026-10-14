@@ -54,7 +54,7 @@ public sealed partial class Shore : StoryScript
         }
         else if (Same(name, "LOC09Fusspuren"))
         {
-            Walk(Hero, Var(Vars.V4ace9c) + -50, Var(Vars.V4acea0));
+            Walk(Hero, Var(Vars.RucksackPointerX) + -50, Var(Vars.RucksackPointerY));
             ready = State(Hero, KneelRight);
             SetVar(Vars.V63be1c, 1);
             ObjAfter("LOC09Fusspuren", false, ready, 6);
@@ -278,9 +278,9 @@ public sealed partial class Shore : StoryScript
             }
             else if (At(6, 3))
             {
-                if (Var(Vars.V650874) == 2)
+                if (Var(Vars.WreckVisit) == 2)
                 {
-                    if (Var(Vars.V64eff6) == 0)
+                    if (Var(Vars.ChoseIslandBeach) == 0)
                     {
                         if (Has(Item.Rope))
                         {
@@ -370,9 +370,9 @@ public sealed partial class Shore : StoryScript
             }
             else if (At(6, 3))
             {
-                if (Var(Vars.V650874) == 2)
+                if (Var(Vars.WreckVisit) == 2)
                 {
-                    if (Var(Vars.V64eff6) == 0)
+                    if (Var(Vars.ChoseIslandBeach) == 0)
                     {
                         if (Has(Item.Rope))
                         {
@@ -460,26 +460,26 @@ public sealed partial class Shore : StoryScript
             }
             else if (At(6, 3))
             {
-                if (Var(Vars.V650874) == 2)
+                if (Var(Vars.WreckVisit) == 2)
                 {
-                    if (Var(Vars.V64eff6) == 0)
+                    if (Var(Vars.ChoseIslandBeach) == 0)
                     {
                         if (Has(Item.Rope))
                         {
-                            if (Var(Vars.V65044c) == 0)
+                            if (Var(Vars.GeorgeBeachTalk) == 0)
                             {
                                 Say(Who.George, "ALL0023", 5, last: true, after: ready);
                             }
-                            else if (Var(Vars.V65044c) == 1)
+                            else if (Var(Vars.GeorgeBeachTalk) == 1)
                             {
                                 Say(Who.George, "ALL0023", 6, last: true, after: ready);
                             }
                         }
-                        else if (Var(Vars.V65044c) == 0)
+                        else if (Var(Vars.GeorgeBeachTalk) == 0)
                         {
                             Say(Who.George, "ALL0023", 11, last: true, after: ready);
                         }
-                        else if (Var(Vars.V65044c) == 1)
+                        else if (Var(Vars.GeorgeBeachTalk) == 1)
                         {
                             Say(Who.George, "ALL0023", 12, last: true, after: ready);
                         }
@@ -493,13 +493,13 @@ public sealed partial class Shore : StoryScript
             }
             else if (At(6, 4))
             {
-                if (Var(Vars.V65044c) == 0)
+                if (Var(Vars.GeorgeBeachTalk) == 0)
                 {
                     IncAfter(Vars.GeorgeWreckTalk, Chain);
-                    IncAfter(Vars.V65044c, ready);
+                    IncAfter(Vars.GeorgeBeachTalk, ready);
                     IncAfter(Vars.GeorgeIslandTalk, ready);
                     Say(Who.George, "ALL0024", 10, last: true, after: ready);
-                    if (Var(Vars.V64eff8) == 0)
+                    if (Var(Vars.CupboardLockTried) == 0)
                     {
                         Say(Who.Dick, "ALL0024", 16);
                         Say(Who.Julian, "ALL0024", 17, last: true);
@@ -530,7 +530,7 @@ public sealed partial class Shore : StoryScript
                         }
                     }
                 }
-                else if (Var(Vars.V65044c) == 1)
+                else if (Var(Vars.GeorgeBeachTalk) == 1)
                 {
                     Say(Who.George, "ALL0024", 20, last: true, after: ready);
                 }
@@ -574,7 +574,7 @@ public sealed partial class Shore : StoryScript
                 }
                 else if (Var(Vars.FishermanTalk) == 2)
                 {
-                    Ask(21, "STRAND0018-09", 36);
+                    Ask(Who.GeorgeAlt, "STRAND0018-09", 36);
                 }
                 else if (Var(Vars.FishermanTalk) == 3)
                 {
@@ -878,9 +878,9 @@ public sealed partial class Shore : StoryScript
                 {
                     if (FromId == 6)
                     {
-                        SetVar(Vars.V6503a4, 1);
+                        SetVar(Vars.HideoutLeaving, 1);
                     }
-                    if (Var(Vars.V6503a4) > 0)
+                    if (Var(Vars.HideoutLeaving) > 0)
                     {
                         Episode = 2;
                         Place(Julian, 250, 300, StandDownRight);
@@ -893,15 +893,15 @@ public sealed partial class Shore : StoryScript
                         Obj("LOC09Julian", true);
                         Chain = State(Hero, StandUpLeft);
                         ready = Chain;
-                        if (Var(Vars.V6503a4) == 1 && Var(Vars.V63be08) != 0)
+                        if (Var(Vars.HideoutLeaving) == 1 && Var(Vars.HideoutAnswer) != 0)
                         {
-                            if (Var(Vars.V63be08) < 2)
+                            if (Var(Vars.HideoutAnswer) < 2)
                             {
                                 PointerOff();
                                 Say(Who.Julian, "STRAND0036", 1, after: ready);
                                 Say(Who.George, "STRAND0036", 2, last: true);
                             }
-                            else if (Var(Vars.V63be08) == 2)
+                            else if (Var(Vars.HideoutAnswer) == 2)
                             {
                                 PointerOff();
                                 Say(Who.Julian, "STRAND0036", 1, after: ready);
@@ -909,7 +909,7 @@ public sealed partial class Shore : StoryScript
                                 Say(Who.Julian, "STRAND0036", 4, last: true);
                             }
                         }
-                        SetVar(Vars.V6503a4, 2);
+                        SetVar(Vars.HideoutLeaving, 2);
                     }
                 }
             }
@@ -1209,7 +1209,7 @@ public sealed partial class Shore : StoryScript
                 }
                 if (Var(Vars.FishermanTalk) == 1)
                 {
-                    Ask(21, "STRAND0018-09", 36, after: after);
+                    Ask(Who.GeorgeAlt, "STRAND0018-09", 36, after: after);
                     SetVar(Vars.FishermanTalk, 2);
                 }
             }
@@ -1233,9 +1233,9 @@ public sealed partial class Shore : StoryScript
                     SetVar(Vars.JulianBeachTalk, 1);
                 }
             }
-            else if (CurrentSpeaker == Who.George && Seq(() => StateAfter(George, StandDownLeft, after), () => Var(Vars.V65044c) == 0))
+            else if (CurrentSpeaker == Who.George && Seq(() => StateAfter(George, StandDownLeft, after), () => Var(Vars.GeorgeBeachTalk) == 0))
             {
-                SetVar(Vars.V65044c, 1);
+                SetVar(Vars.GeorgeBeachTalk, 1);
             }
             SetText("t63be28", "");
         }

@@ -1,7 +1,6 @@
-// Tables taken from the original new-game routine (FUN_00464896).
 namespace OpenFive.Engine.Story;
 
-/// <summary>The story state a new game starts with.</summary>
+/// <summary>The story state a new game starts with (tables from the original's new-game routine, FUN_00464896).</summary>
 public static class NewGameState
 {
     /// <summary>
@@ -66,8 +65,10 @@ public static class NewGameState
         (0x64efa4, 1), (0x64efa8, 2), (0x64efac, 3),
     };
 
+    /// <summary>The story-variable key of an address of the original ("v64efc0").</summary>
     static string Name(int address) => $"v{address:x6}";
 
+    /// <summary>Sets every record and value to its new-game state.</summary>
     public static void Apply(Game.GameSession session)
     {
         foreach (int r in Records)

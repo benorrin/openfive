@@ -10,11 +10,28 @@ namespace OpenFive.Engine.Story;
 /// </summary>
 public sealed class Garden : StoryScript
 {
+    /// <summary>The dialogue scene of Dick's questions to Aunt Fanny.</summary>
+    const string FannyScene = "Fass0";
+
+    /// <summary>Things that are only looked at: where the hero stands and which way they face.</summary>
+    static readonly Dictionary<string, (int X, int Y, int Facing)> LookAt = new()
+    {
+        ["LOC06Vorgarten"] = (631, 457, StandUpRight),
+        ["LOC06Angestelltenbau"] = (781, 477, StandUpLeft),
+        ["LOC06Fenster4"] = (528, 438, StandUpRight),
+        ["LOC06Fenster3"] = (696, 473, StandUpLeft),
+        ["LOC06Fenster2"] = (423, 486, StandUpLeft),
+        ["LOC06Fenster1"] = (44, 395, LookUpRight),
+        ["LOC06Blume"] = (75, 509, StandDownLeft),
+        ["LOC06Faß"] = (110, 441, StandUpLeft),
+        ["LOC06Haus"] = (539, 475, StandUpLeft),
+        ["LOC06FensterToLOC03"] = (250, 424, StandUpRight),
+    };
+
+    /// <inheritdoc/>
     public override string Location => "loc06";
 
-    const string FannyScene = "Fass0";
-    const int TakeLow = 21, LookUpRight = 76, TakeDown = 45, SpeakDownRight = 28;
-
+    /// <summary>Doors, the bucket, the barrel and the window as the story has left them; birds fly over.</summary>
     protected override void Setup()
     {
         Obj("LOC06OpenDoor2", true);
@@ -33,6 +50,7 @@ public sealed class Garden : StoryScript
         Anim("doBirds", -1);
     }
 
+    /// <summary>Only the hero stays in the garden (the others are in the house).</summary>
     void HideOthers()
     {
         Hide(Anne);
@@ -40,6 +58,7 @@ public sealed class Garden : StoryScript
         Hide(Hero == Dick ? George : Dick);
     }
 
+    /// <summary>Places the hero by the way they came in (or for the opening scene) and starts the scenes of the story step.</summary>
     protected override void Arrive()
     {
         switch (From)
@@ -100,6 +119,7 @@ public sealed class Garden : StoryScript
         }
     }
 
+    /// <summary>The opening scene (quest 1), or Uncle Quentin calling from the study (quest 7, step 5).</summary>
     void StartScenes()
     {
         if (At(1, 1))
@@ -145,6 +165,7 @@ public sealed class Garden : StoryScript
         (8, 456, 314, 0.54, 19), (9, 450, 313, 0.53, 20),
     };
 
+    /// <summary>Shows Aunt Fanny standing at the door.</summary>
     void FannyStands(TaskHandle? after = null, int delay = 0)
     {
         AnimPos("FannyStandLeft", 568, 330, 0.35);
@@ -153,6 +174,7 @@ public sealed class Garden : StoryScript
 
     // ---- conversation hooks ------------------------------------------------------------------
 
+    /// <summary>In the opening scene Aunt Fanny talks at the door, and the others turn to her.</summary>
     public override void LineStarting(GameWorld world, int speaker)
     {
         if (World.Episode != 1 || World.Quest >= 3)
@@ -175,6 +197,7 @@ public sealed class Garden : StoryScript
         }
     }
 
+    /// <summary>In the opening scene Aunt Fanny stands still again after her line.</summary>
     public override void LineQueued(GameWorld world, TaskHandle end)
     {
         if (World.Episode != 1 || World.Quest >= 3)
@@ -183,6 +206,10 @@ public sealed class Garden : StoryScript
         FannyStands(end);
     }
 
+    /// <summary>
+    /// After the greeting Dick may ask questions; after them Aunt Fanny takes Julian and Anne
+    /// in. On quest 7 the hero goes to the study window.
+    /// </summary>
     public override void ConversationEnding(GameWorld world, TaskHandle end)
     {
         if (At(1, 1))
@@ -231,6 +258,7 @@ public sealed class Garden : StoryScript
         }
     }
 
+    /// <summary>Aunt Fanny answers Dick's question; the menu comes back until every question has been asked.</summary>
     protected override void AfterChoice(string scene, int line, int option)
     {
         if (scene != FannyScene || Var(ChoicePending) == 0)
@@ -261,47 +289,26 @@ public sealed class Garden : StoryScript
 
     // ---- clicks ------------------------------------------------------------------------------
 
+    /// <summary>Looking around, the doors, the bucket, and the way down to the beach.</summary>
     public override bool Click(string name)
     {
+        if (LookAt.TryGetValue(name, out var spot))
+        {
+            WalkAndFace(spot.X, spot.Y, spot.Facing);
+            return true;
+        }
         switch (name)
         {
             case "LOC06ExitToLOC07": // the shed
             {
                 Walk(Hero, 140, 422);
-                var take = State(Hero, TakeLow);
+                var take = State(Hero, TakeMidUpRight);
                 Sound(@"wav\fx\stuerauf.wav", take, 3);
                 ObjAfter("LOC06ClosedDoor1Obj", false, take, 3);
                 var open = Anim("DoOpenDoorSchuppen", after: take, endObject: "LOC06OpenDoor1Obj", endObjectOn: true);
                 ChangeLocation("loc07", open, 4);
                 return true;
             }
-            case "LOC06Vorgarten":
-                WalkAndFace(631, 457, StandUpRight);
-                return true;
-            case "LOC06Angestelltenbau":
-                WalkAndFace(781, 477, StandUpLeft);
-                return true;
-            case "LOC06Fenster4":
-                WalkAndFace(528, 438, StandUpRight);
-                return true;
-            case "LOC06Fenster3":
-                WalkAndFace(696, 473, StandUpLeft);
-                return true;
-            case "LOC06Fenster2":
-                WalkAndFace(423, 486, StandUpLeft);
-                return true;
-            case "LOC06Fenster1":
-                WalkAndFace(44, 395, LookUpRight);
-                return true;
-            case "LOC06Blume":
-                WalkAndFace(75, 509, StandDownLeft);
-                return true;
-            case "LOC06Faß":
-                WalkAndFace(110, 441, StandUpLeft);
-                return true;
-            case "LOC06Haus":
-                WalkAndFace(539, 475, StandUpLeft);
-                return true;
             case "LOC06ExitToLOC09": // down to the beach
                 Walk(Hero, 86, 340);
                 ChangeLocation("loc09");
@@ -309,7 +316,7 @@ public sealed class Garden : StoryScript
             case "LOC06ExitToLOC04": // the front door
             {
                 Walk(Hero, 467, 395);
-                var take = State(Hero, TakeLow);
+                var take = State(Hero, TakeMidUpRight);
                 PointerAfter(false, take, x: 400, y: 300);
                 ObjAfter("LOC06OpenDoor2", false, take, 5);
                 Sound(@"wav\fx\htuerauf.wav", take, 3);
@@ -323,13 +330,10 @@ public sealed class Garden : StoryScript
                 if (At(7, 5))
                     Say(HeroSpeaker, "AUSSEN0033", 1, last: true);
                 return true;
-            case "LOC06FensterToLOC03":
-                WalkAndFace(250, 424, StandUpRight);
-                return true;
             case "LOC06Eimer": // the bucket
             {
                 Walk(Hero, 129, 423);
-                var take = State(Hero, TakeDown);
+                var take = State(Hero, KneelLeft);
                 ObjAfter("LOC06Eimer", false, take, 4);
                 Sound(@"wav\fx\eimer2.wav", take, 3);
                 return true;
@@ -338,6 +342,7 @@ public sealed class Garden : StoryScript
         return false;
     }
 
+    /// <summary>Taking the bucket (its object switched off) puts it into the rucksack.</summary>
     public override void ObjectChanged(GameWorld world, string name, bool on)
     {
         if (!on && name == "LOC06Eimer")

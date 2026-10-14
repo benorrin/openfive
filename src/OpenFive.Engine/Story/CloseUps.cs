@@ -21,8 +21,10 @@ public abstract class CloseUp : StoryScript
 /// <summary>The model ship, shown after the professor's visit to the study; then the next morning.</summary>
 public sealed class ShipPicture : CloseUp
 {
+    /// <inheritdoc/>
     public override string Location => "schiff";
 
+    /// <summary>Shows the ship for three seconds.</summary>
     protected override void Setup()
     {
         PointerOff();
@@ -34,9 +36,14 @@ public sealed class ShipPicture : CloseUp
 public sealed class NextMorning : CloseUp
 {
     readonly string _name;
+
+    /// <summary>Creates the close-up; <paramref name="name"/> is "morgen" (German) or "morning".</summary>
     public NextMorning(string name) => _name = name;
+
+    /// <inheritdoc/>
     public override string Location => _name;
 
+    /// <summary>Moves the story to quest 5 and goes to the kitchen three seconds later.</summary>
     protected override void Setup()
     {
         PointerOff();
@@ -49,9 +56,14 @@ public sealed class NextMorning : CloseUp
 public sealed class HandCloseUp : CloseUp
 {
     readonly string _name;
+
+    /// <summary>Creates the close-up "hand" or "hand2".</summary>
     public HandCloseUp(string name) => _name = name;
+
+    /// <inheritdoc/>
     public override string Location => _name;
 
+    /// <summary>A click goes back to the hall at once.</summary>
     public override bool Click(string name)
     {
         if (Same(name, "HANDExitToLoc04"))
@@ -59,12 +71,13 @@ public sealed class HandCloseUp : CloseUp
         return true;
     }
 
+    /// <summary>Goes back to the hall after four seconds; the first close-up also moves on three conversations.</summary>
     protected override void Setup()
     {
         if (_name == "hand")
         {
             SetVar(Vars.V64f994, 7);
-            SetVar("v64fa04", 7);
+            SetVar(Vars.V64fa04, 7);
             SetVar(Vars.V64f9cc, 7);
         }
         PointerOff();
@@ -76,9 +89,14 @@ public sealed class HandCloseUp : CloseUp
 public sealed class ShipOpening : CloseUp
 {
     readonly int _step;
+
+    /// <summary>Creates picture <paramref name="step"/> (1-3).</summary>
     public ShipOpening(int step) => _step = step;
+
+    /// <inheritdoc/>
     public override string Location => $"schiffc{_step}";
 
+    /// <summary>Plays the picture's sounds and moves on to the next picture (or the study) a second later.</summary>
     protected override void Setup()
     {
         PointerOff();
@@ -103,8 +121,10 @@ public sealed class ShipOpening : CloseUp
 /// <summary>The treasure map, looked at from the rucksack; a click goes back.</summary>
 public sealed class MapCloseUp : CloseUp
 {
+    /// <inheritdoc/>
     public override string Location => "locKarte";
 
+    /// <summary>A click on the map goes back to where it was looked at from.</summary>
     public override bool Click(string name)
     {
         if (Same(name, "KARTEStartClick") && From.Length > 0)
@@ -112,5 +132,6 @@ public sealed class MapCloseUp : CloseUp
         return true;
     }
 
+    /// <summary>The pointer stays on, so the map can be clicked.</summary>
     protected override void Setup() => PointerOn();
 }

@@ -760,7 +760,7 @@ public sealed partial class Hall : StoryScript
                 SetText("clicked", "Julian");
                 SetVar(Vars.V63bdc7, 1);
                 ObjAfter("LOC04Julian", false, iVar1);
-                if (Var(Vars.V64f17c) != 0)
+                if (Var(Vars.WardrobeState) != 0)
                 {
                     return;
                 }
@@ -1308,7 +1308,7 @@ public sealed partial class Hall : StoryScript
         else if (At(7, 4) && Text("clicked") == "enter" && CurrentSpeaker == Who.George)
         {
             StateAfter(Hero, StandDownLeft, end);
-            PointerAfter(false, end, x: Var(Vars.V4ace9c), y: Var(Vars.V4acea0));
+            PointerAfter(false, end, x: Var(Vars.RucksackPointerX), y: Var(Vars.RucksackPointerY));
             iVar1 = StateAfter(Hero, TakeMidLeft, end);
             iVar1 = Anim("DoOpenDoor1", after: iVar1, delay: 5, endObject: "LOC04Door1Obj", endObjectOn: true);
             Sound(@"wav\fx\hotueauf.wav", iVar1, 3);

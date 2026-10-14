@@ -151,7 +151,7 @@ public sealed partial class Kitchen : StoryScript
             {
                 ready = null;
                 Chain = null;
-                if (Var(Vars.V64f294) > 0)
+                if (Var(Vars.UnderBedTalk) > 0)
                 {
                     SetText("t63bdf0", "");
                     if (Var(Vars.JulianTalk) == 3)
@@ -343,7 +343,7 @@ public sealed partial class Kitchen : StoryScript
             {
                 ready = null;
                 Chain = null;
-                if (Var(Vars.V64f294) > 0)
+                if (Var(Vars.UnderBedTalk) > 0)
                 {
                     if (Var(Vars.AnneTalk) == 3)
                     {
@@ -618,7 +618,7 @@ public sealed partial class Kitchen : StoryScript
                 {
                     ready = null;
                     Chain = null;
-                    if (Var(Vars.V64f294) > 0)
+                    if (Var(Vars.UnderBedTalk) > 0)
                     {
                         if (Var(Vars.DickTalk) == 3)
                         {
@@ -2504,7 +2504,7 @@ public sealed partial class Kitchen : StoryScript
                     PointerAfter(false, end, x: 100, y: 200);
                     Ask(Who.George, "KUECHE0014-05", 4, after: end);
                 }
-                if (Var(Vars.V64f294) > 0)
+                if (Var(Vars.UnderBedTalk) > 0)
                 {
                     SetVar(Vars.AnneTalk, 4);
                 }
@@ -2518,7 +2518,7 @@ public sealed partial class Kitchen : StoryScript
                     PointerAfter(false, end, x: 100, y: 200);
                     Ask(Who.George, "KUECHE0014-05", 4, after: end);
                 }
-                if (Var(Vars.V64f294) > 0)
+                if (Var(Vars.UnderBedTalk) > 0)
                 {
                     SetVar(Vars.DickTalk, 4);
                 }
@@ -2536,7 +2536,7 @@ public sealed partial class Kitchen : StoryScript
                     PointerAfter(false, end, x: 100, y: 200);
                     Ask(Who.George, "KUECHE0014-05", 4, after: end);
                 }
-                if (Var(Vars.V64f294) > 0)
+                if (Var(Vars.UnderBedTalk) > 0)
                 {
                     if (Var(Vars.JulianTalk) == 3)
                     {
@@ -2587,7 +2587,7 @@ public sealed partial class Kitchen : StoryScript
                     Anim("DickEatArm", -1, end);
                     if (Text("t63bdf0") == "change")
                     {
-                        PointerAfter(false, end, x: Var(Vars.V4ace9c), y: Var(Vars.V4acea0));
+                        PointerAfter(false, end, x: Var(Vars.RucksackPointerX), y: Var(Vars.RucksackPointerY));
                         ChangeLocation("loc04", end, 4);
                     }
                 }
@@ -2825,7 +2825,7 @@ public sealed partial class Kitchen : StoryScript
             Walk(Hero, 520, 438);
             Chain = State(Hero, StandDownLeft);
             local_168 = Chain;
-            if (Var(Vars.V64f294) == 0)
+            if (Var(Vars.UnderBedTalk) == 0)
             {
                 PointerOff();
                 if (Episode == 6)

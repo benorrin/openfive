@@ -6,11 +6,18 @@ namespace OpenFive.Engine.Story;
 /// <summary>The end of the game: the credits scroll up; a click ends the game.</summary>
 public sealed class Ending : StoryScript
 {
-    public override string Location => "locextro";
+    const int ScrollSpeed = 2;
 
+    /// <summary>How far the credits have scrolled (pixels).</summary>
     int _scroll;
+
+    /// <summary>The credits have scrolled to their end.</summary>
     bool _done;
 
+    /// <inheritdoc/>
+    public override string Location => "locextro";
+
+    /// <summary>A click on the credits ends the game.</summary>
     public override bool Click(string name)
     {
         if (Same(name, "LOCEXTROClick"))
@@ -18,6 +25,7 @@ public sealed class Ending : StoryScript
         return true;
     }
 
+    /// <summary>Shows the credits of the game's language, without the pointer at first.</summary>
     protected override void Setup()
     {
         PointerOff();
@@ -30,8 +38,10 @@ public sealed class Ending : StoryScript
         ShowScroll();
     }
 
+    /// <summary>Nobody is shown.</summary>
     protected override void Arrive() { }
 
+    /// <summary>Shows the credits pictures from the scroll position down.</summary>
     void ShowScroll()
     {
         foreach (string name in new[] { "LOCEXTROScrollE", "LOCEXTROScrollD" })
@@ -48,6 +58,7 @@ public sealed class Ending : StoryScript
         }
     }
 
+    /// <summary>Scrolls the credits up until their end; the pointer comes back early on.</summary>
     public override void EveryTick()
     {
         if (_done)
@@ -64,7 +75,7 @@ public sealed class Ending : StoryScript
             PointerOn();
             World.CursorWarp = (400, 300);
         }
-        _scroll += 2;
+        _scroll += ScrollSpeed;
         ShowScroll();
     }
 }

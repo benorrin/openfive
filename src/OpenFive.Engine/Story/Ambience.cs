@@ -3,6 +3,7 @@ namespace OpenFive.Engine.Story;
 /// <summary>The background sound of each location ("" = silence; locations not listed keep the current one).</summary>
 public static class Ambience
 {
+    /// <summary>The track of each location, by location name.</summary>
     public static readonly Dictionary<string, string> Tracks = new(StringComparer.OrdinalIgnoreCase)
     {
         ["loc01"] = "",

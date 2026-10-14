@@ -1139,7 +1139,7 @@ public sealed partial class Courtyard : StoryScript
                     {
                         SetText("t63be5c", "");
                         PointerAfter(false, end, x: 400, y: 400);
-                        Ask(20, "RUINE0038", 90, after: end);
+                        Ask(Who.DickAlt, "RUINE0038", 90, after: end);
                     }
                 }
                 else
@@ -1395,7 +1395,7 @@ public sealed partial class Courtyard : StoryScript
             RemoveChosenOption();
             if (Var(Vars.V64efac) != Var(Vars.V64efb4) || Var(Vars.V64efa8) != Var(Vars.V64efb4) || Var(Vars.V64efa4) != Var(Vars.V64efb4))
             {
-                Ask(20, "RUINE0038", 90);
+                Ask(Who.DickAlt, "RUINE0038", 90);
             }
             SetVar(Vars.V64ef11, 0);
         }

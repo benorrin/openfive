@@ -100,4 +100,214 @@ public static partial class Vars
     public const string WellRopeState = "v63be94";
     /// <summary>Vertical position of the rope ladder in the well.</summary>
     public const string WellRopeY = "v63be98";
+
+    /// <summary>Set while the shed puts the axe in place.</summary>
+    public const string ShedPlacingAxe = "v63be03";
+
+    /// <summary>Set while the shed puts the rope in place.</summary>
+    public const string ShedPlacingRope = "v63be04";
+
+    /// <summary>Set while the shed puts the oil can in place.</summary>
+    public const string ShedPlacingOilCan = "v63be05";
+
+    /// <summary>Set while the shed puts the screwdriver in place.</summary>
+    public const string ShedPlacingScrewdriver = "v63be06";
+
+    /// <summary>The axe in the shed can be taken (story record 0x650214).</summary>
+    public const string AxeAvailable = "v650219";
+
+    /// <summary>The axe has been taken from the shed.</summary>
+    public const string AxeTaken = "v65021c";
+
+    /// <summary>The rope in the shed can be taken (story record 0x65024c).</summary>
+    public const string RopeAvailable = "v650251";
+
+    /// <summary>The rope has been taken from the shed.</summary>
+    public const string RopeTaken = "v650254";
+
+    /// <summary>The oil can in the shed can be taken (story record 0x650284).</summary>
+    public const string OilCanAvailable = "v650289";
+
+    /// <summary>The oil can has been taken from the shed.</summary>
+    public const string OilCanTaken = "v65028c";
+
+    /// <summary>The screwdriver in the shed can be taken (story record 0x6502bc).</summary>
+    public const string ScrewdriverAvailable = "v6502c1";
+
+    /// <summary>The screwdriver has been taken from the shed.</summary>
+    public const string ScrewdriverTaken = "v6502c4";
+
+    /// <summary>A pointer position recorded by the original's rucksack code (x). OpenFive never sets it, so it reads 0.</summary>
+    public const string RucksackPointerX = "v4ace9c";
+
+    /// <summary>A pointer position recorded by the original's rucksack code (y). OpenFive never sets it, so it reads 0.</summary>
+    public const string RucksackPointerY = "v4acea0";
+
+    /// <summary>Timmy has been put into the bucket at the bottom of the well shaft.</summary>
+    public const string TimmyInBucket = "v650ecc";
+
+    /// <summary>Dick has called down to Timmy in the well shaft.</summary>
+    public const string TimmyCalledInWell = "v650e94";
+
+    /// <summary>The hero has been down the well shaft (George no longer warns about it).</summary>
+    public const string WellShaftVisited = "v650e5c";
+
+    /// <summary>Timmy has been pulled up out of the well.</summary>
+    public const string TimmyRescued = "v6511a4";
+
+    /// <summary>How far talking to George at the dungeon stairs has got (quest 9).</summary>
+    public const string GeorgeStairsTalk = "v650f3c";
+
+    /// <summary>Dick and George have talked on first coming down the dungeon stairs.</summary>
+    public const string StairsSceneSeen = "v650f74";
+
+    /// <summary>The professor and his accomplice have appeared in the treasure chamber (George turns to them).</summary>
+    public const string ProfessorArrived = "v63beec";
+
+    /// <summary>Dick has said once that he will not leave Anne behind in the dungeon passage (quest 10).</summary>
+    public const string DickStaysWithAnne = "v651364";
+
+    /// <summary>Dick and George have talked on first reaching the dungeon passage (quest 9).</summary>
+    public const string PassageSceneSeen = "v65101c";
+
+    /// <summary>How far talking to Julian in the cell has got (quest 10).</summary>
+    public const string JulianCellTalk = "v6512bc";
+
+    /// <summary>How far talking to Anne in the cell has got (quest 10).</summary>
+    public const string AnneCellTalk = "v6512f4";
+
+    /// <summary>Something has been tried on the lock of the cabin cupboard.</summary>
+    public const string CupboardLockTried = "v64eff8";
+
+    /// <summary>The wreck cabin has been entered (on quest 6, step 3).</summary>
+    public const string CabinVisited = "v65075c";
+
+    /// <summary>The visits to the wreck: 1 first talk on deck, 2 left again or into the cabin, 3 talk after the cabin.</summary>
+    public const string WreckVisit = "v650874";
+
+    /// <summary>Back at the wreck with the tin (quest 7): the talk about it is running; its menu follows.</summary>
+    public const string WreckTinTalkPending = "v63be58";
+
+    /// <summary>The menu about the tin at the wreck has not been offered yet (1 in a new game).</summary>
+    public const string WreckTinMenuAvailable = "v64ef10";
+
+    /// <summary>The guest-room door record is available (always, from a new game): the door is shown closing behind the hero.</summary>
+    public const string GuestRoomDoorAvailable = "v64f141";
+
+    /// <summary>The carpet in the guest room is shown (1 in a new game).</summary>
+    public const string CarpetAvailable = "v64f1b1";
+
+    /// <summary>The guest-room carpet: 0 flat, 1 rolled back (the diary showing), 2 flat again for good.</summary>
+    public const string CarpetState = "v64f1b4";
+
+    /// <summary>Where the guest-room carpet lies (x; 350 in a new game).</summary>
+    public const string CarpetX = "v64f1b8";
+
+    /// <summary>Where the guest-room carpet lies (y; 480 in a new game).</summary>
+    public const string CarpetY = "v64f1bc";
+
+    /// <summary>The diary in the guest room is shown (1 in a new game).</summary>
+    public const string DiaryAvailable = "v64f1e9";
+
+    /// <summary>The diary: 0 under the carpet, 1 taken, 2 put on the shelf.</summary>
+    public const string DiaryState = "v64f1ec";
+
+    /// <summary>The wardrobe in the guest room is shown (1 in a new game).</summary>
+    public const string WardrobeAvailable = "v64f179";
+
+    /// <summary>The guest-room wardrobe: 0 shut, 1 open, 2 open with the coat gone.</summary>
+    public const string WardrobeState = "v64f17c";
+
+    /// <summary>The suitcase key in the coat pocket can be taken (story record 0x64f21c).</summary>
+    public const string SuitcaseKeyAvailable = "v64f221";
+
+    /// <summary>The suitcase key has been taken from the coat pocket.</summary>
+    public const string SuitcaseKeyTaken = "v64f224";
+
+    /// <summary>How far George's remarks about looking under the guest-room bed have got (2: an item was used there).</summary>
+    public const string UnderBedTalk = "v64f294";
+
+    /// <summary>Set while the guest room puts the diary in place.</summary>
+    public const string GuestRoomPlacingDiary = "v63bda4";
+
+    /// <summary>Set while the guest room shows or hides the coat pocket with the key.</summary>
+    public const string GuestRoomPlacingKey = "v63bda5";
+
+    /// <summary>The hero is looking under the guest-room bed.</summary>
+    public const string LookingUnderBed = "v63bda6";
+
+    /// <summary>UnderBedTalk before an item was used under the bed (restored afterwards).</summary>
+    public const string UnderBedTalkBefore = "v63bda8";
+
+    /// <summary>The professor has got up (he no longer sleeps in the guest room).</summary>
+    public const string ProfessorUp = "v6514ec";
+
+    /// <summary>The torch in the hideout: 0 lying there, 1 being picked up, 2 in the rucksack.</summary>
+    public const string TorchTaken = "v65124c";
+
+    /// <summary>The lantern in the hideout: 0 there, 1 being picked up, 2 in the rucksack.</summary>
+    public const string LanternTaken = "v651214";
+
+    /// <summary>The binoculars have been taken from the hideout (they are no longer shown).</summary>
+    public const string BinocularsTaken = "v651284";
+
+    /// <summary>How far talking to Anne in the hideout has got (quest 8; 2 once the hero has the torch and the axe).</summary>
+    public const string AnneHideoutTalk = "v6502fc";
+
+    /// <summary>How far talking to Dick in the hideout has got (quest 8).</summary>
+    public const string DickHideoutTalk = "v650334";
+
+    /// <summary>How far talking to Julian in the hideout has got (quest 8).</summary>
+    public const string JulianHideoutTalk = "v65036c";
+
+    /// <summary>Quest 8: 1 the children are ready to leave the hideout for the beach, 2 they have gone.</summary>
+    public const string HideoutLeaving = "v6503a4";
+
+    /// <summary>The children have talked on meeting in the hideout (quest 8).</summary>
+    public const string HideoutSceneSeen = "v65108c";
+
+    /// <summary>The answer to Julian's question in the hideout (quest 8): 1 leave now, 2 not yet.</summary>
+    public const string HideoutAnswer = "v63be08";
+
+    /// <summary>Dick has tried to push the big stone on his own (quest 8, step 5).</summary>
+    public const string StoneTriedAlone = "v650d44";
+
+    /// <summary>How far talking to Anne in the courtyard at night has got (quest 8; 2 once the stone moves).</summary>
+    public const string AnneNightTalk = "v650e24";
+
+    /// <summary>How far talking to George in the courtyard at night has got (quest 8).</summary>
+    public const string GeorgeNightTalk = "v650dec";
+
+    /// <summary>How far talking to Julian in the courtyard at night has got (quest 8; 2 once he helps push).</summary>
+    public const string JulianNightTalk = "v650db4";
+
+    /// <summary>Anne and Julian have talked on arriving in the courtyard at night (quest 8).</summary>
+    public const string NightSceneSeen = "v650d7c";
+
+    /// <summary>Where the big stone is drawn while it is pushed (x).</summary>
+    public const string BigStoneX = "v63be88";
+
+    /// <summary>Where the big stone is drawn while it is pushed (y).</summary>
+    public const string BigStoneY = "v63be8c";
+
+    /// <summary>The big stone moved during the last tick.</summary>
+    public const string BigStoneMoving = "v63be90";
+
+    /// <summary>How far talking to George on the beach has got.</summary>
+    public const string GeorgeBeachTalk = "v65044c";
+
+    /// <summary>How far Dick's remarks on the island beach have got (quest 8).</summary>
+    public const string DickIslandTalk = "v650804";
+
+    /// <summary>On the first landing the children chose to go to the island beach first.</summary>
+    public const string ChoseIslandBeach = "v64eff6";
+
+    /// <summary>On the first landing the children chose to go back to the mainland first.</summary>
+    public const string ChoseMainland = "v64eff7";
+
+    /// <summary>The barrel on the island beach has been opened.</summary>
+    public const string IslandBarrelOpen = "v650724";
+
+    /// <summary>The children have talked on the island beach after the escape (quest 11).</summary>
+    public const string EscapeSceneSeen = "v65139c";
 }

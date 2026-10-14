@@ -64,11 +64,11 @@ public sealed partial class ItemUses : StoryScript
         if (Same(target, "LOC02UntermBett"))
         {
             local_2c = null;
-            SetVar(Vars.V63bda8, Var(Vars.V64f294));
-            SetVar(Vars.V64f294, 2);
+            SetVar(Vars.UnderBedTalkBefore, Var(Vars.UnderBedTalk));
+            SetVar(Vars.UnderBedTalk, 2);
             Walk(Hero, 380, 540);
             local_2c = State(Hero, KneelingRight);
-            SetVar(Vars.V63bda6, 1);
+            SetVar(Vars.LookingUnderBed, 1);
             ObjAfter("LOC02UntermBett", false, local_2c);
         }
         else if (Same(target, "COMMON_INV03"))
@@ -123,7 +123,7 @@ public sealed partial class ItemUses : StoryScript
         {
             if (Same(target, "LOC16Schloss"))
             {
-                SetVar(Vars.V64eff8, 1);
+                SetVar(Vars.CupboardLockTried, 1);
             }
             if (Same(name, "COMMON_INV01"))
             {
@@ -162,10 +162,10 @@ public sealed partial class ItemUses : StoryScript
             {
                 if (Same(target, "LOC19SeilKlick"))
                 {
-                    if (At(8, 4) && Var(Vars.V650ecc) == 0)
+                    if (At(8, 4) && Var(Vars.TimmyInBucket) == 0)
                     {
                         PointerOff();
-                        SetVar(Vars.V650ecc, 1);
+                        SetVar(Vars.TimmyInBucket, 1);
                         Walk(Hero, 257, 522);
                         Chain = State(Hero, TakeMidRight);
                         Take(Item.Bucket);
@@ -173,7 +173,7 @@ public sealed partial class ItemUses : StoryScript
                         Walk(Timmy, 194, 550);
                         local_f8 = State(Timmy, InBucketRight);
                         StopAnimAfter("Seil", local_f8);
-                        SetText("t63be9c", "Tim");
+                        SetText(StoryTexts.WellRescue, "Tim");
                         Say(Who.Dick, "BRUNNEN0042", 5, last: true, after: local_f0);
                     }
                 }
@@ -291,10 +291,10 @@ public sealed partial class ItemUses : StoryScript
                         SetVar(Vars.JulianBeachTalk, 0);
                         SetVar(Vars.JulianIslandTalk, 0);
                         SetVar(Vars.JulianWreckTalk, 0);
-                        SetVar(Vars.V65044c, 0);
+                        SetVar(Vars.GeorgeBeachTalk, 0);
                         SetVar(Vars.GeorgeIslandTalk, 0);
                         SetVar(Vars.GeorgeWreckTalk, 0);
-                        SetVar(Vars.V65075c, 1);
+                        SetVar(Vars.CabinVisited, 1);
                     }
                     else if (Same(target, "LOC16Schloss"))
                     {
@@ -707,7 +707,7 @@ public sealed partial class ItemUses : StoryScript
                             Say(Who.Dick, "LABYRINTH0046", 3, after: local_46c);
                             Say(Who.George, "LABYRINTH0046", 4, after: local_46c);
                             Say(Who.Dick, "LABYRINTH0046", 5, last: true, after: local_46c);
-                            SetText("t63becc", "geh2");
+                            SetText(StoryTexts.TreasureDoorScene, "geh2");
                         }
                         else if (Var(Vars.TreasureDoorDiscussed) == 1)
                         {
@@ -726,7 +726,7 @@ public sealed partial class ItemUses : StoryScript
                             SetVar(Vars.TreasureDoorBroken, 1);
                             ObjAfter("LOC24Tuer", false, local_46c, 6);
                             Anim("TuerClose", -1, local_46c, 6);
-                            SetText("t63becc", "Tuer");
+                            SetText(StoryTexts.TreasureDoorScene, "Tuer");
                         }
                     }
                 }
