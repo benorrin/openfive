@@ -91,7 +91,9 @@ public sealed class SpriteBank
     }
 
     /// <summary>Draws visible sprites (plus extra ones), furthest first; equal depths keep load order.</summary>
-    public void Draw(Framebuffer fb, IEnumerable<Sprite>? extra = null, Func<Sprite, Func<int, int, bool>?>? occlusion = null)
+    /// <param name="shadowed">Sprites that cast a shadow (drawn just before them), or null.</param>
+    public void Draw(Framebuffer fb, IEnumerable<Sprite>? extra = null, Func<Sprite, Func<int, int, bool>?>? occlusion = null,
+        Func<Sprite, bool>? shadowed = null)
     {
         var all = extra == null ? _order : _order.Concat(extra);
         foreach (var s in all.Where(s => s.Visible && s.Resource != null).OrderByDescending(s => s.Depth))
@@ -105,6 +107,8 @@ public sealed class SpriteBank
                     _frameBuffer = new byte[n];
                 var buf = _frameBuffer.AsSpan(0, n).ToArray();
                 int key = sheet.Decode(s.Frame, buf);
+                if (shadowed != null && shadowed(s))
+                    Shadow.Draw(fb, buf, sheet.FrameWidth, sheet.FrameHeight, key, s.X, s.Y, s.Scale, s.Mirror, hidden);
                 fb.BlitIndexed(buf, sheet.FrameWidth, sheet.FrameHeight, sheet.Palette, key, s.X, s.Y, s.Scale, s.Mirror, hidden);
             }
             else

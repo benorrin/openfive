@@ -129,6 +129,18 @@ rested for one tick, using the object's "over" text, or the character's name for
 * The original also steers walking characters around each other; OpenFive leaves this out for
   now, because it can make characters oscillate and block scenes.
 
+### Shadows
+
+When the shadows option is on (the default), each visible character casts a shadow, drawn just
+before the character (so behind it) and hidden by the same scenery mask. The shadow is the
+character's current frame turned by the light's angle, squashed to half its height, with its foot
+2% of the frame height above the character's feet; where the frame is opaque, the background
+pixel is darkened. A location's ".res" file could name a light (position and darkness), but none
+does, so the angle is always a quarter turn less than the default eighth turn (the shadow falls
+up and to the right) and each 5-bit colour channel c becomes about c x 24/32: start at c with a
+counter of 16, add c to the counter eight times, and take one off c each time the counter passes
+31. Shadow rows land one screen row higher than their own position, except the first.
+
 ## Dialogue
 
 * Lines live in the dialogue files of each speaker, keyed by kind ("V" = line, "DLG" = choice

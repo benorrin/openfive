@@ -9,8 +9,8 @@ OpenFive contains **no code, graphics, text, speech or music from the original g
 your own copy of the game CD (or a disc image of it): OpenFive reads all game data from the disc
 every time it runs.
 
-> **Status:** the whole adventure can be played, from the intro to the closing credits. Character
-> shadows are still missing, and not every side path has been tried yet. See
+> **Status:** the whole adventure can be played, from the intro to the closing credits. Not every
+> side path has been tried yet. See
 > [docs/PROGRESS.md](docs/PROGRESS.md) for details.
 
 ## What you need

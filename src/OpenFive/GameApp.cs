@@ -91,6 +91,7 @@ sealed class GameApp
         if (_movie != null)
             return;
         _world.DialogueBox = _settings.DialogueBox;
+        _world.Shadows = _settings.Shadows;
         if (_settings.AnimatedBackgrounds)
             _world.Scene?.Update(100);
         _session.Tick();

@@ -106,6 +106,8 @@ public sealed class GameWorld
 
     /// <summary>Show the dialogue box and talking heads (option); off shows the text only.</summary>
     public bool DialogueBox { get; set; } = true;
+    /// <summary>Characters cast shadows (an option).</summary>
+    public bool Shadows { get; set; } = true;
 
     /// <summary>Set for one tick when the player asks to skip the line being spoken.</summary>
     public bool SkipRequested { get; set; }
@@ -598,7 +600,7 @@ public sealed class GameWorld
             if (s.MaskDepth is not { } d || mask == null)
                 return null;
             return (x, y) => _regionDepth[mask[y * Framebuffer.Width + x]] is { } rd && rd < d;
-        });
+        }, Shadows ? s => Actors.Any(a => a.Visible && a.Sprite == s) : null);
         foreach (var t in Texts.ToList())
             DrawText(fb, t);
     }
