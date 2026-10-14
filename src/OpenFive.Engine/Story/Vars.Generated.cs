@@ -87,7 +87,6 @@ public static partial class Vars
     public const string V64f64c = "v64f64c";
     public const string V64f684 = "v64f684";
     public const string V64f72c = "v64f72c";
-    public const string V64f764 = "v64f764";
     public const string V64f79c = "v64f79c";
     public const string V64f7d4 = "v64f7d4";
     public const string V64f80c = "v64f80c";
@@ -132,7 +131,6 @@ public static partial class Vars
     public const string V64ff79 = "v64ff79";
     public const string V6500cc = "v6500cc";
     public const string V650104 = "v650104";
-    public const string V65013c = "v65013c";
     public const string V6501e4 = "v6501e4";
     public const string V6504bc = "v6504bc";
     public const string V65052c = "v65052c";
@@ -152,8 +150,6 @@ public static partial class Vars
     public const string V650c2c = "v650c2c";
     public const string V650c64 = "v650c64";
     public const string V650d0c = "v650d0c";
-    public const string V650f04 = "v650f04";
-    public const string V6510c4 = "v6510c4";
     public const string V6510fc = "v6510fc";
     public const string V651134 = "v651134";
     public const string V65116c = "v65116c";

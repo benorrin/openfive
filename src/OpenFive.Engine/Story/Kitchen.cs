@@ -48,7 +48,7 @@ public sealed partial class Kitchen : StoryScript
         }
         else if (Same(name, "LOC05Julian"))
         {
-            SetText("t63bdf0", "Julian");
+            SetText(StoryTexts.KitchenTopic, "Julian");
             if (At(2, 2))
             {
                 Walk(Hero, 100, 450);
@@ -136,10 +136,10 @@ public sealed partial class Kitchen : StoryScript
             {
                 ready = null;
                 Chain = null;
-                SetText("t63bdf0", "");
+                SetText(StoryTexts.KitchenTopic, "");
                 if (Var(Vars.JulianTalk) == 0)
                 {
-                    SetText("t63bdf0", "Julian");
+                    SetText(StoryTexts.KitchenTopic, "Julian");
                     Say(Who.Julian, "KUECHE0014-05", 3, last: true, after: ready);
                 }
                 else if (Var(Vars.V64ef24) == 1)
@@ -153,7 +153,7 @@ public sealed partial class Kitchen : StoryScript
                 Chain = null;
                 if (Var(Vars.UnderBedTalk) > 0)
                 {
-                    SetText("t63bdf0", "");
+                    SetText(StoryTexts.KitchenTopic, "");
                     if (Var(Vars.JulianTalk) == 3)
                     {
                         Say(Who.Julian, "KUECHE0015-05", 16, last: true, after: ready);
@@ -236,7 +236,7 @@ public sealed partial class Kitchen : StoryScript
         }
         else if (Same(name, "LOC05Anne"))
         {
-            SetText("t63bdf0", "Anne");
+            SetText(StoryTexts.KitchenTopic, "Anne");
             if (At(2, 2))
             {
                 Walk(Hero, 100, 450);
@@ -328,10 +328,10 @@ public sealed partial class Kitchen : StoryScript
             {
                 ready = null;
                 Chain = null;
-                SetText("t63bdf0", "");
+                SetText(StoryTexts.KitchenTopic, "");
                 if (Var(Vars.AnneTalk) == 0)
                 {
-                    SetText("t63bdf0", "Anne");
+                    SetText(StoryTexts.KitchenTopic, "Anne");
                     Say(Who.Anne, "KUECHE0014-05", 1, last: true, after: ready);
                 }
                 else if (Var(Vars.V64ef24) == 1)
@@ -428,7 +428,7 @@ public sealed partial class Kitchen : StoryScript
                     StopAnimAfter("QuentinDrinkAll", null);
                     Anim("QuentinDrink", -1);
                 }
-                SetText("t63bdf0", "Timmy");
+                SetText(StoryTexts.KitchenTopic, "Timmy");
                 if (Var(Vars.V650104) == 0)
                 {
                     ready = null;
@@ -463,7 +463,7 @@ public sealed partial class Kitchen : StoryScript
                 {
                     if (Var(Vars.QuentinKitchenTalk) == 0)
                     {
-                        SetText("t63bdf0", "Quentin");
+                        SetText(StoryTexts.KitchenTopic, "Quentin");
                         Say(Who.Quentin, "KUECHE0005-05", 30, after: ready);
                         Say(Who.George, "KUECHE0005-05", 31, after: ready);
                         Say(Who.Quentin, "KUECHE0005-05", 32, after: ready);
@@ -506,7 +506,7 @@ public sealed partial class Kitchen : StoryScript
         }
         else if (Same(name, "LOC05Dick"))
         {
-            SetText("t63bdf0", "Dick");
+            SetText(StoryTexts.KitchenTopic, "Dick");
             ready = null;
             Chain = null;
             if (Hero.Depth != 0)
@@ -596,10 +596,10 @@ public sealed partial class Kitchen : StoryScript
                 {
                     ready = null;
                     Chain = null;
-                    SetText("t63bdf0", "");
+                    SetText(StoryTexts.KitchenTopic, "");
                     if (Var(Vars.DickTalk) == 0)
                     {
-                        SetText("t63bdf0", "Dick");
+                        SetText(StoryTexts.KitchenTopic, "Dick");
                         Say(Who.Dick, "KUECHE0014-05", 2, last: true, after: ready);
                     }
                     else if (Var(Vars.V64ef24) == 1)
@@ -705,7 +705,7 @@ public sealed partial class Kitchen : StoryScript
         }
         else if (Same(name, "LOC05FannyStand"))
         {
-            SetText("t63bdf0", "Fanny");
+            SetText(StoryTexts.KitchenTopic, "Fanny");
             if (At(2, 2))
             {
                 Walk(Hero, 300, 200);
@@ -1081,7 +1081,7 @@ public sealed partial class Kitchen : StoryScript
                 PointerOff();
                 ready = null;
                 Chain = null;
-                SetText("t63bdf0", "George");
+                SetText(StoryTexts.KitchenTopic, "George");
                 ready = F43c744(ready, 0, "GeorgeSitDownRight", 500, 600);
                 // TODO local_d8c = S(local_d88,"V",-1 );
                 Say(Who.Dick, "KUECHE0009-05", 8, after: ready, delay: 60);
@@ -1128,7 +1128,7 @@ public sealed partial class Kitchen : StoryScript
             if (At(3, 3))
             {
                 PointerOff();
-                SetText("t63bdf0", "Teekanne");
+                SetText(StoryTexts.KitchenTopic, "Teekanne");
                 Chain = null;
                 if (Var(Vars.V64fc6c) == 0)
                 {
@@ -1640,7 +1640,7 @@ public sealed partial class Kitchen : StoryScript
             }
             else if (CurrentSpeaker == Who.Dick)
             {
-                if (Text("t63bdf0") != "Fanny")
+                if (Text(StoryTexts.KitchenTopic) != "Fanny")
                 {
                     after = StateAfter(Hero, SpeakDownRight, after);
                 }
@@ -1755,7 +1755,7 @@ public sealed partial class Kitchen : StoryScript
             }
             else if (CurrentSpeaker == Who.George)
             {
-                if (Text("t63bdf0") != "George")
+                if (Text(StoryTexts.KitchenTopic) != "George")
                 {
                     StopAnimAfter("GeorgeSitDownRight", after);
                     Anim("GeorgeSitSpeakDownRight", -1, after);
@@ -1817,9 +1817,9 @@ public sealed partial class Kitchen : StoryScript
         }
         else if (Episode < 4 && Quest == 7)
         {
-            if (Text("t63bdf0") == "nobody")
+            if (Text(StoryTexts.KitchenTopic) == "nobody")
             {
-                SetText("t63bdf0", "");
+                SetText(StoryTexts.KitchenTopic, "");
                 goto LAB_004371cf;
             }
             StateAfter(Hero, SpeakDownLeft, after);
@@ -1846,7 +1846,7 @@ public sealed partial class Kitchen : StoryScript
                 }
                 else if (CurrentSpeaker == Who.George)
                 {
-                    if (Text("t63bdf0") != "start")
+                    if (Text(StoryTexts.KitchenTopic) != "start")
                     {
                         StateAfter(Hero, SpeakDownRight, after);
                     }
@@ -1854,7 +1854,7 @@ public sealed partial class Kitchen : StoryScript
                     {
                         StateAfter(Hero, SpeakDownLeft, after);
                     }
-                    SetText("t63bdf0", "");
+                    SetText(StoryTexts.KitchenTopic, "");
                 }
             }
         }
@@ -1951,7 +1951,7 @@ public sealed partial class Kitchen : StoryScript
             }
             else if (CurrentSpeaker == Who.Dick)
             {
-                if (Text("t63bdf0") != "Fanny")
+                if (Text(StoryTexts.KitchenTopic) != "Fanny")
                 {
                     after = StateAfter(Hero, StandDownRight, after);
                 }
@@ -2058,7 +2058,7 @@ public sealed partial class Kitchen : StoryScript
             }
             else if (CurrentSpeaker == Who.George)
             {
-                if (Text("t63bdf0") != "George")
+                if (Text(StoryTexts.KitchenTopic) != "George")
                 {
                     StopAnimAfter("GeorgeSitSpeakDownRight", after);
                     Anim("GeorgeSitDownRight", -1, after);
@@ -2165,7 +2165,7 @@ public sealed partial class Kitchen : StoryScript
                     StateAfter(Hero, StandDownRight, after);
                 }
             }
-            SetText("t63bdf0", "");
+            SetText(StoryTexts.KitchenTopic, "");
         }
         else if (At(12, 1))
         {
@@ -2223,7 +2223,7 @@ public sealed partial class Kitchen : StoryScript
         TaskHandle? uVar3 = null;
         if (At(5, 0))
         {
-            if (Text("t63bdf0") == "Dick" || Text("t63bdf0") == "Julian" || Text("t63bdf0") == "Anne")
+            if (Text(StoryTexts.KitchenTopic) == "Dick" || Text(StoryTexts.KitchenTopic) == "Julian" || Text(StoryTexts.KitchenTopic) == "Anne")
             {
                 if (CurrentSpeaker == Who.Anne)
                 {
@@ -2256,7 +2256,7 @@ public sealed partial class Kitchen : StoryScript
                 }
                 ChangeLocation("loc04", end, 4);
                 SetStep(5, 1);
-                SetText("t63bdf0", "");
+                SetText(StoryTexts.KitchenTopic, "");
                 goto LAB_00439681;
             }
             if (CurrentSpeaker == Who.Anne)
@@ -2281,7 +2281,7 @@ public sealed partial class Kitchen : StoryScript
         }
         else if (Episode < 4 && Quest == 2)
         {
-            if (Text("t63bdf0") != "Fanny")
+            if (Text(StoryTexts.KitchenTopic) != "Fanny")
             {
                 StateAfter(Hero, StandDownRight, end);
             }
@@ -2310,7 +2310,7 @@ public sealed partial class Kitchen : StoryScript
             {
                 if (Episode == 3)
                 {
-                    if (Text("t63bdf0") != "Quentin")
+                    if (Text(StoryTexts.KitchenTopic) != "Quentin")
                     {
                         if (Var(Vars.DickTalk) == 0)
                         {
@@ -2327,7 +2327,7 @@ public sealed partial class Kitchen : StoryScript
                     }
                     else
                     {
-                        SetText("t63bdf0", "");
+                        SetText(StoryTexts.KitchenTopic, "");
                         SetVar(Vars.QuentinKitchenTalk, 2);
                         SetVar(Vars.DickTalk, 2);
                         SetVar(Vars.FannyTalk, 7);
@@ -2355,17 +2355,17 @@ public sealed partial class Kitchen : StoryScript
                 }
                 else if (Episode == 3)
                 {
-                    if (Text("t63bdf0") == "Timmy" || Text("t63bdf0") == "Sandwich" || Text("t63bdf0") == "Teekanne")
+                    if (Text(StoryTexts.KitchenTopic) == "Timmy" || Text(StoryTexts.KitchenTopic) == "Sandwich" || Text(StoryTexts.KitchenTopic) == "Teekanne")
                     {
-                        if (Text("t63bdf0") != "Teekanne")
+                        if (Text(StoryTexts.KitchenTopic) != "Teekanne")
                         {
-                            if (Text("t63bdf0") != "Sandwich")
+                            if (Text(StoryTexts.KitchenTopic) != "Sandwich")
                             {
-                                SetText("t63bdf0", "");
+                                SetText(StoryTexts.KitchenTopic, "");
                             }
                             else
                             {
-                                SetText("t63bdf0", "");
+                                SetText(StoryTexts.KitchenTopic, "");
                                 PointerAfter(false, end, x: 400, y: 300);
                                 Episode = 4;
                                 F43c744(end, 4, "GeorgeSitDownRight", 570, 435);
@@ -2417,7 +2417,7 @@ public sealed partial class Kitchen : StoryScript
                             {
                                 SetVar(Vars.V64fc6c, 2);
                             }
-                            SetText("t63bdf0", "");
+                            SetText(StoryTexts.KitchenTopic, "");
                         }
                     }
                     else
@@ -2472,13 +2472,13 @@ public sealed partial class Kitchen : StoryScript
                 Anim("JuliansBread", -1, end);
                 Anim("JulianEat", -1, end);
                 Anim("JulianEatArm", -1, end);
-                if (Text("t63bdf0") == "DLG")
+                if (Text(StoryTexts.KitchenTopic) == "DLG")
                 {
                     Chain = null;
                     SetVar(Vars.V64ee04, 0x64e1d4);
                     SetVar(Vars.V64e2f9, 1);
                     Ask(Who.George, "KUECHE0006-05", 3, after: end);
-                    SetText("t63bdf0", "");
+                    SetText(StoryTexts.KitchenTopic, "");
                 }
                 if (Episode == 3)
                 {
@@ -2585,7 +2585,7 @@ public sealed partial class Kitchen : StoryScript
                     Anim("DicksBread", -1, end);
                     Anim("DickEat", -1, end);
                     Anim("DickEatArm", -1, end);
-                    if (Text("t63bdf0") == "change")
+                    if (Text(StoryTexts.KitchenTopic) == "change")
                     {
                         PointerAfter(false, end, x: Var(Vars.RucksackPointerX), y: Var(Vars.RucksackPointerY));
                         ChangeLocation("loc04", end, 4);
@@ -2604,7 +2604,7 @@ public sealed partial class Kitchen : StoryScript
                     StateAfter(Hero, StandDownRight, end);
                 }
             }
-            SetText("t63bdf0", "");
+            SetText(StoryTexts.KitchenTopic, "");
         }
         else if (At(7, 5))
         {
@@ -2631,17 +2631,17 @@ public sealed partial class Kitchen : StoryScript
                     StateAfter(Hero, StandDownRight, end);
                 }
             }
-            SetText("t63bdf0", "");
+            SetText(StoryTexts.KitchenTopic, "");
         }
         else if (At(12, 1))
         {
-            if (Text("t63bdf0") == "Hund")
+            if (Text(StoryTexts.KitchenTopic) == "Hund")
             {
                 StopAnimAfter("GeorgeSitSpeakDownRight", end);
                 Anim("GeorgeSitDownRight", -1, end);
                 Sound(@"wav\timmy\timmy01.wav", end);
                 Sound(@"wav\timmy\timmy01.wav", end, 2);
-                SetText("t63bdf0", "");
+                SetText(StoryTexts.KitchenTopic, "");
                 goto LAB_00439681;
             }
             if (CurrentSpeaker == Who.George)
@@ -2719,7 +2719,7 @@ public sealed partial class Kitchen : StoryScript
             if (Var(Vars.V64f684) < 5)
             {
                 PointerOff();
-                SetText("t63bdf0", "DLG");
+                SetText(StoryTexts.KitchenTopic, "DLG");
                 Say(Who.Quentin, "KUECHE0006-05", 1, delay: 10);
                 Say(Who.Julian, "KUECHE0006-05", 2, last: true);
             }
@@ -2930,7 +2930,7 @@ public sealed partial class Kitchen : StoryScript
                         }
                         else
                         {
-                            SetText("t63bdf0", "change");
+                            SetText(StoryTexts.KitchenTopic, "change");
                         }
                         if (Var(Vars.AnneTalk) < 10)
                         {
@@ -2998,7 +2998,7 @@ public sealed partial class Kitchen : StoryScript
                 Chain = null;
                 local_514 = null;
                 PointerOff();
-                SetText("t63bdf0", "start");
+                SetText(StoryTexts.KitchenTopic, "start");
                 Say(Who.Julian, "KUECHE0031", 1, after: local_514, delay: 8);
                 Say(Who.George, "KUECHE0031", 2);
                 Say(Who.Dick, "KUECHE0031", 3);
@@ -3098,7 +3098,7 @@ public sealed partial class Kitchen : StoryScript
             Place(Timmy, 799, 440, StandDownLeft);
             Chain = null;
             local_5c4 = null;
-            SetText("t63bdf0", "Hund");
+            SetText(StoryTexts.KitchenTopic, "Hund");
             Say(Who.Policeman, "KUECHE0054", 1, after: local_5c4, delay: 10);
             Say(Who.George, "KUECHE0054", 2, last: true);
             Say(Who.Anne, "KUECHE0054", 3);
@@ -3422,7 +3422,7 @@ public sealed partial class Kitchen : StoryScript
             if (At(3, 3))
             {
                 StateAfter(Timmy, EatRight, Chain);
-                SetText("t63bdf0", "Timmy");
+                SetText(StoryTexts.KitchenTopic, "Timmy");
                 Sound(@"wav\timmy\betteln.wav");
                 if (Var(Vars.V6500cc) == 0)
                 {

@@ -310,4 +310,16 @@ public static partial class Vars
 
     /// <summary>The children have talked on the island beach after the escape (quest 11).</summary>
     public const string EscapeSceneSeen = "v65139c";
+
+    /// <summary>Dick has remarked once on using something on the closed tin.</summary>
+    public const string TinRemarked = "v6510c4";
+
+    /// <summary>How far Dick has remarked on using items in the well shaft (quest 8).</summary>
+    public const string WellShaftItemTalk = "v650f04";
+
+    /// <summary>How often George has tried to feed Timmy the sandwich while Uncle Quentin watched.</summary>
+    public const string TimmyFeedTries = "v65013c";
+
+    /// <summary>The newspaper has been pushed under the study door (quest 7, step 4).</summary>
+    public const string NewspaperUnderStudyDoor = "v64f764";
 }

@@ -507,7 +507,7 @@ public sealed class GameSession
         Dragging = 0;
         if (target == null)
             return;
-        if (!new Story.ItemUses(this).Use(Inventory.ObjectName(item), target.Value.Name))
+        if (!new Story.ItemUses(this).Use(item, target.Value.Name))
             Script.UseItem(item, target.Value.Name);
         if (InventoryOpen)
             OpenInventory();

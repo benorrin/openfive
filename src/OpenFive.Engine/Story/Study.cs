@@ -187,7 +187,7 @@ public sealed partial class Study : StoryScript
             if (At(7, 3))
             {
                 PointerOff();
-                SetText("t63bdb4", "Schiff");
+                SetText(StoryTexts.StudyScene, "Schiff");
                 Chain = ready;
                 Say(Who.Quentin, "ARBEIT0029", 8, last: true, after: ready);
                 SetAfter(Vars.AnneTalk, 0, ready);
@@ -1061,7 +1061,7 @@ public sealed partial class Study : StoryScript
                 {
                     Walk(Hero, 230, 430);
                     ShowParty();
-                    SetText("t63bdb4", "ToastOnly");
+                    SetText(StoryTexts.StudyScene, "ToastOnly");
                     Chain = State(Hero, TakeMidLeft);
                     local_37c = Chain;
                     PointerOff();
@@ -1379,7 +1379,7 @@ public sealed partial class Study : StoryScript
                 {
                     StateAfter(Hero, StandDownLeft, after);
                 }
-                else if (Text("t63bdb4") != "Schiff")
+                else if (Text(StoryTexts.StudyScene) != "Schiff")
                 {
                     if (CurrentSpeaker == Who.Quentin)
                     {
@@ -1407,11 +1407,11 @@ public sealed partial class Study : StoryScript
                 if (CurrentSpeaker == Who.George)
                 {
                     StateAfter(Hero, StandDownLeft, after);
-                    if (Text("t63bdb4") == "ToastOnly")
+                    if (Text(StoryTexts.StudyScene) == "ToastOnly")
                     {
                         PointerAfter(false, after, x: 300, y: 400);
                         ChangeLocation("loc04", after, 4);
-                        SetText("t63bdb4", "");
+                        SetText(StoryTexts.StudyScene, "");
                     }
                 }
                 else if (CurrentSpeaker == Who.Quentin)

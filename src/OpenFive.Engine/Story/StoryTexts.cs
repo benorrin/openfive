@@ -14,4 +14,16 @@ public static class StoryTexts
     /// breaks the door with the axe, "Tuer" the others arrive.
     /// </summary>
     public const string TreasureDoorScene = "t63becc";
+
+    /// <summary>What the conversation in the kitchen is about (a character's name, "Sandwich", "nobody"...).</summary>
+    public const string KitchenTopic = "t63bdf0";
+
+    /// <summary>The scene running in the hall ("Koffer" after the suitcase has been opened...).</summary>
+    public const string HallScene = "t63bddc";
+
+    /// <summary>The scene running in the study ("Schiff" when the key has been tried on the model ship...).</summary>
+    public const string StudyScene = "t63bdb4";
+
+    /// <summary>The scene running in the castle courtyard ("Axt" the bush cut down, "EfeuMitSeil" the rope on the ivy...).</summary>
+    public const string CourtyardScene = "t63be5c";
 }

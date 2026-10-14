@@ -264,7 +264,7 @@ public sealed partial class Courtyard : StoryScript
                 }
                 else if (Var(Vars.JulianCastleTalk) == 3)
                 {
-                    SetText("t63be5c", "exit");
+                    SetText(StoryTexts.CourtyardScene, "exit");
                     Say(Who.Julian, "RUINE0038", 34, last: true, after: local_318);
                 }
             }
@@ -377,7 +377,7 @@ public sealed partial class Courtyard : StoryScript
                 if (Var(Vars.V650b4c) == 0)
                 {
                     PointerOff();
-                    SetText("t63be5c", "Busch");
+                    SetText(StoryTexts.CourtyardScene, "Busch");
                     Walk(Timmy, 456, 433);
                     WalkAfter(George, 476, 450, null, 5);
                     ready = State(Timmy, StandLeft);
@@ -421,7 +421,7 @@ public sealed partial class Courtyard : StoryScript
                 ready = Chain;
                 if (Has(Item.Bucket))
                 {
-                    SetText("t63be5c", "wiederhinein");
+                    SetText(StoryTexts.CourtyardScene, "wiederhinein");
                     Say(Who.Dick, "RUINE0042", 8, after: ready);
                     Say(Who.George, "RUINE0042", 9, last: true, after: ready);
                 }
@@ -696,7 +696,7 @@ public sealed partial class Courtyard : StoryScript
                 PointerOff();
                 SetVar(Vars.V651524, 1);
                 F451ce3();
-                SetText("t63be5c", "start");
+                SetText(StoryTexts.CourtyardScene, "start");
                 Say(Who.Anne, "RUINE0038", 1, delay: 85);
                 Say(Who.Dick, "RUINE0038", 2);
                 Say(Who.Julian, "RUINE0038", 3);
@@ -731,7 +731,7 @@ public sealed partial class Courtyard : StoryScript
                 }
                 else
                 {
-                    SetText("t63be5c", "start");
+                    SetText(StoryTexts.CourtyardScene, "start");
                     PointerOff();
                     Chain = null;
                     IncAfter(Vars.V650d0c, null);
@@ -985,7 +985,7 @@ public sealed partial class Courtyard : StoryScript
                 if (Hero.State == PhoneStillRight)
                 {
                     StateAfter(Hero, PhoneTalkRight, null);
-                    SetText("t63be5c", "Kueche");
+                    SetText(StoryTexts.CourtyardScene, "Kueche");
                 }
                 else if (Var(Vars.CourtyardFree) > 1)
                 {
@@ -1097,7 +1097,7 @@ public sealed partial class Courtyard : StoryScript
             }
             else if (CurrentSpeaker == Who.Dick)
             {
-                if (Text("t63be5c") != "Kueche")
+                if (Text(StoryTexts.CourtyardScene) != "Kueche")
                 {
                     if (Var(Vars.CourtyardFree) > 1)
                     {
@@ -1112,32 +1112,32 @@ public sealed partial class Courtyard : StoryScript
                     SetAfter(Vars.EpisodeNumber, 1, end);
                     SetAfter(Vars.QuestNumber, 12, end);
                 }
-                if (Text("t63be5c") == "EfeuMitSeil")
+                if (Text(StoryTexts.CourtyardScene) == "EfeuMitSeil")
                 {
                     PointerAfter(false, end, x: 400, y: 400);
                     ChangeLocation("loc17b", end, 6);
-                    SetText("t63be5c", "");
+                    SetText(StoryTexts.CourtyardScene, "");
                 }
             }
         }
         else if (At(8, 2))
         {
-            if (Text("t63be5c") != "start")
+            if (Text(StoryTexts.CourtyardScene) != "start")
             {
-                if (Text("t63be5c") != "Busch")
+                if (Text(StoryTexts.CourtyardScene) != "Busch")
                 {
-                    if (Text("t63be5c") != "fr")
+                    if (Text(StoryTexts.CourtyardScene) != "fr")
                     {
-                        if (Text("t63be5c") == "Axt")
+                        if (Text(StoryTexts.CourtyardScene) == "Axt")
                         {
-                            SetText("t63be5c", "");
+                            SetText(StoryTexts.CourtyardScene, "");
                             StateAfter(Hero, StandDownRight, end);
                             goto LAB_00451cd7;
                         }
                     }
                     else
                     {
-                        SetText("t63be5c", "");
+                        SetText(StoryTexts.CourtyardScene, "");
                         PointerAfter(false, end, x: 400, y: 400);
                         Ask(Who.DickAlt, "RUINE0038", 90, after: end);
                     }
@@ -1152,7 +1152,7 @@ public sealed partial class Courtyard : StoryScript
                     WalkAfter(Dick, 431, 442, end, 10);
                     local_30 = State(Dick, StandDownRight);
                     Say(Who.Dick, "RUINE0038", 18, last: true, after: local_30, delay: 20);
-                    SetText("t63be5c", "fr");
+                    SetText(StoryTexts.CourtyardScene, "fr");
                     WalkAfter(Julian, 520, 433, end);
                     State(Julian, StandUpLeft);
                     WalkAfter(Anne, 540, 433, end);
@@ -1204,13 +1204,13 @@ public sealed partial class Courtyard : StoryScript
             {
                 StateAfter(Hero, StandDownRight, end);
             }
-            if (Text("t63be5c") == "Busch")
+            if (Text(StoryTexts.CourtyardScene) == "Busch")
             {
                 World.Hero = Dick;
             }
-            if (Text("t63be5c") != "fr")
+            if (Text(StoryTexts.CourtyardScene) != "fr")
             {
-                SetText("t63be5c", "");
+                SetText(StoryTexts.CourtyardScene, "");
             }
         }
         else if (At(8, 3))
@@ -1231,7 +1231,7 @@ public sealed partial class Courtyard : StoryScript
             {
                 StateAfter(Hero, StandDownRight, end);
             }
-            SetText("t63be5c", "");
+            SetText(StoryTexts.CourtyardScene, "");
         }
         else if (At(8, 4))
         {
@@ -1251,9 +1251,9 @@ public sealed partial class Courtyard : StoryScript
             {
                 StateAfter(Hero, StandDownRight, end);
             }
-            if (Text("t63be5c") != "wiederhinein")
+            if (Text(StoryTexts.CourtyardScene) != "wiederhinein")
             {
-                if (Text("t63be5c") == "start")
+                if (Text(StoryTexts.CourtyardScene) == "start")
                 {
                     ToggleAfter(Vars.V63be6e, end);
                 }
@@ -1263,7 +1263,7 @@ public sealed partial class Courtyard : StoryScript
                 PointerAfter(false, end, x: 400, y: 400);
                 ChangeLocation("loc18", end, 2);
             }
-            SetText("t63be5c", "");
+            SetText(StoryTexts.CourtyardScene, "");
         }
         else if (At(8, 5))
         {
@@ -1283,7 +1283,7 @@ public sealed partial class Courtyard : StoryScript
             {
                 StateAfter(Hero, StandDownRight, end);
             }
-            SetText("t63be5c", "");
+            SetText(StoryTexts.CourtyardScene, "");
         }
     LAB_00451cd7:
         return;

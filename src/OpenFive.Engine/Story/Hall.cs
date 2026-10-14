@@ -1127,9 +1127,9 @@ public sealed partial class Hall : StoryScript
                     {
                         if (CurrentSpeaker == Who.George)
                         {
-                            if (Text("t63bddc") == "Koffer")
+                            if (Text(StoryTexts.HallScene) == "Koffer")
                             {
-                                SetText("t63bddc", "");
+                                SetText(StoryTexts.HallScene, "");
                                 StateAfter(Hero, StandDownRight, end);
                                 iVar1 = StateAfter(Hero, KneelLeft, end, 4);
                                 StopAnimAfter("KofferKarte", iVar1, 15);
