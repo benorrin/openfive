@@ -4,7 +4,11 @@ using OpenFive.Engine.World;
 
 namespace OpenFive.Engine.Game;
 
-/// <summary>What the pointer is over.</summary>
+/// <summary>What the pointer is over: an object or a character.</summary>
+/// <param name="Name">The object's or character's name.</param>
+/// <param name="Label">The text shown by the pointer ("" for none).</param>
+/// <param name="Object">The object, if it is one.</param>
+/// <param name="Actor">The character, if it is one.</param>
 public readonly record struct HoverTarget(string Name, string Label, ObjectDef? Object, Actor? Actor);
 
 /// <summary>
@@ -13,35 +17,54 @@ public readonly record struct HoverTarget(string Name, string Label, ObjectDef? 
 /// </summary>
 public sealed class GameSession
 {
+    /// <summary>The game world: location, characters, tasks.</summary>
     public GameWorld World { get; }
+
+    /// <summary>The rucksack.</summary>
     public Inventory Inventory { get; } = new();
+
+    /// <summary>The script of the current location.</summary>
     public LocationScript Script { get; private set; }
+
+    /// <summary>The player's options.</summary>
     public Settings Settings { get; }
 
     /// <summary>Story state kept by the location scripts (puzzle progress etc.), saved with the game.</summary>
     public Dictionary<string, int> Vars { get; } = new(StringComparer.OrdinalIgnoreCase);
 
+    /// <summary>Remembered texts of the story scripts (saved with the game).</summary>
+    public Dictionary<string, string> Texts { get; } = new(StringComparer.OrdinalIgnoreCase);
+
+    /// <summary>
+    /// The value of a story variable (0 if never set). Some of the original's globals that the
+    /// scripts read and write are engine state: the quest, the episode and the language.
+    /// </summary>
     public int Var(string name) => name switch
     {
-        // Some of the original's globals that the scripts read and write are engine state.
-        "v64efe4" => World.Quest,
-        "v64efe8" => World.Episode,
-        "v64efd4" => World.Data.Language == Language.German ? 1 : 2,
+        Story.Vars.QuestNumber => World.Quest,
+        Story.Vars.EpisodeNumber => World.Episode,
+        Story.Vars.LanguageNumber => World.Data.Language == Language.German ? 1 : 2,
         _ => Vars.TryGetValue(name, out int v) ? v : 0,
     };
 
-    /// <summary>Remembered texts of the story scripts (saved with the game).</summary>
-    public Dictionary<string, string> Texts { get; } = new(StringComparer.OrdinalIgnoreCase);
+    /// <summary>Sets a story variable (the language cannot be set this way).</summary>
     public void SetVar(string name, int value)
     {
         if (Trace.On && Var(name) != value)
             Trace.Log($"{World.Tick}: var {name} = {value}");
         switch (name)
         {
-            case "v64efe4": World.Quest = value; break;
-            case "v64efe8": World.Episode = value; break;
-            case "v64efd4": break;
-            default: Vars[name] = value; break;
+            case Story.Vars.QuestNumber:
+                World.Quest = value;
+                break;
+            case Story.Vars.EpisodeNumber:
+                World.Episode = value;
+                break;
+            case Story.Vars.LanguageNumber:
+                break;
+            default:
+                Vars[name] = value;
+                break;
         }
     }
 
@@ -51,26 +74,51 @@ public sealed class GameSession
     public string PreviousLocation { get; private set; } = "";
     /// <summary>True once a game has been started or loaded.</summary>
     public bool InGame { get; set; }
+
+    /// <summary>Set when the player chose to quit.</summary>
     public bool QuitRequested { get; set; }
 
     /// <summary>Raised when the session wants a movie played (path relative to the disc, music track).</summary>
     public event Action<string, string>? MovieRequested;
+
+    /// <summary>Asks the platform to play a movie (see <see cref="MovieRequested"/>).</summary>
     public void PlayMovie(string path, string music) => MovieRequested?.Invoke(path, music);
+
     readonly Func<string, LocationScript> _scriptFactory;
 
-    // Pointer
+    // ---- pointer state ----
+
+    /// <summary>Pointer x position (screen pixels).</summary>
     public int MouseX { get; private set; } = 400;
+
+    /// <summary>Pointer y position (screen pixels).</summary>
     public int MouseY { get; private set; } = 300;
+
+    /// <summary>What the pointer is over (updated every tick).</summary>
     public HoverTarget? Hover { get; private set; }
+
     int _pointerFrame, _restTicks, _lastMouseX = -1, _lastMouseY = -1;
 
-    // Rucksack
+    /// <summary>Decoding buffer for the character hit test (reused between ticks).</summary>
+    byte[] _hitFrame = Array.Empty<byte>();
+
+    // ---- rucksack state ----
+
+    /// <summary>Is the rucksack open?</summary>
     public bool InventoryOpen { get; private set; }
+
     /// <summary>The item being dragged, or 0.</summary>
     public int Dragging { get; private set; }
+
+    /// <summary>The open rucksack's panel on screen.</summary>
     public const int BoxX = 268, BoxY = 146, BoxW = 448, BoxH = 308;
+
     const int ItemsX = BoxX + 60 + 30, ItemsY = BoxY + 30, ItemStepX = 60, ItemStepY = 50, ItemsPerRow = 6;
 
+    /// <summary>
+    /// Creates a session for <paramref name="world"/>; <paramref name="scripts"/> makes the
+    /// script for a location name (default: plain locations).
+    /// </summary>
     public GameSession(GameWorld world, Func<string, LocationScript>? scripts = null, Settings? settings = null)
     {
         World = world;
@@ -120,6 +168,7 @@ public sealed class GameSession
         Script.Enter(from);
     }
 
+    /// <summary>The mouse button was released.</summary>
     public void ButtonReleased() => Script.ButtonReleased();
 
     /// <summary>Text input (save names); returns true if it was used.</summary>
@@ -131,16 +180,18 @@ public sealed class GameSession
         Reset();
         InGame = true;
         // The rucksack starts with Dick's pocket knife and the newspaper.
-        Inventory.Give(6);
-        Inventory.Give(27);
+        Inventory.Give(Item.ClosedKnife);
+        Inventory.Give(Item.Newspaper);
         Story.NewGameState.Apply(this);
         StoryScript.NewGameMenus(this);
         World.Hero = World.Dick;
         ChangeLocation(NewGameLocation);
     }
 
+    /// <summary>Where a new game starts: the garden of Kirrin Cottage.</summary>
     public const string NewGameLocation = "loc06";
 
+    /// <summary>Switches the game's language (texts and speech) and saves the choice.</summary>
     public void SwitchLanguage(Language language)
     {
         World.Data.Language = language;
@@ -152,6 +203,7 @@ public sealed class GameSession
 
     // ---- saving -------------------------------------------------------------------------------
 
+    /// <summary>The game's current state as a save named <paramref name="name"/>.</summary>
     public SaveGame Capture(string name) => new()
     {
         Name = name,
@@ -178,12 +230,15 @@ public sealed class GameSession
         GameLocation = "";
     }
 
+    /// <summary>
+    /// Continues a saved game: the new-game state first (so flags the save does not mention keep
+    /// their defaults), then the saved state; then the saved location is entered.
+    /// </summary>
     public void Restore(SaveGame s)
     {
         Reset();
         foreach (int i in s.Items)
             Inventory.Give(i);
-        // Start from the new-game state, so flags a save does not mention keep their defaults.
         Story.NewGameState.Apply(this);
         StoryScript.NewGameMenus(this);
         foreach (var (k, v) in s.Vars)
@@ -202,9 +257,13 @@ public sealed class GameSession
 
     // ---- items -----------------------------------------------------------------------------
 
+    /// <summary>Puts an item into the rucksack.</summary>
     public void GiveItem(int item) => Inventory.Give(item);
+
+    /// <summary>Takes an item out of the rucksack.</summary>
     public void TakeItem(int item) => Inventory.Take(item);
 
+    /// <summary>Opens the rucksack (or redraws it): the panel and the carried items in rows of six.</summary>
     public void OpenInventory()
     {
         InventoryOpen = true;
@@ -231,6 +290,7 @@ public sealed class GameSession
     /// <summary>True when (x, y) is on the open rucksack panel.</summary>
     public static bool InRucksack(int x, int y) => x >= BoxX && x < BoxX + BoxW && y >= BoxY && y < BoxY + BoxH;
 
+    /// <summary>Closes the rucksack.</summary>
     public void CloseInventory()
     {
         if (!InventoryOpen)
@@ -245,6 +305,7 @@ public sealed class GameSession
 
     // ---- pointer and hover -------------------------------------------------------------------
 
+    /// <summary>Moves the pointer (kept on the screen).</summary>
     public void MoveMouse(int x, int y)
     {
         MouseX = Math.Clamp(x, 0, Framebuffer.Width - 1);
@@ -258,7 +319,7 @@ public sealed class GameSession
         int bestDepth = int.MaxValue;
         void Consider(ObjectDef o)
         {
-            if (o.Click.Length < 3 || !World.IsObjectOn(o.Name) || !Geometry.Contains(o.Click, x, y))
+            if (!o.Contains(x, y) || !World.IsObjectOn(o.Name))
                 return;
             if (Dragging != 0 && Inventory.ItemOf(o.Name) == Dragging)
                 return;
@@ -291,6 +352,7 @@ public sealed class GameSession
         return best;
     }
 
+    /// <summary>True when (x, y) is on a non-transparent pixel of the character's current frame.</summary>
     bool HitsActor(Actor a, int x, int y)
     {
         var s = a.Sprite;
@@ -300,11 +362,13 @@ public sealed class GameSession
         int w = (int)Math.Round(sheet.FrameWidth * s.Scale), h = (int)Math.Round(sheet.FrameHeight * s.Scale);
         if (x < s.X || y < s.Y || x >= s.X + w || y >= s.Y + h)
             return false;
-        var buf = new byte[sheet.FrameWidth * sheet.FrameHeight];
-        int key = sheet.Decode(s.Frame, buf);
+        int size = sheet.FrameWidth * sheet.FrameHeight;
+        if (_hitFrame.Length != size)
+            _hitFrame = new byte[size];
+        int key = sheet.Decode(s.Frame, _hitFrame);
         int sx = Math.Min(sheet.FrameWidth - 1, (int)((x - s.X) / s.Scale));
         int sy = Math.Min(sheet.FrameHeight - 1, (int)((y - s.Y) / s.Scale));
-        return buf[sy * sheet.FrameWidth + sx] != key;
+        return _hitFrame[sy * sheet.FrameWidth + sx] != key;
     }
 
     /// <summary>A location change requested by a script; applied at the start of the next tick.</summary>
@@ -349,6 +413,7 @@ public sealed class GameSession
             _pointerFrame = 0;
     }
 
+    /// <summary>The first pointer frame of the arrow for an exit in direction <paramref name="dir"/>.</summary>
     static int ArrowFrame(string dir) => dir.ToUpperInvariant() switch
     {
         "DOWN" => 5,
@@ -435,6 +500,7 @@ public sealed class GameSession
         DropItem(new HoverTarget(target, "", o, a));
     }
 
+    /// <summary>Drops the dragged item on a target: the item-use rules first, then the location script.</summary>
     void DropItem(HoverTarget? target)
     {
         int item = Dragging;

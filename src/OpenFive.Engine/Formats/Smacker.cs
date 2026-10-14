@@ -96,9 +96,16 @@ public sealed class Smacker
     readonly long[] _frameOffset;
     readonly BigTree _mmap = new(), _mclr = new(), _full = new(), _type = new();
 
+    /// <summary>Frame width in pixels.</summary>
     public int Width { get; }
+
+    /// <summary>Frame height in pixels.</summary>
     public int Height { get; }
+
+    /// <summary>The number of frames (including the final ring frame, a copy of the first).</summary>
     public int Frames { get; }
+
+    /// <summary>The frame last decoded (-1 before the first).</summary>
     public int CurrentFrame { get; private set; } = -1;
     /// <summary>Milliseconds per frame.</summary>
     public double FrameDelay { get; }
@@ -107,6 +114,8 @@ public sealed class Smacker
     /// <summary>Current palette, 256 * RGB888.</summary>
     public byte[] Palette { get; } = new byte[768];
 
+    /// <summary>Reads the header, frame table and Huffman trees of a Smacker file.</summary>
+    /// <exception cref="InvalidDataException">The file is not a Smacker video.</exception>
     public Smacker(byte[] file)
     {
         _file = file;
@@ -212,12 +221,6 @@ public sealed class Smacker
         v[self] = Node | r;
         r++;
         return r + BuildBig(ref br, lo, hi, esc, last, v, depth + 1);
-    }
-
-    public void Rewind()
-    {
-        CurrentFrame = -1;
-        Array.Clear(Pixels);
     }
 
     /// <summary>Decodes the next frame (wrapping after the last). Returns false on corrupt data.</summary>
@@ -345,8 +348,10 @@ public sealed class Smacker
                     int mode = 0;
                     if (_v4)
                     {
-                        if (br.Bit() != 0) mode = 1;
-                        else if (br.Bit() != 0) mode = 2;
+                        if (br.Bit() != 0)
+                            mode = 1;
+                        else if (br.Bit() != 0)
+                            mode = 2;
                     }
                     while (run-- > 0 && blk < blocks)
                     {

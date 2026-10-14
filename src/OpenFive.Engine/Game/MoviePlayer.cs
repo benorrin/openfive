@@ -11,8 +11,10 @@ public sealed class MoviePlayer
     double _clock;
     int _shown;
 
+    /// <summary>True once the movie has played to its end or was skipped.</summary>
     public bool Finished { get; private set; }
 
+    /// <summary>Opens a movie from the disc and decodes its first frame.</summary>
     public MoviePlayer(GameData data, string path)
     {
         _video = data.Video(path);
@@ -43,8 +45,10 @@ public sealed class MoviePlayer
         }
     }
 
+    /// <summary>Stops the movie.</summary>
     public void Skip() => Finished = true;
 
+    /// <summary>Draws the current frame centred on a black screen.</summary>
     public void Draw(Framebuffer fb)
     {
         fb.Clear();

@@ -14,20 +14,28 @@ public readonly record struct WalkLeg(int X, int Y, int Shape);
 /// </summary>
 public sealed class WalkGraph
 {
+    /// <summary>The paths, then the areas.</summary>
     public readonly List<WalkShape> Shapes = new();
+
+    /// <summary>Whether each shape may be walked on (scripts block some at times).</summary>
     public readonly List<bool> Enabled = new();
+
+    /// <summary>The number of paths (areas are numbered after them).</summary>
     public int PathCount { get; }
 
+    /// <summary>Builds the graph of a location; every shape starts enabled.</summary>
     public WalkGraph(ResScript res)
     {
         Shapes.AddRange(res.Paths);
         Shapes.AddRange(res.Areas);
         PathCount = res.Paths.Count;
-        foreach (var _ in Shapes)
-            Enabled.Add(true);
+        Enabled.AddRange(Enumerable.Repeat(true, Shapes.Count));
     }
 
+    /// <summary>Is the shape an area (rather than a path)?</summary>
     public bool IsArea(int shape) => shape >= PathCount;
+
+    /// <summary>Is <paramref name="shape"/> the number of a shape?</summary>
     public bool Valid(int shape) => shape >= 0 && shape < Shapes.Count;
 
     /// <summary>Is (x, y) on the polyline of path <paramref name="shape"/> (y matching the line at x)?</summary>
@@ -89,13 +97,17 @@ public sealed class WalkGraph
         int py = (int)Math.Round(ay + (px - ax) * m);
         if (ax < bx)
         {
-            if (px < ax) (px, py) = (ax, ay);
-            else if (px > bx) (px, py) = (bx, by);
+            if (px < ax)
+                (px, py) = (ax, ay);
+            else if (px > bx)
+                (px, py) = (bx, by);
         }
         else
         {
-            if (px > ax) (px, py) = (ax, ay);
-            else if (px < bx) (px, py) = (bx, by);
+            if (px > ax)
+                (px, py) = (ax, ay);
+            else if (px < bx)
+                (px, py) = (bx, by);
         }
         return (px, py);
     }
@@ -125,13 +137,17 @@ public sealed class WalkGraph
                 double d = Dist(px, py, x, y);
                 if (IsArea(s))
                 {
-                    if (d < dArea) { dArea = d; bestArea = new WalkPos(s, px, py); }
+                    if (d < dArea)
+                    { dArea = d; bestArea = new WalkPos(s, px, py); }
                 }
-                else if (d < dPath) { dPath = d; bestPath = new WalkPos(s, px, py); }
+                else if (d < dPath)
+                { dPath = d; bestPath = new WalkPos(s, px, py); }
             }
         }
-        if (bestPath == null) return bestArea;
-        if (bestArea == null) return bestPath;
+        if (bestPath == null)
+            return bestArea;
+        if (bestArea == null)
+            return bestPath;
         return dPath <= dArea ? bestPath : bestArea;
     }
 
@@ -144,8 +160,10 @@ public sealed class WalkGraph
             int lo = 0, hi = 0;
             for (int i = 1; i < p.Length; i++)
             {
-                if (p[i].Y < p[lo].Y) lo = i;
-                if (p[i].Y > p[hi].Y) hi = i;
+                if (p[i].Y < p[lo].Y)
+                    lo = i;
+                if (p[i].Y > p[hi].Y)
+                    hi = i;
             }
             if (p[hi].Y == p[lo].Y)
                 return value(p[hi]);
@@ -163,7 +181,8 @@ public sealed class WalkGraph
             {
                 var (px, py) = ClosestOnSegment(p[i], p[i + 1], x, y);
                 double d = Dist(px, py, x, y);
-                if (d < best) { best = d; seg = i; }
+                if (d < best)
+                { best = d; seg = i; }
             }
         }
         if (seg < 0)
@@ -206,7 +225,8 @@ public sealed class WalkGraph
         {
             var (px, py) = ClosestOnSegment(p[i], p[i + 1], x, y);
             double d = Dist(px, py, x, y);
-            if (d < bd) { bd = d; best = i; }
+            if (d < bd)
+            { bd = d; best = i; }
         }
         return best;
     }

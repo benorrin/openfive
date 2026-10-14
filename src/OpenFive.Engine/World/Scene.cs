@@ -13,11 +13,24 @@ public sealed class Scene
     readonly ushort[] _backgroundPixels = new ushort[Framebuffer.Width * Framebuffer.Height];
     double _backgroundClock;
 
+    const string SkyPath = "bmp/sky/skyback.brg";
+
+    /// <summary>Background pixels of this colour (pure green) are transparent: the sky shows through.</summary>
+    const ushort ChromaKey = 0x07E0;
+
+    /// <summary>The location's name ("loc05").</summary>
     public string Name { get; }
+
+    /// <summary>The location's ".res" description.</summary>
     public ResScript Script { get; }
+
+    /// <summary>The depth mask: a region number per screen pixel (null if the location has none).</summary>
     public byte[]? Mask { get; }
+
+    /// <summary>The on/off state of the location's objects.</summary>
     public Dictionary<string, bool> ObjectVisible { get; } = new(StringComparer.OrdinalIgnoreCase);
 
+    /// <summary>Loads location <paramref name="name"/>: description, background movie, mask, object states.</summary>
     public Scene(GameData data, string name)
     {
         _data = data;
@@ -71,67 +84,6 @@ public sealed class Scene
         }
     }
 
-    const string SkyPath = "bmp/sky/skyback.brg";
-    const ushort ChromaKey = 0x07E0;
-
-    /// <summary>Draws the visible objects that have graphics, furthest (largest depth) first.</summary>
-    public void DrawObjects(Framebuffer fb)
-    {
-        foreach (var o in Script.Objects.Where(o => o.Gfx >= 0 && IsVisible(o)).OrderByDescending(o => o.Depth))
-            DrawGfx(fb, o.Gfx, o.GfxX, o.GfxY);
-    }
-
-    public void DrawGfx(Framebuffer fb, int resource, int x, int y, int frame = 0)
-    {
-        if (resource < 0 || resource >= Script.Resources.Count)
-            return;
-        var r = Script.Resources[resource];
-        if (r.Kind != ResourceKind.Gfx || !_data.Exists(r.Path))
-            return;
-        if (r.Packed || _data.IsPacked(r.Path))
-        {
-            var sheet = _data.Packed(r.Path);
-            var buf = new byte[sheet.FrameWidth * sheet.FrameHeight];
-            int key = sheet.Decode(frame, buf);
-            fb.BlitIndexed(buf, sheet.FrameWidth, sheet.FrameHeight, sheet.Palette, key, x, y);
-        }
-        else
-        {
-            var img = _data.Image(r.Path);
-            fb.Blit(img, x, y, img.Pixels.Length > 0 ? img.Pixels[0] : -1);
-        }
-    }
-
+    /// <summary>Is the object switched on (its state in this location, else its default)?</summary>
     public bool IsVisible(ObjectDef o) => ObjectVisible.TryGetValue(o.Name, out bool v) ? v : o.On;
-
-    /// <summary>The visible, clickable object under (x, y), preferring the nearest one.</summary>
-    public ObjectDef? ObjectAt(int x, int y)
-    {
-        ObjectDef? best = null;
-        foreach (var o in Script.Objects)
-        {
-            if (!IsVisible(o) || o.Click.Length < 3 || !Geometry.Contains(o.Click, x, y))
-                continue;
-            if (best == null || o.Depth < best.Depth)
-                best = o;
-        }
-        return best;
-    }
-}
-
-public static class Geometry
-{
-    /// <summary>Even-odd point-in-polygon test.</summary>
-    public static bool Contains((int X, int Y)[] poly, int x, int y)
-    {
-        bool inside = false;
-        for (int i = 0, j = poly.Length - 1; i < poly.Length; j = i++)
-        {
-            var a = poly[i];
-            var b = poly[j];
-            if ((a.Y > y) != (b.Y > y) && x < (double)(b.X - a.X) * (y - a.Y) / (b.Y - a.Y) + a.X)
-                inside = !inside;
-        }
-        return inside;
-    }
 }

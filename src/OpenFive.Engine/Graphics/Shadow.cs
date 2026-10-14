@@ -99,7 +99,7 @@ public static class Shadow
                     continue;
                 int i = screenY * Framebuffer.Width + x;
                 fb.Pixels[i] = DarkenPixel(fb.Pixels[i]);
-               
+
             }
             screenY = y;
             u0 += rowU;

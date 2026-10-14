@@ -5,21 +5,22 @@ namespace OpenFive.Engine.Graphics;
 /// <summary>The 800x600 RGB565 screen the game draws into.</summary>
 public sealed class Framebuffer
 {
+    /// <summary>The screen size the game was made for.</summary>
     public const int Width = 800, Height = 600;
+
+    /// <summary>The pixels, row by row.</summary>
     public readonly ushort[] Pixels = new ushort[Width * Height];
 
+    /// <summary>Fills the screen with one colour (black by default).</summary>
     public void Clear(ushort colour = 0) => Array.Fill(Pixels, colour);
-
-    public void CopyFrom(ushort[] src)
-    {
-        Array.Copy(src, Pixels, Math.Min(src.Length, Pixels.Length));
-    }
 
     /// <summary>Draws an RGB565 image; pixels equal to <paramref name="key"/> are transparent.</summary>
     public void Blit(Image16 img, int dx, int dy, int key = -1, int sx = 0, int sy = 0, int w = -1, int h = -1)
     {
-        if (w < 0) w = img.Width - sx;
-        if (h < 0) h = img.Height - sy;
+        if (w < 0)
+            w = img.Width - sx;
+        if (h < 0)
+            h = img.Height - sy;
         for (int y = 0; y < h; y++)
         {
             int ty = dy + y, srcY = sy + y;
@@ -92,29 +93,4 @@ public sealed class Framebuffer
             }
         }
     }
-
-    public void FillRect(int x, int y, int w, int h, ushort colour)
-    {
-        for (int yy = Math.Max(0, y); yy < Math.Min(Height, y + h); yy++)
-            for (int xx = Math.Max(0, x); xx < Math.Min(Width, x + w); xx++)
-                Pixels[yy * Width + xx] = colour;
-    }
-
-    /// <summary>Darkens/blends a rectangle towards a colour (used for translucent text boxes).</summary>
-    public void BlendRect(int x, int y, int w, int h, ushort colour, int alpha256)
-    {
-        int cr = colour >> 11, cg = (colour >> 5) & 63, cb = colour & 31;
-        for (int yy = Math.Max(0, y); yy < Math.Min(Height, y + h); yy++)
-            for (int xx = Math.Max(0, x); xx < Math.Min(Width, x + w); xx++)
-            {
-                ushort p = Pixels[yy * Width + xx];
-                int r = p >> 11, g = (p >> 5) & 63, b = p & 31;
-                r += (cr - r) * alpha256 >> 8;
-                g += (cg - g) * alpha256 >> 8;
-                b += (cb - b) * alpha256 >> 8;
-                Pixels[yy * Width + xx] = (ushort)(r << 11 | g << 5 | b);
-            }
-    }
-
-    public static ushort Rgb(int r, int g, int b) => (ushort)((r >> 3) << 11 | (g >> 2) << 5 | (b >> 3));
 }

@@ -3,10 +3,16 @@ namespace OpenFive.Engine.Formats;
 /// <summary>An RGB565 image (the game's native pixel format).</summary>
 public sealed class Image16
 {
+    /// <summary>Width in pixels.</summary>
     public int Width { get; }
+
+    /// <summary>Height in pixels.</summary>
     public int Height { get; }
+
+    /// <summary>The pixels, row by row.</summary>
     public ushort[] Pixels { get; }
 
+    /// <summary>Creates an image (black, unless <paramref name="pixels"/> are given).</summary>
     public Image16(int width, int height, ushort[]? pixels = null)
     {
         Width = width;
@@ -14,6 +20,7 @@ public sealed class Image16
         Pixels = pixels ?? new ushort[width * height];
     }
 
+    /// <summary>The pixel at (x, y).</summary>
     public ushort this[int x, int y] => Pixels[y * Width + x];
 }
 
@@ -23,10 +30,22 @@ public sealed class Image16
 /// </summary>
 public sealed class PackedSheet
 {
-    public int SheetWidth, SheetHeight, FrameWidth, FrameHeight;
+    /// <summary>Size of the whole sheet as declared in the file.</summary>
+    public int SheetWidth, SheetHeight;
+
+    /// <summary>Size of one frame.</summary>
+    public int FrameWidth, FrameHeight;
+
+    /// <summary>The 256 colours (RGB565).</summary>
     public ushort[] Palette = new ushort[256];
+
+    /// <summary>Where each frame's coded data ends in <see cref="Data"/>.</summary>
     public uint[] FrameEnd = Array.Empty<uint>();
+
+    /// <summary>The coded frames, one after the other.</summary>
     public byte[] Data = Array.Empty<byte>();
+
+    /// <summary>The number of frames.</summary>
     public int Frames => FrameEnd.Length;
 
     /// <summary>
@@ -56,9 +75,12 @@ public sealed class PackedSheet
             if (b1 != 0xFF)
             {
                 output[o++] = b0;
-                if (o < total) output[o++] = b1;
-                if (o < total) output[o++] = b2;
-                if (o < total) output[o++] = b3;
+                if (o < total)
+                    output[o++] = b1;
+                if (o < total)
+                    output[o++] = b2;
+                if (o < total)
+                    output[o++] = b3;
             }
             else
             {
@@ -74,6 +96,7 @@ public sealed class PackedSheet
 /// <summary>Reader for the game's ".brg" bitmap files.</summary>
 public static class Brg
 {
+    /// <summary>The file header: for packed sheets A and B are the frame size; Type 0 means raw pixels.</summary>
     readonly record struct Header(int HeaderSize, int W, int H, int A, int B, int Type);
 
     static Header ReadHeader(byte[] d)
@@ -87,6 +110,8 @@ public static class Brg
     /// <summary>True if the file holds a palettised, run-length coded sprite sheet.</summary>
     public static bool IsPacked(byte[] d) => ReadHeader(d).Type != 0;
 
+    /// <summary>Loads an uncompressed RGB565 picture.</summary>
+    /// <exception cref="InvalidDataException">The file is not a raw BRG picture.</exception>
     public static Image16 LoadRaw(byte[] d)
     {
         var h = ReadHeader(d);
@@ -98,6 +123,8 @@ public static class Brg
         return img;
     }
 
+    /// <summary>Loads a packed sprite sheet (palette, frame table and coded frames).</summary>
+    /// <exception cref="InvalidDataException">The file is not a packed BRG sheet.</exception>
     public static PackedSheet LoadPacked(byte[] d)
     {
         var h = ReadHeader(d);

@@ -2,41 +2,49 @@ using OpenFive.Engine.Formats;
 
 namespace OpenFive.Engine.Audio;
 
-public enum SoundCategory { Music, Effects, Speech }
+/// <summary>The kinds of sound, each with its own volume.</summary>
+public enum SoundCategory
+{
+    /// <summary>The background track (music or ambience).</summary>
+    Music,
+    /// <summary>Sound effects.</summary>
+    Effects,
+    /// <summary>Spoken lines.</summary>
+    Speech,
+}
 
 /// <summary>
 /// Software mixer for the game's sounds: a looping background track (music or ambience), sound
 /// effects and speech. Produces interleaved stereo float samples at <see cref="Wav.OutputRate"/>;
-/// the platform layer pulls them with <see cref="Mix"/> from its audio thread.
+/// the platform layer pulls them with <see cref="Mix"/> from its audio thread, so every public
+/// member is thread-safe.
 /// </summary>
 public sealed class AudioMixer
 {
+    /// <summary>A sound being played.</summary>
     sealed class Voice
     {
         public required AudioClip Clip;
         public required SoundCategory Category;
         public int Position;
         public bool Loop, Playing = true;
-        public float Gain = 1, Pan; // pan -1 (left) .. 1 (right)
+        public float Gain = 1;
+        /// <summary>-1 (left) .. 1 (right).</summary>
+        public float Pan;
     }
 
     readonly object _lock = new();
     readonly Dictionary<int, Voice> _voices = new();
+    readonly float[] _categoryVolume = { 1, 1, 1 };
     int _nextId = 1;
     int _musicId;
-    readonly float[] _categoryVolume = { 1, 1, 1 };
-    bool _paused;
 
-    public float MasterVolume { get; set; } = 1;
-
-    /// <summary>Volume of a category, 0..1 (the game's options sliders).</summary>
+    /// <summary>Sets the volume of a category, 0..1 (the game's options sliders).</summary>
     public void SetCategoryVolume(SoundCategory c, float volume)
     {
         lock (_lock)
             _categoryVolume[(int)c] = Math.Clamp(volume, 0, 1);
     }
-
-    public float GetCategoryVolume(SoundCategory c) => _categoryVolume[(int)c];
 
     /// <summary>
     /// Converts the game's 0..100 volume scale into a linear gain: the original used
@@ -51,6 +59,7 @@ public sealed class AudioMixer
     /// <summary>Converts a pan of -10000 (left) .. 10000 (right) into -1..1.</summary>
     public static float PanFromUnits(int units) => Math.Clamp(units / 10000f, -1, 1);
 
+    /// <summary>Starts playing a clip; returns its voice id.</summary>
     public int Play(AudioClip clip, SoundCategory category, bool loop = false, float gain = 1, float pan = 0)
     {
         lock (_lock)
@@ -72,30 +81,18 @@ public sealed class AudioMixer
         }
     }
 
+    /// <summary>Stops a voice.</summary>
     public void Stop(int id)
     {
         lock (_lock)
             _voices.Remove(id);
     }
 
+    /// <summary>Is the voice still playing?</summary>
     public bool IsPlaying(int id)
     {
         lock (_lock)
             return _voices.TryGetValue(id, out var v) && v.Playing;
-    }
-
-    public void SetGain(int id, float gain)
-    {
-        lock (_lock)
-            if (_voices.TryGetValue(id, out var v))
-                v.Gain = gain;
-    }
-
-    public void SetPan(int id, float pan)
-    {
-        lock (_lock)
-            if (_voices.TryGetValue(id, out var v))
-                v.Pan = pan;
     }
 
     /// <summary>Stops all speech; returns true if anything was playing.</summary>
@@ -110,65 +107,47 @@ public sealed class AudioMixer
         }
     }
 
-    public void StopAll(bool keepMusic = false)
-    {
-        lock (_lock)
-        {
-            foreach (int id in _voices.Keys.ToList())
-                if (!keepMusic || id != _musicId)
-                    _voices.Remove(id);
-            if (!keepMusic)
-                _musicId = 0;
-        }
-    }
-
-    public bool Paused
-    {
-        get => _paused;
-        set { lock (_lock) _paused = value; }
-    }
-
     /// <summary>Fills <paramref name="output"/> (interleaved stereo) with the mix of all voices.</summary>
     public void Mix(Span<float> output)
     {
         output.Clear();
         lock (_lock)
         {
-            if (_paused)
-                return;
             List<int>? finished = null;
             foreach (var (id, v) in _voices)
-            {
-                if (!v.Playing)
-                    continue;
-                float g = v.Gain * _categoryVolume[(int)v.Category] * MasterVolume;
-                float gl = g * (v.Pan > 0 ? 1 - v.Pan : 1), gr = g * (v.Pan < 0 ? 1 + v.Pan : 1);
-                var s = v.Clip.Samples;
-                int frames = output.Length / 2;
-                for (int i = 0; i < frames; i++)
-                {
-                    if (v.Position >= v.Clip.Frames)
-                    {
-                        if (v.Loop && v.Clip.Frames > 0)
-                            v.Position = 0;
-                        else
-                        {
-                            v.Playing = false;
-                            (finished ??= new List<int>()).Add(id);
-                            break;
-                        }
-                    }
-                    output[i * 2] += s[v.Position * 2] * gl;
-                    output[i * 2 + 1] += s[v.Position * 2 + 1] * gr;
-                    v.Position++;
-                }
-            }
+                if (v.Playing && !MixVoice(v, output))
+                    (finished ??= new List<int>()).Add(id);
+            // Finished voices are dropped; the background track stays (it loops).
             if (finished != null)
-                foreach (int id in finished)
-                    if (id != _musicId)
-                        _voices.Remove(id);
+                foreach (int id in finished.Where(id => id != _musicId))
+                    _voices.Remove(id);
         }
         for (int i = 0; i < output.Length; i++)
             output[i] = Math.Clamp(output[i], -1f, 1f);
+    }
+
+    /// <summary>Adds the voice's next samples to <paramref name="output"/>; false when it has ended.</summary>
+    bool MixVoice(Voice v, Span<float> output)
+    {
+        float gain = v.Gain * _categoryVolume[(int)v.Category];
+        float left = gain * (v.Pan > 0 ? 1 - v.Pan : 1), right = gain * (v.Pan < 0 ? 1 + v.Pan : 1);
+        var samples = v.Clip.Samples;
+        int frames = output.Length / 2;
+        for (int i = 0; i < frames; i++)
+        {
+            if (v.Position >= v.Clip.Frames)
+            {
+                if (!v.Loop || v.Clip.Frames == 0)
+                {
+                    v.Playing = false;
+                    return false;
+                }
+                v.Position = 0;
+            }
+            output[i * 2] += samples[v.Position * 2] * left;
+            output[i * 2 + 1] += samples[v.Position * 2 + 1] * right;
+            v.Position++;
+        }
+        return true;
     }
 }

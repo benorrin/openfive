@@ -5,15 +5,25 @@ namespace OpenFive.Engine.Formats;
 /// <summary>Hover/use texts of objects: "OBJECT name" followed by "over:", "use:", "forceuse:" lines.</summary>
 public sealed class ObjectTexts
 {
+    /// <summary>The texts of one object.</summary>
     public sealed class Entry
     {
-        public string Over = "", Use = "", ForceUse = "";
+        /// <summary>Shown while the pointer is over the object.</summary>
+        public string Over = "";
+
+        /// <summary>Said when the object is used (unused by OpenFive).</summary>
+        public string Use = "";
+
+        /// <summary>Said when an item is forced onto the object (unused by OpenFive).</summary>
+        public string ForceUse = "";
     }
 
     readonly Dictionary<string, Entry> _entries = new(StringComparer.OrdinalIgnoreCase);
 
-    public Entry? Get(string name) => _entries.TryGetValue(name, out var e) ? e : null;
+    /// <summary>The texts of an object, or null if it has none.</summary>
+    public Entry? Get(string name) => _entries.GetValueOrDefault(name);
 
+    /// <summary>Adds the objects of a text file (later entries replace earlier ones).</summary>
     public void Load(byte[] data)
     {
         Entry? cur = null;
@@ -35,9 +45,15 @@ public sealed class ObjectTexts
                 string val = line[(colon + 1)..].Trim();
                 switch (key)
                 {
-                    case "over": cur.Over = val; break;
-                    case "use": cur.Use = val; break;
-                    case "forceuse": cur.ForceUse = val; break;
+                    case "over":
+                        cur.Over = val;
+                        break;
+                    case "use":
+                        cur.Use = val;
+                        break;
+                    case "forceuse":
+                        cur.ForceUse = val;
+                        break;
                 }
             }
         }
@@ -47,9 +63,16 @@ public sealed class ObjectTexts
 /// <summary>A line (or, for choices, a set of options) of a character's dialogue file.</summary>
 public sealed class DialogEntry
 {
+    /// <summary>A choice menu ("DLG") rather than a spoken line ("V").</summary>
     public bool IsChoice;
+
+    /// <summary>The story step the entry belongs to.</summary>
     public int Quest, Episode;
+
+    /// <summary>The scene name ("KUECHE0027").</summary>
     public string Scene = "";
+
+    /// <summary>The line number within the scene.</summary>
     public int Id;
     /// <summary>Text and speech file name of each option (one for normal lines).</summary>
     public List<(string Text, string Speech)> Options = new();
@@ -76,8 +99,10 @@ public sealed class DialogTexts
     public DialogEntry? Find(string scene, int id) =>
         _entries.Values.FirstOrDefault(d => d.Scene.Equals(scene, StringComparison.OrdinalIgnoreCase) && d.Id == id);
 
+    /// <summary>All entries loaded.</summary>
     public IEnumerable<DialogEntry> All => _entries.Values;
 
+    /// <summary>Adds the entries of one speaker's dialogue file.</summary>
     public void Load(byte[] data, string speaker)
     {
         DialogEntry? cur = null;
@@ -122,6 +147,7 @@ public sealed class DialogTexts
         }
     }
 
+    /// <summary>The number of a tagged field ("Q5" = 5); 0 if there is none.</summary>
     static int ParseTagged(string s)
     {
         s = s.Trim();

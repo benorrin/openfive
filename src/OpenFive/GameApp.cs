@@ -18,10 +18,13 @@ sealed class GameApp
     readonly GameWorld _world;
     readonly GameSession _session;
     readonly Settings _settings;
-    MoviePlayer? _movie;
+    /// <summary>One tick's worth of sound, mixed and thrown away when there is no audio device.</summary>
     readonly float[] _silence = new float[Engine.Formats.Wav.OutputRate / 10 * 2];
+
+    MoviePlayer? _movie;
     int _movieMusic;
 
+    /// <summary>Sets up the world and session with the player's settings.</summary>
     public GameApp(GameData data, Options opt, Settings settings)
     {
         _data = data;
@@ -55,6 +58,7 @@ sealed class GameApp
         }
     }
 
+    /// <summary>Stops the movie and its own music.</summary>
     void EndMovie()
     {
         _movie = null;
@@ -63,6 +67,10 @@ sealed class GameApp
         _movieMusic = 0;
     }
 
+    /// <summary>
+    /// Starts the intro (unless skipped), then either the logo/menu or, with --loc, a game in that
+    /// location at the given story step.
+    /// </summary>
     void Start()
     {
         if (!_opt.SkipIntro)
@@ -86,6 +94,7 @@ sealed class GameApp
             _session.EnterLocation(_opt.SkipIntro ? "menue" : "logo");
     }
 
+    /// <summary>One game tick (nothing happens while a movie plays).</summary>
     void Tick()
     {
         if (_movie != null)
@@ -98,6 +107,7 @@ sealed class GameApp
         _world.Update();
     }
 
+    /// <summary>Draws the movie, or the game and the pointer.</summary>
     void Render()
     {
         if (_movie != null)
@@ -109,6 +119,7 @@ sealed class GameApp
         _session.DrawOverlay(_fb);
     }
 
+    /// <summary>A click skips a movie, or goes to the game.</summary>
     void Click(int x, int y)
     {
         if (_movie != null)
@@ -120,6 +131,10 @@ sealed class GameApp
         _session.Click();
     }
 
+    /// <summary>
+    /// A key: skips a movie, types into a save name, or F1 (menu), Space (skip the line) and
+    /// Escape (back to the game from a menu).
+    /// </summary>
     void Key(int scancode)
     {
         if (_movie != null)
@@ -139,11 +154,12 @@ sealed class GameApp
             _session.ChangeLocation(_session.GameLocation);
     }
 
+    /// <summary>The character a key types (letters, digits, space and editing keys), or '\0'.</summary>
     static char ScancodeToChar(int sc) => sc switch
     {
-        >= 4 and <= 29 => (char)('A' + sc - 4),
-        >= 30 and <= 38 => (char)('1' + sc - 30),
-        39 => '0',
+        >= Keys.A and <= Keys.Z => (char)('A' + sc - Keys.A),
+        >= Keys.Digit1 and <= Keys.Digit9 => (char)('1' + sc - Keys.Digit1),
+        Keys.Digit0 => '0',
         Keys.Space => ' ',
         Keys.Backspace => '\b',
         Keys.Return => '\r',
@@ -163,17 +179,13 @@ sealed class GameApp
         int maxTicks = _opt.Frames > 0 ? _opt.Frames : 200000;
         for (int t = 0; t < maxTicks && !runner.Done && !_session.QuitRequested; t++)
         {
-            string? msg = runner.Tick(_session, file =>
-            {
-                Render();
-                Screenshot.SaveBmp(_fb, file);
-            });
+            string? msg = runner.Tick(_session, SaveScreenshot);
             if (msg != null)
                 Console.WriteLine($"{t,6} {msg}");
             _mixer.Mix(_silence);
             Tick();
         }
-        Console.WriteLine($"end: {_world.Scene?.Name} Q{_world.Quest} E{_world.Episode} items [{string.Join(",", _session.Inventory.Items)}] errors {runner.Errors}{(runner.Done ? "" : " (not finished)")}");
+        Console.WriteLine($"end: {Summary()} errors {runner.Errors}{(runner.Done ? "" : " (not finished)")}");
         return runner.Errors == 0 && runner.Done ? 0 : 1;
     }
 
@@ -199,8 +211,7 @@ sealed class GameApp
                         Key(cmd.X);
                         break;
                     case "shot":
-                        Render();
-                        Screenshot.SaveBmp(_fb, cmd.Arg);
+                        SaveScreenshot(cmd.Arg);
                         Console.WriteLine($"tick {t}: {_world.Scene?.Name} Q{_world.Quest} E{_world.Episode} -> {cmd.Arg}");
                         break;
                 }
@@ -213,20 +224,37 @@ sealed class GameApp
             Tick();
         }
         if (_opt.Screenshot != null)
-        {
-            Render();
-            Screenshot.SaveBmp(_fb, _opt.Screenshot);
-        }
-        Console.WriteLine($"end: {_world.Scene?.Name} Q{_world.Quest} E{_world.Episode} items [{string.Join(",", _session.Inventory.Items)}]");
+            SaveScreenshot(_opt.Screenshot);
+        Console.WriteLine($"end: {Summary()}");
         return 0;
     }
 
+    void SaveScreenshot(string file)
+    {
+        Render();
+        Screenshot.SaveBmp(_fb, file);
+    }
+
+    /// <summary>Where the game is: location, story step and rucksack.</summary>
+    string Summary() =>
+        $"{_world.Scene?.Name} Q{_world.Quest} E{_world.Episode} items [{string.Join(",", _session.Inventory.Items)}]";
+
+    /// <summary>Runs the game (or an off-screen run, for --play, --script and --screenshot); returns the exit code.</summary>
     public int Run()
     {
         if (_opt.Play != null)
             return RunPlay();
         if (_opt.Script != null || _opt.Screenshot != null)
             return RunScripted();
+        return RunWindowed();
+    }
+
+    /// <summary>
+    /// The game in a window: input, movies, ten game ticks per second (at most a second's worth
+    /// caught up after a stall), and a frame drawn every time round.
+    /// </summary>
+    int RunWindowed()
+    {
         using var host = new Host(_opt.Fullscreen || _settings.Fullscreen, _settings.SmoothScaling && !_opt.Sharp);
         using var output = new AudioOutput(_mixer);
         Start();
@@ -253,14 +281,8 @@ sealed class GameApp
                 if (_movie.Finished)
                     EndMovie();
             }
-            clock += dt;
-            if (clock > 1000)
-                clock = 1000;
-            while (clock >= 100)
-            {
-                clock -= 100;
+            for (clock = Math.Min(clock + dt, 1000); clock >= 100; clock -= 100)
                 Tick();
-            }
             Render();
             host.Present(_fb, host.Input.MouseInside && _movie == null);
             if (_world.CursorWarp is { } w)

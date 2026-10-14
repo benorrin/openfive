@@ -8,12 +8,13 @@ namespace OpenFive.Platform;
 /// <summary>Feeds the engine's <see cref="AudioMixer"/> to the default SDL3 playback device.</summary>
 public sealed unsafe class AudioOutput : IDisposable
 {
+    // The SDL callback is a static function, so the mixer and buffer are static too (there is
+    // only ever one output).
     static AudioMixer? s_mixer;
     static float[] s_buffer = new float[8192];
     IntPtr _stream;
 
-    public bool Available => _stream != IntPtr.Zero;
-
+    /// <summary>Opens the default playback device and starts pulling sound from <paramref name="mixer"/>.</summary>
     public AudioOutput(AudioMixer mixer)
     {
         s_mixer = mixer;
@@ -27,6 +28,7 @@ public sealed unsafe class AudioOutput : IDisposable
         Sdl.ResumeAudioStreamDevice(_stream);
     }
 
+    /// <summary>Called by SDL's audio thread when it needs <paramref name="additional"/> more bytes.</summary>
     [UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvCdecl) })]
     static void Callback(IntPtr userdata, IntPtr stream, int additional, int total)
     {
@@ -42,6 +44,7 @@ public sealed unsafe class AudioOutput : IDisposable
             Sdl.PutAudioStreamData(stream, p, span.Length * sizeof(float));
     }
 
+    /// <summary>Stops the sound and closes the device.</summary>
     public void Dispose()
     {
         if (_stream != IntPtr.Zero)

@@ -9,16 +9,31 @@ namespace OpenFive.Engine.World;
 /// </summary>
 public sealed class Sprite
 {
+    /// <summary>The picture shown (null: nothing yet).</summary>
     public ResourceEntry? Resource;
+
+    /// <summary>The picture is a packed sprite sheet (frames by number) rather than a raw picture.</summary>
     public bool Packed;
+
+    /// <summary>Is the sprite drawn?</summary>
     public bool Visible;
+
     /// <summary>Larger depth = further away (drawn earlier).</summary>
     public int Depth;
+
+    /// <summary>The part of a raw picture shown.</summary>
     public int SrcX, SrcY, SrcW, SrcH;
+
     /// <summary>Frame of a packed sheet to show.</summary>
     public int Frame;
+
+    /// <summary>Top left corner on screen.</summary>
     public int X, Y;
+
+    /// <summary>Drawing scale.</summary>
     public double Scale = 1;
+
+    /// <summary>Drawn mirrored left to right.</summary>
     public bool Mirror;
     /// <summary>Depth at which the background mask hides this sprite (actors), or null.</summary>
     public int? MaskDepth;
@@ -26,6 +41,10 @@ public sealed class Sprite
     /// <summary>A sprite owned by a character; its image changes with the character's animation.</summary>
     public Sprite() { }
 
+    /// <summary>
+    /// A sprite for an object or animation picture of <paramref name="width"/> by
+    /// <paramref name="height"/>; packed sheets start far back (depth 8000).
+    /// </summary>
     public Sprite(ResourceEntry resource, bool packed, int width, int height)
     {
         Resource = resource;
@@ -44,8 +63,10 @@ public sealed class SpriteBank
     readonly List<Sprite> _order = new();
     byte[] _frameBuffer = Array.Empty<byte>();
 
+    /// <summary>Creates an empty bank that loads pictures from <paramref name="data"/>.</summary>
     public SpriteBank(GameData data) => _data = data;
 
+    /// <summary>The sprites, in the order they were created.</summary>
     public IReadOnlyList<Sprite> All => _order;
 
     /// <summary>Gets (creating on first use) the sprite for a resource; null if it is not an image.</summary>
@@ -83,6 +104,7 @@ public sealed class SpriteBank
         return null;
     }
 
+    /// <summary>Drops the sprites of resources (a location being unloaded).</summary>
     public void Remove(IEnumerable<ResourceEntry> resources)
     {
         foreach (var r in resources)
@@ -103,9 +125,10 @@ public sealed class SpriteBank
             {
                 var sheet = _data.Packed(s.Resource!.Path);
                 int n = sheet.FrameWidth * sheet.FrameHeight;
-                if (_frameBuffer.Length < n)
+                // Decode fills the whole buffer, so it must be exactly one frame long.
+                if (_frameBuffer.Length != n)
                     _frameBuffer = new byte[n];
-                var buf = _frameBuffer.AsSpan(0, n).ToArray();
+                var buf = _frameBuffer;
                 int key = sheet.Decode(s.Frame, buf);
                 if (shadowed != null && shadowed(s))
                     Shadow.Draw(fb, buf, sheet.FrameWidth, sheet.FrameHeight, key, s.X, s.Y, s.Scale, s.Mirror, hidden);

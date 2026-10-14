@@ -74,19 +74,22 @@ internal static unsafe class Sdl
         public float X, Y, W, H;
     }
 
-    [DllImport(Lib, EntryPoint = "SDL_Init")] [return: MarshalAs(UnmanagedType.U1)]
+    [DllImport(Lib, EntryPoint = "SDL_Init")]
+    [return: MarshalAs(UnmanagedType.U1)]
     public static extern bool Init(uint flags);
     [DllImport(Lib, EntryPoint = "SDL_Quit")] public static extern void Quit();
     [DllImport(Lib, EntryPoint = "SDL_GetError")] static extern IntPtr GetErrorPtr();
     public static string GetError() => Marshal.PtrToStringUTF8(GetErrorPtr()) ?? "";
-    [DllImport(Lib, EntryPoint = "SDL_SetHint")] [return: MarshalAs(UnmanagedType.U1)]
+    [DllImport(Lib, EntryPoint = "SDL_SetHint")]
+    [return: MarshalAs(UnmanagedType.U1)]
     public static extern bool SetHint([MarshalAs(UnmanagedType.LPUTF8Str)] string name, [MarshalAs(UnmanagedType.LPUTF8Str)] string value);
     [DllImport(Lib, EntryPoint = "SDL_GetTicks")] public static extern ulong GetTicks();
     [DllImport(Lib, EntryPoint = "SDL_Delay")] public static extern void Delay(uint ms);
 
     public const uint MESSAGEBOX_ERROR = 0x10, MESSAGEBOX_INFORMATION = 0x40;
 
-    [DllImport(Lib, EntryPoint = "SDL_ShowSimpleMessageBox")] [return: MarshalAs(UnmanagedType.U1)]
+    [DllImport(Lib, EntryPoint = "SDL_ShowSimpleMessageBox")]
+    [return: MarshalAs(UnmanagedType.U1)]
     public static extern bool ShowSimpleMessageBox(uint flags, [MarshalAs(UnmanagedType.LPUTF8Str)] string title,
         [MarshalAs(UnmanagedType.LPUTF8Str)] string message, IntPtr window);
 
@@ -94,40 +97,53 @@ internal static unsafe class Sdl
     public static extern IntPtr CreateWindow([MarshalAs(UnmanagedType.LPUTF8Str)] string title, int w, int h, ulong flags);
     [DllImport(Lib, EntryPoint = "SDL_DestroyWindow")] public static extern void DestroyWindow(IntPtr window);
     [DllImport(Lib, EntryPoint = "SDL_GetWindowFlags")] public static extern ulong GetWindowFlags(IntPtr window);
-    [DllImport(Lib, EntryPoint = "SDL_SetWindowFullscreen")] [return: MarshalAs(UnmanagedType.U1)]
+    [DllImport(Lib, EntryPoint = "SDL_SetWindowFullscreen")]
+    [return: MarshalAs(UnmanagedType.U1)]
     public static extern bool SetWindowFullscreen(IntPtr window, [MarshalAs(UnmanagedType.U1)] bool fullscreen);
-    [DllImport(Lib, EntryPoint = "SDL_SetWindowMinimumSize")] [return: MarshalAs(UnmanagedType.U1)]
+    [DllImport(Lib, EntryPoint = "SDL_SetWindowMinimumSize")]
+    [return: MarshalAs(UnmanagedType.U1)]
     public static extern bool SetWindowMinimumSize(IntPtr window, int w, int h);
 
     [DllImport(Lib, EntryPoint = "SDL_CreateRenderer")]
     public static extern IntPtr CreateRenderer(IntPtr window, IntPtr name);
     [DllImport(Lib, EntryPoint = "SDL_DestroyRenderer")] public static extern void DestroyRenderer(IntPtr renderer);
-    [DllImport(Lib, EntryPoint = "SDL_SetRenderVSync")] [return: MarshalAs(UnmanagedType.U1)]
+    [DllImport(Lib, EntryPoint = "SDL_SetRenderVSync")]
+    [return: MarshalAs(UnmanagedType.U1)]
     public static extern bool SetRenderVSync(IntPtr renderer, int vsync);
-    [DllImport(Lib, EntryPoint = "SDL_SetRenderLogicalPresentation")] [return: MarshalAs(UnmanagedType.U1)]
+    [DllImport(Lib, EntryPoint = "SDL_SetRenderLogicalPresentation")]
+    [return: MarshalAs(UnmanagedType.U1)]
     public static extern bool SetRenderLogicalPresentation(IntPtr renderer, int w, int h, int mode);
-    [DllImport(Lib, EntryPoint = "SDL_RenderCoordinatesFromWindow")] [return: MarshalAs(UnmanagedType.U1)]
+    [DllImport(Lib, EntryPoint = "SDL_RenderCoordinatesFromWindow")]
+    [return: MarshalAs(UnmanagedType.U1)]
     public static extern bool RenderCoordinatesFromWindow(IntPtr renderer, float wx, float wy, out float x, out float y);
-    [DllImport(Lib, EntryPoint = "SDL_RenderCoordinatesToWindow")] [return: MarshalAs(UnmanagedType.U1)]
+    [DllImport(Lib, EntryPoint = "SDL_RenderCoordinatesToWindow")]
+    [return: MarshalAs(UnmanagedType.U1)]
     public static extern bool RenderCoordinatesToWindow(IntPtr renderer, float x, float y, out float wx, out float wy);
-    [DllImport(Lib, EntryPoint = "SDL_SetRenderDrawColor")] [return: MarshalAs(UnmanagedType.U1)]
+    [DllImport(Lib, EntryPoint = "SDL_SetRenderDrawColor")]
+    [return: MarshalAs(UnmanagedType.U1)]
     public static extern bool SetRenderDrawColor(IntPtr renderer, byte r, byte g, byte b, byte a);
-    [DllImport(Lib, EntryPoint = "SDL_RenderClear")] [return: MarshalAs(UnmanagedType.U1)]
+    [DllImport(Lib, EntryPoint = "SDL_RenderClear")]
+    [return: MarshalAs(UnmanagedType.U1)]
     public static extern bool RenderClear(IntPtr renderer);
-    [DllImport(Lib, EntryPoint = "SDL_RenderTexture")] [return: MarshalAs(UnmanagedType.U1)]
+    [DllImport(Lib, EntryPoint = "SDL_RenderTexture")]
+    [return: MarshalAs(UnmanagedType.U1)]
     public static extern bool RenderTexture(IntPtr renderer, IntPtr texture, FRect* src, FRect* dst);
-    [DllImport(Lib, EntryPoint = "SDL_RenderPresent")] [return: MarshalAs(UnmanagedType.U1)]
+    [DllImport(Lib, EntryPoint = "SDL_RenderPresent")]
+    [return: MarshalAs(UnmanagedType.U1)]
     public static extern bool RenderPresent(IntPtr renderer);
 
     [DllImport(Lib, EntryPoint = "SDL_CreateTexture")]
     public static extern IntPtr CreateTexture(IntPtr renderer, uint format, int access, int w, int h);
     [DllImport(Lib, EntryPoint = "SDL_DestroyTexture")] public static extern void DestroyTexture(IntPtr texture);
-    [DllImport(Lib, EntryPoint = "SDL_UpdateTexture")] [return: MarshalAs(UnmanagedType.U1)]
+    [DllImport(Lib, EntryPoint = "SDL_UpdateTexture")]
+    [return: MarshalAs(UnmanagedType.U1)]
     public static extern bool UpdateTexture(IntPtr texture, IntPtr rect, void* pixels, int pitch);
-    [DllImport(Lib, EntryPoint = "SDL_SetTextureScaleMode")] [return: MarshalAs(UnmanagedType.U1)]
+    [DllImport(Lib, EntryPoint = "SDL_SetTextureScaleMode")]
+    [return: MarshalAs(UnmanagedType.U1)]
     public static extern bool SetTextureScaleMode(IntPtr texture, int mode);
 
-    [DllImport(Lib, EntryPoint = "SDL_PollEvent")] [return: MarshalAs(UnmanagedType.U1)]
+    [DllImport(Lib, EntryPoint = "SDL_PollEvent")]
+    [return: MarshalAs(UnmanagedType.U1)]
     public static extern bool PollEvent(out Event e);
 
     [DllImport(Lib, EntryPoint = "SDL_CreateSurfaceFrom")]
@@ -137,12 +153,15 @@ internal static unsafe class Sdl
     [DllImport(Lib, EntryPoint = "SDL_DestroySurface")] public static extern void DestroySurface(IntPtr surface);
     [DllImport(Lib, EntryPoint = "SDL_CreateColorCursor")]
     public static extern IntPtr CreateColorCursor(IntPtr surface, int hotX, int hotY);
-    [DllImport(Lib, EntryPoint = "SDL_SetCursor")] [return: MarshalAs(UnmanagedType.U1)]
+    [DllImport(Lib, EntryPoint = "SDL_SetCursor")]
+    [return: MarshalAs(UnmanagedType.U1)]
     public static extern bool SetCursor(IntPtr cursor);
     [DllImport(Lib, EntryPoint = "SDL_DestroyCursor")] public static extern void DestroyCursor(IntPtr cursor);
-    [DllImport(Lib, EntryPoint = "SDL_ShowCursor")] [return: MarshalAs(UnmanagedType.U1)]
+    [DllImport(Lib, EntryPoint = "SDL_ShowCursor")]
+    [return: MarshalAs(UnmanagedType.U1)]
     public static extern bool ShowCursor();
-    [DllImport(Lib, EntryPoint = "SDL_HideCursor")] [return: MarshalAs(UnmanagedType.U1)]
+    [DllImport(Lib, EntryPoint = "SDL_HideCursor")]
+    [return: MarshalAs(UnmanagedType.U1)]
     public static extern bool HideCursor();
     [DllImport(Lib, EntryPoint = "SDL_WarpMouseInWindow")]
     public static extern void WarpMouseInWindow(IntPtr window, float x, float y);
@@ -152,11 +171,14 @@ internal static unsafe class Sdl
     [DllImport(Lib, EntryPoint = "SDL_OpenAudioDeviceStream")]
     public static extern IntPtr OpenAudioDeviceStream(uint device, ref AudioSpec spec,
         delegate* unmanaged[Cdecl]<IntPtr, IntPtr, int, int, void> callback, IntPtr userdata);
-    [DllImport(Lib, EntryPoint = "SDL_ResumeAudioStreamDevice")] [return: MarshalAs(UnmanagedType.U1)]
+    [DllImport(Lib, EntryPoint = "SDL_ResumeAudioStreamDevice")]
+    [return: MarshalAs(UnmanagedType.U1)]
     public static extern bool ResumeAudioStreamDevice(IntPtr stream);
-    [DllImport(Lib, EntryPoint = "SDL_PauseAudioStreamDevice")] [return: MarshalAs(UnmanagedType.U1)]
+    [DllImport(Lib, EntryPoint = "SDL_PauseAudioStreamDevice")]
+    [return: MarshalAs(UnmanagedType.U1)]
     public static extern bool PauseAudioStreamDevice(IntPtr stream);
-    [DllImport(Lib, EntryPoint = "SDL_PutAudioStreamData")] [return: MarshalAs(UnmanagedType.U1)]
+    [DllImport(Lib, EntryPoint = "SDL_PutAudioStreamData")]
+    [return: MarshalAs(UnmanagedType.U1)]
     public static extern bool PutAudioStreamData(IntPtr stream, void* buf, int len);
     [DllImport(Lib, EntryPoint = "SDL_DestroyAudioStream")] public static extern void DestroyAudioStream(IntPtr stream);
 }

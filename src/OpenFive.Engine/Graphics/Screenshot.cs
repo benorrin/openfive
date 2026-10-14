@@ -3,6 +3,7 @@ namespace OpenFive.Engine.Graphics;
 /// <summary>Writes the framebuffer as a 24-bit BMP (used for screenshots and automated tests).</summary>
 public static class Screenshot
 {
+    /// <summary>Saves the screen to <paramref name="path"/>.</summary>
     public static void SaveBmp(Framebuffer fb, string path)
     {
         const int w = Framebuffer.Width, h = Framebuffer.Height;

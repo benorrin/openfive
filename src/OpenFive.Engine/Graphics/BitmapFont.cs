@@ -11,12 +11,18 @@ public sealed class BitmapFont
 {
     /// <summary>Characters in the order the font image stores them.</summary>
     public const string Order = "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜabcdefghijklmnopqrstuvwxyzäöü1234567890!\"/()=?-,.;:_+*´% ß";
+    /// <summary>The height of a line of glyphs in the font image.</summary>
     public const int GlyphHeight = 20;
+
     const ushort Marker = 0x07E0, Transparent = 0xFFFF;
 
     readonly Image16 _image;
     readonly Dictionary<char, (int X, int Y, int W)> _glyphs = new();
 
+    /// <summary>
+    /// Finds the glyphs in the font image: each run between two marker pixels on a row is the
+    /// next character of <see cref="Order"/>. (The markers are made transparent in a copy.)
+    /// </summary>
     public BitmapFont(Image16 image)
     {
         _image = new Image16(image.Width, image.Height, (ushort[])image.Pixels.Clone());
@@ -40,6 +46,7 @@ public sealed class BitmapFont
         }
     }
 
+    /// <summary>Maps typographic quotes and dashes onto the characters the font has.</summary>
     static char Normalize(char c) => c switch
     {
         '’' or '‘' or '\'' or '`' or '\u0092' => '´',
@@ -48,15 +55,12 @@ public sealed class BitmapFont
         _ => c,
     };
 
-    public int CharWidth(char c) => _glyphs.TryGetValue(Normalize(c), out var g) ? g.W : _glyphs.TryGetValue(' ', out var s) ? s.W : 8;
+    /// <summary>The width of a character (unknown ones are as wide as a space).</summary>
+    public int CharWidth(char c) =>
+        _glyphs.TryGetValue(Normalize(c), out var g) ? g.W : _glyphs.TryGetValue(' ', out var space) ? space.W : 8;
 
-    public int MeasureWidth(string s)
-    {
-        int w = 0;
-        foreach (char c in s)
-            w += CharWidth(c);
-        return w;
-    }
+    /// <summary>The width of a text on one line.</summary>
+    public int MeasureWidth(string s) => s.Sum(CharWidth);
 
     /// <summary>Draws text with its top-left at (x, y). Returns the x after the last glyph.</summary>
     public int Draw(Framebuffer fb, string s, int x, int y)

@@ -13,12 +13,22 @@ public abstract class TaskHandle
 /// </summary>
 public abstract class GameTask : TaskHandle
 {
+    /// <summary>A name for diagnostics (the original's task type names, such as "TALK").</summary>
     public string Name = "";
+
+    /// <summary>The task does not start before this is released (null: no wait).</summary>
     public TaskHandle? WaitFor;
+
+    /// <summary>Ticks to wait after <see cref="WaitFor"/> is released.</summary>
     public int Delay;
+
+    /// <summary>The task has completed (or was removed).</summary>
     public bool Finished { get; internal set; }
+
     /// <summary>True once the task has begun acting (its wait and delay are over).</summary>
     public bool Started { get; internal set; }
+
+    /// <summary>A task releases what waits for it when it finishes.</summary>
     public override bool Released => Finished;
 
     /// <summary>Called each tick once ready; return true when the task is complete.</summary>
@@ -35,24 +45,26 @@ public abstract class GameTask : TaskHandle
 /// </summary>
 public sealed class TaskScheduler
 {
+    /// <summary>The number of slots.</summary>
     public const int Capacity = 600;
+
     readonly GameTask?[] _slots = new GameTask?[Capacity];
 
-    public IEnumerable<GameTask> Active => _slots.Where(t => t != null)!;
+    /// <summary>The tasks in the list, in slot order.</summary>
+    public IEnumerable<GameTask> Active => _slots.OfType<GameTask>();
 
+    /// <summary>Puts a task into the lowest free slot and returns it.</summary>
+    /// <exception cref="InvalidOperationException">All slots are taken.</exception>
     public T Add<T>(T task) where T : GameTask
     {
-        for (int i = 0; i < Capacity; i++)
-        {
-            if (_slots[i] == null)
-            {
-                _slots[i] = task;
-                return task;
-            }
-        }
-        throw new InvalidOperationException("task list is full");
+        int free = Array.IndexOf(_slots, null);
+        if (free < 0)
+            throw new InvalidOperationException("task list is full");
+        _slots[free] = task;
+        return task;
     }
 
+    /// <summary>Takes a task off the list; it counts as finished.</summary>
     public void Remove(GameTask task)
     {
         for (int i = 0; i < Capacity; i++)
@@ -63,6 +75,7 @@ public sealed class TaskScheduler
             }
     }
 
+    /// <summary>Takes every task (except those <paramref name="keep"/> accepts) off the list.</summary>
     public void Clear(Func<GameTask, bool>? keep = null)
     {
         for (int i = 0; i < Capacity; i++)
@@ -73,8 +86,10 @@ public sealed class TaskScheduler
             }
     }
 
+    /// <summary>The tasks of one type, in slot order.</summary>
     public IEnumerable<T> OfType<T>() where T : GameTask => _slots.OfType<T>();
 
+    /// <summary>Advances every task by one tick, in slot order.</summary>
     public void Tick(GameWorld world)
     {
         for (int i = 0; i < Capacity; i++)
@@ -111,12 +126,15 @@ public sealed class TaskScheduler
 public sealed class ActionTask : GameTask
 {
     readonly Action<GameWorld> _action;
+
+    /// <summary>Creates a task named <paramref name="name"/> that runs <paramref name="action"/>.</summary>
     public ActionTask(string name, Action<GameWorld> action)
     {
         Name = name;
         _action = action;
     }
 
+    /// <summary>Runs the action; the task is then finished.</summary>
     protected internal override bool Run(GameWorld world)
     {
         _action(world);

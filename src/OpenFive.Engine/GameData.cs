@@ -3,7 +3,14 @@ using OpenFive.Engine.IO;
 
 namespace OpenFive.Engine;
 
-public enum Language { English, German }
+/// <summary>The language the game is played in (the disc has both).</summary>
+public enum Language
+{
+    /// <summary>English texts and speech.</summary>
+    English,
+    /// <summary>German texts and speech.</summary>
+    German,
+}
 
 /// <summary>
 /// Access to the game's assets on the user's disc, with decoding and caching. Nothing from the
@@ -18,11 +25,20 @@ public sealed class GameData : IDisposable
     readonly Dictionary<string, ResScript> _res = new(StringComparer.OrdinalIgnoreCase);
     Dictionary<string, string>? _speechIndex;
 
+    /// <summary>The language texts and speech are read in (call <see cref="LoadTexts"/> after changing it).</summary>
     public Language Language { get; set; }
+
+    /// <summary>Where the files come from (disc image or folder), for messages.</summary>
     public string Source => _files.Source;
+
+    /// <summary>The objects' hover texts.</summary>
     public ObjectTexts ObjectTexts { get; private set; } = new();
+
+    /// <summary>The dialogue lines and menus.</summary>
     public DialogTexts Dialogs { get; private set; } = new();
 
+    /// <summary>Opens the game's files and reads the texts of <paramref name="language"/>.</summary>
+    /// <exception cref="InvalidDataException">The files are not from the game's CD.</exception>
     public GameData(IGameFiles files, Language language = Language.English)
     {
         _files = files;
@@ -43,10 +59,16 @@ public sealed class GameData : IDisposable
         return p.StartsWith("res/", StringComparison.OrdinalIgnoreCase) ? p : "Res/" + p;
     }
 
+    /// <summary>Does a file exist (path relative to the Res folder)?</summary>
     public bool Exists(string path) => _files.Exists(ResPath(path));
+
+    /// <summary>Reads a whole file (path relative to the Res folder).</summary>
     public byte[] Read(string path) => _files.ReadAll(ResPath(path));
+
+    /// <summary>The names of the entries of a folder (relative to the Res folder).</summary>
     public IEnumerable<string> List(string dir) => _files.List(ResPath(dir));
 
+    /// <summary>(Re)reads the object and dialogue texts of the current language.</summary>
     public void LoadTexts()
     {
         ObjectTexts = new ObjectTexts();
@@ -61,6 +83,7 @@ public sealed class GameData : IDisposable
         _speechIndex = null;
     }
 
+    /// <summary>The ".res" description of a location (cached).</summary>
     public ResScript Location(string name)
     {
         if (!_res.TryGetValue(name, out var r))
@@ -78,6 +101,7 @@ public sealed class GameData : IDisposable
         _ => location,
     };
 
+    /// <summary>A raw picture (cached until <see cref="TrimCaches"/>).</summary>
     public Image16 Image(string path)
     {
         if (!_raw.TryGetValue(path, out var img))
@@ -85,6 +109,7 @@ public sealed class GameData : IDisposable
         return img;
     }
 
+    /// <summary>A packed sprite sheet (cached until <see cref="TrimCaches"/>).</summary>
     public PackedSheet Packed(string path)
     {
         if (!_packed.TryGetValue(path, out var s))
@@ -92,10 +117,13 @@ public sealed class GameData : IDisposable
         return s;
     }
 
+    /// <summary>Is the picture file a packed sprite sheet?</summary>
     public bool IsPacked(string path) => Brg.IsPacked(Read(path));
 
+    /// <summary>Opens a Smacker video (a new decoder each time).</summary>
     public Smacker Video(string path) => new(Read(path));
 
+    /// <summary>A decoded sound, or null if it is missing or unreadable (cached).</summary>
     public AudioClip? Sound(string path)
     {
         if (_audio.TryGetValue(path, out var c))
@@ -133,5 +161,6 @@ public sealed class GameData : IDisposable
         _packed.Clear();
     }
 
+    /// <summary>Closes the disc image.</summary>
     public void Dispose() => _files.Dispose();
 }

@@ -5,8 +5,12 @@ namespace OpenFive.Engine.World;
 /// <summary>An animation definition together with the resource it draws from.</summary>
 public sealed class AnimInfo
 {
+    /// <summary>The animation as described in the ".res" file.</summary>
     public required AnimDef Def;
+
+    /// <summary>The picture it draws from.</summary>
     public required ResourceEntry Resource;
+
     /// <summary>Current position (scripts may move an animation).</summary>
     public int X, Y;
     /// <summary>Drawing scale (scripts may scale an animation).</summary>
@@ -20,13 +24,22 @@ public sealed class AnimInfo
 /// </summary>
 public sealed class AnimTask : GameTask
 {
+    /// <summary>The animation played.</summary>
     public readonly AnimInfo Anim;
+
+    /// <summary>Times still to play (-1: forever).</summary>
     public int Loops;
+
+    /// <summary>The frame shown.</summary>
     public int Frame;
+
     /// <summary>Object to switch when the animation ends (null = none).</summary>
     public string? EndObject;
+
+    /// <summary>Whether <see cref="EndObject"/> is switched on (true) or off.</summary>
     public bool EndObjectOn;
 
+    /// <summary>Creates the task that plays <paramref name="anim"/> <paramref name="loops"/> times.</summary>
     public AnimTask(AnimInfo anim, int loops)
     {
         Anim = anim;
@@ -34,13 +47,13 @@ public sealed class AnimTask : GameTask
         Loops = loops;
     }
 
+    /// <summary>Shows the next frame; after the last one, loops or ends.</summary>
     protected internal override bool Run(GameWorld world)
     {
         var sprite = world.Sprites.For(Anim.Resource);
         int n = Anim.Def.Frames.Length;
         if (sprite == null || n == 0)
             return true;
-        world.OnAnimFrame(this);
         if (Frame < n - 1)
         {
             Frame++;
@@ -66,6 +79,7 @@ public sealed class AnimTask : GameTask
         return true;
     }
 
+    /// <summary>Points the sprite at the current frame, at the animation's position and size.</summary>
     void Show(Sprite s)
     {
         var f = Anim.Def.Frames[Frame];
@@ -84,65 +98,5 @@ public sealed class AnimTask : GameTask
         s.X = Anim.X + f.X;
         s.Y = Anim.Y + f.Y;
         s.Scale = Anim.Scale;
-    }
-}
-
-/// <summary>Ends a running animation of the given name when it runs.</summary>
-public sealed class StopAnimTask : GameTask
-{
-    readonly string _anim;
-    public StopAnimTask(string anim)
-    {
-        Name = "STOP_ANIM";
-        _anim = anim;
-    }
-
-    protected internal override bool Run(GameWorld world)
-    {
-        world.StopAnim(_anim, onlyStarted: true);
-        return true;
-    }
-}
-
-/// <summary>Switches an object on or off when it runs.</summary>
-public sealed class ObjectTask : GameTask
-{
-    readonly string _object;
-    readonly bool _on;
-    public ObjectTask(string obj, bool on)
-    {
-        Name = "OBJECT";
-        _object = obj;
-        _on = on;
-    }
-
-    protected internal override bool Run(GameWorld world)
-    {
-        world.ShowObject(_object, _on);
-        return true;
-    }
-}
-
-/// <summary>Plays a sound effect when it runs.</summary>
-public sealed class SoundTask : GameTask
-{
-    readonly string _path;
-    readonly int _volume, _pan;
-    readonly bool _loop;
-    public int Voice { get; private set; }
-
-    public SoundTask(string path, int volume, int pan, bool loop)
-    {
-        Name = "SFX_TASK";
-        _path = path;
-        _volume = volume;
-        _pan = pan;
-        _loop = loop;
-    }
-
-    protected internal override bool Run(GameWorld world)
-    {
-        Voice = world.Audio.PlayEffect(_path, _volume, _pan, _loop);
-        return true;
     }
 }

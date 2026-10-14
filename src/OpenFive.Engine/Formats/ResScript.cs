@@ -1,16 +1,38 @@
 using System.Globalization;
 using System.Text;
+using OpenFive.Engine.World;
 
 namespace OpenFive.Engine.Formats;
 
-public enum ResourceKind { Gfx, Smk, Sfx }
+/// <summary>The kind of a resource listed in a ".res" file.</summary>
+public enum ResourceKind
+{
+    /// <summary>A picture or sprite sheet (".brg", ".lmsk").</summary>
+    Gfx,
+    /// <summary>A Smacker movie.</summary>
+    Smk,
+    /// <summary>A sound.</summary>
+    Sfx,
+}
 
+/// <summary>A resource of a location: what it is, where it is on the disc and how it is stored.</summary>
+/// <param name="Kind">Picture, movie or sound.</param>
+/// <param name="Path">Path below the disc's Res folder.</param>
+/// <param name="Packed">The picture is a packed sprite sheet.</param>
+/// <param name="NoLoad">The original did not load the resource with the location.</param>
 public sealed record ResourceEntry(ResourceKind Kind, string Path, bool Packed, bool NoLoad);
 
 /// <summary>One frame of an animation: sheet frame index and drawing offset.</summary>
 public readonly record struct AnimFrame(int Frame, int X, int Y);
 
 /// <summary>A named animation over a resource: "anim Name,res,w,h,x,y:frame,dx,dy;...".</summary>
+/// <param name="Name">The name scripts play it by.</param>
+/// <param name="Resource">Index of its picture in the location's resource list.</param>
+/// <param name="Width">Frame width (for unpacked strips).</param>
+/// <param name="Height">Frame height (for unpacked strips).</param>
+/// <param name="X">Where it is drawn, or for character animations the first frame of the sheet.</param>
+/// <param name="Y">Where it is drawn.</param>
+/// <param name="Frames">The frames, in order.</param>
 public sealed record AnimDef(string Name, int Resource, int Width, int Height, int X, int Y, AnimFrame[] Frames);
 
 /// <summary>A point of a walk path/area polygon with its depth (draw order) and scale (percent).</summary>
@@ -19,24 +41,58 @@ public readonly record struct WalkPoint(int X, int Y, int Depth, int Scale);
 /// <summary>Connection from a path/area to another one (1-based index into the combined list).</summary>
 public readonly record struct WalkLink(int Target, int X, int Y);
 
+/// <summary>A walkable path (a line) or area (a polygon), with its connections to the others.</summary>
 public sealed record WalkShape(bool IsArea, WalkPoint[] Points, WalkLink[] Links);
 
 /// <summary>Sample point of the depth mask: pixels of the mask region at (X,Y) lie at Depth.</summary>
 public readonly record struct MaskSample(int X, int Y, int Depth);
 
-public enum ObjectCommand { None, Examine, ChangeLocation }
+/// <summary>What clicking an object does when no script handles it.</summary>
+public enum ObjectCommand
+{
+    /// <summary>Nothing.</summary>
+    None,
+    /// <summary>The object is looked at.</summary>
+    Examine,
+    /// <summary>The object is an exit to another location (the argument is the arrow direction).</summary>
+    ChangeLocation,
+}
 
+/// <summary>A clickable (or merely visible) object of a location or of the common set.</summary>
 public sealed class ObjectDef
 {
+    /// <summary>The object's name ("LOC07Axt"); scripts and texts refer to it by this.</summary>
     public string Name = "";
+
+    /// <summary>Whether the object is shown when the location is first loaded.</summary>
     public bool On;
-    public int Gfx = -1, GfxX, GfxY;
+
+    /// <summary>Index of its picture in the resource list (-1: none).</summary>
+    public int Gfx = -1;
+
+    /// <summary>Where its picture is drawn.</summary>
+    public int GfxX, GfxY;
+
+    /// <summary>Drawing depth (0: the picture's own); nearer objects win clicks.</summary>
     public int Depth;
+
+    /// <summary>Drawing scale.</summary>
     public double Size = 1.0;
+
+    /// <summary>The click area (a polygon; fewer than three points means not clickable).</summary>
     public (int X, int Y)[] Click = Array.Empty<(int, int)>();
+
+    /// <summary>Where the hero walks to when the object is clicked.</summary>
     public int GotoX, GotoY;
+
+    /// <summary>What clicking it does by default.</summary>
     public ObjectCommand Command;
+
+    /// <summary>The command's argument (for exits: the arrow direction).</summary>
     public string CommandArg = "";
+
+    /// <summary>True when (x, y) is inside the object's click area.</summary>
+    public bool Contains(int x, int y) => Click.Length >= 3 && Geometry.Contains(Click, x, y);
 }
 
 /// <summary>
@@ -45,18 +101,36 @@ public sealed class ObjectDef
 /// </summary>
 public sealed class ResScript
 {
+    /// <summary>The location's name as written in the file.</summary>
     public string Name = "";
+
+    /// <summary>Pictures, movies and sounds, referred to by index.</summary>
     public List<ResourceEntry> Resources = new();
+
+    /// <summary>The animations.</summary>
     public List<AnimDef> Anims = new();
+
+    /// <summary>Index of the background picture (-1: none).</summary>
     public int Background = -1;
+
+    /// <summary>The depth mask (regions in front of or behind the characters), if any.</summary>
     public string? MaskPath;
+
+    /// <summary>The depth of each mask region, given by a sample point inside it.</summary>
     public List<MaskSample> MaskSamples = new();
+
+    /// <summary>The walkable paths (lines).</summary>
     public List<WalkShape> Paths = new();
+
+    /// <summary>The walkable areas (polygons).</summary>
     public List<WalkShape> Areas = new();
+
+    /// <summary>The objects.</summary>
     public List<ObjectDef> Objects = new();
 
     static int Int(string s) => int.Parse(s.Trim(), NumberStyles.Integer, CultureInfo.InvariantCulture);
 
+    /// <summary>Parses a ".res" file (Latin-1 text: sections of "key arguments" lines and object blocks).</summary>
     public static ResScript Parse(byte[] data)
     {
         var res = new ResScript();

@@ -3,16 +3,27 @@ namespace OpenFive.Engine.Formats;
 /// <summary>Decoded PCM audio, interleaved stereo float at <see cref="Wav.OutputRate"/>.</summary>
 public sealed class AudioClip
 {
+    /// <summary>The samples: left, right, left, right...</summary>
     public float[] Samples { get; }
+
+    /// <summary>The number of stereo sample pairs.</summary>
     public int Frames => Samples.Length / 2;
+
+    /// <summary>Wraps interleaved stereo samples.</summary>
     public AudioClip(float[] samples) => Samples = samples;
 }
 
 /// <summary>Reader for the uncompressed PCM ".wav" files used for speech, music and effects.</summary>
 public static class Wav
 {
+    /// <summary>The sample rate everything is converted to.</summary>
     public const int OutputRate = 44100;
 
+    /// <summary>
+    /// Decodes an 8- or 16-bit, mono or stereo PCM file and converts it to stereo at
+    /// <see cref="OutputRate"/> (linear interpolation).
+    /// </summary>
+    /// <exception cref="InvalidDataException">The file is not a supported WAV file.</exception>
     public static AudioClip Load(byte[] d)
     {
         if (d.Length < 12 || d[0] != 'R' || d[1] != 'I' || d[2] != 'F' || d[3] != 'F' || d[8] != 'W' || d[9] != 'A')
